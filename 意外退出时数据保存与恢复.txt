@@ -1,0 +1,23 @@
+
+1、onSaveInstanceState(Bundle b){	//用于保存数据
+
+	b.putXx();		//用参数保存数据
+}		
+
+2、onRestoreInstanceState(Bundle b){ 	//用于恢复数据
+	
+	b.getXx()		//取出保存的数据
+
+}
+
+3、onCreate(Bundle b){		//第二中恢复数据，在创建视图时判断Bund是否有数据
+
+	if(b != null){				
+		b.getXx()
+	}
+}
+
+
+onSaveInstanceState是在Activity执行了onPause后一定会被执行
+
+onRestoreInstanceState是当Activity意外退出后再次进入的时候才会被调用，但只是意外退出才执行		

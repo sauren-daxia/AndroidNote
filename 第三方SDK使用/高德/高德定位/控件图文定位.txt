@@ -1,0 +1,110 @@
+先获取KEY，获取KEY的方法外面有文档可以看
+
+1、将2D或3D的jar包放到libs文件下
+
+2、在Manifest中配置KEY
+	<meta-data android:name="com.amap.api.v2.apikey" android:value="请输入您的用户Key"></meta-data>
+
+3、添加权限
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+4、在布局中添加控件，要注意，如果是2D的jar包或3D的jar包控件名是不一样的
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/mapview"
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+
+    </com.amap.api.maps2d.MapView>
+
+5、添加生命周期时的操作
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+	mMapView.onCreate(savedInstanceState);
+  ｝
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        mMapView.onDestroy();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
+        mMapView.onResume();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
+        mMapView.onPause();
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
+        mMapView.onSaveInstanceState(outState);
+    }
+
+6、实例化定位类、监听类、参数类，具体怎么操作外面有文档可以看
+
+7、声明并实例地图控件类
+	private AMap aMap;
+	initAMap(){
+	 if (aMap == null) {
+            aMap = mMapView.getMap();		//从VIew里面获取
+            setUpMap();				//自己写的设置小蓝点参数的方法
+	 }
+	}
+
+8、设置关于定位的小蓝点的参数
+	// 自定义系统定位小蓝点
+        MyLocationStyle myLocationStyle = new MyLocationStyle();
+
+	myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.location_marker));	// 设置小蓝点的图标
+	myLocationStyle.strokeColor(Color.BLACK);			// 设置圆形的边框颜色
+        myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));	// 设置圆形的填充颜色
+	myLocationStyle.strokeWidth(1.0f);				// 设置圆形的边框粗细
+	myLocationStyle.anchor(50,80);					//设置小蓝点的锚点
+	
+	aMap.setMyLocationStyle(myLocationStyle);			// 将自定义的 myLocationStyle 对象添加到地图上
+
+	aMap.setLocationSource(this);					// 设置定位监听
+	aMap.getUiSettings().setMyLocationButtonEnabled(true);		// 设置默认定位按钮是否显示
+	aMap.setMyLocationEnabled(true);		// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+
+9、在setLocationSource的回调中，获取和销毁一些实例,但要先声明定位监听类
+	public OnLocationChangedListener mListener;
+
+	@override
+	activate(){
+		mListener = onLocationChangedListener;
+	}
+
+	@Override
+	public void deactivate() {
+		mListener = null;
+		if (mLocationClient != null) {
+		mLocationClient.stopLocation();
+		mLocationClient.onDestroy();
+		 }
+		mLocationClient = null;
+	}
+
+10、在AMapLocationListener回调类中的方法设置当回调的时候就显示小蓝点
+	if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+			 mListener.onLocationChanged(aMapLocation);
+		}
+	}
+

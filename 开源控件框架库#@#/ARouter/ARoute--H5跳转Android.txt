@@ -1,0 +1,49 @@
+1、先定义一个Activity接收Scheme(简单来说就是点击的链接跟activity设置的隐式的规则是否匹配)
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Uri data = getIntent().getData();
+        if(data!=null){
+            ARouter.getInstance().build(data).navigation();
+        }
+        finish();
+}
+
+2、在activity中配置
+<activity android:name=".SchmemActivity" >
+            <!-- Schame -->
+            <intent-filter>
+                <data
+                    android:host="com.xiaofeixia"
+                    android:scheme="xiaofeixia"/>
+		 <!-- 下面这三句固定 -->
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+</activity>
+
+PS:data标签
+	schmem属性相当于 = http://
+	host属性相当于 = www.baidu.com
+	只要链接的前缀包含xiaofeixia://com.xiaofeixia，就会进入SchmemActivity,然后从中获取uri
+
+3、把指定界面的path拼接给前端，设置在点击链接里面
+比如要跳转登录界面
+@Route(paht = "/xiaofeixia/login")
+public class LoginActivit{
+	@Autowired
+	String name;
+	@Autowired(name = "p")		//这里要注意，如果重命名之后就只能用重命名的字段复制，即使是自己调用也是，但完全可以不用重命名
+	String password;
+
+	 @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ARouter.getInstance().inject(this);	//获取字段前必须写这个方法，最好放在BaseActivity中
+        text.setText("name = "+name+"\n"+"password"+password);
+    }
+}
+
+
+	

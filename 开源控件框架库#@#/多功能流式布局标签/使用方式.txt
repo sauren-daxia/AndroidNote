@@ -1,0 +1,118 @@
+GItHub：https://github.com/Rukey7/TagLayout
+
+依赖库：
+	1、在根目录下得builder.gralder添加
+		allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+	2、在APP目录下的builder.gralder添加
+	compile 'com.github.Rukey7:TagLayout:1.0.6'	\\最新版自己上GitHub上找
+
+自定义属性：    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+作为容器使用:
+	
+	<com.dl7.tag.TagLayout
+        android:id="@+id/tag_layout_1"
+        style="@style/TagLayout.RandomColor"
+        app:tag_layout_fit_num="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+	属性设置
+
+标签布局属性（有对应接口）：
+
+name				format		description
+tag_layout_mode			enum		{normal，edit，change，single_choice，multi_choice}, 分别为正常、编辑、换一换、单选和多选等模式
+tag_layout_shape		enum		{round_rect，arc，rect}，标签形状分别为圆角矩形、圆弧形和直角矩形，默认round_rect
+tag_layout_random_color		boolean		随机颜色
+tag_layout_press_feedback	boolean		按压反馈效果
+tag_layout_fit_num		integer		设置一行固定显示几个标签
+tag_layout_bg_color		color		标签布局背景颜色
+tag_layout_border_color		color		标签布局边框颜色
+tag_layout_border_radius	dimension	标签布局边框圆角弧度
+tag_layout_border_width		dimension	标签布局边框大小
+tag_layout_vertical_interval	dimension	标签垂直间隔
+tag_layout_horizontal_interval	dimension	标签水平间隔
+tag_view_bg_color		color		标签背景颜色
+tag_view_border_color		color		标签边框颜色
+tag_view_text_color		color		标签字体颜色
+tag_view_bg_color_check		color		标签选中背景颜色
+tag_view_border_color_check	color		标签选中边框颜色
+tag_view_text_color_check	color		标签选中字体颜色
+tag_view_border_width		dimension	标签边框大小
+tag_view_border_radius		dimension	标签边框圆角弧度
+tag_view_vertical_padding	dimension	标签垂直填充
+tag_view_horizontal_padding	dimension	标签水平填充
+tag_view_icon_padding		dimension	标签icon和文字的间隔
+tag_view_text_size		float		标签字体大小，单位sp
+
+代码使用：
+	添加子View：
+	tag.addView(View v);		//添加一个View
+	tag.addTag(String s);		//添加一个字符串生成一个子View
+	tag.addTags(List<String> s);	//添加一个集合生成一组子View
+	tag.addTags(String...s);	//添加一个数组生成一组子View
+	tag.addTagWithIcon(String s,int icon);	//添加一个有文字有图片的子View
+
+	监听：
+	tag.setTagCheckListener();	//监听每个子View的选择事件
+	tag.setTagClickListener();	//监听每个子View的点击事件
+	tag.setTagLongClickListener();	//监听每个子View的长按事件
+
+	//回调中的值没有测试过，大体跟ListView的应该是一样的
+
+单个标签使用：
+	<com.dl7.tag.TagView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="删除"
+            app:tag_border_color="@android:color/holo_red_light"
+            app:tag_icon="@mipmap/ic_delete"
+            app:tag_press_feedback="true"
+            app:tag_text_color="@android:color/holo_red_light"/>
+
+标签属性：
+
+name			format		description
+tag_mode		enum		{normal，check，icon_check_invisible，icon_check_change}, 分别为正常、可选中、选中图标消失和选中换图标等模式
+tag_shape		enum		{round_rect，arc，rect}，标签形状分别为圆角矩形、圆弧形和直角矩形，默认round_rect
+tag_auto_check		boolean		使能自动点击选中操作
+tag_press_feedback	boolean		按压反馈效果
+tag_checked		boolean		初始选中状态
+tag_icon		reference	标签图标
+tag_icon_change		reference	标签选中时替换的图标（icon_check_change模式）
+tag_text_check		string		标签选中时替换的字符
+tag_bg_color		color		标签背景颜色
+tag_border_color	color		标签边框颜色
+tag_text_color		color		标签字体颜色
+tag_bg_color_check	color		标签选中背景颜色
+tag_border_color_check	color		标签选中边框颜色
+tag_text_color_check	color		标签选中字体颜色
+tag_border_width	dimension	标签边框大小
+tag_border_radius	dimension	标签边框圆角弧度
+tag_vertical_padding	dimension	标签垂直填充
+tag_horizontal_padding	dimension	标签水平填充
+tag_icon_padding	dimension	标签icon和文字的间隔
+
+代码使用：
+	设置：
+	tag.setTagShape(int shape)		//设置样式
+	tag.setTagMode(TagView.MODE_CHANGE)	//设置模式
+	tag.setChecked(boolean trun);		//设置选中
+	tag.setTagText(String s);		//设置标签的文本
+	tag.setTagTextChecked();		//不知道是啥
+
+	监听：
+	监听：
+	tag.setTagCheckListener();	//监听View的选择事件
+	tag.setTagClickListener();	//监听View的点击事件
+	tag.setTagLongClickListener();	//监听View的长按事件

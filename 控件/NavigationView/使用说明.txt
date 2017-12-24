@@ -1,0 +1,13 @@
+1、找控件
+首先要在主布局声明NavigationView，并找到它
+根据NavigationView再去找布局里的控件
+
+        menuNav.getHeaderView(0).findViewById(R.id.llty_balance).setOnClickListener(this);
+        menuNav.getHeaderView(0).findViewById(R.id.llty_invite_friends).setOnClickListener(this);
+        menuNav.getHeaderView(0).findViewById(R.id.llty_order).setOnClickListener(this);
+
+2、开关
+其实NavigationView只是一个空间，主要还是依靠DrawerLayout去做开关
+开：  drawerLayout.openDrawer(Gravity.LEFT);
+关：  drawerLayout.closeDrawers()
+是否开关：drawerLayout.isDrawerOpen(Gravity.LEFT)

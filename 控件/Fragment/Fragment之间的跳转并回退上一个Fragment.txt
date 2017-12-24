@@ -1,0 +1,13 @@
+步骤：
+
+1、在FragmentA中获取Fragment操作对象FragmentManager
+
+	fm = getFragmentManager()
+		
+	ft = fm.begin...;	
+
+	ft.add(xx,xx,xx)		//添加第二个Fragment对象
+
+	ft.addToBackStack(tag)		//把第二个Fragment对象加入回退栈
+
+	ft.commit();

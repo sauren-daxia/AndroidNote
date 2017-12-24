@@ -1,0 +1,49 @@
+ViewGroup:
+
+	事件分发：dispatchTouchEvent()：
+			1、return true：如果容器不分发事件，则不会传递给子控件，
+			   并且不会调用onInterceptTouchEvent()，并且自己
+			   调用onTouchEvent()进行处理
+
+			2、return false：如果分发了事件，则传递给onInterceptTouchEvent()
+			   进行处理，是否拦截事件
+
+	事件拦截：onInterceptTouchEvent()
+			1、return true：如果容器拦截了事件，则不会传递给子控件，
+			   并且在往后的过程也不会再次调用该方法，
+			   并且会调用onTouchEvent()进行处理
+
+			2、return false：如果容器没有拦截事件，则传递给子控件，
+			   并且在往后的过程也不会再次调用该方法，
+
+	事件消费：onTouchEvent()
+			1、return true：如果容器消费了事件，则终止这一次的点击活动
+			   并且不会再往上一级返回事件，并且往后的所有事件都由这里处理
+
+			2、return false：如果容器没有消费事件，则往上一级的onTouchEvent()返回事件，
+			   并且往后的所有事件都无法再处理
+
+View:
+
+	事件分发：dispatchTouchEvent()
+			1、return true：如果控件不分发事件，则不做任何处理
+
+			2、return false：如果控件分发了事件，则调用onTouchEvent()处理
+
+			PS：
+			    默认情况下，首先判断mOnTouchListener不为null，并且view是enable的状态，
+			    然后 mOnTouchListener.onTouch(this, event)返回true，这三个条件如果都满足，
+			    直接return true ; 也就是下面的onTouchEvent(event）不会被执行了
+
+	事件消费监听：onTouchListener()
+			1、return true：如果控件在监听里消费了事件，则不会再调用onTouchEvent()
+			   并且不会再往上一级返回事件。
+
+			2、return false：如果控件没在监听里消费事件，则调用onTouchEvent()
+
+	事件消费：onTouchEvent()
+			1、return true：如果控件消费了事件，则终止这一次的点击活动
+			   并且不会再往上一级返回事件，并且往后的所有事件都由这里处理
+
+			2、return false：如果控件没有消费事件，则往上一级的onTouchEvent()返回事件，
+			   并且往后的所有事件都无法再处理

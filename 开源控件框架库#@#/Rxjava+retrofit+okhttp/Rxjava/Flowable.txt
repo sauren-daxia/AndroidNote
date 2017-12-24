@@ -1,0 +1,51 @@
+Flowable和Observable使用方式一样，只是多了一个背压的参数，而也不再是用Observer订阅，采用Subscribe订阅
+
+	Flowable.create(new FlowableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(FlowableEmitter<Integer> emitter) throws Exception {
+                for (int i = 0; i < 1000; i++) {
+                    Log.d(TAG, "emit " + i);
+                    emitter.onNext(i);
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
+        .subscribe(new Subscriber<Integer>() {
+
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        Log.d(TAG, "onSubscribe");
+                         s.request(Long.MAX_VALUE);		//注意这句代码，如果是同步的情况下不写，会报异常MissingBackpressureException
+								如果是异步，可以不写，在128事件内虽然不会报异常，但是超出了128事件后就会报异常
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d(TAG, "onNext: " + integer);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.w(TAG, "onError: ", t);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete");
+                    }
+                });
+
+1、同步线程发送事件，一般根据发送数量确定request()的处理数量，如果不确定则Long.Max_VALUE
+
+2、异步线程发送事件，虽然可以不设置request()，但Flowable默认有128个事件缓存，如果超过这个缓存则还是会报异常MissingBackpressureException
+
+
+
+BackpressureStrategy常量
+
+BackpressureStrategy.ERROR	//上下游流量不均匀的时候会抛出异常
+
+BackpressureStrategy.BUFFER	//与Observable并没有什么不同，如果不处理的话还是会OOM
+
+BackpressureStrategy.DROP	//丢弃128以外的事件，直到每处理一个才把最新的一个存进来，这样会导致事件丢失，比如1-999，只会保存1-128的事件，之后的都抛弃
+
+BackpressureStrategy.LATEST	//每进入一个就把第一个丢弃掉，最终只会保存最新最新的128事件，比如1-999，只会保存999之前的事件

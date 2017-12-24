@@ -1,0 +1,22 @@
+1、获取Bitmap源
+
+	Bitmap srcBitmap = BitmapFactory.decodeResource(getResources().R.drawable.xx)
+
+2、调用Bitmap静态裁剪方法进行裁剪
+
+	Bitmap bitmap = Btiamp.createBitmap(srcBitmap,srcBitmap.getWidth()/2,srcBitmap.getHeight()/2,,
+					    srcBitmap.getWidth()/2,srcBitmap.getHeight()/2);
+
+	第一个参数：数据源
+
+	第二个参数：X的起始位置
+
+	第三个参数：Y的起始位置
+
+	第四个参数：X裁剪的长度
+
+	第五个参数：Y裁剪的长度
+
+3、将Bitmap设置到ImageView中
+
+	image.setImageBitmap(bitmap);	

@@ -1,0 +1,72 @@
+1、在Module添加:
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.1'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
+2、在app.build.gradle添加
+	头部添加：apply plugin: 'org.greenrobot.greendao'
+	dependencies {
+		compile 'org.greenrobot:greendao:3.0.1'
+	}
+
+	greendao {
+		schemaVersion 1			//数据库版本
+		//自动生成的文件所在目录
+		daoPackage 'com.hh.greendao.gen'	//生成实体类对应操作类的包名，最好是项目包名加上greendao.gen
+		targetGenDir 'src/main/java'		//表示放在哪个目录下
+	}
+
+
+3、创建实体类,创建完毕之后同步一下
+@Entity
+public class Person{
+	 @Id
+	private Long id;		//必须得，也可以让它自增长，但自增长就不能对它赋值，建议自增长
+	private String age;
+	private String name;
+}
+
+基础属性注解
+@Id :主键 Long型，可以通过@Id(autoincrement = true)设置自增长
+@Property：设置一个非默认关系映射所对应的列名，默认是的使用字段名 举例：@Property (nameInDb="name")
+@NotNul：设置数据库表当前列不能为空
+@Transient ：添加次标记之后不会生成数据库表的列
+
+
+4、创建操作实体类的数据库管理类	，具体操作内容看DBManger.java
+public class UserDBManger{
+    private final static String dbName = "test_db";			//数据表名
+    private static DBManager mInstance;					//单利对象
+    private DaoMaster.DevOpenHelper openHelper;				//不知道
+    private Context context;
+
+    public DBManager(Context context) {
+        this.context = context;
+        openHelper = new DaoMaster.DevOpenHelper(context, dbName, null);
+    }
+
+     /* 获取单例引用*/
+    public static DBManager getInstance(Context context) {
+        if (mInstance == null) {
+            synchronized (DBManager.class) {
+                if (mInstance == null) {
+                    mInstance = new DBManager(context);
+                }
+            }
+        }
+        return mInstance;
+    }
+
+}
+

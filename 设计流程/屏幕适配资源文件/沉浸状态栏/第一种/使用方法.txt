@@ -1,0 +1,20 @@
+1、将values-v19和values-v21复制到res目录下
+
+2、将项目默认的values/styles.xml中添加一个<style>
+	<style name="TranslucentTheme" parent="AppTheme">
+	 <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
+	</style>
+
+3、在需要设置为沉浸状态栏的Activity的布局文件的根容器中设置属性
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="@mipmap/env_bg"
+	    android:fitsSystemWindows="true">
+
+4、在Manifest中的Activity中设置values的style样式
+	<activity 
+	theme = "@style/TranslucentTheme" />
+
+PS:这种做法的沉浸式状态栏，会根据Activity布局文件中的根容器的背景颜色修改状态栏的颜色
+   所以，这种方式的沉浸式状态栏，最好是类似天气的界面才使用，因为天气界面的背景是一整个图片，图片有各种颜色，也会让状态栏更加好看

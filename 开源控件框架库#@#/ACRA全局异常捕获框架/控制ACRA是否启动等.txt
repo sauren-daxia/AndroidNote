@@ -1,0 +1,45 @@
+启用/禁用ACRA
+
+<CheckBoxPreference android:key="acra.disable"
+    android:title="@string/pref_disable_acra"
+    android:summaryOn="@string/pref_acra_disabled"
+    android:summaryOff="@string/pref_acra_enabled"
+    android:defaultValue="false"/>
+
+or
+
+<CheckBoxPreference android:key="acra.enable"
+    android:title="@string/pref_enable_acra"
+    android:summaryOn="@string/pref_acra_enabled"
+    android:summaryOff="@string/pref_acra_disabled"
+    android:defaultValue="true"/>
+
+启用/禁用系统日志
+
+ <CheckBoxPreference android:key="acra.syslog.enable"
+    android:summaryOn="@string/pref_acra_syslog_enabled"
+    android:summaryOff="@string/pref_acra_syslog_disabled"
+    android:title="@string/pref_acra_syslog"
+    android:defaultValue="true"/>
+
+启用/禁用包括DeviceID 设备ID
+
+<CheckBoxPreference android:key="acra.deviceid.enable"
+    android:title="@string/pref_acra_deviceid"
+    android:summaryOn="@string/pref_acra_deviceid_enabled"
+    android:summaryOff="@string/pref_acra_deviceid_disabled" 
+    android:defaultValue="true"/>
+
+设置要添加到报告的电子邮件地址	设置用户的邮件地址
+
+ <EditTextPreference android:key="acra.user.email"
+    android:title="@string/pref_acra_user_email"
+    android:summary="@string/pref_acra_user_email_summary"/>
+
+启用/禁用自动接受报告
+
+ <CheckBoxPreference android:key="acra.alwaysaccept"
+    android:title="@string/pref_acra_alwaysaccept"
+    android:summaryOn="@string/pref_acra_alwaysaccept_enabled"
+    android:summaryOff="@string/pref_acra_alwaysaccept_disabled"
+    android:defaultValue="false"/>

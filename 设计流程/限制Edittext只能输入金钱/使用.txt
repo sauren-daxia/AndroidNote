@@ -1,0 +1,1 @@
+loanEt.setFilters(new InputFilter[]{new CashierInputFilter()});

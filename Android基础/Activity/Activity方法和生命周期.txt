@@ -1,0 +1,55 @@
+Activity:
+--------------------------------------
+两层循环生命周期：
+第一层，焦点生命周期：onPause -> oResume -> onPause
+第二层，生命周期：onStart -> onRestart -> onResume -> onPause -> onStop
+
+具体生命周期：
+整体生命周期：onCreate -> onStart() -> onResume() - > onPause() -> onStop() -> onDestory
+可视生命周期：onStart -> .. -> onStop
+焦点生命周期：onResume -> onPause
+
+方法：
+---------------------------------------
+onCreate(R.layout.Main)		//初始化	创建的时候
+
+onStart()			//开始		启动的时候
+
+onRestart()			//重新开始	重新启动的时候
+
+onResume()			//获取焦点	用户看见的时候
+
+onPause()			//失去焦点	部分可见，用户不能跟Activity交互的时候
+
+OnStop()			//停止		完全不可见
+
+onDestroy()			//销毁		已经死亡
+
+
+activity生命周期
+----------------------------------------
+一、开始activity，这个阶段会依次执行三个方法：
+1、onCreate()
+
+2、onStart()
+
+3、onResume()
+
+二、失去焦点的时候,这个阶段会依次执行两个方法
+1、onPause()
+
+2、onStop()
+
+三、activity重获焦点,这个阶段会依次执行三个方法：
+1、onRestart()
+
+2、onStart()
+
+3、onResume()
+
+四、关闭activity,这个阶段会依次执行三个方法：
+1、onPause()
+
+2、onStop()
+
+3、onDestroy()

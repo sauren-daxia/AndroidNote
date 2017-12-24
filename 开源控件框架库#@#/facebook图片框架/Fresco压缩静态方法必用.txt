@@ -1,0 +1,20 @@
+public static void displayImage(Context context , Uri uri, SimpleDraweeView draweeView){
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setResizeOptions(new ResizeOptions(MetricsUtil.dip2px(context,120), MetricsUtil.dip2px(context,120)))
+                .build();
+
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(draweeView.getController())
+                .build();
+        draweeView.setController(controller);
+    }
+
+支持转换URI的图片链接
+	"res://" + getActivity().getPackageName() + "/" + R.drawable.sxx;
+
+	http://babaibaibia.jpg
+
+
+	

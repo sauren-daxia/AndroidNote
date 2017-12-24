@@ -1,0 +1,84 @@
+在官网申请好应用并获取KEy
+
+1、在Application中初始化
+	SpeechUtility.createUtility(this, SpeechConstant.APPID +"=5813f8ec");
+
+2、将jniLibs文件放到main目录下
+	具体jniLibs里面的内容，需要获取最新的SDK，解压后的libs里面的内容
+
+3、权限
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+4、初始化合成对象
+	 //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
+        mTts = SpeechSynthesizer.createSynthesizer(this, new InitListener() {
+            @Override
+            public void onInit(int i) {
+                Log.d(TAG, "onInit: i = " + i);
+            }
+        });
+	//2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaorong");//设置发音人
+        mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
+        mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
+        mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
+	//设置合成音频保存位置（可自定义保存位置），保存在“./sdcard/iflytek.pcm”  
+	//保存在SD卡需要在AndroidManifest.xml添加写SD卡权限	
+	//如果不需要保存合成音频，注释该行代码  
+	mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");  
+
+5、监听
+	 private SynthesizerListener mSynListener = new SynthesizerListener() {
+        //会话结束回调接口，没有错误时，error为null
+        public void onCompleted(SpeechError error) {
+            Log.d(TAG, "onCompleted: error = " + error.toString());
+        }
+
+        //缓冲进度回调
+        //percent为缓冲进度0~100，beginPos为缓冲音频在文本中开始位置，endPos表示缓冲音频在文本中结束位置，info为附加信息。
+        public void onBufferProgress(int percent, int beginPos, int endPos, String info) {
+            Log.d(TAG, "onBufferProgress: percent = " + percent);
+            Log.d(TAG, "onBufferProgress: beginPos = " + beginPos);
+            Log.d(TAG, "onBufferProgress: endPos = " + endPos);
+            Log.d(TAG, "onBufferProgress: info = " + info);
+
+        }
+
+        //开始播放
+        public void onSpeakBegin() {
+            Log.d(TAG, "onSpeakBegin: startPlay");
+        }
+
+        //暂停播放
+        public void onSpeakPaused() {
+            Log.d(TAG, "onSpeakBegin: pausePlay");
+        }
+
+        //播放进度回调
+        //percent为播放进度0~100,beginPos为播放音频在文本中开始位置，endPos表示播放音频在文本中结束位置.
+        public void onSpeakProgress(int percent, int beginPos, int endPos) {
+            Log.d(TAG, "onSpeakProgress: percent = " + percent);
+            Log.d(TAG, "onSpeakProgress: beginPos = " + beginPos);
+            Log.d(TAG, "onSpeakProgress: endPos = " + endPos);
+        }
+
+        //恢复播放回调接口
+        public void onSpeakResumed() {
+            Log.d(TAG, "onSpeakResumed: resumePlay");
+        }
+
+        //会话事件回调接口
+        public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
+            Log.d(TAG, "onEvent: arg0 = " + arg0 + ", arg1 = " + arg1 + ", arg2 = " + arg2);
+        }
+    };
+
+5、合成并播放
+	mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);    

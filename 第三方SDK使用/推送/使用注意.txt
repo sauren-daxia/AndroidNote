@@ -1,0 +1,18 @@
+服务器：
+
+1、要把Tomcat/lib/servlet-api.jar放入项目中builder一下，就可以了
+
+2、在resources目录下的jdbc配置文件里添加 jdbcPassword = 数据库的密码
+
+3、jdbcUrl=jdbc:mysql://localhost/test?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+	在MySQL中新建一个数据库文件，将数据库名替换test数据名
+
+客户端：
+1、要在res目录下的raw/androidpn.properties文件修改服务器连接IP
+	apiKey		没用
+	xmppHost	服务器IP
+	xmppPort	服务器端口号
+
+2、将lib文件名改了libs文件名，再将里面的asmack.jar包builder一下
+
+3、第二步修改文件之后会报错，右键项目，在android/ java build path的 library中把错误的移除掉就行了

@@ -1,0 +1,17 @@
+1、当快速双击调用FragmentTransaction.add()方法添加fragmentA，而fragmentA不是每次单独生成的，就会引起这个异常。
+	
+DialogFragment.show()内部调用了FragmentTransaction.add()方法，所以调用DialogFragment.show()方法时候也可能会出现这个异常。
+
+在add()方法时候，先判断fragmentA.isAdded()，如下调用可以避免该异常：
+
+if(!fragmentA.isAdded()){
+                    FragmentManager manager = ((FragmentActivity)context).getSupportFragmentManager();
+                    FragmentTransaction ft = manager.beginTransaction();
+                    ft.add(fragmentA, "fragment_name");
+                    ft.commit();
+}
+
+2、
+popBackStack()： 回退删除，注意此方法为异步方法，其只是就请求发送到消息队列当中，当这个动作直到应用回到事件循环当中才执行。
+注意：如果此时队列当中还有对于fragment操作，可能会引起异常，我就遇到了java.lang.IllegalStateException: Fragment already added。 
+程序当中的具体业务在对于fragment进行操作的时候，要添加判断。

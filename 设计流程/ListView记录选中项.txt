@@ -1,0 +1,29 @@
+步骤
+
+1、在Listview的单击监听事件中判断，举例，每个Item有个checkBox
+	if(!checkbox.isChecked()){
+		mba.addPosition(position)
+	}else{
+		mba.removePostion(position)
+	}
+	checkbox.toggle()
+
+2、在Adapter中定义一个全局变量的集合，例如List集合,并提供add，remove方法
+	List<Integer> list = new ArrayList<Integer>();
+	
+	public void addPosition(Integer position){};
+	
+	public viod removePosition(Integer position){};
+
+3、在getItem中判断，如果list里面包含position就设置checkBox选中
+
+	public void getItem(position,xx,xx,xx){
+
+		
+		if(list.contains(position)){
+			check.setChecked(true)
+		}else{
+			check.setChecked(false)
+		}
+		
+	}

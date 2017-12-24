@@ -1,0 +1,69 @@
+EditText用于输入的文本框：
+
+属性：
+-----------------------------
+android:id			//控件名称
+
+android:layout_width		//控件宽度
+
+android:laytou_height		//控件高度
+
+android:text			//文本内容
+
+android:textSize		//文本大小
+
+android:textSize = "20sp"		//使用数值对控件的大小进行设置，单位是sp
+
+--------------------------------------------------
+android:textColor = "#000000"		//通过颜色格式设置本文颜色
+
+--------------------------------------------------
+android:password = "true"
+android:inputType = "textpassword"			//里面很多种输入格式
+--------------------------------------------------
+android:background		//控件背景
+
+--------------------------------------------------
+android:visibility = "visible"		设置控件的显示
+visible		//可见
+isvisible	//不可见，但还占位置
+gone		//完全不可见
+--------------------------------------------------
+android:hint			//输入提示文本
+
+android:hint = "请输入信息"	//在输入文本框中用于提示用户输入。当有数据输入后会消失。
+--------------------------------------------------
+
+android:singleLine 		//限制一行，true
+
+android:singleLine = "true"	
+--------------------------------------------------
+android:maxLines = "1"		//限制行数
+
+android:maxLength = "5"		//限制输入字数
+--------------------------------------------------
+android:layout_marginLeft		//设置间距
+android:layout_marginTop		//设置间距
+--------------------------------------------------
+android:digits = "abc"			//限制输入
+--------------------------------------------------
+
+方法：
+--------------------------------------------------
+setAlpha(float f)			//设置图片透明度，0-255	
+hasFocus()				//判断是否获取焦点
+
+InputMothodManager im = getSystemService(INPUT_MOTHOD_SERVICE).showSoftInput(EditText, 0); 判断获取焦点的时候弹出软键盘
+
+
+事件：
+--------------------------------------------------
+addTextChangedListener(new TextWatcher())	//输入监听
+
+afterTextChanged(Editable e)		//文本改变事件
+
+setOnEditorActionListener		//软键盘监听
+if(arg1 == EditorInfo.IME_ACTION_SEARCH)	//判断是否按回车键
+
+setOnKeyListener			//物理键盘监听
+if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP)	//判断是否按了回车键并且松开了，两个条件必须

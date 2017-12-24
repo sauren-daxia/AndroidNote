@@ -1,0 +1,3 @@
+  在系统环境变量那一栏中点->新建classpath。
+         变量名:classpath
+         变量值: .;%JAVA_HOME%/lib/;%JAVA_HOME%/jre/lib/

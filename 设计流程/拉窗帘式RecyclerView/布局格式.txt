@@ -1,0 +1,35 @@
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/llty"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:background="#F1F1F1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_talk"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/shape_formfill_commit_bg_1caaee"
+                android:gravity="center"
+                android:text="³·»Ø"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+        <com.dsfa.reimbursement.ui.widget.ExpandOrFoldView
+            android:id="@+id/eof_fold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/llty" />
+    </RelativeLayout>

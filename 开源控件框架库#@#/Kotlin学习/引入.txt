@@ -1,0 +1,7 @@
+1、在菜单栏的Tools下拉列表中选择kotlin -> configure kotlin in project
+
+2、在菜单栏的Code下拉列表中选择convert Java file to kotlin File，根据Model来选或者全选
+
+3、在APP下的build.gradle中添加
+	apply plugin: 'kotlin-android-extensions'
+

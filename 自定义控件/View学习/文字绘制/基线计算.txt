@@ -1,0 +1,7 @@
+方式一：
+	basex = (int) (canvas.getWidth() / 2 - mPaint.measureText(text) / 2);
+        baseY = (int) ((canvas.getHeight() / 2) - ((mPaint.descent() + mPaint.ascent()) / 2));
+        staticLayout.draw(canvas);
+
+方式二：
+	

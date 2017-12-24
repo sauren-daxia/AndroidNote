@@ -1,0 +1,25 @@
+1、匿名方法
+	1.一个参数
+	1)btn.setOnclickListener(view -> Log.d(""))
+	2)btn.setOnclickListener((view) -> Log.d(""))
+	3)btn.setOnclickListener((View view) -> Log.d(""))
+	4)View.OnclickListener listener = view -> Log.d("")
+	5)btn.setOnClickListener( view -> {  Log.d("")  return; })	//两条语句必须用括号，如果知道这个方法有返回值，返回值类型必须一致
+
+	2.两个参数
+	1)checkbox.setOnCheckedListener((view,isChecked) -> view.getChecked() == isChecked)	//两个参数必须要括号,其他写法和上面相同
+
+	PS:以->为分割，左边是参数，右边是核心代码
+
+2、lambda提供的接口
+	Consumer<T>		//消费型接口，传一个值消费一个值，没有返回
+		.accept()
+
+	Supplier<T>		//供给型接口，无传值，但需要返回一个值
+		.get()
+
+	Function<T,R>		//函数式接口，传入一个T返回一个R
+		.apply()
+
+	Predice<T>		//断言式接口，传入一个值，返回一个Boolean
+		.test()			

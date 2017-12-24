@@ -1,0 +1,27 @@
+Android studio
+
+1、将SlidingMenu-master下的Library文件使用Import module方式导入
+
+2、修改SlidingMeun的builde.Gradle文件,修改与自己的builde.Gradle(module.app)中的版本一致
+ 
+ dependencies {
+        classpath 'com.android.tools.build:gradle:1.3.0'
+ }
+
+ android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 24
+    }
+
+3、ctrl+shift+alt+s引用库
+
+4、修改SlidingMeun项目的CustomViewAbove类的303行，
+	将:	return (float)FloatMath.sin(f);
+
+	修改成：return (float)Math.sin(f);
+
+5、build -> clean build    build -> make project

@@ -1,0 +1,10 @@
+通过修改下面对应的 XML 文件中的相关属性，可以实现将头像变为圆形：
+rc_item_conversation.xml 会话列表 
+rc_item_message.xml 会话页面 
+rc_item_conversation_member.xml 设置页面 
+
+app:shape=“circle” //圆形 
+app:shape=“square”//方形 
+
+android:scaleType="centerCrop"//设置
+每个xml文件中有两处需替换

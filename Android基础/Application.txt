@@ -1,0 +1,22 @@
+程序默认有一个Applica
+
+1、写一个类继承Application，并重写onCreate()
+
+public class A extends Application
+
+public void onCreate(){
+
+
+}
+
+2、在配置文件<Application>
+
+	<Application android:name = "com.bwf.xxxxx">	
+
+3、在Activity里面调用getApplication()方法得到Application对象
+
+	在需要调用Application的Activity中使用getApplication获得对象
+	A a = (A)getApplication;	
+
+作用：可以设置全局变量，让所有Activity共享,一个应用只有一个Application对象，
+	在不同的Activity里面调用，也只会得到同一个对象

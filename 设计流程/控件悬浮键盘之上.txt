@@ -1,0 +1,64 @@
+第一种：
+	1、在activity配置
+		android:windowSoftInputMode="adjustResize"
+	2、监听
+	onCreate(){
+		contentView = findViewById(android.R.id.content);
+		contentView.getViewTreeObserver().addOnGlobalLayoutListener(this);
+	}
+	@Override
+	public void onGlobalLayout() {
+		//获取全屏幕的高度
+		int screenHeight = getWindow().getDecorView().getHeight(); 
+
+		//获取键盘高度
+		Rect rect = new Rect();
+		getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+
+		  if (screenHeight - rect.bottom != 0) {
+			viewById.setVisibility(View.VISIBLE);
+		  } else {
+			viewById.setVisibility(View.GONE);
+		  }
+	}
+
+	3、将要弹出来的控件设置在activity最底部
+
+
+第二种
+1、监听全局变化
+	onCreate(){
+		contentView = findViewById(android.R.id.content);
+		contentView.getViewTreeObserver().addOnGlobalLayoutListener(this);
+	}
+
+2、在监听中设置控件的margin
+    @Override
+    public void onGlobalLayout() {
+	//获取全屏幕的高度
+        int screenHeight = getWindow().getDecorView().getHeight(); 
+
+	//获取键盘高度
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) viewById.getLayoutParams();
+
+	//判断全屏高度-键盘高度如果不为0则表示弹出键盘，再用键盘的高度设置控件的margin则完成
+        if (screenHeight - rect.bottom != 0) {
+            layoutParams.bottomMargin = screenHeight - rect.bottom;
+            viewById.setVisibility(View.VISIBLE);
+        } else {
+            layoutParams.bottomMargin = 0;
+            viewById.setVisibility(View.GONE);
+        }
+        viewById.setLayoutParams(layoutParams);
+    }
+
+3、取消监听
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        contentView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+    }
+
+PS：弹出的控件建议放在activity中的底部,总之要在底部，最好使用include引入进来

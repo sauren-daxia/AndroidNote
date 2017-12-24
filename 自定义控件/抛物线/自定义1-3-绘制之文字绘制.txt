@@ -1,0 +1,89 @@
+canvas.drawText(String text,int x, int y , Paint p);		//基础文字绘制
+		参数说明：
+		参数一：绘制的文字
+		参数二：X轴绘制的起始点，文字会在这个点再往右移一点点点点，因为每个文字实际上是有边距
+		参数三：基线的位置
+		参数四：Paint对象
+
+drawTextOnPath(String text, Path path, float hOffset, float vOffset, Paint paint)	//沿着Path线绘制文字
+		参数说明：
+		参数一：绘制的文字
+		参数二：Path路径
+		参数三：每个文字右移偏移量
+		参数四：每个文字下移偏移量
+		参数五：Paint对象
+		PS：最好用拐弯为圆角绘制
+
+StaticLayout		//多行绘制
+	new StaticLayout(text1, paint, 600,Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+		构造说明：
+		参数一：绘制的文字
+		参数二：Paint对象
+		参数三：X轴的宽度，超出这个宽度就会自定换行
+		参数四：对齐方向
+		参数五：行间距倍数，通常为1
+		参数六：行间距倍数额外增加值，通常为0
+		参数七：是指是否在文字上下添加额外的空间，来避免某些过高的字符的绘制出现越界。
+
+paint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Satisfy-Regular.ttf"));
+		//可通过放在assets的字体文件，对字体进行改变
+
+paint.setFakeBoldText(boolean fakeBoldText)		//是否加粗
+
+paint.setStrikeThruText(boolean strikeThruText)		//是否加删除线（中线）
+
+paint.setUnderlineText(boolean underlineText)		//是否加下划线
+
+paint.setTextSkewX(float skewX)				//倾斜角度
+
+paint.setTextScaleX(float scaleX)			//横向缩放
+
+paint.setLetterSpacing(0.2f);				//字符间距，默认为0
+
+paint.setFontFeatureSettings("smcp");			//用 CSS 的 font-feature-settings 的方式来设置文字
+
+paint.setTextAlign(Paint.Align.LEFT);			//设置文字对齐方式，有三个值：LEFT CETNER 和 RIGHT
+
+paint.setTextLocale(Locale.CHINA);			//使用系统语言来绘制文字，中文，繁体，日文，等等
+
+paint.setHinting(int mode)				//微调，使字体放大缩小时候样式还保持细微圆润，目前可以不使用
+
+paint.getFontSpacing()					//获取行间距，在手动绘制多行的时候，高度加上这个值，再乘行数？？第一行不使用，第二行使用，第三行使用*2...
+
+paint.getFontMetrics()					//获取FontMetrice对象，该对象可以获取到文字的几种测量值，
+							ascent(普通字符的最高点)、descent(普通字符的最低点)
+							top(所有字符的最高点)、bottom(所有字符的最低点)、baseline(基准线)
+
+paint. getTextBounds(String text, int start, int end, Rect bounds)	//获取文字的绘制的矩阵，可以知道文字绘制了多长多高
+
+paint.measureText(String text)				//获取文字绘制的宽度，但会加上每个字符独有的间距，比getTextBounds的要长一点点
+
+paint.getTextWidths(String text, float[] widths)	//获取每个字符的宽度，结果放到widths里
+
+paint.getRunAdvance(CharSequence text, int start, int end, int contextStart, int contextEnd, boolean isRtl, int offset)
+//计算某个字的光标所在X轴位置，只是用来计算，并不是画上去。
+		参数说明：
+		参数一：绘制的文字
+		参数二：文字起始的位置
+		参数三：文字结束的位置
+		参数四：上下文起始的位置
+		参数五：上下文结束的位置
+		参数六：文字方向，false = 从左到右
+		参数七：指定字符的位置光标所在
+
+paint.getOffsetForAdvance(CharSequence text, int start, int end, int contextStart, int contextEnd, boolean isRtl, float advance)
+//计算出点击位置距离最近的字符的索引，参数和上面差不多，只是最后一个值不同，暂未尝试过传什么值
+
+paint.hasGlyph(String string)				//获取该字符是否是一个独立的字型，a、陈、\uD83c\uDDE8\uD83C\uDDF3，都算独立字形，ab则不算
+
+
+
+
+
+
+
+
+
+
+
+

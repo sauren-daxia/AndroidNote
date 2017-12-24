@@ -1,0 +1,39 @@
+1、
+	在Android studio 中 import Module  libzxing，如果加载不出来，要restart一下
+	或者依赖：
+		compile 'com.google.zxing:core:3.3.1'
+
+
+2、修改libzxing里面最小SDK的版本与项目一致
+
+3、ctrl+shift+alt+s ,中依赖libs
+
+4、调用扫描
+	startActivityForResult(new Intent(MainActivity.this,CaptureActivity.this),0)
+
+	onActivityResult(int requestCode,int resultConde,Intent data){
+		if(resultCode == Activity.RESULT_OK){
+			//扫描到的值，一般是字符串
+			String result = data.getStringExtra("result");
+		}
+	}
+
+5、生成二维码
+	//返回一个Bitmap,参数第一个是字符串，第二第三是返回的Bitmap宽高，第四个在中心加图标
+	Bitmap bitmap = EncodingUtils.createQRCode(text, widht, height , BitmapFactory.decodeResource(R.drawable.bg));
+
+PS：
+	1、调用扫描出现问题
+       解决方法:1)手机安全中心->授权管理->应用权限管理->程序名称->多媒体相关相机、拍照、录像和闪光灯选中 
+		2)设置->其他应用程序->程序名称->权限管理->多媒体相关相机、拍照、录像和闪光灯选中 
+
+附加功能：
+	除去边距：
+		在源代码EncodingUtils类中添加
+			hints.put(EncodeHintType.MARGIN, 0);	//0是无边框，最大4
+
+	无背景色：
+		在源代码EncodingUtils类中，在两个循环中把else去调，不绘制白边
+
+	修改二维码颜色
+		在源代码EncodingUtils类中，在两个循环中把if里的十六进制颜色代码替换

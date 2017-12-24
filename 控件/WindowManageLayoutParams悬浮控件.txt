@@ -1,0 +1,96 @@
+PS：6.0使用悬浮窗口需要手动添加权限,如果用户不手动授权，则会报错
+if( Settings.canDrawOverlays(this)){	//判断是否已经授权悬浮
+	//跳转授权应用可悬浮窗口权限界面
+	Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+}
+
+1、定义悬浮管理对象，定义悬浮视图对象
+
+2、在构造中初始化对象，设置各种属性
+
+	windowManeger = (WindonManager)getSystemService(Context.WINDOW_SERVICE);	//获取悬浮管理对象
+
+	WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();  	//悬浮视图对象
+
+	//设置宽高
+	windowLayoutParams.width = LayoutParams.WARP_CONTENT;
+	windowLayoutParams.height = LayoutParams.WARP_CONTENT;
+
+	//设置绘图模式，抗锯齿
+	windowLayoutParams.format = PixelFormat.RGBA_8888;
+
+	//设置显示位置
+	windowLayoutParams.gravity = = Gravity.LEFT | Gravity.TOP;       
+	windowLayoutParams.x = 100;	//距离显示位置的X偏移量
+	windowLayoutParams.y = 100;	//距离显示位置的Y偏移量
+
+	//设置悬浮对象是否可触摸，可悬浮
+	windowLayoutParams.flags = LayoutParams.FLAG_NOT_TOUCHABLE | LayoutParams.FLAG_NOT_FOCUSABLE;	//可悬浮，不可触控
+
+	windowLayoutParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL | LayoutParams.FLAG_NOT_FOCUSABLE;	//可触控，可悬浮，需要权限
+
+	权限：
+		windowLayoutParams.type = LayoutParams.TYPE_SYSTEM_ALERT
+		<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+		
+
+3、加载视图
+	
+	View view = LayoutInflater.from().inflate(R.layout.xx,null);
+
+4、为悬浮对象添加视图
+
+	//先判断是否已经关联了视图的
+
+	if(!view.isAttachedToWindow()){
+		windowManager.addView(windowManager , windowLayoutParams)	//添加视图，添加之后就会显示出来
+
+		//当视图内容发生改变时可以使用该方法更新
+		windowLayoutParams.x += 20;
+		windowManager.updataViewLayout(windowManager , windowLayoutParams)
+	}
+
+5、在退出界面的时候移除悬浮控件
+ondestroy(){
+
+windowManager.removeView(view);
+}
+
+5、如果设置为可触控的，当移动悬浮控件时需要重新绘制
+
+	//为视图设置监听事件
+
+	windowLayoutParams.setOnTouchListener = listener;
+
+	private void OnTouchListener = {
+
+	int fromX;
+	int fromY;
+	switch(event.getAction()){
+
+	//刚触摸的时候，记录触摸的位置	
+	case MotionEvent.ACTION_DOWN:		
+	fromX = event.getRawX();
+	fromY =event.getRawY();	
+	break;
+	
+	//当触摸位置改变时，重新绘制视图位置
+	case MotionEvent.ACTION_MOVE:
+		//将移动的值累加当前的值
+		float toX = getRawX()-fromX;
+		float toY = getRawY()- fromY;
+		windowLayoutParams.x += toX;
+		WindowLayoutParams.y += toY;
+		//更新
+		windowLayoutParams.updataViewLayout(windowManager, windowLayoutParams);
+		//将重绘的值变成上一次的值
+		fromX = getRawX();
+		fromY = getRawY();
+
+	//当放手时
+	case MotionEvent.ACTION_UP:
+	}		
+}

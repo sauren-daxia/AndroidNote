@@ -1,0 +1,4 @@
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+		// 创建一个证书工厂
+        .sslSocketFactory(SSLSocketFactory, X509TrustManager) 
+        .build();

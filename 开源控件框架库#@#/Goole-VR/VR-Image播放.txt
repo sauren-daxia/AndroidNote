@@ -1,0 +1,80 @@
+1、添加依赖:
+	    compile 'com.google.vr:sdk-panowidget:1.120.0'		//暂时无法得知最新版本
+
+2、XML使用
+ <com.google.vr.sdk.widgets.pano.VrPanoramaView
+        android:id="@+id/vr_photo"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+3、代码设置
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+	 VrPanoramaView.Options option = new VrPanoramaView.Options();
+	 option.inputType = VrPanoramaView.Options.TYPE_MONO;
+	 vrPhoto.setEventListener(this);
+
+	 Uri uri = Uri.parse("http://scjtys.pro.zhijiaobang.com.cn/public/uploads/scjtys.pro.zhijiaobang.com.cn/fullview/20171222/5a3ca07663b07.jpg");
+        getFrescoCacheBitmap(uri, getApplicationContext());
+    }
+
+   /**
+     * 这里使用FRESCO来获取Bitmap
+     * @param uri
+     * @param context 最好用Application的上下文避免加载时候内存泄漏
+     */
+    public void getFrescoCacheBitmap(Uri uri, Context context) {
+        ImageRequest imageRequest = ImageRequestBuilder
+                .newBuilderWithSource(uri)
+                .setProgressiveRenderingEnabled(true)
+                .build();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, context);
+        dataSource.subscribe(new BaseBitmapDataSubscriber() {
+            @Override
+            protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
+                Log.d("CHEN---------- : ", "onFailureImpl: ");
+            }
+
+            @Override
+            public void onNewResultImpl(Bitmap bitmap) {
+                Log.d("CHEN---------- : ", "onNewResultImpl: ");
+                if (bitmap == null) {
+                    // Log.e(TAG,"保存图片失败啦,无法下载图片");
+                    return;
+                }
+                
+                vrPhoto.loadImageFromBitmap(bitmap, option);
+            }
+        }, CallerThreadExecutor.getInstance());
+    }
+
+4、监听
+	    @Override
+            public void onLoadSuccess() {
+                super.onLoadSuccess();
+                Log.d("CHEN---------- : ", "onLoadSuccess: 加载成功");
+            }
+
+            @Override
+            public void onLoadError(String errorMessage) {
+                super.onLoadError(errorMessage);
+                Log.d("CHEN---------- : ", "onLoadSuccess: 加载失败 e = "+errorMessage);
+            }
+
+            @Override
+            public void onClick() {
+                super.onClick();
+                Log.d("CHEN---------- : ", "onClick: 点击了");
+            }
+
+            @Override
+            public void onDisplayModeChanged(int newDisplayMode) {
+                super.onDisplayModeChanged(newDisplayMode);
+                Log.d("CHEN---------- : ", "onDisplayModeChanged: 模式切换");
+
+            }

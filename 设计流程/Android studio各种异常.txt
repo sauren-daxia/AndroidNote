@@ -1,0 +1,9 @@
+gradle project sync failed basic funcationality (e.g.editing, debugging) will not work properly
+
+Error:Unknown host 'jcenter.bintray.com'. 
+You may need to adjust the proxy settings in Gradle. 
+<a href="toggle.offline.mode">Enable Gradle 'offline mode' and sync project</a><br>
+<a href="https://docs.gradle.org/current/userguide/userguide_single.html#sec:
+
+解决方案：尝试了很多次刷新，最后一次刷新是在半个小时之后。然后就好了。
+	  在此之前进入了SDKTool里面更新了Android SDK Tool 和 Android SDK Platform - tools;

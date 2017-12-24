@@ -1,0 +1,124 @@
+
+Android studio在Builder.gradle中配置
+
+	普通使用	compile 'com.facebook.fresco:fresco:0.12.0'
+	支持Webp	compile 'com.facebook.fresco:webpsupport:1.4.0'
+	
+	导入Okhttp	compile 'com.facebook.fresco:imagepipeline-okhttp:0.12.0+'
+1、在Application中初始化框架
+	普通使用：	Fresco.initialize(context);
+
+	Okhttp使用：
+			Context context;
+			OkHttpClient okHttpClient = new OkHttpClient(); // build on your own,一些OKHttp的配置，请参考Okhttp使用
+			ImagePipelineConfig config = OkHttpImagePipelineConfigFactory.newBuilder(this, okHttpClient).build();
+			Fresco.initialize(this, config);
+
+PS:千万千万要记得在配置文件中添加Application的生命！！！！！！！
+
+2、在XML中使用:	引用自定义属性： 
+
+<com.facebook.drawee.view.SimpleDraweeView
+ xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="130dp"		//一定要指定宽高
+    android:layout_height="130dp"
+  />
+
+属性：
+
+类型	描述
+center	居中，无缩放
+centerCrop	保持宽高比缩小或放大，是的两边都大于或等于边界，且宽和高契合显示边界，居中显示
+focusCrop	同centerCrop，但居中点不是中点，而是指定的某个点
+centerInside	缩放图片使两边都在显示边界内，居中显示。和fitCenter不同，不会对图片进行放大。如果尺寸大于显示边界，则保持宽高比例缩小图片。
+fitCenter	保持宽高比，缩小或者放大，使得图片完全显示在显示边界内，且宽或高契合显示边界，居中显示。
+fitStart	同上，但不居中，和显示边界左上对齐。
+fitEnd	同fitCenter，但不居中，和显示边界右下对齐。
+fitXY	不保存宽高比，填充满显示边界。
+none	如果要使用tile mode显示，则需要设置为none
+	
+  fresco:viewAspectRatio="1.33"						//设置宽高比，必须设置宽高其中一样为固定值，比例为4:3
+
+  fresco:fadeDuration="300"						//淡入淡出持续时间
+
+  fresco:actualImageScaleType="focusCrop"				//实际图像的缩放类型
+
+  fresco:placeholderImageScaleType="fitCenter"				//占位图的缩放类型
+
+  fresco:retryImageScaleType="centerCrop"				//重试图缩放类型
+
+  fresco:failureImageScaleType="centerInside"				//加载失败图片缩放类型
+
+  fresco:placeholderImage="@drawable/ic_null_home"			//图片未显示前的占位图
+
+  fresco:failureImage="@drawable/error"					//加载失败时候显示图片
+
+  fresco:retryImage="@drawable/retrying"				//重试图
+
+  fresco:progressBarImage="@drawable/progress_bar"			//加载进度的图片
+
+  fresco:progressBarImageScaleType="centerInside"			//进度图的缩放类型
+
+  fresco:progressBarAutoRotateInterval="1000"				//进度图自动旋转间隔时间
+
+  fresco:backgroundImage="@drawable/ic_null_home"			//背景图片
+
+  fresco:overlayImage="@drawable/watermark"				//叠加图
+
+  fresco:pressedStateOverlayImage="@drawable/ic_null_home"				//按压状态下的叠加图
+
+  fresco:roundAsCircle="false"						//是否以圆形显示
+
+  fresco:roundedCornerRadius="1dp"					//圆角的度数
+
+  fresco:roundTopLeft="true"						//是否设置左上角为圆角
+	
+  fresco:roundTopRight="false"						//是否设置右上角为圆角
+
+  fresco:roundBottomLeft="false"					//是否设置左下角为圆角
+
+  fresco:roundBottomRight="true"					//是否设置右下角为圆角
+
+  fresco:roundWithOverlayColor="@color/corner_color"			//圆形或者圆角图底下的叠加颜色(只能设置颜色)
+
+  fresco:roundingBorderWidth="2dp"					//圆角或圆形的边宽度
+
+  fresco:roundingBorderColor="@color/border_color"			//圆形或者圆角图边框的颜色
+
+代码使用
+SimpleDraweeView imageView = new SimpleDraweeView(getActivity());
+
+            GenericDraweeHierarchyBuilder builder =
+                    new GenericDraweeHierarchyBuilder(getResources());
+            GenericDraweeHierarchy hierarchy = builder
+                    .setPlaceholderImage(R.drawable.ic_null_goods)
+                    .setFailureImage(R.drawable.ic_null_goods)
+                    .build();
+            imageView.setHierarchy(hierarchy);
+	    mSimpleDraweeView.setHierarchy(hierarchy);
+
+代码加载本地图片
+  //加载标准全路径图片链接
+    public static void frescoLoad(SimpleDraweeView img ,String url){
+        img.setImageURI(url);
+    }
+    //加载本地资源图片
+    public static void frescoLoadRes(Context con,SimpleDraweeView img, int res){
+        img.setImageURI("res://"+con.getPackageName()+"/"+res);
+    }
+    //加载本地路径图片
+    public static void frescoLoadLocal(SimpleDraweeView img , String localUrl){
+        img.setImageURI("file://"+localUrl);
+    }
+
+
+使用该控件完美缩放显示图片案例：
+	params.height =  MetricsUtil.dip2px(mContext,189);	//使用工具转换dp和px，将设计图的px/2然后传进去
+	holder.adverSldv.setLayoutParams(params);
+	GenericDraweeHierarchy hierarchy = holder.adverSldv.getHierarchy();
+        hierarchy.setFailureImage(R.drawable.ic_null_specialselling, ScalingUtils.ScaleType.FIT_XY);
+        hierarchy.setPlaceholderImage(R.drawable.ic_null_specialselling, ScalingUtils.ScaleType.FIT_XY);
+        hierarchy.setRetryImage(R.drawable.ic_null_specialselling, ScalingUtils.ScaleType.FIT_XY);
+        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
+        holder.adverSldv.setHierarchy(hierarchy);
+        holder.adverSldv.setImageURI(mList.get(position).getImgUrl());

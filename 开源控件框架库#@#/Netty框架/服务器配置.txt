@@ -1,0 +1,45 @@
+public class EchoServer {
+    private final int port;
+
+    public EchoServer(int port) {
+        this.port = port;
+    }
+
+
+    public void start() throws Exception {
+
+        EventLoopGroup boosGroup = new NioEventLoopGroup();   // 创建NIO线程组，用于处理客户端链接
+        EventLoopGroup workGroup = new NioEventLoopGroup();   // 创建NIO线程组，用户网络读写
+        try {
+            ServerBootstrap b = new ServerBootstrap();   // ⇽---   ❷ 创建Server-Bootstrap用于配置
+            b.group(boosGroup, workGroup)                    //添加线程组
+                    .channel(NioServerSocketChannel.class)//⇽---　 ❸ 指定所使用的NIO传输Channel
+                    .option(ChannelOption.SO_BACKLOG, 100)
+//                    .localAddress(new InetSocketAddress(port))//⇽---　 ❹ 使用指定的端口设置套接字地址
+                    .handler(new LoggingHandler(LogLevel.INFO))
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch)
+                                throws Exception {
+                            // 以"$_"为结尾分割的 解码器,第一个参数为读取长度，如果这个长度里面没有$_就会抛异常
+                            ByteBuf delimiter = Unpooled.copiedBuffer("####".getBytes());
+                            ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
+                            // 字符串解码 和 编码
+                            ch.pipeline().addLast("decoder", new StringDecoder());
+                            ch.pipeline().addLast("encoder", new StringEncoder());
+
+
+			    //添加连接回调，！！这里有个坑，这个回调类必须再最后一行添加，否则上面添加的一些操作不生效
+                            ch.pipeline().addLast(new EchoServerHandler()); //⇽---　 EchoServerHandler被标注为@Shareable，所以我们可以总是使用同样的实例
+                        }
+                        //⇽---   ❺添加一个EchoServer-
+                        //Handler到子Channel的ChannelPipeline
+                    });
+            ChannelFuture f = b.bind(port).sync();    //⇽---   ❻ 异步地绑定服务器；调用sync()方法阻塞等待直到绑定完成
+            f.channel().closeFuture().sync();//⇽---　 ❼ 获取Channel的CloseFuture，并且阻塞当前线程直到它完成
+        } finally {
+            boosGroup.shutdownGracefully().sync();    //⇽---   ❽ 关闭EventLoopGroup，释放所有的资源
+            workGroup.shutdownGracefully().sync();    //⇽---   ❽ 关闭EventLoopGroup，释放所有的资源
+        }
+    }
+}

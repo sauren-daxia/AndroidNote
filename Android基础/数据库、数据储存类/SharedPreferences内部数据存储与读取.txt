@@ -1,0 +1,42 @@
+PS：	SharedPreferences存储最好在OnPause方法和OnDestroy方法中使用，
+	因为OnPause方法后，程序可能会被Kill掉
+
+PS：	SharedPreferences取出数据最好在onCreate和onResume方法中取出。
+	因为OnPause方法没有被杀掉的话会，再次进入会执行OnResume方法
+
+步骤：
+
+一、储存数据
+
+1、创建文件、并设置访问权限
+
+	SharedPreferences sp =getSharedPreferences("xxx",Context.MODE_PRIVATE)
+		
+	存储对应位置在：data/data/包名shared_prefs,以XML文件保存
+
+	PS:如果不设置名字，默认为当前默认类名.XML，例如：MainActiv.XML
+
+2、获取文件编辑者对象
+
+	Editor editor = sp.edit()
+
+3、储存信息
+	
+	editor.putString("xx","xx");
+	editor.putInt("xx", 11);
+
+4、提交信息
+	
+	editor.commit()
+
+
+二、读取数据
+
+1、指定文件名，设置访问权限
+
+	SharedPreferences sp =getSharedPreferences("xxx",Context.MODE_PRIVATE)
+
+2、获取键值对信息
+
+	String xx = sp.getString("xx");
+	int x  = spgetInt("xx",0);

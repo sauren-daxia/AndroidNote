@@ -1,0 +1,10 @@
+GitHub：https://github.com/ssseasonnn/RxDownload
+
+1、在APP.builde.gradle依赖
+   compile 'zlc.season:rxdownload2:2.0.4'
+
+2、添加权限6.0需要动态权限
+	<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+

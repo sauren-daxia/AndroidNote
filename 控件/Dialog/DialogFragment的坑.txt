@@ -1,0 +1,20 @@
+1、频繁显示需要进行判断不然会导致崩溃
+
+	  HotelRoomDetailFragment tag = (HotelRoomDetailFragment) image_room.getTag();
+            if (tag == null) {
+                HotelRoomDetailFragment dialogFragment = new HotelRoomDetailFragment();
+                dialogFragment.setArguments(intent);
+                dialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "dialog");
+                image_room.setTag(dialogFragment);
+            } else  {
+                if (!tag.isAdded()){
+                    ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().remove(tag);
+                    tag.show(((AppCompatActivity) context).getSupportFragmentManager(), "dialog");
+                }
+            }
+
+2、第一个可以避免调用崩溃，但是如果DialogFragment里面涉及到网络请求的话
+	需要判断使用getActivity回调主线程的时候是否等于null
+		if(getActivity()!= null && !getActivity().isFinishing()){
+
+		}

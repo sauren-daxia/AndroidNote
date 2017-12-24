@@ -1,0 +1,155 @@
+PS：框架最低编译版本23.
+
+1、依赖
+	compile 'cn.finalteam:galleryfinal:1.4.8.7'		//主要
+
+	compile 'com.android.support:support-v4:23.1.1'
+
+2、在Application中初始化配置
+
+	2.1、//设置主题
+		ThemeConfig theme = new ThemeConfig.Builder()
+		...
+		.build();
+
+	2.2、//配置功能
+		FunctionConfig functionConfig = new FunctionConfig.Builder()
+		.setEnableCamera(true)		//最主要的几个参数。如果不填则打不开
+		.setEnableEdit(true)
+		.setEnableCrop(true)
+		.setEnableRotate(true)
+		.setCropSquare(true)
+		.setEnablePreview(true)
+		...
+		.build();
+
+	2.3//配置imageloader
+		//ImageLoader imageloader = new UILImageLoader();       //默认使用这个
+		//推荐使用
+		1、Glide
+		GlideImageLoader imageloader = new GlideImageLoader();
+
+		2、Fresco
+		Bitmap.Config config = Bitmap.Config.RGB_565;		//可以使用ARGB_8888，但是内存占用高
+		FrescoImageLoader imageLoader  =new FrescoImageLoader(this,config);//使用565的话就不需要第二个参数
+
+		PS:Fresco强大但是文件大，Glide速度快并且小，看需求
+
+	2.4//配置
+		CoreConfig coreConfig = new CoreConfig.Builder(context, imageloader, theme)
+		.setDebug(BuildConfig.DEBUG)
+		.setFunctionConfig(functionConfig)
+		...
+		.build();
+
+	2.5//初始化
+		GalleryFinal.init(coreConfig);
+
+3、调用
+	1、单选图片
+		GalleryFinal.openGallerySingle(1, mOnHanlderResultCallback);
+		//带配置
+		GalleryFinal.openGallerySingle(1, functionConfig, mOnHanlderResultCallback);
+
+	2、多选图片
+		GalleryFinal.openGalleryMuti(2, mOnHanlderResultCallback);
+		//带配置
+		FunctionConfig config = new FunctionConfig.Builder(MainActivity.this)
+		.setMutiSelectMaxSize(8)	//多选图片数量
+		.build();
+		GalleryFinal.openGalleryMuti(2, functionConfig, mOnHanlderResultCallback);
+
+	3、打开拍照
+		GalleryFinal.openCamera(3, mOnHanlderResultCallback);
+		//带配置
+		GalleryFinal.openCamera(3, functionConfig, mOnHanlderResultCallback);
+
+	4、裁剪
+		GalleryFinal.openCrop(4, path, mOnHanlderResultCallback);		//path是图片的路径，对某个图片进行处理
+		//带配置
+		GalleryFinal.openCrop(4, path, functionConfig, mOnHanlderResultCallback);
+
+	5、图片编辑
+		GalleryFinal.openEdit(5,path, mOnHanlderResultCallback);
+		//带配置
+		GalleryFinal.openEdit(5,path, functionConfig, mOnHanlderResultCallback);
+
+
+
+4、权限
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+	动态权限申请：
+	String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP,
+                Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.CAMERA};
+
+        ActivityCompat.requestPermissions(getActivity(),mPermissionList, 100);
+
+5、混淆
+	-keep class cn.finalteam.galleryfinal.widget.*{*;}
+	-keep class cn.finalteam.galleryfinal.widget.crop.*{*;}
+	-keep class cn.finalteam.galleryfinal.widget.zoonview.*{*;}
+
+6、ThemeConfig、CoreConfig、FunctionConfig
+	FunctionConfig：
+		FunctionConfig functionConfig = new FunctionConfig.Builder()
+		.setTitleBarTextColor//标题栏文本字体颜色
+		.setTitleBarBgColor//标题栏背景颜色
+		.setTitleBarIconColor//标题栏icon颜色，如果设置了标题栏icon，设置setTitleBarIconColor将无效
+		.setCheckNornalColor//选择框未选颜色
+		.setCheckSelectedColor//选择框选中颜色
+		.setCropControlColor//设置裁剪控制点和裁剪框颜色
+		.setFabNornalColor//设置Floating按钮Nornal状态颜色
+		.setFabPressedColor//设置Floating按钮Pressed状态颜色
+		.setIconBack//设置返回按钮icon
+		.setIconCamera//设置相机icon
+		.setIconCrop//设置裁剪icon
+		.setIconRotate//设置旋转icon
+		.setIconClear//设置清楚选择按钮icon（标题栏清除选择按钮）
+		.setIconFolderArrow//设置标题栏文件夹下拉arrow图标
+		.setIconDelete//设置多选编辑页删除按钮icon
+		.setIconCheck//设置checkbox和文件夹已选icon
+		.setIconFab//设置Floating按钮icon
+		.setEditPhotoBgTexture//设置图片编辑页面图片margin外背景
+		.setIconPreview设置预览按钮icon
+		.setPreviewBg设置预览页背景
+		.build();
+
+	CoreConfig:
+		CoreConfig coreConfig = new CoreConfig.Builder(context, imageloader, theme)
+		.setDebug //debug开关
+		.setEditPhotoCacheFolder(File file)//配置编辑（裁剪和旋转）功能产生的cache文件保存目录，不做配置的话默认保存在/sdcard/GalleryFinal/edittemp/
+		.setTakePhotoFolder设置拍照保存目录，默认是/sdcard/DICM/GalleryFinal/
+		.setFunctionConfig //配置全局GalleryFinal功能
+		.setNoAnimcation//关闭动画
+		.setPauseOnScrollListener//设置imageloader滑动加载图片优化OnScrollListener,根据选择的ImageLoader来选择PauseOnScrollListener
+		.build();
+
+	ThemeConfig:
+		ThemeConfig theme = new ThemeConfig.Builder()
+		.setTitleBarTextColor//标题栏文本字体颜色
+		.setTitleBarBgColor//标题栏背景颜色
+		.setTitleBarIconColor//标题栏icon颜色，如果设置了标题栏icon，设置setTitleBarIconColor将无效
+		.setCheckNornalColor//选择框未选颜色
+		.setCheckSelectedColor//选择框选中颜色
+		.setCropControlColor//设置裁剪控制点和裁剪框颜色
+		.setFabNornalColor//设置Floating按钮Nornal状态颜色
+		.setFabPressedColor//设置Floating按钮Pressed状态颜色
+		.setIconBack//设置返回按钮icon
+		.setIconCamera//设置相机icon
+		.setIconCrop//设置裁剪icon
+		.setIconRotate//设置旋转icon
+		.setIconClear//设置清楚选择按钮icon（标题栏清除选择按钮）
+		.setIconFolderArrow//设置标题栏文件夹下拉arrow图标
+		.setIconDelete//设置多选编辑页删除按钮icon
+		.setIconCheck//设置checkbox和文件夹已选icon
+		.setIconFab//设置Floating按钮icon
+		.setEditPhotoBgTexture//设置图片编辑页面图片margin外背景
+		.setIconPreview//设置预览按钮icon
+		.setPreviewBg//设置预览页背景
+		.build();

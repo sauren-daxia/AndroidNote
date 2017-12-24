@@ -1,0 +1,184 @@
+Paint章节
+
+颜色：
+	paint.setColoe()
+
+	paint.setShader()	//着色器
+		LinearGradient		//线性渐变着色器
+					构造说明：
+						参数一：着色起始点X轴，
+						参数二：着色起始点Y轴，
+						参数三：第一颜色结束点X轴，
+						参数四：第一颜色结束点Y轴
+						参数五：第一颜色
+						参数六：第二颜色
+						参数七：渐变模式
+							TileMode.CLAMP		//直线渐变，例如红蓝渐变，红，蓝
+							TileMode.MIRROR		//镜像渐变，例如红蓝渐变，分成四块，小蓝，大红，大蓝，小红
+							TileMode.REPEAT		//重复渐变，红，蓝，红，蓝，红，蓝
+
+		RadialGradient		//圆形辐射渐变着色器
+					构造说明：
+					参数一：辐射中心的坐标X轴
+					参数二：辐射中心的坐标Y轴
+					参数三：辐射半径
+					参数四：辐射中心的颜色
+					参数五：辐射边缘的颜色
+					参数流：渐变模式
+
+		SweepGradient		//雷达扫描式渐变着色器
+					构造说明：
+					参数一：扫描中心点X轴
+					参数二：扫描中心点Y轴
+					参数三：扫描的起始颜色
+					参数四：扫描的终止颜色
+
+		BitmapShader		//Bitmap着色器
+					构造说明
+					参数一：Bitmap对象
+					参数二：X轴渐变模式
+					参数三：Y后渐变模式
+					PS：渐变方式一样只是效果需要稍微调整一下
+
+		ComposeShader		//组合着色器，可使用上面任意两种组合，需要关闭硬件加速
+					构造说明
+					参数一：着色器一
+					参数二：着色器二
+					参数三：叠加模式
+					PS：叠加模式和PS的叠加模式一样，有17种
+
+PorterDuffXfermode	//叠加模式
+
+		混合模式种类：
+		1.PorterDuff.Mode.CLEAR			2.PorterDuff.Mode.SRC		3.PorterDuff.Mode.DST
+		所绘制不会提交到画布上。		显示上层绘制图片		显示下层绘制图片
+
+		4.PorterDuff.Mode.SRC_OVER		5.PorterDuff.Mode.DST_OVER	6.PorterDuff.Mode.SRC_IN	
+		正常绘制显示，上下层绘制叠盖。		上下层都显示。下层居上显示。	取两层绘制交集。显示上层。
+		
+		7.PorterDuff.Mode.DST_IN		8.PorterDuff.Mode.SRC_OUT	9.PorterDuff.Mode.DST_OUT
+		取两层绘制交集。显示下层。		取上层绘制非交集部分。		取下层绘制非交集部分。
+
+		10.PorterDuff.Mode.SRC_ATOP		11.PorterDuff.Mode.DST_ATOP	12.PorterDuff.Mode.XOR
+		取下层非交集部分与上层交集部分		取上层非交集部分与下层交集部分	异或：去除两图层交集部分
+			
+		13.PorterDuff.Mode.DARKEN		14.PorterDuff.Mode.LIGHTEN	15.PorterDuff.Mode.MULTIPLY
+		取两图层全部区域，交集部分颜色加深	取两图层全部，点亮交集部分颜色	取两图层交集部分叠加后颜色
+			
+		16.PorterDuff.Mode.SCREEN
+		取两图层全部区域，交集部分变为透明色
+
+		模式应用：
+			DST_IN、SRC_IN:只混合重叠的地方，可以用作抠图，绘制某块区域，比如圆形头像，先画原图在底下，再画目标图在上面
+
+			DST_OUT：描边，画轮廓？将图片不透明的地方混合成一种颜色，从而形成轮廓
+
+			SCREEN:像美图里面的滤镜，先画一层颜色在底下，再画目标图在上面
+
+
+paint.setColorFilter(ColorFilter);		//使用Paint方法，进行过滤
+
+	ColorFilter有三个子类：
+		ColorMatrix(色彩矩阵颜色过滤器):
+			ColorMatrix colorMatrix = new ColorMatrix(new float[]{  
+				1, 0, 0, 0, 0,		//R
+				0, 1, 0, 0, 0,		//G
+				0, 0, 1, 0, 0,		//B
+				0, 0, 0, 1, 0,		//A
+				}); 
+	
+	LightingColorFilter(光照颜色过滤器)		//把某种颜色加强或者弱化，用法不明
+		LightingColorFilter lightingColorFilter = new LightingColorFilter(0xFFFF00FF, 0x00000000);
+
+		//使用16进制为单位，第一个参数是颜色倍增，第二个参数是颜色添加
+
+	PorterDuffColorFilter(混合模式)		//就是指定一个颜色，然后用叠加模式进行融合
+		PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.DARKEN);
+
+paint.setXfermode(Xfermode);		//设置本次画出来的内容与上一次canvas画出来的内容的叠加模式方案
+					使用方式：paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN)); 
+					PS：使用完要及时清空setXfermode(null)
+
+离屏缓冲技术，有两种：
+	主要用于在使用颜色过滤，叠加等效果时，若是影响了整体效果，可以使用离屏缓冲做为新建图层，在新图层绘制完再合并
+	简单一点的话，只要涉及颜色修改，都新建图层，要注意的是，不论目标还是源，都要画在离屏缓冲里面
+
+	canvas.saveLayer() and canvas.restoreToCount()	//离屏缓冲技术，相当于新建图层再合并，在一张图上连续作画有问题的时候可以使用新建图层解决
+		使用:
+		int saved = canvas.saveLayer(null, null, Canvas.ALL_SAVE_FLAG);		//此步骤之后的内容都在新图层
+		...
+		canvas.restoreToCount(saved);						//合并图层
+
+	View.setLayerType()				//离屏缓冲技术
+		View.setLayerType()			//直接把整个 View 都绘制在离屏缓冲中
+		View.setLayerType(LAYER_TYPE_HARDWARE)  //使用 GPU 来缓冲
+		View.setLayerType(LAYER_TYPE_SOFTWARE)  //直接直接用一个 Bitmap 来缓冲
+
+线条形状：
+	setStrokeWidth(float width)		//设置线条大小粗细
+	setStrokeCap(Paint.Cap cap)		//设置线头形状，BUTT 平头、ROUND 圆头、SQUARE 方头
+	setStrokeJoin(Paint.Join join)		//设置线条拐弯形状，MITER 尖角、 BEVEL 平角和 ROUND 圆角
+	setStrokeMiter(miter)			//用于设置拐弯形状的MITER状态时夹角的尖长
+
+颜色优化：
+	paint.setDither(true);			//计算出更流畅更舒服的色彩，在ARGB_8888作用不大
+	paint.setFilterBitmap(true);		//双线性过滤，优化图片放大时的像素感
+
+paint.setPathEffect()		//线的轮廓效果，不支持硬件加速
+	new CornerPathEffect(20)				//拐角的直角边圆角
+	new DiscretePathEffect(20, 5);				//随机变换
+	new DashPathEffect(new float[]{20, 10, 5, 10}, 0);	//虚线，数组中必须有两个偶数，第一第三都是线长，第二第四是线长的左右间距
+	new PathDashPathEffect(dashPath, 40, 0,PathDashPathEffectStyle.TRANSLATE); //按照Path来画，
+			构造说明：
+			参数一：Path形状
+			参数二：每个Path的起始点间距
+			参数三：偏移量
+			参数四：拐弯方式，TRANSLATE：位移，ROTATE：旋转，MORPH：变体
+	new SumPathEffect(dashEffect, discreteEffect);		//组合PathEffect，重叠
+	new ComposePathEffect(dashEffect, discreteEffect);	//组合PathEffect，先用第一种效果改变原来的状态，再用第二种效果改变第一种状态，好比线本来是直的，先弄成弧形，再弄成三角形，就变成了弧形的三角线
+				
+paint.setShadowLayer(10, 0, 0, Color.RED);	//底层阴影，不支持硬件加速
+		参数说明：
+			参数一：阴影范围
+			参数二：偏移X轴
+			参数三：偏移Y轴
+			参数四：颜色
+		PS：如果 shadowColor 是半透明的，阴影的透明度就使用 shadowColor 自己的透明度；而如果 shadowColor 是不透明的，阴影的透明度就使用 paint 的透明度。	
+paint.clearShadowLayer()			//清除阴影
+
+paint.setMaskFilter()				//顶层阴影，不支持硬件加速
+	new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL)	//模糊效果
+				构造说明：
+					参数一：模糊范围
+					参数二：模糊类型，
+					NORMAL: 内外都模糊绘制，
+					SOLID: 内部正常绘制，外部模糊，
+					INNER: 内部模糊，外部不绘制，
+					OUTER: 内部不绘制，外部模糊（什么鬼？）
+	new EmbossMaskFilter(new float[]{0, 1, 1}, 0.2f, 8, 10)	 //浮雕效果
+				构造说明：
+					参数一：浮点型数组，用于控制x,y,z轴的光源方向
+					参数二：设置环境光亮度，0到1之间
+					参数三：炫光系数
+					参数四：模糊半径
+
+paint.getFillPath(src, dst)			//获取实际Path路径，也就是Path实际画过的线，好比一个实心圆，看起来实心，其实里面实际画过的Path可以很复杂
+				参数说明:
+				参数一：已经绘制好的Path
+				参数二：新的Path对象，用于保存真实路径
+
+paint.getTextPath(String text, int start, int end, float x, float y, Path path)		//获取文字的实际Path，字体多样复杂，Path也很复杂
+				参数说明:
+				参数一：需要获取的文字
+				参数二：从第几个文字开始
+				参数三：到第几个文字结束
+				参数四：未知
+				参数五：未知
+				参数六：新Path对象，保存到Path后一定要close，否则无效
+
+paint.reset();			//重置，相当于new
+
+paint.set(Paint src)		//将别的paint效果复制过来
+
+
+

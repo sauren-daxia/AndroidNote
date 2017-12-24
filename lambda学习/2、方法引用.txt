@@ -1,0 +1,32 @@
+1、语法
+	对象::实例方法		Person p = new Person()      Supplier<Integer> s = p::getAge;
+
+	类::静态方法名          Comparator<Integer> c = Integer::compare;
+
+	类::实例方法		BiPredicate<String,String> p = String::equals;
+
+	构造器::引用            Supplier<Person> s = Person::new;
+
+	数组/集合构造::引用     Function<Integer,String[]> f = String[]::new;
+
+	PS:
+		1.根据方法引用的类型会返回lambda表示式的四大接口类型
+		2.方法引用的方法，其返回值和参数类型必须和四大接口一致
+			比如Predice<T>接口，一个参数一个返回值，那么引用的方法也必须是一个参数一个返回值
+		3.如果用类::实例方法，第一个参数必须和类一致，第二个参数必须是实例方法的参数类型
+			比如x.equals(y)  方法引用写法   String::equals
+			x是String类型，y也是String类型，x和类一致，y是equals的参数类型
+		4.使用构造引用时，构造参数与接口参数必须一致
+				比如上面的Supplier<T>,这个接口只有一个无参方法get()
+				那么对应的就会去构造Person的无参构造
+		5.数组/集合构造引用和类构造相似
+		
+2、使用场景：
+		一般如果lambda表达式中只有一段代码，而那段代码仅仅是用方法就可以构成主体的话，就可以简写成方法引用,比如:
+		Comsumer<String> c = (x) -> System.out.println(x);
+		转化：
+		Comsumer<String> c = System.out::println;
+
+		BiPredicate<String,String> p = (x,y) -> x.equals(y);
+		转化:
+		BiPredicate<String,String> p = String::equals;

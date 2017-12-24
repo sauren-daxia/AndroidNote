@@ -1,0 +1,54 @@
+直接使用AIDL方式传递数据时不安全的，安卓提供一个安全的传递机制Messenger
+
+1、继承Service
+
+2、在Service中定义一个Messenger和一个Handler
+
+	private Handler handler = new Handler(){   }	
+
+	private Messenger mm = new Messenger(handler)	//构造需要一个Handler去处理
+
+3、在onBind（）方法中返回IBind对象，这个对象在Messenger中有
+
+	onBind(){
+		return mm.getBinder();
+	}
+
+4、在ACtivity中定义Messenger，并在OnStart中绑定Service
+	private Messenger mm ;
+	private boolean isBind;
+
+	private ServiceConnection conn = new ServiceConnection(){
+		//绑定成功
+		onServiceConnected(){
+			mm = new Messenger(service);
+			isBind =true;
+		}
+		//绑定失败
+		onServiceDisconnected(){
+			mm = null;
+			isBind = false;
+		}
+	}
+	
+
+	onStart(){
+		Intent intent = new Intent(this,MyService.class);
+		bindService(intent,conn ,Content.BIND_AUTO_CREATE);
+	}
+
+5、在Activity的OnStop方法中解绑service
+	if(isBind){
+		unBindService(conn);
+		isBind = false;
+	}
+6、通过Message发送消息到Service的Messenger
+
+	onclick(){
+		Message m = Message.obtain();
+
+		m.what = 0;
+		m.obj = "";
+
+		mm.send(m);		//使用Messenger对象发送
+	}

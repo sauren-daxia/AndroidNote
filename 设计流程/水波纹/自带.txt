@@ -1,0 +1,8 @@
+点击波浪
+android:foreground="?android:selectableItemBackground"
+圆形波浪
+android:foreground="?android:selectableItemBackgroundBorderless"
+
+非button需要加
+android:clickable="true"
+android:focusable="true"

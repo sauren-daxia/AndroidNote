@@ -1,0 +1,20 @@
+步骤：
+
+方法：
+-------------------------------
+Environment.getExternalStorageDirectory();	//获取外部存储的根目录相对路径的FIle对象
+
+Environment.getExternalStorageState()		//获取外部储存的状态是否可用
+	Environment.MEDIA_MOUNTED	
+
+
+1、获取根目录文件
+	File rootFile = Environment.getExternalStorageDirectory();
+
+2、判断外部是否可用
+	Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
+separator
+3、添加读写权限
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>

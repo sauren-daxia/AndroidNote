@@ -1,0 +1,7 @@
+OKHttpClient okClient = new OKHttpClient.Builder()
+			.readTimeout(10,TimeUnit.SECONDS)	//读取超时
+			.writeTimeout(10,TimeUnit.SECONDS)	//写入超时
+			.connectTimeout(10,TimeUnit.SECONDS)	//连接超时
+			.pingInterval(10,TimeUnit.SECONDS)	//websocket 轮训间隔
+			.build();
+			

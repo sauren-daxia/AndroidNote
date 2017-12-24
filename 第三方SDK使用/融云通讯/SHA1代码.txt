@@ -1,0 +1,22 @@
+  public static String sha1(String data) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.update(data.getBytes());
+            StringBuffer buf = new StringBuffer();
+            byte[] bits = md.digest();
+            for(int i=0;i<bits.length;i++){
+                int a = bits[i];
+                if(a<0) a+=256;
+                if(a<16) buf.append("0");
+                buf.append(Integer.toHexString(a));
+            }
+            return buf.toString();
+        }catch (Exception e){
+
+        }
+        return "";
+    }
+
+
+    keytool -v -list -keystore keystore.jks
+【一定要记得加上 -v 参数，不然只能看到SHA1，没有MD5】【keystore.jks，需要替换为你自己的密钥所在路径和文件名】

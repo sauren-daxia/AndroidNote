@@ -1,0 +1,90 @@
+启动群聊代码：
+	RongIM.getInstance().startGroupChat(getActivity(), "9527", "标题");
+
+创建群组：		接口：https://api.cn.ronghub.com/group/create.json
+		
+	使用OKHttp框架，其他框架自己去查怎么添加头部的
+		String time = System.currentTimeMillis()+"";			//当前时间
+                String num = (long)(Math.random()*1098798790)+"";		//随机数
+                String secret = "qN3yuvkQsGuc4";				//KEY
+                String str = secret + num + time;				//拼接字符串
+
+		Headers headers= new Headers.Builder()		//OKHttp添加头部链接的方法
+                        .add("App-Key","6tnym1brnndu7")		//调用所有接口都需要使用的KEY参数
+                        .add("Nonce",num)			//调用所有接口都需要使用的随机参数
+                        .add("Timestamp",time+"")		//调用所有接口都需要使用的时间参数
+                        .add("Signature",sha1(str))		//由secret + num + time 经过SHA1计算的参数
+                        .build();
+
+		FormEncodingBuilder builder = new FormEncodingBuilder();
+                builder.add("userId", "10086");					//至少添加两个userId才算创建群组
+                builder.add("userId", "10010");
+                builder.add("groupId", "666666");				//群组的ID
+                builder.add("groupName", "10086 + 10010");			//群组的名字
+
+		Request r = new Request.Builder()
+			        .headers(headers)
+			        .url("https://api.cn.ronghub.com/group/create.json")		//这个接口是用于创建群组的
+				.post(builder.build()).build();	
+		OkHttpClient client = new OkHttpClient();
+		client.newCall(r).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                }
+                @Override
+                public void onResponse(Response response) throws IOException {
+                     String s = response.body().string();
+                     Log.d(TAG, "onResponse: " + s);
+                  }
+                });
+
+加入群组：		接口:https://api.cn.ronghub.com/group/join.json
+	方式和创建群组的方式、KEY等，都是一样的，
+	如果不想使用创建组的接口，加入组的接口也可以创建。
+
+退出群组：		接口：https://api.cn.ronghub.com/group/quit.json
+	KEY:
+		userId		String		要退出群的用户ID
+		groupId		String		要退出的群ID
+
+解散群组：		接口：https://api.cn.ronghub.com/group/dismiss.json
+	KEY：
+		userId		String		操作散群的用户ID
+		groupId		String		要解散的群ID	
+
+刷新群组信息：		接口：https://api.cn.ronghub.com/group/refresh.json
+	KEY:
+		groupId		String		要刷新的群ID
+		groupName	String		要刷新的群组名
+	
+查询群员；		接口：https://api.cn.ronghub.com/group/user/query.json
+	KEY:
+		groupId		String		要查询的群ID
+	
+	返回值：
+		users		String		群人数
+		id		String		每个群员的ID
+
+禁言群员：		接口：https://api.cn.ronghub.com/group/user/gag/add.json
+	KEY:
+		userId		String		要禁言的用户ID
+		groupId		String		要操作禁言的群组ID
+		minute		String		禁言时长
+
+取消禁言群员：		接口：https://api.cn.ronghub.com/group/user/gag/rollback.json
+	KEY:	
+		userId		String		取消禁言的用户ID
+		groupId		String		操作取消禁言的群组ID
+		
+查询被禁言的所有群员：	接口：https://api.cn.ronghub.com/group/user/gag/list.json
+	KEY:
+		groupId		String		查询的群组ID
+
+	返回值：
+		time		String		解禁时间
+		userId		String		被禁言群员ID
+
+
+
+               
+		

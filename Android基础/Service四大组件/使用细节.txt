@@ -1,0 +1,13 @@
+1、在程序结束后，后台的Service中要启动一个Activity
+
+	需要使用Intent的flag属性
+
+	Intent intent = new Intent();
+
+	intent.setFlag(Intent.FLAG_ACTIVITY_NEW_TASK)	//启动一个新的任务栈
+
+	PS：如果在任务栈中有该ACtivity的话，就在当前栈中启动
+
+2、service默认和主线程使用的是同一个线程，所以不能在service中做耗时操作
+
+3、Intent携带的值可以在Command方法中获取到

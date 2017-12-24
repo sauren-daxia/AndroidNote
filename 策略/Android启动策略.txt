@@ -1,0 +1,26 @@
+Android在启动的时候通常涉及到太多的初始化加载，会造成一定的主线程阻塞，导致打开APP的过程很慢
+
+1、创建一个空白Activity作为启动页，在Manifest中替换主题为启动页主题，并延时2秒跳转到广告页
+
+2、创建一个广告页作为启动延时的策略，延时2秒跳转到主Activity
+
+PS：第一个启动页主要是让用户感觉APP已经打开了，第二个广告页则是为一些库的初始化做一个延时操作，两个页面流程走完，一般的库初始化都加载完成了
+
+style:
+ <style name="start_photo">
+        <item name="android:windowBackground">@drawable/layer_start_photo</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+drawable:
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@android:color/white"/>
+    <item>
+        <bitmap android:src="@drawable/jjjjj" android:gravity="center"/>
+    </item>
+
+</layer-list>
+
+manifest:

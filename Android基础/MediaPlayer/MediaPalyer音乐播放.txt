@@ -1,0 +1,52 @@
+MediaPlayer:
+
+构造：
+------------------------------------------
+new MediaPlayer()
+
+MediaPalyer.create(this，int res)
+
+MediaPlayer.create(Uri)
+
+方法：
+-----------------------
+	setDataSource(String)		//设置文件路径
+	
+	start()				//开始播放或暂停后继续播放
+	
+	parpare()			//就绪状态
+
+	pause()				//暂停
+
+	isPalying()			//是否在播放
+
+	reset()				//重置，每次播放前都要重置一下
+
+	getDuration()			//播放总时长	
+
+	getCurrentPosition()		//获取当前播放事件
+	
+	release()			//释放对象
+
+	setLooping(true)		//是否循环播放
+
+使用步骤：
+-------------------------------
+
+1、构造给数据源
+	
+	MediaPlayer mp = new MediaPlayer(xx)
+
+	mp.start();
+
+	mp.xxx()
+
+
+2、设置数据源
+基本流程：（不可改变）
+	MediaPlayer mp = new MediaPlayer();
+	mp.setdatasourece(xx)
+	mp.parpare();
+	mp.start();
+	mp.getCurrentxx();
+	

@@ -1,0 +1,30 @@
+RxUrl
+    public interface RxUrl {
+        //系统时间
+        String SYSTEM_TIME = "Common/getSysTime.jhtml";
+    }
+
+ARouterUrl
+    public interface ARouterUrl {
+        //头部
+        String TITLE = "/xxx/view"          //最好使用/项目名/view来表示
+        //系统时间
+        String SYSTEM_TIME = TITLE + "Common/getSysTime.jhtml";
+    }
+
+RxRequest
+    public interface RxRequest{
+        @POST(RxUrl.SYSTEM_TIME)
+        Observable<BaseBean<Object>> getSystemTime();
+    }
+
+Navigator
+    public void Navigator{
+        public void static startMain(Context con){
+            ARouter
+                        .getInstance()
+                        .build(ARouterUrl.START_MAIN)
+                        .withTransition(R.anim.startactivity_anim_left_in, R.anim.startactivity_anim_left_out)
+                        .navigation(con);
+        }
+    }

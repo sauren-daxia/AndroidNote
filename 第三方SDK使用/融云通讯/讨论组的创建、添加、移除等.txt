@@ -1,0 +1,60 @@
+创建讨论组：
+	List<String> list = new ArrayList<String>();
+                //至少要添加两个用户ID才能创建，并且10086是我自己的，创建的时候在讨论组里却说是邀请了Jason(ID:10086)，不明了
+        list.add("10010");
+        list.add("10086");
+        RongIM.getInstance().createDiscussionChat(this, list, "我们的聊天室", new RongIMClient.CreateDiscussionCallback() {
+             @Override
+             public void onSuccess(String s) {
+               Log.d(TAG, "onSuccess: "+s);	//返回的是讨论组的ID
+             }
+             @Override
+             public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.d(TAG, "onError: "+errorCode);
+             }
+         });
+
+打开一个讨论组：
+	   RongIM.getInstance().startDiscussionChat(this, "9527", "六级一班");
+	   第二个参数是讨论组的ID
+
+添加一个或多个群员：
+	ArrayList<String> userIds = new ArrayList<String>();
+	userIds.add("101");//增加 userId。
+	userIds.add("102");//增加 userId。
+	userIds.add("103");//增加 userId。
+
+	RongIM.getInstance().getRongIMClient().addMemberToDiscussion("9527", userIds, new RongIMClient.OperationCallback() {
+	    @Override
+	    public void onSuccess() {
+
+	    }
+	@Override
+	public void onError(RongIMClient.ErrorCode errorCode) {
+
+	    }
+	});
+
+移除群员：
+	/**
+ * 供创建者将某用户移出讨论组。
+ * 移出自己或者调用者非讨论组创建者将产生 {@link RongIMClient.ErrorCode#UNKNOWN} 错误。
+ * @param discussionId 讨论组 Id。
+ * @param userId       用户 Id。
+ * @param callback     执行操作的回调。
+ */
+RongIM.getInstance().getRongIMClient().removeMemberFromDiscussion("discussionId_9527", "user_9527", new RongIMClient.OperationCallback() {
+    @Override
+    public void onSuccess() {
+    }
+    @Override
+    public void onError(RongIMClient.ErrorCode errorCode) {
+    }
+});
+
+讨论组人数上限设置：
+	可以通过配置文件配置讨论组人数上限，请在 res/values/rc_config.xml 文件中修改
+	<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="discussion_member_max_count">500000</integer>
+</resources>

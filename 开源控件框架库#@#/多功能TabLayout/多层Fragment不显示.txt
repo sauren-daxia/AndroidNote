@@ -1,0 +1,7 @@
+1、新定义一个view，用到哪个就把哪个的控件全部代码复制过来
+
+2、比如SlidingTabLayout
+	把它的setViewPager重载，写成
+	public void setViewPager(ViewPager vp, String[] titles, FragmentManager fa, ArrayList<Fragment> fragments) {}
+
+3、传递的时候FragmentManager，传getChildFragmentManager()

@@ -1,0 +1,22 @@
+public class ClassFragmentPageAdapter extends FragmentStatePagerAdapter {
+    private List<Fragment> mFragments;
+    private List<String> mTitles;
+
+    public ClassFragmentPageAdapter(FragmentManager fm, List<Fragment> mFragments, List<String> mTitles) {
+        super(fm);
+        this.mFragments = mFragments;
+        this.mTitles = mTitles;
+    }
+
+    public Fragment getItem(int position) {
+        return (Fragment)this.mFragments.get(position);
+    }
+
+    public int getCount() {
+        return this.mFragments.size();
+    }
+
+    public CharSequence getPageTitle(int position) {
+        return (CharSequence)this.mTitles.get(position);
+    }
+}

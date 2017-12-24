@@ -1,0 +1,50 @@
+启动两种方式：
+
+1、
+	1、定义一个继承Service的类
+
+	2、在配置文件<application>中添加<service name =xx.xx.xx>
+
+	3、在Activity中调用方法启动或停止Service
+		
+		Intent intent = new Intent(MainActivity.this,xx.class);
+		
+		startService(intent);
+		stopService(intent);
+
+2、	1.定义一个类继承Service
+
+	2.onBind()用于返回Service对象
+			public class MyBinder extends Binder{
+				MyService getMyService(){
+					return MyService.this
+				}
+			}
+	
+		onBind(){
+			return new MyBinder;
+		}
+
+	3.绑定Service
+		Intent intent = new Intent();
+
+		startService(intent);
+		bindService(intent,conncetion,Context.BIND_AUTO_CREATE);
+
+	4.在Activity中创建ServiceConncetion
+
+			onServiceDisconnected //用于断开链接的时候		
+
+			onServiceConnected	//连接时候
+
+				MyBinder mb = (MyBinder)service;	//强转为内部类
+
+				mb.getMyService();	//获取Service对象，就可以调用里面的方法
+
+	5.在onDestroy方法中解绑和stopService
+		unBindService()
+		StopService()
+	
+	6.在配置文件中注册Service
+
+	

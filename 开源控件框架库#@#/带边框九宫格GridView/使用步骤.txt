@@ -1,0 +1,8 @@
+<com.ddtx.kexiansen.widget.NoScrollGridView
+            android:padding="1dp"
+            android:id="@+id/nsgv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:listSelector="@drawable/selector_date_select"
+            android:numColumns="3" />

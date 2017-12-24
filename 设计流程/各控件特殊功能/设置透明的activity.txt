@@ -1,0 +1,3 @@
+在配置文件中注册activity时添加如下属性：
+
+android:theme = "@android:style/Theme.DeviceDefault.Dilog"

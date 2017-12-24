@@ -1,0 +1,38 @@
+假如正在某一分支（除主分支外，因为不建议主分支工作）工作，突然来了一个修复bug的任务。
+
+需要新建一个分支去执行，但是这样做会把原来的工作丢失，所以在新建分支之前先把之前的工作分支隐藏。
+
+git stash		//储藏当前分支
+
+在这之前，先判断是哪个分支的任务，然后跳转到该分支去创建新分支
+
+git checkout dve
+
+git checkout -b bug
+
+解决后add 并 commit，然后切换为任务分支，合并并删除
+
+git merge bug
+
+git branch -d bug
+
+然后查看之前储藏的工作分支
+
+git stash list			//查看所有储藏分支
+
+恢复分支
+
+git stash apply stash@{0}	//制定恢复某个储藏分支
+
+git stash apply		//恢复储藏的内容不删除，需要手动删除,list里之后一条分支的时候使用
+
+git stash drop		//删除储藏分支
+
+git stash pop 		//恢复储藏分支并删除
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+1、获取该控件最小的滑动值
+	touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+
+2、需要控件的计算
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+		//在点击的时候获取位置
+			lastX = event.getX();
+			lastY = event.getY();
+			break;
+		case MotionEvent.ACTION_MOVE:
+		//计算偏移量
+			float offsetX = event.getX() - lastX;
+			float offsetY = event.getY() - lastY;
+		//滑动偏移量
+			scrollBy(-(int)offsetX, -(int)offsetY);
+		//重新获取滑动后的位置，再去减下一次的偏移量
+			lastX = event.getX();
+			lastY = event.getY();
+			break;
+		case MotionEvent.ACTION_UP:
+			break;
+		}
+		return true;
+	}

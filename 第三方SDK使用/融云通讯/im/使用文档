@@ -1,0 +1,19 @@
+1、在Application或在Activity中调用初始化方法，初始化会获取本地账号信息，如果有则登录成功
+    IMManger.init(this);
+
+2、在登录的时候调用登录的方法
+    IMManager.getInstance().login(账号);
+    IMManager.getInstance().loing(账号，密码);
+    PS:有两种登录方式，目前用第一种
+
+3、在退出的时候调用退出的方法
+    IMManager.getInstance().logout();
+
+4、在接收消息的界面设置监听方法
+
+5、发送消息，没有经纬度可以传""
+    IMChattingManager.getInstance().sendText(对方的ID，发送的文本，纬度，经度)
+
+6、所有即时通讯的LOG可以通过在Logcat界面搜索IM展示
+
+PS:在IMManager的onInitialized方法中通过SharedPreference获取登录信息，然后转换实体类，获取用户电话，然后设置在login()方法中

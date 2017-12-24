@@ -1,0 +1,5 @@
+
+方法：
+---------------------------
+getDatabasePath("")		//获取指定数据库文件的file对象
+getResources().openRawResource(R.raw.xx)	//获取资源文件中数据库的输入流对象InputStream

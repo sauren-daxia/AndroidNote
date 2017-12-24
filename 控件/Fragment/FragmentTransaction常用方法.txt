@@ -1,0 +1,40 @@
+a、获取FragmentManage的方式：
+
+getFragmentManager() // v4中，getSupportFragmentManager
+
+b、主要的操作都是FragmentTransaction的方法
+
+FragmentTransaction transaction = fm.benginTransatcion();//开启一个事务
+
+transaction.add() 
+
+往Activity中添加一个Fragment
+
+transaction.remove() 
+
+从Activity中移除一个Fragment，如果被移除的Fragment没有添加到回退栈（回退栈后面会详细说），这个Fragment实例将会被销毁。
+
+transaction.replace()
+
+使用另一个Fragment替换当前的，实际上就是remove()然后add()的合体~
+
+transaction.hide()
+
+隐藏当前的Fragment，仅仅是设为不可见，并不会销毁
+
+transaction.show()
+
+显示之前隐藏的Fragment
+
+detach()
+
+会将view从UI中移除,和remove()不同,此时fragment的状态依然由FragmentManager维护。
+
+attach()
+
+重建view视图，附加到UI上并显示。
+
+transatcion.commit()//提交一个事务
+
+注意：常用Fragment的哥们，可能会经常遇到这样Activity状态不一致：State loss这样的错误。
+主要是因为：commit方法一定要在Activity.onSaveInstance()之前调用。

@@ -1,0 +1,54 @@
+静态方法
+
+public interface BlueService {
+@Headers("Cache-Control: max-age=640000")
+  @GET("book/search")
+  Call<BookSearchResponse> getSearchBooks(@Query("q") String name);
+
+}
+
+当然你想添加多个header参数也是可以的，写法也很简单
+
+public interface BlueService {
+@Headers({
+      "Accept: application/vnd.yourapi.v1.full+json",
+      "User-Agent: Your-App-Name"
+  })
+  @GET("book/search")
+  Call<BookSearchResponse> getSearchBooks(@Query("q") String name);
+}
+
+此外也可以通过Interceptor来定义静态请求头
+
+public class RequestInterceptor implements Interceptor {
+  @Override
+  public Response intercept(Chain chain) throws IOException {
+      Request original = chain.request();
+      Request request = original.newBuilder()
+          .header("User-Agent", "Your-App-Name")
+          .header("Accept", "application/vnd.yourapi.v1.full+json")
+          .method(original.method(), original.body())
+          .build();
+      return chain.proceed(request);
+  }
+}
+
+
+动态方法。在参数里面传过去
+
+public interface BlueService {
+  @GET("book/search")
+  Call<BookSearchResponse> getSearchBooks(
+  @Header("Content-Range") String contentRange, @Query("q") String name);
+}
+
+
+定义完head后，使用方法
+	在OkHttp创建Client实例时，添加RequestInterceptor即可
+
+private static OkHttpClient getNewClient(){
+	return new OkHttpClient.Builder()
+	.addInterceptor(new RequestInterceptor())
+	.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+	.build();
+}

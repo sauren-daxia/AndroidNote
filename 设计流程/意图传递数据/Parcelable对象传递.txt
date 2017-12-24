@@ -1,0 +1,30 @@
+步骤：
+
+在主界面使用Intent方法传递对象
+
+	Intent intent = new Intent(xxx.this,xx.calss);
+	intent.putExtra("user",new User(xx,xx))
+
+1、实现parcelable借口
+
+2、实现它的两个方法 describeContents 和 writeToParcel
+
+3、在writeToParcel方法中，使用参数的 dest对象，将要传递的值写入
+
+	dest.writeString(getName());
+	dest.writeInt(getAge());
+
+4、定义一个静态final的Creator对象，用于获取对象值
+	public static final Creator<User> CREATOR = new Create<User>(){
+
+	public User createFromParcel(Parcel source){
+		return new User(source.readString,source.readInt());
+	}
+	public User[] newArray(int size){
+		return new User[size]
+	}
+
+};
+
+5、在需要获取的界面调用getParcelableExtra方法获取对象
+	User u = getParcelableExtra("user");	

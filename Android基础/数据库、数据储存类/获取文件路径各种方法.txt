@@ -1,0 +1,62 @@
+方法：
+-----------------------------
+String		getPackageName()	//获取项目文件的包名路径
+File		getFilesDir()		//获取/data/data/files的路径，是程序的数据默认的路径
+File		getCacheDir()		//获取/data/data/cache，程序的缓存路径，放一些不重要的文件		
+String		getDatabasePath("xx").getAbsolutePath()	//获取数据库存储的文件路径
+File		getExternalCacheDir()	//获取外部存储的/mnt/sdcard/Android/data/包名/ 路径	//这个是缓存目录
+File		getExternalFilesDir()	//Android/data/包名/files/	//这个是数据目录
+
+PS：不论内外存储，只要数据放在它们data的目录下，卸载的时候都会随着删除。
+
+	//判断SD卡是否可用
+	if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))｛
+		//获取SD卡的路径
+		path = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File file = new File(path , "myFils");
+	｝
+	//权限
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
+权限写法：
+	单个 : MODE_PRIVATE
+	多个 ：MODE_PRIVAT+MODE_APPEND+...
+	
+
+Outputstream		openFileOutput()	//可以往files文件里写入数据
+InputStream		openFileInputStream()	//可以往files文件里读取数据
+
+常见的获取文件路径方法，对应的绝对路径
+
+getCacheDir().getAbsolutePath()：
+
+/data/data/packagename/cache
+
+
+getFilesDir().getAbsolutePath()：
+
+/data/data/packagename/files
+
+以上为内存存储路径,以下为外部存储路径
+
+
+getExternalCacheDir().getAbsolutePath()：
+可以作为外部缓存的路径,卸载app时，会自动删除文件 
+/storage/emulated/0/Android/data/packagename/cache
+
+
+Environment.getExternalStorageDirectory().getAbsolutePath()：
+
+/storage/emulated/0
+
+
+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath())：
+
+/storage/emulated/0/DCIM
+
+
+getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath：
+
+/storage/emulated/0/Android/data/packagename/files/Pictures

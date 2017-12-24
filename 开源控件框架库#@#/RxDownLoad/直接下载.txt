@@ -1,0 +1,42 @@
+1、配置下载需求
+RxDownload rxDownload = RxDownload.getInstance(context)
+    .retrofit(myRetrofit)             //若需要自己的retrofit客户端,可在这里指定
+    .defaultSavePath(defaultSavePath) //设置默认的下载路径
+    .maxThread(3)                     //设置最大线程
+    .maxRetryCount(3)                 //设置下载失败重试次数
+    .maxDownloadNumber(5)             //Service同时下载数量
+
+2、下载
+Disposable disposable = RxDownload.getInstance(this)
+        .download(url)                       //只传url即可
+        .subscribeOn(Schedulers.io()) 
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<DownloadStatus>() {
+            @Override
+            public void accept(DownloadStatus status) throws Exception {
+                //DownloadStatus为下载进度
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                //下载失败
+            }
+        }, new Action() {
+            @Override
+            public void run() throws Exception {
+                //下载成功
+            }
+        });
+
+3、停止下载
+//获得订阅返回的Disposable.
+Disposable disposable = RxDownload.getInstance(context)
+                .download(url)...
+  				
+//取消订阅, 即可暂停下载
+if (disposable != null && !disposable.isDisposed()) {
+    disposable.dispose();
+}
+
+4、继续下载和下载一样，传相同URL就会继续下载
+

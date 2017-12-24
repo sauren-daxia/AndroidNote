@@ -1,0 +1,21 @@
+  private List<ImageView> indicators = new ArrayList<>();		//不能是VIew
+  /**
+     * 添加小点点
+     *
+     * @param count
+     */
+    private void initIndicator(int count) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
+        params.setMargins(0, 0, 20, 0);
+        for (int i = 0; i < count; i++) {
+            ImageView view = new ImageView(this);
+            view.setLayoutParams(params);
+            indicators.add(view);
+            if (i == 0) {
+                view.setBackgroundResource(R.mipmap.ic_indicator_true);
+            } else {
+                view.setBackgroundResource(R.mipmap.ic_indicator_false);
+            }
+            indicatorLlty.addView(view);
+        }
+    }

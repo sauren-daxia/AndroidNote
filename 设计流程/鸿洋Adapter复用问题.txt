@@ -1,0 +1,1 @@
+1、在convert不是直接设置参数，而是有if条件的情况会出现复用，只要添加else条件即可，即if如果是VISIBLE一个控件，else就要GONE一个控件

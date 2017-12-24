@@ -1,0 +1,48 @@
+1、
+ssh-keygen -t rsa -C "youremail@example.com"
+
+你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，由于这个Key也不是用于军事目的，所以也无需设置密码。
+
+如果一切顺利的话，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，
+
+不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
+
+key所在:C://user//.ssh//
+
+2、进入个人设置页面settings
+
+3、选择左边选项SSH and GPG keys
+
+4、添加SSH KEY
+
+5、打开id_rsa.pub内容粘贴到内容框,然后提交
+
+6、多个电脑提交多个，每个电脑的KEY都不一样
+
+绑定远程库
+1、在github上新建一个Create a new repo
+
+2、使用命令：git remote add origin git@github.com:c297131019/learngit.git ，具体库名具体设置
+
+3、git push -u origin master
+
+PS： 如果绑定错误：fatal: remote origin already exists.
+    解决办法如下：
+    1、先输入$ git remote rm origin
+    2、再输入$ git remote add origin git@github.com:c297131019/learngit.git 就不会报错了！
+
+在Android studio 第一次提交项目的时候：
+	git config --global user.name ""
+
+	git config --global user.email ""
+
+	git init
+
+	git add -A
+
+	git commit -m ""
+
+	git remote add origin  git@github.com:c297131019/learngit.git 
+
+	git push -u origin master
+

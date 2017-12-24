@@ -1,0 +1,141 @@
+增：
+---------------------------------
+vim xxx.txt		//新建一个记事本，在记事本状态下按shift + wq退出编辑状态
+
+git init xx		//创建一个管理库
+
+git clone xxx/ xxxx	//克隆一个管理库，库名/ 新库名
+
+git clone git@github.com:c297131019/test.git	//克隆远程库,只能克隆master主分支，其他分支需要创建远程分支
+
+git add a.txt		//添加到暂存区
+
+git commit -m"第一次提交" //提交任务到当前分支, -m表示提交的信息或标题
+
+git branch xx		//创建分支
+
+git checkout -b xxx	//创建分支并切换分支
+
+git checkout -b dev origin/dev	//创建远程库的某个分支 origin=库 dev=分支
+
+git clone git@github.com:c297131019/text.git	//克隆远程仓库,但最好回退到仓库外的目录执行，不然会克隆到当前目录
+
+git stash apply stash@{0}	//制定恢复某个储藏分支
+
+git stash apply		//恢复储藏的内容不删除，需要手动删除,list里之后一条分支的时候使用
+
+git stash drop		//删除储藏分支
+
+git stash pop 		//恢复储藏分支并删除
+
+git tag v0.1		//默认标签打在该分支最新commit
+
+git tag v0.2 89886f	//为某个commit ID打标签	
+
+git tag -a v0.3 -m"version v0.3" 09808f		//指定打标签 -a=指定标签名,-m=说明 -09808f=commit ID
+
+git tag -s v0.2 -m "signed version 0.2 released" fec145a	//私钥标签，必须配置PGP KEY
+
+删：
+----------------------------------
+git branch -d xx	//删除分支
+
+git branch -D xx	//在没合并之前不允许删除，该方法可以将没合并的分支强行删除
+
+git rm	a.txt		//删除暂存区不需要的文件
+
+git rm --cached a.txt	//只删除暂存区不删除工作区文件
+
+git reset HEAD a.txt	//撤销暂存区文件，把文件重新放回工作区
+
+git stash drop		// 删除暂存区
+
+
+改：
+-----------------------------------
+git stash			//储藏当前分支
+
+git merge --on-ff -m"merge with no-ff" xx	//常用的方法，合并分支并提交，并且不会销毁分支信息
+
+git merge xx			//合并分支,需要切换为主分支，再合并该分支,合并后删掉分支
+
+git checkout -- readme.txt	//不管有没有添加到暂存，都会让工作区的文件回到上一个commit或add版本
+
+git checkout xx			//切换分支
+
+git reset --hard HEAD^		//回退某个历史记录，HEAD^ 表示上一个版本，HEAD^^ 上上一个版本 HEAD~100  上100个版本
+
+git reset --hard 97665675	//如果切换到上一个版本，最新版本会不见，使用该命令，去找回最新版本，使用版本的前7位ID查询即可
+
+git tag -d v0.9				//先删本地
+
+git push origin :refs/tags/v0.9		//再删远程,注意有冒号的
+
+查：
+----------------------------------
+git remote -v		//查看远程仓库，如果没有推送权限，就看不到push的地址。
+
+git log --graph		//查看合并图
+
+git branch		//查看当前分支
+
+cat a.txt		//查看文本内容，是以UTF-8打开，window记事本不是用UTF-8存的
+
+la -ls			//查看当前目录下的所有文件
+
+git log --pretty=oneline	//查询库里每个版本的ID
+
+git reflog			//查询操作记录
+
+git diff a.txt		//如果添加到了暂存区之后又对文件修改了，这个命令可以查看被修改的内容，之后需要再次添加
+
+git diff HEAD -- a.txt	//查看工作区和库里最新版本的区别
+
+git status		//查看工作区和暂存区是否一致
+
+git tag			//查看所有标签
+
+git show v0.9		//查看某个版本的标签
+
+分支：
+-----------------------------
+查看分支：git branch
+
+创建分支：git branch xx
+
+切换分支：git checkout xx
+
+创建+切换分支：git checkout -b xxx
+
+合并某分支到当前分支：git merge xxx
+
+删除分支：git branch -d xxxx
+
+推送：
+------------------------------------------
+git push origin v1.0		//推送某个标签
+
+git push origin --tags		//推送所有标签
+
+git push -u origin master	//把某个分支推送到服务器，第一次推送要加 -u， origin=仓库名 master=需要推送的分支，每个分支的第一次都要用-u
+
+
+PS：如果提交错误进入编辑状态，一直报红字，请输入：wq!
+
+配置：
+-----------------------------------------------------
+git config --global user.name 陈志坚				//配置用户名,也可以更改用户
+
+git config --global user.email jian_workemail@163.com		//配置用户邮箱
+
+git config --global --add user.name xx				//添加用户
+
+git config --get user.name					//获取最新添加的用户，只能获取最新
+
+git config --list --global					//获取用户集合
+
+git config --global --unset user.name xx			//删除用户
+
+git config --global alias.co  checkout				//自定义快捷字符，co 快捷字符，按两次Tab输出checkout	
+
+git config --global color.ui true

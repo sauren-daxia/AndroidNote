@@ -1,0 +1,16 @@
+一、用apktool
+
+1、将apk放到apktool目录，然后进入cmd
+
+2、输入 apktool d xx.apk
+
+3、使用apktool反编译会在C:\Users\Jason Chen\AppData\Local\apktool\framework 生成apk，切记删除
+
+二、用dex2jar
+1、将APK后缀改为zip，最好新建一个文件夹再解压，解压出来获得classes.dex文件，复制到dex2jar目录下
+
+2、输入 d2j-dex2jar.bat   classes.dex
+
+3、获得 classes-dex2jar
+
+4、使用jd-gui 打开 classes-dex2jar

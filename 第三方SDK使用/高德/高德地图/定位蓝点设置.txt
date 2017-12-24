@@ -1,0 +1,30 @@
+1、构造
+	MyLocationStyle locationStyle = new MyLocationStyle();
+
+2、设置
+locationStyle.interval(2000);                               //设置连续定位时间的间隔
+
+locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);   //设置定位模式
+
+locationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.location));      //自定义小蓝点图标
+
+locationStyle.anchor(0.0f, 1.0f);		//设置定位蓝点图标的锚点方法。
+
+locationStyle.strokeColor(int color);		//设置定位蓝点精度圆圈的边框颜色的方法。
+
+locationStyle.radiusFillColor(int color);	//设置定位蓝点精度圆圈的填充颜色的方法。
+
+locationStyle.strokeWidth(float width);		//设置定位蓝点精度圈的边框宽度的方法。
+
+* 定位模式
+* MyLocationStyle.LOCATION_TYPE_SHOW               //只定位一次。
+
+* MyLocationStyle.LOCATION_TYPE_LOCATE             //定位一次，且将视角移动到地图中心点。
+
+* (MyLocationStyle.LOCATION_TYPE_FOLLOW            //连续定位、且将视角移动到地图中心点，定位蓝点跟随设备移动。（1秒1次定位）
+
+* MyLocationStyle.LOCATION_TYPE_MAP_ROTATE         //连续定位、且将视角移动到地图中心点，地图依照设备方向旋转，定位点会跟随设备移动。（1秒1次定位）
+
+* MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE    //连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）默认执行此种模式。
+
+

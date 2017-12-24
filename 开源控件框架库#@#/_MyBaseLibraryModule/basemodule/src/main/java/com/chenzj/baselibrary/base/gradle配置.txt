@@ -1,0 +1,61 @@
+APP.build.gradle
+android {
+       defaultConfig {
+                multiDexEnabled true
+                //阿里路由配置
+                javaCompileOptions {
+                        annotationProcessorOptions {
+                        arguments = [ moduleName : project.getName() ]
+                        }
+                }
+       }
+       //不支持多语言
+        lintOptions{
+                checkReleaseBuilds false
+                abortOnError false
+        }
+         buildTypes {
+
+                debug {
+                            //是否开启日志
+                            buildConfigField("boolean", "LOG_DEBUG", "true");
+                            //BASEURL
+                            buildConfigField("String", "BASE_URL", "\"http://192.168.4.106:8080/xxxx\"")
+                            //关于更多的KEY或者全局值都可以配置
+                }
+                release {
+                            //是否混淆
+                            minifyEnabled false
+                            //优化
+                            zipAlignEnabled true
+                            //移除未使用的资源文件
+                            shrinkResources true
+                            //是否开启日志
+                            buildConfigField("boolean", "LOG_DEBUG", "false");
+                            //BASEURL
+                            buildConfigField("String", "BASE_URL", "\"http://192.168.4.106:8080/xxxx\"")
+                            //关于更多的KEY或者全局值都可以配置
+
+                }
+
+         }
+}
+
+
+
+APP.gradle
+    buildscript {
+                dependencies {
+                             classpath 'com.android.tools.build:gradle:2.3.3'
+                             //-------------------必须
+                             classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+                             //-------------------必须
+                }
+    }
+
+    allprojects {
+                repositories {
+                             jcenter()
+                             maven { url 'https://jitpack.io' }
+                }
+    }

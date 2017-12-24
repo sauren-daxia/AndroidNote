@@ -1,0 +1,12 @@
+TimePicker
+
+属性：
+---------------------------------
+setIs24HourView(true)		//设置24小时制
+
+
+事件：
+----------------------------------
+setOnTimeChangedListener()		//时间改变监听器
+	
+onTimeChanged(T t ,int hour, int minute)	//第一个参数是用户改变后的时针时间，第二个是用户改变后的分针时间

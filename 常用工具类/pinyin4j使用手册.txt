@@ -1,0 +1,35 @@
+新建一个类：
+
+1、定义以个全局变量
+
+	private HanyuPinyinOutputFormat format = null;
+
+2、提供一个无参构造，在构造中创建format对象
+
+	format = new HanyuPinyinOutputFormat();
+
+	format.setToneType(HanyunPinyinToneType.xx)	//设置声调格式
+
+   值：	HanyuPinyinToneType.WITH_TONE_NUMBER 用数字表示声调，例如：liu2
+	HanyuPinyinToneType.WITHOUT_TONE 无声调表示，例如：liu
+	HanyuPinyinToneType.WITH_TONE_MARK 用声调符号表示，例如：liú
+	
+	format.setCaseType(HanyuPinyinCaseType); 	//设置大小写格式
+	
+   值：	HanyuPinyinCaseType.LOWERCASE 转换后以全小写方式输出
+	HanyuPinyinCaseType.UPPERCASE 转换后以全大写方式输出
+
+
+	format.setVCharType(HanyuPinyinVCharType);	//设置特殊拼音ü的显示格式：
+	
+    值：HanyuPinyinVCharType.WITH_U_AND_COLON 以U和一个冒号表示该拼音，例如：lu:
+	HanyuPinyinVCharType.WITH_V 以V表示该字符，例如：lv
+	HanyuPinyinVCharType.WITH_U_UNICODE 以ü表示
+
+3、提供单个字符转换方法
+
+	Pinyin[] pinyin = PinyinHelper.toHanyunPinyinStringArray(char c , format)	
+	//返回的是该字符的汉语拼音,例如：李,返回:li ,如果不是字符则返回null
+
+4、提供字符串转换方法
+	循环字符串，调用单个字符转换方法，如果字符为null则原样添加到Stringbuilder中，

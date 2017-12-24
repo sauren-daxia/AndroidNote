@@ -1,0 +1,37 @@
+1、添加依赖
+		compile 'com.airbnb.android:lottie:2.2.5'
+
+2、在项目gradle中添加
+	     
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://maven.google.com" }
+    }
+}
+
+3、把资源文件放在Main下的assets目录
+
+//hello-world.json就是资源
+
+4、XML布局中使用
+  <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="hello-world.json" 
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
+5、有必要可以在代码中使用，这样就不需要在布局中设置
+	   animationView = (LottieAnimationView) findViewById(R.id.animation_view);
+        animationView.setAnimation("hello-world.json");
+        animationView.loop(true);
+        animationView.addAnimatorUpdateListener(this);
+
+	 if (!isPaly) {
+            animationView.setProgress(animProgress);
+            animationView.playAnimation();
+        } else {
+            animationView.pauseAnimation();
+        }

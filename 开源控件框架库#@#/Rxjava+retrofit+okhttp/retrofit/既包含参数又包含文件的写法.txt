@@ -1,0 +1,11 @@
+1、参数列表
+@Multipart
+@POST(RxUrl.UPDATA_IMG)
+Observable<BaseBean<UpdataImgBean>> updataToPHP(@Part("id") RequestBody id, @Part MultipartBody.Part file);
+
+2、生成参数
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/png"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+        RequestBody requestId = RequestBody.create(null, UserManager.getInstance().getBean().getId() + "");
+
+PS:有一点要注意，用自己的retrofit框架的时候，不能添加参数到拦截里面。。不然传不了图片

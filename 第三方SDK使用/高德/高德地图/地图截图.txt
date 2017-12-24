@@ -1,0 +1,49 @@
+/**
+ * 对地图进行截屏，未测试成功，待研究
+*/
+aMap.getMapScreenShot(new OnMapScreenShotListener() {
+        @Override
+        public void onMapScreenShot(Bitmap bitmap) {
+
+        }
+
+        @Override
+        public void onMapScreenShot(Bitmap bitmap, int status) {
+          SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+          if(null == bitmap){
+            return;
+          }
+          try {
+            FileOutputStream fos = new FileOutputStream(
+                Environment.getExternalStorageDirectory() + "/test_"
+                    + sdf.format(new Date()) + ".png");
+            boolean b = bitmap.compress(CompressFormat.PNG, 100, fos);
+            try {
+              fos.flush();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+            try {
+              fos.close();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+            StringBuffer buffer = new StringBuffer();
+            if (b)
+              buffer.append("截屏成功 ");
+            else {
+              buffer.append("截屏失败 ");
+            }
+            if (status != 0)
+              buffer.append("地图渲染完成，截屏无网格");
+            else {
+              buffer.append( "地图未渲染完成，截屏有网格");
+            }
+            ToastUtil.show(getApplicationContext(), buffer.toString());
+
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
+
+        }
+      });

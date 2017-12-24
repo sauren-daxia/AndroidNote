@@ -1,0 +1,39 @@
+1、下载并解压SDK
+
+2、将SDK里的文件复制到项目中
+	libs：
+		jar文件复制到Project视图的libs中
+		各种SO文件复制到Project视图的APP -- src -- main -- jniLibs 中，jinLibs要自己创建
+	res:
+		把里面的四个文件复制到res中
+
+3、将SDK里AndroidMainfest.xml里的权限之类的东西复制粘贴到自己项目里，具体复制什么请看文档。千万别忘了修改三个内容
+
+	1、最后一个activity需要配置官方申请的key
+	2、自定义的Receive，如果不需要可以删除，但几乎都需要的
+	3、其中有一个SDK自带的Service，会互相的唤起使用极光推送的APP，没需要就删掉
+
+4、在Application中注册
+	JPushInterface.init(this);
+        JPushInterface.setDebugMode(true);	//真正的APP中设为false
+
+5、自定义的Receiver需要接收的类型的静态值需要参考文档，下面是最基本的，复制粘贴到Receiver中即可
+	 Bundle bundle = intent.getExtras();
+        Log.d("info", "onReceive - " + intent.getAction());
+
+        if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
+        }else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
+            Log.d(TAG, "onReceive: "+"收到了自定义消息。消息内容是：" + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+            // 自定义消息不会展示在通知栏，完全要开发者写代码去处理
+        } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
+            Log.d(TAG, "onReceive: "+"收到了通知");
+            // 在这里可以做些统计，或者做些其他工作
+        } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+            Log.d(TAG, "onReceive: "+"用户点击打开了通知");
+            // 在这里可以自己写代码去定义用户点击后的行为
+            Intent i = new Intent(context, MainActivity.class);  //自定义打开的界面
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+        } else {
+            Log.d("info", "Unhandled intent - " + intent.getAction());
+        }

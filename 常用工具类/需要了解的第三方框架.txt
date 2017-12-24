@@ -1,0 +1,5 @@
+vitamio		//视频播放
+
+fresco		//图片下载
+
+zxing		//二维码扫描

@@ -1,0 +1,12 @@
+1、使用
+       UploadPhotoBean img1 = UploadImgUtils.createUploadPhotoBean("img", UploadPhotoBean.MediaType.JPG, "xxxx.jpg");
+       UploadPhotoBean img2 = UploadImgUtils.createUploadPhotoBean("img", UploadPhotoBean.MediaType.JPG, "xxxx.jpg");
+       UploadImgUtils.getPhoto(this, new UploadImgUtils.OnPhotoResultListener<BaseBean>() {
+            @Override
+            public void onPhoto(BaseBean photo) {
+                //服务器返回的数据
+            }
+        },img1,img2);
+
+2、修改
+      UploadImgUtils.updataToService()方法是没有传递参数的，如有参数需要自己到代码里面添加

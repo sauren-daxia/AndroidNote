@@ -1,0 +1,19 @@
+   toolbar
+                .Build()
+                .setLeft(
+                        new TitleBar.Attr(this, "返回", R.mipmap.ic_launcher_round,
+                        9, R.color.color999999, Gravity.RIGHT, 18, 18, 5)
+                )
+                .setRightTwoImg(R.mipmap.ic_launcher)
+                .setRinghtOne("扫一扫", R.mipmap.ic_launcher_round)
+                .setTitleText("我不知道啊我不知道啊我不知道啊我不知道啊")
+                .setLeftClickListener(v -> {
+                    Toast.makeText(this, "点击了返回", Toast.LENGTH_SHORT).show();
+                })
+                .setRightOneClickListener(v -> {
+                    Toast.makeText(this, "点击了左边第一个", Toast.LENGTH_SHORT).show();
+                })
+                .setRightTwoClickListener(v -> {
+                    Toast.makeText(this, "点击了左边第二个", Toast.LENGTH_SHORT).show();
+                })
+                .build();

@@ -1,0 +1,46 @@
+步骤：
+
+PS:如果不想别的activity或应用访问自己的activity，可以在注册<activity>时，添加android:exported = "false"
+
+1、在主界面定义Intent	！！如果没有可以不用添加
+Intent intent = new Intent();
+
+2、获取到需要跳转界面在配置文件中的<action>字符串
+
+	假如跳转页面的<action>为"aaa"
+	intent.setAction("aaaa")
+	并且，跳转界面的<intent-filter>需要添加一个默认
+	<category android:name="android.intent.category.DEFAULT"/>，否则会报错
+	
+	ps:<action>是自定义的，可能有多个，但是只需要指定其中的一个即可
+
+3、添加需要跳转界面的<categroy>字符串	！！如果没有可以不用添加
+	
+	假如跳转页面的<categroy>为"123"
+	假如跳转页面的<categroy>为"abc"
+	intent.categroy("123");	
+	intent.categroy("abc");
+
+	ps:<date>是自定义的，如果跳转页面的<categroy>有多个，就必须添加多个，并且，跳转界面的<intent-filter>需要添加一个默认
+	<category android:name="android.intent.category.DEFAULT"/>，否则会报错
+
+4、添加需要跳转界面的<data>字符串	！！如果没有可以不用添加
+
+	<data android:scheme = "http" android:host = "www.baidu.com" path = "data" >
+
+	scheme  :  使用的协议
+	
+	path : 绝对路径 www.baidu.com/img/data/xx/xxx	(推荐)
+
+	host : 主机名 www.baidu.com
+	
+	假如跳转页面的<categroy>为"123"
+	假如跳转页面的<categroy>为"www.baidu.com"
+	intent.setDate(URI.parse("www.baidu.com"))
+
+	ps:<date>是自定义的，可能有多个，但是只需要指定其中的一个即可
+	并且，跳转界面的<intent-filter>需要添加一个默认
+	<category android:name="android.intent.category.DEFAULT"/>，否则会报错
+
+4、使用startActivity跳转
+startActivity(intent);

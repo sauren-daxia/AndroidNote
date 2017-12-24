@@ -1,0 +1,49 @@
+TextView用于文字的显示：		字体单位：sp	长度单位：dp
+	
+属性：
+--------------------------------------------------
+android:id				//控件名称
+
+--------------------------------------------------
+android:layout_width			//控件宽度
+
+wrap_content				//包裹实际文本内容，文本有多长宽度就有多长
+match_parent				//当前控件铺满父类容器---->2.3API之后出现
+fill_parent				//当前控件铺满父类容器---->2.3API之前出现
+--------------------------------------------------
+
+android:layout_height			//控件高度
+
+android:text				//文本内容
+
+android:textSize			//本文大小
+
+android:textColor			//文本颜色
+
+android:background			//控件背景
+
+android:gravity				//设置内容的对其方式
+
+center					//水平对其
+
+android:ellipsize="marquee"		//跑马灯模式
+
+android:focusable="true"		//获取焦点
+
+android:marqueeRepeatLimit="marquee_forever"	//循环播放
+--------------------------------------------------
+android:drawableTop			//设置图片在控件上面
+android:drawableBottom			//设置图片在控件下面
+
+--------------------------------------------------
+android:layout_marginLeft		//设置间距
+android:layout_marginTop		//设置间距
+--------------------------------------------------
+android:singleLine 		//限制一行，true
+
+android:singleLine = "true"
+--------------------------------------------------
+
+方法：
+--------------------------------------------------
+setText(String text)			//在代码中设置Text的值

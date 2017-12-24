@@ -1,0 +1,78 @@
+1、XML属性：	xmlns:sliding="http://schemas.android.com/apk/res-auto"		//自定义属性
+
+<com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
+        xmlns:sliding="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/slidingmenulayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffffff"
+         />
+
+  sliding:behindOffset="0dp"
+        
+  sliding:behindScrollScale="1"
+
+  sliding:fadeDegree="0.3"
+
+  sliding:fadeEnabled="true"
+
+  sliding:touchModeAbove="fullscreen"
+
+  sliding:viewAbove="@layout/layout"				//引用布局文件作为主视图
+
+
+2、代码方法 
+  menu.toggle();						//动态判断自动关闭或开启SlidingMenu
+  用法：
+  if (mLeftMenu.isMenuShowing()) //判断是否是显示，是的话让他关闭，一般用于点击监听
+  mLeftMenu.toggle();
+
+  menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);		//设置侧滑菜单的宽度，使用Res文件定义的值
+  menu.setBehindOffset(R.dimen.slidingmenu_offset);		//设置侧滑菜单的宽度
+
+  menu.setShadowWidthRes(R.dimen.shadow_width);			//设置侧滑菜单的阴影的宽度,使用res文件定义的宽度
+  menu.setShadowWidth(300)					//设置侧滑菜单的阴影的宽度,使用随便写的宽度
+
+  menu.setShadowDrawable(R.drawable.shadow);			//是侧滑菜单的阴影效果
+
+  slidingMenu.setFadeEnabled(true);				//是否使用淡入淡出效果
+	
+  menu.setFadeDegree(0.35f);					//侧滑菜单淡入淡出的效果值
+
+  menu.setMenu(R.layout.leftmenu);				//设置左边的侧滑菜单布局文件
+
+  menu.setSecondaryMenu(R.layout.right_menu_frame);		//设置右边的侧滑菜单布局文件
+
+  mLeftMenu.setMode(SlidingMenu.LEFT_RIGHT );			//设置滑动的模式，左边滑动菜单还是右边滑动菜单，或者是双向侧滑
+
+3、监听
+/** 
+     * 设置打开监听事件，当滑动菜单被打开时调用 
+     */  
+    public void setOnOpenListener(OnOpenListener listener) {  
+        mOpenListener = listener;  
+    }  
+  
+    /** 
+     * 设置关闭监听事件，当滑动菜单被关闭时调用 
+     */  
+    public void setOnCloseListener(OnCloseListener listener) {  
+        //mViewAbove.setOnCloseListener(listener);  
+        mCloseListener = listener;  
+    }  
+  
+    /** 
+     * 设置打开监听事件，当滑动菜单被打开过之后调用 
+     */  
+    public void setOnOpenedListener(OnOpenedListener listener) {  
+        mViewAbove.setOnOpenedListener(listener);  
+    }  
+  
+    /** 
+     * 设置关闭监听事件，当滑动菜单被关闭过之后调用 
+     */  
+    public void setOnClosedListener(OnClosedListener listener) {  
+        mViewAbove.setOnClosedListener(listener);  
+    }  
+
+

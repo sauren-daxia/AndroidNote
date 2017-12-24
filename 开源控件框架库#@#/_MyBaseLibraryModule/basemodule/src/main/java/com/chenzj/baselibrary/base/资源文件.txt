@@ -1,0 +1,10 @@
+1、所有关于base的资源文件都写在my_resource
+
+2、图片、drawalbe、anim之类的文件只能单个复制，关键的文件有
+    pickerview_layout_basepickerview.xml
+    pickerview_dialog_scale_in.xml
+    pickerview_dialog_scale_out.xml
+    pickerview_slide_in_bottom.xml
+    pickerview_slide_out_bottom.xml
+    window_bottom_in.xml
+    window_bottom_out.xml

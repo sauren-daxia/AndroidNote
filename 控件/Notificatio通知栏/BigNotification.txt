@@ -1,0 +1,45 @@
+1、构造通知栏条目，最高高度64dp
+
+	NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+	//设置三个主要属性，必须设置的
+	builder.setSmallIcon(R.drawable.xx)	//设置小图标
+
+	builder.setContentTitle("")	//设置标题
+
+	builder.setContentText("")	//设置内容
+
+2、设置大视图样式
+
+	NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+
+	style.setBigContentTitle("");		//大视图标题
+
+	style.setSummaryText("")		//小标题
+
+	style.addLine("")		//添加一行的内容
+
+	builder.setStyle(style)
+
+3、创建一个通知栏对象
+
+	Notigication n = builder.build();
+
+4、设置通知栏点击事件
+
+	Intentn intentn = new Intent(thi,xx.class);
+	PendingIntent pi = PendingIntent.getAcitivity(this, 0 , intent, PengdingIntent.FLAG_UPDATE_CURRENT);
+
+	PengdingIntent.FLAG_UPDATE_CURRENT	//如果pi存在则更新Intent，没有则创建
+	PengdingIntent.FLAG_CANCEL)CURRENT	//取消当前pi，创建新的
+	PengdingIntent.FLAG_NO_CREATE		//如果有则创建，没有则不创建
+	PengdingIntent.FLAG_ONE_SHOT		//只使用一次
+	
+	builder.setContentIntent(pi)
+
+5、获取系统通知栏管理器，然后发送通知
+
+	NotificationManager nm = (Notification)getSystemService(Context.NOTIFICATION_SERVICE);
+
+	int NID = 0x1;
+	nm.notify(NID_1, n);		//发送通知

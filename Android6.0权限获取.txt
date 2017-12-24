@@ -1,0 +1,20 @@
+动态获取权限：
+
+public String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,
+            Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
+
+ ActivityCompat.requestPermissions(this,mPermissionList, 100);
+
+ 判断是否有该权限
+  if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+      != PackageManager.PERMISSION_GRANTED){
+
+
+	}
+
+是否禁止
+if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            Toast.makeText(context, "您已禁止该权限，需要重新开启。", Toast.LENGTH_SHORT).show();
+}

@@ -1,0 +1,47 @@
+1、自定义ViewPager
+
+2、在setAdapter的时候调用Timer设定好的切换任务
+
+3、在OnTouch时间中，当Down的时候停止任务，当UP的时候再启动任务
+
+4、使用Handler切换视图
+
+Stop任务：
+	public void stopTask() {
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
+	}
+
+Start任务：
+
+public void startTask() {
+		if (timer == null) {
+			timer = new Timer();
+			task = new TimerTask() {
+				@Override
+				public void run() {
+					index = getCurrentItem();
+					index++;
+					if (index >= getAdapter().getCount()) {
+						index = 0;
+					}
+					handler.sendMessage(handler.obtainMessage(0, index, 0));
+					
+				}
+			};
+			timer.schedule(task, 2500, 2500);
+		}
+	}
+
+Handler任务：
+private Handler handler = new Handler(new Handler.Callback() {
+
+		@Override
+		public boolean handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			setCurrentItem(msg.arg1, true);
+			return false;
+		}
+	});

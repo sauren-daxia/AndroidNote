@@ -1,0 +1,43 @@
+
+粘滞广播只适用于长时间停留的广播，但会产生更多的资源浪费，电源就属于粘滞广播
+
+两种注册方式：
+
+权限：<BROADCAST_STICKY>
+
+1、动态注册
+	
+	1.定义一个内部类继承BroadCastReceive
+
+	2.创建好内部类对象
+
+	3、定义一个IntentFilter类用于广播接收者的注册,并设置优先级
+		IntentFilter if = new IntentFilter();
+		
+		if.addAction(Intent.ACTION_BATTERY_CHANGED);	//电量改变对应ACTION		
+
+		registerReceiver(xx,if);
+
+	4、内部类的方法中intent参数，获取Action值用于判断是哪个广播
+
+		intent.getAction().equals(xx);
+
+		itentn.getInt(BrtteryManager.EXTRA_LEVEL,0);	//获取当前电源值，需要计算百分比
+
+	5、在Activity的onDestroy方法中取消注册
+
+		unRegisterReceiver(xxx);
+
+2、静态注册广播接收者
+
+	1、定义一个类继承自BroadCastReceive
+
+	2、在配置文件中<application>中自定义一个<receive>标签，在<receive name = 类名>标签中定义一个<action name = xx>
+
+	3、内部类的方法中intent参数，获取Action值用于判断是哪个广播
+
+		intent.getAction().equals(xx);
+
+	4、在Activity的onDestroy方法中取消注册
+	
+		unRegisterReceiver(xxx);

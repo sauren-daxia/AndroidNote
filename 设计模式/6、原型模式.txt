@@ -1,0 +1,32 @@
+使用场景：
+	需要创建多个类似的对象的时候
+	比如：
+		创建三个人类，只是名字不同
+
+	基本使用:
+		class 人类 implements Cloneable{
+			public String name;
+			public ArrayList<String> list = ArrayList<>();
+		
+			
+			//这里要注意，clone方法是Obejct的protected的，需要手动修改为public
+			@Override
+			public Object clone() throws CloneNotSupportedException {
+
+				//调用Object的clone就会把原型的所有基本类型都克隆过来
+				A a = (A) super.clone();	
+
+				//对于引用类型，则需要手动调用clone，如果该类没有clone则需要添加
+				a.list = (ArrayList<String>) this.list.clone();
+
+				return a;
+			}
+		}
+
+		mian(){
+			人类 A = new 人类();
+			A.name = "张三";
+
+			人类 B = A.clone();
+			B.name = "李四";
+		}

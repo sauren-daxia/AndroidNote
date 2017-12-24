@@ -1,0 +1,54 @@
+SQLiteOpenHelper
+	作用：创建数据库、创建表、升级数据库、得到数据库对象
+
+PS：现有的数据库文件复制到DATA目录里时一定要判断文件服目录是否存在，不存在则创建
+
+步骤1：添加父类构造，重写onCreate() 、 onUpgrade() 方法
+
+	super(context,"xx" ,null , xx)		
+	
+	//第一个：上下文，
+
+	第二个：数据库文件名
+
+	第三个：null 
+
+	第四个：版本
+
+步骤2、在onCreate方法里，写建表语句
+
+	db.execSQL("xxxxxx....")	用SQLite语句写
+
+
+步骤3、
+	在onUpgrade内写升级数据库内容
+		假设1.0版本只有name,age两个字段，1.1时添加了一个字段：
+		double src = 1.0
+		double newsrc = 1.1
+		if(src == 1.0 && newsrc ==1.1){
+			db.execSQL("")	//添加一个字段
+		}
+		
+		假设1.0版本只有name,age两个字段，1.2时添加了一个表：
+
+		if(src == 1.0 && newsrc == 1.2){
+			db.execSQL("");	//当用户夸版本的时候就该新建一个表
+			db.execSQL("")	//并且在原来的表添加一个字段
+		}
+
+步骤、获取数据库对象
+
+	MySql ms = new MySql(this);
+
+	SQLiteDatabase sd = ms.getReadableDatabase();	//读写数据库，但内存不足时变成只读
+
+	SQLiteDatabase sd = ms.getWritebleDatabase()	//读写数据库，但内存不足时会报错
+
+
+
+PS:
+1、onCreate方法的触发时机、触发次数
+
+	onCreate方法在对象去获取一个数据库对象时候，如果该数据库没有，就会调用，并且创建数据库
+	
+	只会触发一次

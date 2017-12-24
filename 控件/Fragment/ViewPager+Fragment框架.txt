@@ -1,0 +1,53 @@
+步骤：
+
+1、定义好Fragment碎片的子类，使用V4包
+
+2、定义好界面布局
+
+3、在主界面继承FragmentActivity，需要使用getSupportFragmentManager()方法获取FragmentManager()
+
+	MainActivity extends FragmentActivity
+
+4、自定义一个FragmentPagerAdapter，并重写方法
+
+	List<Fragment>	list;		//用于存碎片对象
+
+	public MyAdapter(fm,List<Fragment> list)	//在构造的时候初始化List
+
+	public Fragment getItem(position)
+			return list.get(position)	//重写返回碎片对象方法
+
+	public int getCount()
+			return list.size()		//重写返回List长度
+
+5、初始化控件，并将碎片对象添加进集合中
+
+	viewPager = findViewById()
+	List<Fragment> list = new xx
+	
+	list.add(new XXX)		//添加碎片对象
+
+	FPAdapter fp = new XX(list)	//创建适配器对象
+
+	viewPager.setAdapter()
+
+6、初始化子空间
+	
+	LinearLayout linear = findViewById(xxx)
+	CheckedTextView c = new CheckedTextView[linear.getChildCount()]
+	for()
+	c[i] = lienar.getChildAt(i)		
+	c[i].setOnClickListenre(this)
+
+7、设置ViewPager的改变事件
+	private int indexTab = -1;
+	public void onPagerScrolled
+		if(idnexTab == position)return 		//如果点中的按钮的索引等于ViewPager的索引则return
+
+		c[position].toggle();
+		c[indexTab].toggle();
+		indexTab = position;
+
+8、设置按钮点击事件
+
+	for()

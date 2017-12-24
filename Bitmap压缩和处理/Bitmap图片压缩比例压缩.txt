@@ -1,0 +1,45 @@
+比例压缩：改变的是Bitmap的大小，减少像素，适合缩略图
+
+1、获取比例压缩对象，并设置只获取Bitmap边界信息，不存入内存
+	
+	Options opts = new Options();
+
+	opts.inJustDecodeBounds = true;
+
+2、获取获取图片资源并和比例压缩对象绑定在一起
+
+	BitmapFactory.decodeResource(getResources().R.drawable.xx.opts);	//返回的Bitamp对象是空的
+
+3、获取到图片的宽高并设置要压缩的宽高
+
+	int width = opts.outWidth;
+
+	int height = opts.outHeight;
+
+	int dstWidth = 100;
+
+	int dstHeight = 50;
+
+4、计算压缩值
+	int size = 0;
+	if(width / height > dstWidth / dstHeight){
+		size = width / dstWidth
+	}else{
+		size = height / dstHeight;
+	}
+	
+	if(size == 0){
+		size = 1;
+	}
+
+5、加载设置好的比例对象
+	
+	opts.inSampleSize = size;	//设置压缩系数
+
+	opts.inJustDecodeBounds = false;	//加载到内存
+
+	Bitmap dstBitmap = BitmapFactory.decodeResource(getResource().R.drawable.xx,opts);
+
+	image.setImageBitmap(dstBitmap);
+
+	

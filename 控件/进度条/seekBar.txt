@@ -1,0 +1,26 @@
+SeekBar
+
+属性：
+--------------------------
+id
+width
+height
+secondaryProgress = "40"	//设置进度条属性
+miaxHeight = "1dp"		//设置进度条的高度
+thumb = "@drawable/..."		//设置进度条的按钮图片
+progressDrawable ="@drawable/.." //设置进度条样式第一进度的颜色
+
+方法：
+---------------------------
+setMax(int i)				//设置最大进度1--??
+setSecondaryProgress(int )		//设置第二进度
+
+事件:
+---------------------------------
+setOnSeekBarChangeListener(new OnSeekBarChangeListener)
+
+onStopTrackingTouch()		//刚放开的事件
+
+onStartTrackingTouch()		//刚按下的事件
+
+onProgressChanged(S s, int progress,boolean b)		//进度改变事件,第二个是当前进度值，第三个是判断是否手动控制进度或者自动控制进度

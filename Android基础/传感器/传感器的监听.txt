@@ -1,0 +1,25 @@
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+    		//传感器精度变化调用的方法
+	}
+
+
+
+	public void onSensorChanged(SensorEvent event) {
+		//传感器数据变化调用的方法，基本上的传感器都会返回这三个参数，只是每种传感器的值的意义不一样
+		event.values[0];	//X轴
+		event.values[1];	//Y轴
+		event.values[2];	//Z轴	
+	}	
+
+	加速传感器：Sensor.TYPE_ACCELEROMETER
+		values[0]:	//左到右为正值	//需要从重力感应中获取values[0]经过公式减去杂音，才能让这个值初始化
+		values[1]:	//假设，水平时，靠自己近为正值
+		values[2]:	//升起为正值	//会受到加速重力的影响，默认为接近9.81的值，所以要减去9.81，但是去杂音后就不需要减
+
+			float alpha = (float)0.8;	//0.8-0.9都可以
+		公式：values[0] = values[0] - (alpha * zhongli[0] + (1 - alpha) * event.values[0]);
+	
+	重力传感器：Sensor.TYPE_GRAVITY
+
+	临近传感器：Sensor.TYPE_PROXIMITY
+		values[0]	//只有一个值，并且单位是cm

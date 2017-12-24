@@ -1,0 +1,15 @@
+ImageButtom: 图片按钮
+
+属性：
+-----------------------------------
+android:src			//设置图像路径
+
+android:id			//控件名称
+
+android:size			//控件大小
+
+android:background		//设置背景颜色
+
+android:
+
+setAlpha(float f)			//设置图片透明度，0-255	

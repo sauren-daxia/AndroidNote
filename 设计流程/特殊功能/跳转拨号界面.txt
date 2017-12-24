@@ -1,0 +1,7 @@
+Intent intent = new Intent();
+
+intent.setAction(Intent.ACTION_DIAL);
+
+Intent.setDate(Uri.parse("tel:10086"))		//"tel:xxx" ∏Ò ΩπÃ∂®
+
+startActivity(intent)//

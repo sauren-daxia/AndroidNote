@@ -1,0 +1,29 @@
+Github：https://github.com/CarGuo/GSYVideoPlayer
+
+1、依赖
+	compile 'com.shuyu:GSYVideoPlayer:1.6.8'
+
+2、StandardGSYVideoPlayer基础播放器使用
+	2.1 XML使用
+		<com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+		android:layout_width="match_parent"
+		android:id="@+id/video"
+		android:layout_height="match_parent"></com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
+
+	2.2代码使用
+		video.setThumbImageView(img);				//增加封面
+		video.setUp(url, true, null, "这是title");		//设置播放url，第一个url，第二个开始缓存，第三个使用默认缓存路径，第四个设置title
+		video.getTitleTextView().setVisibility(View.GONE);	//非全屏下，不显示title
+		video.getBackButton().setVisibility(View.GONE);		//非全屏下不显示返回键
+		video.setIsTouchWiget(false);				//是否可以滑动界面改变进度，声音等
+		videoPlayer.getFullscreenButton();			//获取全屏按钮
+		video.setNeedShowWifiTip(true);				//是否显示WIFI或者流量状态
+		video.setPlayTag(TAG);					//防止错位，在ListView下有用
+		video.setPlayPosition(1);				//防止错位，在ListView下有用
+		video.setLooping(true);					//循环播放
+		video.setNeedLockFull(true);				//需要横屏锁屏按键
+		video.onVideoPause();					//在Activity.nPause()下调用，可停止播放，否则将后台播放
+		GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9);//设置显示比例，默认SCREEN_TYPE_DEFAULT ，自适应
+
+
+

@@ -1,0 +1,26 @@
+
+	RecyclerView view = findViewById(R.x.xx);
+	
+	//设置Resycler的布局模式	
+	LayoutManager manager = new LayoutManager(this);
+	//创建Resycler的数据源
+	ResyclerAdapter adapter = new ResyclerAdapter();
+	//设置Resycler的Item添加和删除动画
+	mView.setItemAnimator(new DefaultItemAnimator());
+	//设置Resycler是否包裹大小。貌似没作用
+        mView.setHasFixedSize(true);
+
+//布局模式：
+	
+	LinearLayoutManager(this,LinearManager.Horizontal,false);
+
+	GridLayoutManger(this,2,GirdLayoutManager.Horizontal,false)	//最后一个参数是否反转数据源
+
+	StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.HORIZONTAL)
+
+方法：
+adapter.notifyItemInserted(int )	//在指定一个位置插入一个Item的动画，只是动画，必须在数据源也更改，再同时调用notifyDataChange()
+adapter.notifyItemRemoved(int )		//删除指定位置的Item的动画，只是删除动画而已。
+	
+
+	

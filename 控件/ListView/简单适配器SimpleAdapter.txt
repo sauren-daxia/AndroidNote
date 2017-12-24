@@ -1,0 +1,28 @@
+SimpleAdapter ：简单适配器一点都不简单，并且使用于复杂的数据源绑定
+
+构造：
+-------------------------------
+SimpleAdapter sat = new SimpleAdapter(this,list_arr,R.layout.item,new String[]{"a","b"},new int[]{R.id.a,R.id.b});
+第一个参数：content
+
+第二个参数：date
+	    每个Map键都要与from的值一一对应
+	    数据源，由map集合组成的List集合数据源，List<map<String,xx>>;
+	    每个Map对应LiveView的一行
+	    每个Map的<键--值>必须包含所有在from中指定的键
+
+第三个参数：resource
+	    自定义的视图列表
+	    列表项的布局文件ID
+
+第四个参数：from
+	    
+	    Map中的键名
+
+第五个参数：to
+	    每个列表视图的控件R.id.xx的值构成的int数组
+	    绑定数据视图中的ID，与from成对应关系
+
+方法：
+---------------------------------
+notifyDataSetChanged()		//动态在界面增加或者改变数据的时候通知界面刷新，不然会报错

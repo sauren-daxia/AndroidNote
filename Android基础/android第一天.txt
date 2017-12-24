@@ -1,0 +1,58 @@
+1.安卓开发环境
+  a)Eclipse作为开发工具
+   1.Eclipse 
+   2.android SDK
+   3.adt(插件)
+  b)Android Studio作为开发工具
+    android SDK
+2、安卓模拟器
+  2.0 系统自带模拟器
+  2.1 genymotion模拟器
+  2.2 夜神模拟器
+  2.3 真机(安卓手机)
+3.android发展史
+  安卓之父：安迪鲁宾 Andy Rubin
+  2003年在美国，经过22个月，由于资金严重的缺口， (2005年8月)被谷歌低调收购。
+4.移动操作系统介绍
+  android、IOS、Windows phone
+5.android版本更替
+  android在1.5之后用甜点作为系统版本代号。
+  android 2.3.5
+  android 4.0 冰淇淋
+  android 5.0 棒棒糖 2014.10 
+  android 6.0 棉花糖 2015
+  android 7.0 2016
+6.开源
+7.android系统架构 4层
+8.第一个安卓项目
+  8.1 DDMS 显示已连接的设备列表
+  8.2 Logcat 用来显示项目中打印的调试信息，或项目报错的信息
+  8.3 安卓项目框架
+      1.src/： Java源代码的存放位置
+      2.gen/:存放系统自动生成的配置文件，不能修改。R.java里面生成的是资源的id，如果不能生产，则说明资源文件有
+      错误(1.xml文件中含有错误  2.资源命名错误)
+      3.assets/:也可存放资源，但不会在R.java里面生成的id，需要通过AssetManager以二进制流的形式访问。
+      4.bin/:存放应用自己生成的文件，比如apk文件 
+      5.libs/: 存放项目中使用的第三方jar包 
+      6.  资源命名规则：只能由小写字母、数字、下划线，并且数字不能开头
+        res/:用来存放应用用到的所有资源，都会在R.java中生成一个对应的资源id。
+        res/drawable/: 存放图片
+        res/layout/:存放xml的布局文件
+        res/menu/:存放选项菜单的xml配置文件
+        res/values/:存放尺寸、字符串、主题、颜色等xml资源文件
+        AndroidManifest.xml：配置文件，配置一些与应用有关的重要信息。包括：项目包名、权限、程序组件等
+      7.
+9.安卓四大组件
+   1.Activity：（翻译过来是活动）是应用程序的界面，一个应用往往有多个Activity。每个应用都有且只有一个作为入口的Activity
+   2.Service ：服务，没有界面，运行在后台，常用来在后台做数据处理或执行任务。
+   3.BroadcastReceiver： 广播接收者。android中有广播机制。
+   4.ContentProvider：内容提供者。用于实现不同的应用直接的数据共享。
+   
+
+
+
+
+
+
+
+

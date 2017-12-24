@@ -1,0 +1,5 @@
+ArrayAdapter : 数组适配器只能对数组或者集合的数据源进行绑定
+
+构造：
+---------------------------
+ArrayAdapter<String> aat =new  ArrayAdapter<String>(this,android.layout.simple_list_item_1,String[])

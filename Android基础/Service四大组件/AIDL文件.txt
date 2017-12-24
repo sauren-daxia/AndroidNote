@@ -1,0 +1,69 @@
+
+1、	新建一个包后缀.aidl，创建一个文件后缀为.aidl
+		package xxx.xx.aidl;
+		interface xx{
+			int getint();
+		}
+
+2、	定义一个类继承Service，并创建aidl类
+		.AIDL.Stub stu = new Stub()	//重写方法
+
+3、	在onBind()里返回stu
+
+4、	注册Service并提供一个跳转的<action>
+
+5、	在客户端项目里也复制一个.aidl的包
+
+6、	使用Intent跳转到Service类，并绑定
+	
+		Intent intent = new Intent("com.bwf.SERVICE");
+		bindService(intent, conn, Context.BIND_AUTO_CREATE);
+	
+7、	创建ServiceConnection类，在onServiceConnected()中获取AIDL对象
+		
+		AIDL a = (AIDL)Stud.asInterface(service);
+		a.xx()		//调用方法
+
+Android studio中：
+
+1、新建一个AIDL文件，定义好AIDL的内容，或者这个内容是在服务器写好，复制过来的文件。
+	
+	可以在Project视图下的，APP->build->generated->source->aidl->debug->包名->xxx	/找到该类
+
+	假如类名为：ICat
+
+2、定义一个类继承Service，并在onBind()方法中返回AIDL的类的实例
+
+		onBind(){
+		return .ICat.Stub stu = new Stub();
+	}
+
+3、在Activity中使用Intent绑定启动service，并定义一个ServiceConnection用于绑定成功后获取AIDL类的实例
+	private ICat icat;
+	private boolean isBound;
+
+	private ServiceConnectionn conn = new ServiceConnection(){
+		
+		在onServiceConnected()中获取AIDL对象
+		 icat = (AIDL)Stud.asInterface(service);
+		//在绑定成功后改变布尔值
+		isBound = true;
+	}
+
+	onClick(){
+	Intent Intent = new Intent(this,MyService.class);
+	bindService(intent);
+	}
+
+4、绑定成功后就可以调用AIDL的方法
+	if(icat == null){
+		return;
+	}
+	icat.SayHolle();
+
+5.最后在退出的时候解绑
+	ondestroy(){
+		if(icat != null){
+			unBind(conn);
+		}
+	}

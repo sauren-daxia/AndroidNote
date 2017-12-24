@@ -1,0 +1,33 @@
+1、创建Builder
+
+	NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+2、设置三个必要参数：
+
+	builder.setSmallIcon(R.drawable.xx);
+
+	builder.setContentTitle("")
+
+	builder.setContentText("")
+
+3、使用远程视图对象获取自定义的视图
+
+	RemoteViews views = new RemoteViews(getPackageName(), R.layout.xx);
+
+	views.setTextViewText(R.id.xx, "")	//设置某个Textview的内容
+
+	views.setImageViewResource(R.id.xx,R.xx.xx)	//设置某个ImageView的图片
+
+	views.setOnclickPandingIntent()	//设置单击事件
+
+4、将视图绑定到builder中
+
+	builder.setContent(views)
+	
+	builder.setTicker("")
+
+5、发送通知栏
+
+	NotificationManager nm =(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+	nm.notify(1,builder.build);

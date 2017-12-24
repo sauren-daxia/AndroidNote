@@ -1,0 +1,23 @@
+GitHub ：https://github.com/ACRA/acra/wiki/BasicSetup
+
+1、添加依赖：
+	compile 'ch.acra:acra:4.9.2'
+
+2、在Application中的attachBaseContext中初始化，并且设置日志发送地址
+@ReportsCrashes(
+        formUri = "http://www.backendofyourchoice.com/reportpath"
+    )
+public class MyApplication extends Application {
+	  @Override
+        protected void attachBaseContext(Context base) {
+            super.attachBaseContext(base);
+
+            // The following line triggers the initialization of ACRA
+            ACRA.init(this);
+        }
+ }
+
+3、在manifest中配置Application
+
+4、配置日志发送需要的权限
+	<uses-permission android:name="android.permission.INTERNET"/>

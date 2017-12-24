@@ -1,0 +1,20 @@
+Headler		//发送消息给界面通知更新
+
+构造：
+--------------------------
+new	Handler(Handler.Callback)	return false;
+
+
+方法：
+--------------------------
+int	what()		//获取发送信息的类型
+
+sendMessage(Message)	//发送Message消息对象
+
+sendEmptyMessage(int)	//发送消息的类型
+
+setData(bundle)		//发送键值对对象
+
+
+
+Message message = Message.obtain();	//使用消息池

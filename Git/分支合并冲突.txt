@@ -1,0 +1,12 @@
+假如：同一个文件a.txt
+
+A支线内容为 hello &	然后创建了一个支线B，B修改了内容
+B支线内容为 hello and	然后合并
+
+这时合并会报异常
+	CONFLICT (content): Merge conflict in readme.txt
+	Automatic merge failed; fix conflicts and then commit the result.
+
+再次打开文件，会显示两个的区别，修改一致后再次add commit
+
+然后合并，并删除分支

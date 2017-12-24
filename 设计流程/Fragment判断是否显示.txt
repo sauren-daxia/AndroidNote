@@ -1,0 +1,14 @@
+ 在Fragment中重写：使用于app下的Fragment，v4包下的Fragment使用懒加载
+ @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            //显示?
+        }else{
+            //隐藏?
+        }
+	//PS:貌似else才是显示
+    }
+
+PS:在点击HOME键或者其他键的时候，不会调用onHiddenChanged()。
+如果需要的话，请在Activity中监听按键，然后使用 fragmentTransaction.hide（）

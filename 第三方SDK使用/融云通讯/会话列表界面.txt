@@ -1,0 +1,38 @@
+1、创建Activity，用于承载Fragment
+	Activity布局：
+		<?xml version="1.0" encoding="utf-8"?>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+	<fragment
+		android:id="@+id/subconversationlist"
+		android:name="io.rong.imkit.fragment.SubConversationListFragment"
+		android:layout_width="match_parent"
+	        android:layout_height="match_parent" />
+	</LinearLayout>
+
+2、设置Activity配置文件
+	<!--聚合会话列表-->
+ <activity
+     android:name="io.rong.fast.activity.SubConversationListActivtiy"
+     android:screenOrientation="portrait"
+     android:windowSoftInputMode="stateHidden|adjustResize">
+
+     <intent-filter>
+         <action android:name="android.intent.action.VIEW" />
+
+         <category android:name="android.intent.category.DEFAULT" />
+
+         <data
+             android:host="io.rong.fast"
+             android:pathPrefix="/subconversationlist"
+             android:scheme="rong" />
+     </intent-filter>
+ </activity>
+
+3、跳转方法
+	//启动会话列表界面
+	if (RongIM.getInstance() != null)
+                   RongIM.getInstance().startConversationList(this);

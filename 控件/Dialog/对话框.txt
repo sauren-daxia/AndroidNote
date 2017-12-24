@@ -1,0 +1,46 @@
+AlertDialog.Builder	对话框
+
+构造：
+---------------------------
+AlertDialog.builder = new AlertDialog.Builder();		//通过静态内部类才能创建对象
+
+方法；
+-----------------------------
+create()			//获取一个AlertDialog对象
+
+setTitle(String name)		//设置对话框的标题名
+
+setIcon(int id)			//设置图片，从R文件里获取
+
+setMessage(String)		//设置提示语句
+
+setCancelable(boolean )		//设置能否通过对话框外或返回键取消对话框
+
+setItems(String[],new DialogInterface.OnClickListener(){..})	//列表式，第一个是列表字符串，第二个是点击事件
+
+setSingleChoiceItems(String[],int,new DialogInterface.OnClickListener(){..})	//单选对话框，第一个是列表字符串，第二个是默认选择
+
+setMultiChoiceItems(String[],boolean[],new DialogInterface.MultiChoiceClickListener(){..})	//第一个是列表字符串，第二个是是否选中boolean数组，
+
+show()				//显示对话框
+
+
+设置按钮：
+-----------------------------
+setNegativeButton(String name,new DialogInterface.OnClickListener(){..})	//第一个参数是按钮名，第二个是点击事件，第二个事件创建方法固定
+
+setPositiveButton(String name,new DialogInterface.OnClickListener(){..})	//第一个参数是按钮名，第二个是点击事件，第二个事件创建方法固定
+
+setNeutralButton(String name,new DialogInterface.OnClickListener(){..})		//第一个参数是按钮名，第二个是点击事件，第二个事件创建方法固定
+
+样式:
+----------------------------
+<style name="dialog" parent="@android:style/Theme.Dialog">
+<item name="android:windowFrame">@null</item><!--边框-->
+<item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+<item name="android:windowIsTranslucent">false</item><!--半透明-->
+<item name="android:windowNoTitle">true</item>
+<item name="android:background">@android:color/black</item>
+<item name="android:windowBackground">@null</item>
+<item name="android:backgroundDimEnabled">false</item><!--模糊-->
+</style>

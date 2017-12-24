@@ -1,0 +1,49 @@
+1、定义一个全局PopupWindow,在别的方法里创建好
+
+	pop = new PopupWindow(contentView ,LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+
+	第一个参数：视图View
+
+	第二个参数：宽
+
+	第三个参数：高	
+
+2、设置各种参数
+			
+	pop.setFocusable(boolean focusable)  
+	
+	pop.setTouchable(boolean touchable)  
+	
+	pop.setOutsideTouchable(boolean touchable)  
+	
+	Btimap bitmap = null;	
+	pop.setBackgroundDrawable(new BitmapDrawable(getResources(),bitmap))  	//设置一个空背景，不然会失去焦点，点哪里都没用
+
+3、显示或隐藏窗口
+
+	pop.showAsDropDown()	//相对其他控件的位置显示
+
+	pop.showAtLocation()	//相对父容器的位置显示
+
+	pop.dismiss()		//隐藏
+
+	PS:如果一个控件还没在屏幕上绘制，是得不到宽高的，控件在执行onResume之后才会绘制
+	
+	View.measure(0,0)	//测量宽高，默认为0，这个时用LayoutInflater加载的布局文件，需要添加到PopWindow的，设置过默认后，就可以获取它的宽高
+
+	pop.showAtLocation(btn,btn.getiHeight - view.getHeight(),0);
+
+	
+	
+4、設置動畫
+
+	pop.setAnimationStyle()
+
+	//如果要设置动画，要在style.xml里定义一个<style>标签，
+	<item name ="adroid.windowEnterAnimation">@anim/xxx</>	//显示时候动画
+	
+	<item name = "adroid.windowExitAnimation">@anim/xxx</>	//隐藏时候动画
+
+5、添加阴影
+
+	在contentView视图里在外面设置一个覆盖父窗口的<RelativeLayout>将它设置半透明，具体的控件写在它里面就可以实现阴影效果

@@ -1,0 +1,27 @@
+
+Uri是通用资源标志符：
+	例如：	content://com.imooc.provider/music/#
+	        |--------||----------------||----||--|
+		    A		  B	       C    D	
+	A:前缀表明数据受控于一个内容提供者，它从不修改。也就是schema
+
+	B:是指在AndroidManifest.xml中我们注册的provider中的
+
+	C：具体操作的哪个条目
+
+	D：具体指定到哪个条目的哪条记录(#代表通配符)
+
+Uri解析类：
+
+	UriMatcher:
+	
+	构造：
+		UriMatch matcher = new UriMatcher(UriMatcher.NO_MATCH);
+		UriMatcher.NO_MATCH 表示不匹配任何路径的返回码
+
+	方法：
+
+		matcher.addUri("com.bwf.provider","music",1);
+
+
+		matcher.match(uri);	//匹配通过addUri添加进来的Uri，成功则返回code值，反之返回一个-1

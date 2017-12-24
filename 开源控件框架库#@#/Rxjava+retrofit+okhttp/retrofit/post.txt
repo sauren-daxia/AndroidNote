@@ -1,0 +1,72 @@
+1、基本接口写法
+
+public interface ClassifyService {
+    @FormUrlEncoded
+    @POST("book/reviews")
+    Call<String> addReviews(@Field("book") String bookId, @Field("title") String title,
+                            @Field("content") String content, @Field("rating") String rating);
+}
+
+2、参数的写法:
+	
+	//少量参数写法
+	Call<String> addReviews(@Field("book") String bookId)
+
+	//少量参数写法，在参数里面设置是否转换为encode
+	Call<String> adddReviews(@Field(value = "book",encode = true) String bookId)
+		
+	//同类型多个参数写法
+	Call<String> addReviews(@FieldMap Map<String, String> fields);
+
+	//不同类型多个参数写法
+	Call<String> addReviews(@Body RequestParams params);
+
+	public class RequestParams{
+		public String name;
+		public int age;
+	}
+
+PS:接口地址的注意点
+	第一种：
+	http://118.244.206.136:1000/app/login/?password=123456&username=t00003
+	baseUrl应该这样写
+		baseUrl("http://118.244.206.136:1000/");
+	接口应该这样写
+		@GET("app/login/")	//问号前有/符号
+	PS:post和get不能混淆用
+
+	第二种：
+	https://api.douban.com/v2/book/search?q=%E5%B0%8F%E7%8E%8B%E5%AD%90&tag=&start=0&count=3
+	baseUrl应该这样写
+		baseUrl("https://api.douban.com/v2/")
+	接口应该这样写
+		@GET("book/search")	//问号前没有/符号
+	
+
+3、异步调用
+
+	Retrofit retrofit = new Retrofit.Builder()
+	 .baseUrl("https://api.douban.com/v2/")				//Base链接
+	.addConverterFactory(GsonConverterFactory.create())		//使用什么解析json。可以不写	
+	.client()							//可以使用OK作为底层网络访问框架
+	.build();
+
+	BlueService service = retrofit.create(BlueService.class);
+
+	Call<BookSearchResponse> call = service.addReviews("小王子", "", 0, 3);
+
+	//异步
+	call.enqueue(new Callback<ResponseBody>() {  
+	 @Override //成功
+	 public void onResponse(Call<ResponseBody> call,
+		 Response<ResponseBody> response) {
+		 Log.v("Upload", "success");
+	}
+
+	@Override //失败	
+	public void onFailure(Call<ResponseBody> call, Throwable t) {
+	  Log.e("Upload error:", t.getMessage());
+	}
+
+4、同步调用
+	BookSearchResponse response = call.execute().body();

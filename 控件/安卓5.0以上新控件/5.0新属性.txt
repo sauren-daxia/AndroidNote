@@ -1,0 +1,17 @@
+属性：
+------------------------------
+elevation = "1dp"	//设置阴影效果
+
+android:tint="#B4BCBC"	//设置图片的颜色
+
+android:colorControlHighlight：设置波纹颜色
+
+android:colorAccent：设置checkbox等控件的选中颜色
+
+android:background="?android:attr/selectableItemBackground"波纹有边界		//前提要在主题中引用Material
+
+android:background="?android:attr/selectableItemBackgroundBorderless"波纹超出边界
+
+方法：
+------------------------------------------------------------
+setTranslationZ(int)	//设置Z轴的高度一般配合elevation使用

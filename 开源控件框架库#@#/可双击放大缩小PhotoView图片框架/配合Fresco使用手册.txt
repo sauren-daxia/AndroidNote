@@ -1,0 +1,27 @@
+1、引用依赖库
+	compile 'com.facebook.fresco:fresco:0.13.0'
+	compile 'me.relex:photodraweeview:1.1.0'
+
+2、XML中使用
+	<me.relex.photodraweeview.PhotoDraweeView
+        android:layout_width="200dp"			//不一定指定宽高
+        android:layout_height="200dp" />
+
+3、代码使用
+	mPhotoDraweeView.setPhotoUri(Uri.parse("http://your.image.url"));		//使用URi方法加载图片
+
+
+	PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();	//使用Fresco的控制器？
+	controller.setUri(URI);
+	controller.setOldController(mPhotoDraweeView.getController());
+	controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+	  @Override
+	  public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+	    super.onFinalImageSet(id, imageInfo, animatable);
+	   if (imageInfo == null || mPhotoDraweeView == null) {
+	       return;
+	   }
+	   mPhotoDraweeView.update(imageInfo.getWidth(), imageInfo.getHeight());
+	  }
+	});
+	mPhotoDraweeView.setController(controller.build());

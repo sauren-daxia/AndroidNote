@@ -1,0 +1,4 @@
+在Activity中直接使用即可
+
+	用法：
+		runOnUiThread(new Runnable())

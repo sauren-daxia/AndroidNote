@@ -1,0 +1,4 @@
+ QueryBuilder<SignInDateBean> query = getAbstractDao().queryBuilder();
+            List<SignInDateBean> list = query.where(SignInDateBeanDao.Properties.Year.eq(bean.getYear()),
+                    SignInDateBeanDao.Properties.Month.eq(bean.getMonth()),
+                    SignInDateBeanDao.Properties.Day.eq(bean.getDay())).list();

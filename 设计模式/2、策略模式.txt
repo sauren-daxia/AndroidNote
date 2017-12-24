@@ -1,0 +1,54 @@
+使用场景：
+	在面对同一个功能，按照规则不同，实现内容不一样的时候使用
+	例如商场收银需求：
+				1、国庆满300返100
+				2、中秋8折
+				3、元旦买二免一
+
+	都是同一个功能————结账，但是根据规则不一样，计算的方式，或者说实现的内容不一样的时候，就可以根据策略模式使用
+
+	基本使用：
+		class 策略{
+			private 接口 A;
+
+			public 策略(接口 A){
+				this.A = A;
+			}
+		
+			public Object getResult(){
+				return A.result();
+			}
+		}
+
+		main(){
+			策略 a = new 策略(new 接口实现类());
+			输出( a.getResult )
+		}
+
+
+	结合简单工厂使用(推荐)：
+
+		class 策略{
+			private 接口 A;
+
+			public 策略(String type){
+
+				switch(type){
+					case 1:
+						A = new 接口实现类B();
+					break;
+					case 2:
+						A = new 接口实现类C();
+					break;
+				}
+			}
+		
+			public Object getResult(){
+				return A.result();
+			}
+		}
+
+		main(){
+			策略 a = new 策略(type);
+			输出( a.getResult )
+		}

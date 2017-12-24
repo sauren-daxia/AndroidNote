@@ -1,0 +1,1 @@
+compile 'fm.jiecao:jiecaovideoplayer:2.0'

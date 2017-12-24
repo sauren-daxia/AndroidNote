@@ -1,0 +1,34 @@
+1、要在app.builder.gradle里面添加开启dataBinding
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    dataBinding{
+        enabled true
+    }
+}
+
+2、布局文件格式
+<layout xmlns:android="http://schemas.android.com/apk/res/android">	//除了这条属性之外不能有其他属性
+    <data>
+        <variable	//可以有多个
+            name="user"		//相当于对象名
+            type="com.bjesc.app.testpronject2.bean.UserBean" />
+    </data>
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#292a3c"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.id}"/>		//属性的绑定方式
+   </LinearLayout>
+<layout>
+
+3、设置布局和数据
+onCreate(){
+viewModel = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+}

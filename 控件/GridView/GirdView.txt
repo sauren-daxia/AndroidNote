@@ -1,0 +1,23 @@
+GridView
+
+属性：
+---------------------------------------
+numColumns = "3" auto_fit：自动适应	//每行显示多少列
+horizontalSpacing = "10dp"		//列与列之间间隔
+verticalSpacing = "10dp"		//行与行之间间隔
+
+
+
+方法：
+----------------------------------------
+setAdapter(adapter) 
+
+
+
+
+
+事件：
+---------------------------------------
+OnItemClickListenter()			//选择项监听事件
+
+onItemCilick(AdapterView<?> parent, V,v, int position,long id)		//positon 是点击选中的索引值

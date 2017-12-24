@@ -1,0 +1,35 @@
+MultiAutoCompleteTextView : 多个匹配，类似于发邮件的多人发送
+
+属性：
+--------------------------------------------
+completionThreshold = "2"		//设置输入字符长度进行匹配
+
+方法：
+--------------------------------------------
+setAdapter(adap)			//绑定匹配器
+
+setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer())	//设置分隔符
+
+
+
+
+用法：
+-----------------------------------------
+
+1、定义一个MuautoCompleteTextView
+
+2、定义适配器和匹配字符串：
+String[] arrString;...
+
+ArrayAdapter<String> adap = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrString)
+
+3、绑定适配器：
+
+setAdapter(adap)
+
+4、设置分割符：
+setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer())
+
+5、设置输入长度进行匹配：
+
+completionThreshold = "2"	

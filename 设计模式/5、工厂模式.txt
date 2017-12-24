@@ -1,0 +1,62 @@
+使用场景
+
+
+
+	
+	
+	基本使用:
+		class abstract 汽车{
+			public abstract String getColor();
+			public abstract String getBrand();
+		}
+
+		class 敞篷车 extends 汽车{
+			public String getColor(){
+				return "红色";
+			}
+			
+			public String getBrand(){
+				return "奥迪";
+			}
+		}
+
+		class 卡车 extends 汽车{
+			public String getColor(){
+				return "蓝色";
+			}
+
+			public String getBrand(){
+				return "奔驰";
+			}
+		}
+
+		interface 汽车Factory{
+			汽车 builder();
+		}
+
+		class 敞篷车Factory implements{
+			publci 汽车 builder(){
+				return new 敞篷车;
+			}
+		}
+
+		class 卡车Factory implements{
+			public 汽车 builder(){
+				return new 卡车;
+			}
+		}
+
+		mian(){
+			汽车Factory factory = new 卡车Factory();
+			汽车 A = factory.builder();
+			a.getColor();
+			a.getBrand();
+		}
+
+
+	工厂模式和简单工厂唯一区别在于switch的判断，简单工厂内置一个switch判断，而工厂模式没有这个
+	优点：
+		很好的按照开闭原则来书写代码，在新增功能时候不去修改简单工厂里面的switch
+	
+	缺点：
+		将逻辑又回归客户端，没有了switch，如果需要判断只能在客户端判断

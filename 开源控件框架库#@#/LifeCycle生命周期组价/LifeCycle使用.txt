@@ -1,0 +1,33 @@
+1、新建一个类实现LifecyclerObserver的接口，实现需要的生命周期方法，例如：
+   实现的方式并不是通过重写，而是注解， @OnLifecyclerEvent()
+   主要有以下生命周期：
+   ON_CREATE		->	对应activity的onCreate()方法
+   ON_START		->	对应activity的onStart()方法
+   ON_RESUME		->	对应activity的onResume()方法
+   ON_PAUSE		->	对应activity的onPasu()方法
+   ON_STOP		->	对应activity的onStop()方法
+   ON_DESTROY		->	对应activity的onDestroy()方法
+	
+public class MainActivityLifeCycle implements LifecycleObserver {
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    public void onCreate(){
+        Log.d("CHEN", "onCreate: ");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    public void onDestroy(){
+        Log.d("CHEN", "onDestroy: ");
+    }
+}
+
+2、需要在Activity中添加监听，现在Activity都实现了LifecycleOwner接口，可以直接调用，如果是Fragment需要继承LifecycleFragment
+	getLifecycle().addObserver(new TwoActivityLifeCycle());
+
+3、状态判断
+	Lifecyler.State有几种状态判断当前页面处于什么状态
+		DESTROYED		->	表示activity调用了onDestroy后的状态
+		INITIALIZED		->	表示activity被创建了但是还没调用onCreate之前的状态
+		CREATED			->	表示activity处于onCreate()和onStop()之间，有可能会调用多次
+		STARTED			->	表示activity处于onStart()和onPause()之间，有可能会调用多次
+		RESUMED			->	表示activity调用了onResume后的状态
+		

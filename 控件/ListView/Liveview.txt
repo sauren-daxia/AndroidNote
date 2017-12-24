@@ -1,0 +1,47 @@
+ListView ：
+
+属性：
+-----------------------------------------------
+divider		//设置Item的线条颜色
+android:listSelector="@android:color/transparent"  	//隐藏点击效果
+
+方法：
+------------------------------------------------
+setAdapter(aat)			//绑定适配器
+
+getItemAtPosition(position)	//获取选中项的内容
+
+setHeaderView(view)		//设置头视图
+
+setFooterView(view)		//设置脚视图
+
+setEmptyView(view)		//判断listView是否有数据，有数据则隐藏一个遮盖listView的控件
+
+PS:设置头尾视图时，监听事件必须判断id != -1,再执行里面的代码
+
+
+事件：
+------------------------------------------------
+OnItemClickListener()	//单个选项的点击事件
+
+public void onImten(Adapter parent,int position,long id)	//第二个参数是选中的位置
+简单用法：
+String str = lv.getItemAtPosition(position)	
+Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+--------------------------------------------------
+OnScrollListener()			//滚动变化，在滚动中加载数据
+
+onScrollStateChanged(AbsListView av,int scrollState)	//第二个是滚动状态，有三种
+
+第一种：
+SCROLL_STATE_FLING		//手指离开前用力滑动，视图由于惯性继续滑动
+如果使用这种状态加载新的数据，只会在下拉到最低的时候加载
+
+第二种：
+SCROLL_STATE_IDLE		//视图停止滑动
+
+第三种：
+SCROLL_STATE_TOUCH_sCROLL	//手指没有离开屏幕，视图正在滑动
+
+---------------------------------------------------
+OnItemLongClickListener()		//长按监听事件，要return true

@@ -1,0 +1,92 @@
+XMPP：
+	是一种可扩展消息和展示协议，以XML为底层结构，也就是说格式是XML样式的。
+	XMPP在IM即时通讯中的作用，用于不同的通讯APP之间都可以互相发送数据，就比如，Email，每个Email应用都可以发给其他Email应用
+	是因为每个Email应用都使用了同一种协议规范，所以能互相通讯。至少国外大多数软件是这样的，因为国内腾讯一家独大，所以也没打
+	算跟通讯软件进行通讯，所以也就没有采用XMPP。
+
+初步连接：			stream结构
+		
+	Client:
+		<stream:stream
+			to = "example.com"	//表示指定目标服务器的地址
+		>
+	
+	Server:	//服务器收到连接请求的时候会返回下面的内容
+		<stream:stream
+			from = "example.com"	//服务器发送的，表示连接来自哪里
+			id = "someid"		//随机生成的ID，客户端收到ID后会作为用于与服务器连接的ID
+		>
+以上标签并没有结束标签，是因为如果发送结束标签，就意味着连接结束，就会断开连接：
+	</stream : stream>
+
+在线状态：			presence结构
+	<persence
+		from = "jackson@gmail.com"		//表示谁发送的
+		to = "jimmy@msm.com"			//表示发送给谁的
+		type = "unavailable"			//type表示状态
+	persence>
+			
+		<show>away</show>				//内部的属于扩展标签		
+		<status>我去吃东西了</status>
+	</persence>
+persence内容含义：表示jackson对jimmy说，我下线了
+type:类型
+	available	//默认状态，表示上线		
+	unavailable	//表示下线
+	subscribe	//表示订阅某个用户的状态
+	unsubscribe 	//取消订阅某个用户的状态
+	subscribed	//表示授权订阅
+	unsubscribed	//取消授权订阅
+	error		//错误
+show:类型
+	chat		//在线并且活跃状态
+	away		//暂离状态
+	xa		//离开状态
+	dnd		//免打扰状态，隐身？	
+			
+信息内容：			Message结构
+	<message
+	from = "jackson@gmail.com"		//表示谁发送的
+	to = "jimmy@msm.com"			//表示发送给谁的
+	type = "chat"	
+	>
+	
+	<body>你好啊</body>				//消息主体
+	
+	</message>
+type：类型
+	normal		//独立会话，私聊？
+	chat		//一对一的会话
+	groupchat	//群聊
+	headline	//头条信息
+	error		//错误
+
+查询：			iq结构
+	Client:
+		<iq
+		from = "jackson@gmail.com"		//表示谁发起的查询
+		to = "jackson@gmail.com"		//查询谁的，一般只能查询自己的
+		type = "get"				//干嘛
+		id = "rr82a1z7"			
+		>
+		<query xmlns = "jabbere:iq:roster">	//查询联系人，目前只知道一条命令
+		</iq>
+
+	Server:当接到客户端的请求的时候返回相应数据
+		<iq
+		from = "jackson@gmail.com"		//表示谁发起的查询
+		to = "jackson@gmail.com"		//查询谁的，一般只能查询自己的
+		type = "result"				//返回结果
+		id = "rr82a1z7"			
+		>
+		<query xmlns = "jabbere:iq:roster">	//返回查询联系人结果
+			<item jid = "jimmt@msn.com">
+			<item jid = "tom@hotmail.com">	
+		</query>
+		</iq>
+
+type：类型
+	get		//获取数据
+	set		//修改数据
+	result		//相应数据？什么鬼
+	error

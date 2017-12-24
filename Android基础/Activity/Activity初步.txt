@@ -1,0 +1,8 @@
+Activity
+1.Activity是Android组件中的最基本的也是最常用的四大组件之一。
+2.Activity是界面，负责与用户交互。
+3.创建一个简单的Activity步骤：
+  3.0 在res/layout目录下创建一个布局文件
+  3.1 写一个类去继承Activity,并且重写它的onCreate()方法，在方法里面调用
+   setContentView()方法为这个Activity设置一个用来显示的视图。
+  3.2 去androidManifest.xml文件里注册配置这个Activity

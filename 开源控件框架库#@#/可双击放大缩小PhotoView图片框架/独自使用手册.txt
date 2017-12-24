@@ -1,0 +1,17 @@
+1、在项目的Gradle.builde中添加
+	allprojects {
+	 repositories {
+	    ...
+	   maven { url "https://jitpack.io" }
+	  }
+	}
+
+2、添加依赖
+	
+    compile 'com.github.chrisbanes:PhotoView:1.3.0'
+   
+3、将ImageView添加到处理中
+
+	PhotoViewAttacher mAttacher = new PhotoViewAttacher(mImageView);
+
+	mAttacher.update();

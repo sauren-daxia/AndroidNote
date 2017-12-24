@@ -1,0 +1,11 @@
+Fragment 与 Activity 通讯：
+
+getActivity();
+
+Activity 与 Fragment 通讯：
+
+getFramgentManager()  或 getSupporFragmentManager()
+
+Fragment 与 Fragment 通许：
+
+getActivity() 获取到Activity后 再通过Activity调用getFragment（）获取Fragments

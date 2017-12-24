@@ -1,0 +1,32 @@
+AutoCompleteTextView	:  搜索匹配输入框
+
+属性：其他属性跟EditText相近
+-----------------------------------------
+completionThreshold = "2"		//输入几个字符进行匹配
+
+
+方法：
+-----------------------------------------
+setAdapter(adap)			//绑定匹配器
+
+
+
+
+
+用法：
+-----------------------------------------
+
+1、定义一个autoCompleteTextView
+
+2、定义适配器和匹配字符串：
+String[] arrString;...
+
+ArrayAdapter<String> adap = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arrString)
+
+3、绑定适配器：
+
+setAdapter(adap)
+
+4、设置输入长度进行匹配：
+
+completionThreshold = "2"	

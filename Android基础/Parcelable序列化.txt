@@ -1,0 +1,32 @@
+
+
+1、定义一个类实现parcelabel接口
+
+2、实现接口的几个方法
+
+	public int describeContents() {		//内容描述接口，基本不用管
+	         return 0;
+     	}
+
+	public void writeToParcel(Parcel out, int flags) {	//用于把属性写入内存
+         out.writeInt(mData);			//写入各种属性	
+   	 }
+
+	 private MyParcelable(Parcel in) {		//自定义构造，用于读取数据
+         mData = in.readInt();
+     }
+
+	 public static final Parcelable.Creator<MyParcelable> CREATOR = new Parcelable.Creator<MyParcelable>() 
+     {
+         public MyParcelable createFromParcel(Parcel in) 
+         {
+             return new MyParcelable(in);		//返回读取到的数据
+         }
+
+         public MyParcelable[] newArray(int size) 
+         {
+             return new MyParcelable[size];
+         }
+     };
+
+3、用Intent的方法putExtra(String , Parcelable)方法传递

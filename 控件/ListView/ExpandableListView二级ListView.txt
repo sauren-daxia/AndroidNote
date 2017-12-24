@@ -1,0 +1,61 @@
+ExpandableListView
+
+
+
+
+监听时间：
+//设置每组的每条数据的监听时间
+listview.setOnChildClickListener()
+//设置每组的监听时间
+listview.setOnGroupClickListener();
+
+
+设置数据源；
+1、新建一个类继承BaseExpandableListAdapter
+
+2、重写Adapter的方法；
+
+	//假设分组数据
+	String[] group = {"好友","朋友"};
+	//假设每组的数据
+	String[][] items = {{"蛋蛋","二狗子","大黑"},{"大娃","小黄","二赖子"}};
+
+	PS:最好的数据源使用两个：
+	分组数据使用List<Object1>
+	分组数据每条数据使用Map<Object1 , list<Object2>>
+
+	//返回分组总数
+	getGroupCont();
+	return group.length;
+
+	//返回某一组里的数据总数	
+	getChildrenCount(int groupPosition);
+	return items[groupPosition].length
+	
+	//返回某组的组名数据
+	getGroup(int position);
+	return group[position]
+
+	//返回某组的某条数据
+	getChild(int groupPosition , int childPosition);
+	return items[groupPosition][childPosition]
+
+	//返回某组的ID
+	getGroupId();
+	return groupPosition;
+
+	//返回某组的某条ID
+	getChildId();
+	return childPosition;
+
+	hasStableIds();
+	return false;
+	
+	//设置每组的视图，过程和普通BaseAdapter一样
+	getGroupView();
+	//设置每组的每条数据的视图，过程和普通BaseAdapter一样
+	getChildView();	
+
+	//返回true表示二级目录可以被选中
+	isChildSelectable();
+	reutrn true;

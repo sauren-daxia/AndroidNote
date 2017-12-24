@@ -1,0 +1,77 @@
+其实并没有什么难度。
+
+1、假如，需要保存Check的选中状态，只需要在对应的实体类里添加一个属性，这个属性用来保存checkBox的状态，然后在getView里根据状态设置是否选中就行了
+
+2、假如，当前商品可以动态的增减商品数量，那也只需要在实体类里添加一个属性，用于保存这个数量，然后在getView中获取出来，设置到TextView上即可
+
+....
+
+所有需要保存状态的都只需要在实体类里增加一个对应的属性，用来保存当前控件状态即可。
+
+最难的就是全选和删除；方法如下
+
+全选：
+	//在Adapter中提供回调，通知是否全选，在Adapter中提供一个方法全选，然后按照下面代码操作就可以实现全选了
+
+	 @Override
+	 public void onSelectAll(boolean isAll) {
+		wholeCb.setOnCheckedChangeListener(null);
+		wholeCb.setChecked(isAll);
+		wholeCb.setOnCheckedChangeListener(checkedChangeListener);
+	}
+
+	public CompoundButton.OnCheckedChangeListener checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+	 @Override
+	 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+	     if (expandAdapter != null) {
+	         expandAdapter.selectAllGroup(isChecked);
+	     }
+        }
+    };
+
+删除：
+	//需要先创建一个集合来保存需要删除的Item，然后在循环完这个集合后统一删除
+
+	 ArrayList<String> keyList = new ArrayList<>();
+        for (int i = 0; i < this.beanList.size(); i++) {
+            List<ShoppingInfoBean> goods = new ArrayList<>();
+            for (ShoppingInfoBean goodsBean : this.beanList.get(i).getGoods()) {
+                if (goodsBean.getIsCheckde() == 1) {
+                    keyList.add(goodsBean.getKey());
+                    goods.add(goodsBean);
+                }
+            }
+            this.beanList.get(i).getGoods().removeAll(goods);
+        }
+
+        List<ShoppingCartBean> beanList =new ArrayList<>();
+        for (int i = 0; i < this.beanList.size(); i++) {
+            if(this.beanList.get(i).getGoods().size() == 0){
+                beanList.add(this.beanList.get(i));
+            }
+        }
+        this.beanList.removeAll(beanList);
+        notifyDataSetChanged();
+
+有EditText的实现：
+	主要是因为弹出或收回键盘的话，会影响ListView的显示条目数量，数量改变之后，就会重新刷新Adapter执行getView的方法
+	内容还没保存好就刷新了，获取到的还是原来的内容，这样的话就没法及时的保存EdiText的内容。
+
+	重点就在于焦点这里，因为一个界面只有一个焦点，当编辑那个EditText的时候就把这个焦点Index给记录下来，
+	当失去焦点的时候就用根据这个Index去设置数据源的内容即可，代码如下：
+
+	  private int index = -1;
+
+	  edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    index = position;
+                }else{
+                    String tempValue = ((EditText) v).getText().toString();
+                    list.get(index).setEdit(tempValue);
+                    notifyDataSetChanged();
+                }
+            }
+        });
+	

@@ -1,0 +1,66 @@
+GitHub：https://github.com/alibaba/ARouter
+
+1、在app.builde.gradle里添加依赖
+android {
+    defaultConfig {
+	...
+	javaCompileOptions {
+	    annotationProcessorOptions {
+		arguments = [ moduleName : project.getName() ]
+	    }
+	}
+    }
+}
+
+dependencies {
+    // 替换成最新版本, 需要注意的是api
+    // 要与compiler匹配使用，均使用最新版可以保证兼容
+    compile 'com.alibaba:arouter-api:1.2.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.3'
+}
+
+2、在Application中初始化
+@Override
+    public void onCreate() {
+        super.onCreate();
+        if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
+            ARouter.openLog();     // 打印日志
+            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+        }
+        ARouter.init(this); // 尽可能早，推荐在Application中初始化
+    }
+
+3、在BaseActivity中调用类似于注册发射器的功能
+	 @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+       ARouter.getInstance().inject(this);
+       super.onCreate(savedInstanceState);
+    }
+
+4、简单跳转
+	 ARouter
+                .getInstance()
+                .build("/testproject/view/secondactivity")		//指定Activity的路径，至少两级，机构随意命名
+                .withString("content","这个就厉害了")			//附带值
+                .withString("url","http://www.91pro.uk")
+                .navigation(this, 5);					//附带请求参数，可以不带，也可以回调，在其他说明文件仔细描述
+
+5、目标Activity配置
+	@Route(path="/testproject/view/secondactivity")		//自定义路径，最好写在一个类里统一管理路径，像Retrofit一样，名字随意定，至少两级
+	public class SecondActivity extends AppCompatActivity {
+	   @Autowired		//表示自动接收参数的注解，但是参数类型除了基础类型，其他自定义类型需要别的处理，其他说明文件仔细描述
+	   String content;	//变量不能用private修饰
+	   @Autowired
+	   String url;
+
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		//ARouter.getInstance().inject(this);	//如果继承BaseActivity就不用
+		setContentView(R.layout.activity_main);
+		Log.d("CHEN", "onCreate: SecondActivity content = "+content+", url = "+url);
+		}
+	}
+
+PS:使用2.3以上的gradle不支持使用apt插件，具体操作
+http://www.jianshu.com/p/c1666a947692

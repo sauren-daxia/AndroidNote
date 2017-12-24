@@ -1,0 +1,163 @@
+RxJava部分：
+
+1、class abstract SuperBaseSubscriber<T> extends Subscriber<T>
+	这个类是最高级的父类，只需要重写onNext()即可
+	
+	public abstract void onNext(T t){
+		
+	}
+
+2、class RxSubscriber<T> extends SuperBaseSubscriber<T>
+	这个类主要对Dialog的一些操作进行处理，因为每个网络访问几乎都需要Dialog
+
+	protected Context mCon;
+	private boolean isShowDialog = true;
+	protected ProgressDialog mDialog;
+
+	public RxSubscriber(Context context){		//构造的时候就创建Dialog
+		this.mCon = context;
+		if(isShowDialog && context != null){
+		    mDialog = new ProgressDialog(Context);
+		}
+	}
+
+	public void setIsShowDialog(boolean isShowDialog){	//设置是否显示Dialog
+		this.isShowDialog = isShowDialog;
+	}
+
+	private boolean isShow(){	//主要判断一些主要的对象能不能执行，最后一个是判断是否是后台运行中，后天访问的话就不需要弹Dialog
+		return isShowDialog && mDialog != null && mCon != null && ActivityUtils.isBackgroud();
+	}
+
+	@override
+	private void onStart(){		//在执行开始的时候显示Dialog
+		if(isShow()){
+			mDialog.show();
+		}
+	}
+
+	@override
+	private void onCompleted(){	//在完成的时候隐藏
+		if(isShow()){
+			mDialog.dismiss();
+		}
+	}
+
+	@overried
+	private void onError(){		//在错误的时候隐藏
+		if(isShow()){
+			mDialog.dismiss();
+		}
+	}
+	//至于onNext()	//执行过程中并不需要做什么处理
+
+3、class abstract BaseSubscriber<T> extends RxSubscriber<T>
+	这个类里面就是做一些数据的处理
+	@override
+	public void onNext(T t){
+		super(t);
+		if(t instanceof TokenBean){		//这里的t已经是实体类了，TokenBean是所有实体类的最外层
+							//这里可以做一些数据底层保存的处理
+			onSuccess(t);			//将数据回调出去
+		}
+
+	}
+
+	@override
+	public void onError(Throwable error){
+		super(error);			//这里自动捕获异常
+		error.printStackTrace();	//所以这里需要手动打印异常
+		onFailure(error);		//把异常回调出去
+	}
+
+	public abstract void onSuccess();	//用于回调数据
+	public abstract void onFailure();	//用于回调异常
+
+PS:RxJava部分基本完成
+
+Retrofit部分:
+1、class RetrofitClient
+	这个类主要做一些Retrofit的初始化和设置
+	private static Context mCon;
+	private Map<String,Object> map;				//参数集合
+	private static RetrofitClient client;			//Retrofit式的单例
+
+	//Retrofit式的单例
+	public static RetrofitClient getInstance(Context context) {
+		mContext = context;
+		return SingletonHolder.INSTANCE;
+	}
+
+	//Retrofit式的单例
+	private static class SingletonHolder {
+	        private static RetrofitClient INSTANCE = new RetrofitClient(mContext);
+	}
+
+	public RetrofitClient(Context context){
+		map = new HashMap<String,Object>();
+
+		client = new Retrofit.Builder()
+				     .client(genericClient())			//设置OKHttp为底层网络访问
+				     .baseUrl(BaseApiService.URL)		//设置链接
+				     .addConverterFactory(GsonConverterFactory.create())	//设置Gson解析
+				     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  //设置RxJava为异步
+				     .build();
+	}
+
+	public OkHttpClient genericClient() {		//创建Okhttp
+		 OkHttpClient.Builder interceptor = new OkHttpClient.Builder()
+			  .addInterceptor(new Interceptor() {
+				   @Override
+				  public Response intercept(Chain chain) throws IOException {
+				   Request.Builder builder = getBuilder(chain);
+				  return chain.proceed(builder.build());
+				    }
+			  });
+			if (DevelopBean.isDevelop)
+			    interceptor.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+		  return interceptor.build();
+	}
+
+	private Request.Builder getBuilder(Interceptor.Chain chain) {
+		Request request = chain.request();		//获取请求对象
+		String url = request.url().url().toString();    //获取请求对象里面的url
+		if (null != mapData && mapData.size() > 0)      //判断参数个数
+		request = initBody(request);			//如果有参数创建一个方法设置到请求对象里面
+       
+		Request.Builder builder = request.newBuilder();		
+		builder.addHeader("","")			//添加一些头部
+
+		return builder;
+	}
+
+	private Request initBody(Request request) {			//添加参数
+		FormBody.Builder bodyBuilder = new FormBody.Builder();
+		Set<String> bodyKeys = mapData.keySet();
+	        for (String key : bodyKeys) {
+		bodyBuilder.addEncoded(key, mapData.get(key) + "");
+		}
+		request = request.newBuilder().post(bodyBuilder.build()).build();
+		return request;
+	}
+
+	public <T> T create(final Class<T> service) {		//这个作为内部方法再调取定义好的POST接口，最终返回一个Observable
+		if (service == null) {
+			throw new RuntimeException("Api service is null!");
+		}
+		return retrofit.create(service);
+	}
+
+	public RetrofitClient setHashMap(HashMap<String, Object> hashMap) {	//内部方法设置参数，返回本类
+		mapData.clear();
+	        if (null == hashMap)
+		return this;
+		this.mapData.putAll(hashMap);
+		return this;
+	}
+
+
+
+
+
+	
+

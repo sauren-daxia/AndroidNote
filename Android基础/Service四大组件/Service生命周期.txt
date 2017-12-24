@@ -1,0 +1,7 @@
+startService : oncreate、oncommand、onDestroy
+
+bind : oncreate、onbind、 onUnBind、 onDestroy
+
+只要是创建过的service，不管是再次启动，或者退出程序后再启动，都只会执行Command方法
+
+停止方法，可以调用Stopservice，或者在service内部调用stopself()方法,或者在手机应用管理中停止

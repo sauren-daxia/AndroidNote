@@ -1,0 +1,28 @@
+依赖
+	compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+
+public class RxPermissUtil {
+    /**
+     * @param activity
+     * @param booleanRxCallBack 用来回调的接口
+     * @param permissions       需要被处理的权限
+     */
+    public static void getPermission(Activity activity, final RxCallBack<Boolean> booleanRxCallBack, final String... permissions) {
+        new RxPermissions(activity).request(permissions)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                            booleanRxCallBack.onSuccess(true);
+                        } else {
+                            booleanRxCallBack.onFailure(new Throwable("授权失败"));
+                        }
+                    }
+                });
+    }
+
+    private interface RxCallBack<T>{
+	void onSuccess(T t);
+	void onFailure(Throwable e);
+    }
+}

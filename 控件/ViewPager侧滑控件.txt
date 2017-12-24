@@ -1,0 +1,28 @@
+ViewPager: 使用时需要用包名加类名： android.support.v4.view.ViewPager
+
+步骤：
+
+1、继承PagerAdapter并重写4个方法，和添加构造
+	
+	List<View> views
+
+	getCount();
+		return views.size()		
+	
+	isViewFromObject()
+		return arg0==arg1
+
+	instantiateItem()
+		View view = views.get(position);
+		container.addView(view)
+		return viwe;
+
+	destoryItem()
+		View view = views.get(position)
+		container.remover(view);
+
+
+状态：
+				ViewPager.SCROLL_STATE_IDLE;		//停止
+				ViewPager.SCROLL_STATE_SETTLING		//松手
+				ViewPager.SCROLL_STATE_DRAGGING		//刚开始滑动

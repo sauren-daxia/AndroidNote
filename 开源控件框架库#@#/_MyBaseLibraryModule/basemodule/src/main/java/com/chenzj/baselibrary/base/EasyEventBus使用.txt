@@ -1,0 +1,14 @@
+1、在Activity或Fragment里面注册和注销
+onCreate(){
+    EasyEventBus.getInstance().registerEvent(this);
+}
+
+onDestroy(){
+    EasyEventBus.getInstance().unregisterEvent(this);
+}
+
+2、发送
+    //群发
+    EasyEventBus.getInstance().sendMsg(T t);
+    //单发
+    EasyEventBus.getInstance().sendMsg(LoginActivity.class,T t);

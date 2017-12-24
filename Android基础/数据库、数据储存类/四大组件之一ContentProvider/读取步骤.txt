@@ -1,0 +1,12 @@
+步骤
+
+1、获取getContentProvider对象
+	ContentResolver cp = getContentResolver();
+
+2、条件查询
+
+	String[] str = {Contects._ID,Contects.DISPLAT_NAME}	//查询的值
+	Uri uri = Contects.CONTENT_URIl				//需要访问的资源			
+	Cursor cursor =	cp.query(uri,str,null,null,null)	//获取游标对象
+
+	cursor.getInt(cursor.getColumnIndex(Contects._ID))	//获取该字段的值

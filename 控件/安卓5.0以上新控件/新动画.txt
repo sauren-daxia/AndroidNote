@@ -1,0 +1,13 @@
+Animator   createCircularReveal(view, int, int, int, int)
+
+这五个参数分别是：
+
+view 操作的视图
+
+centerX 动画开始的中心点X
+
+centerY 动画开始的中心点Y
+
+startRadius 动画开始半径
+
+startRadius 动画结束半径

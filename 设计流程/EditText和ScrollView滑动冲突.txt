@@ -1,0 +1,12 @@
+1、判断是否触摸了EditText
+	   @Override
+	public boolean onTouch(View view, MotionEvent motionEvent) {
+		boolean isTouch = false;
+		if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			isTouch = true;
+		} else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+			isTouch = false;
+		}
+        appraiseEt.getParent().requestDisallowInterceptTouchEvent(isTouch);		//根据状态设置是否屏蔽父类的触摸事件
+        return false;
+    }

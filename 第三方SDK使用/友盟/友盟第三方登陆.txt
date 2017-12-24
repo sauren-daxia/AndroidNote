@@ -1,0 +1,71 @@
+1、在Activity中定义一个UMShareAPI	//第三方授权 、 登陆类
+
+	public UMShareAPI mShareAPI;
+	onCreate(){
+		mShareAPI = UMShareAPI.get(this);
+	}
+
+2、重写onActivityResult方法，调用第三方方法
+	onActivityResult(){
+		mShareAPI.onActivityResult(requestCode, resultCode, data);
+	}
+
+3、写一个方法，用于不同APP的授权
+
+	private void platformLogin(SHARE_MEDIA platform){
+		mShareAPI.doOauthVerify(getActivity(), platform, umAuthListener);
+	}
+
+	如果要授权QQ的话：
+	platformLogin(SHARE_MEDIA.QQ);
+
+4、创建第3步的授权监听
+	private UMAuthListener umAuthListener = new UMAuthListener() {
+		@Override
+		public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
+			Toast.makeText(getActivity(), "授权异常",0).show();
+		}
+		@Override
+		public void onComplete(SHARE_MEDIA arg0, int arg1, Map<String, String> arg2) {
+			Toast.makeText(getActivity(), "授权成功",0).show();
+
+			//授权成功后调用登陆监听，从登陆中获取APP的个人信息
+			mShareAPI.getPlatformInfo(getActivity(), arg0, getInfoListener);
+		}
+		@Override
+		public void onCancel(SHARE_MEDIA arg0, int arg1) {
+			Toast.makeText(getActivity(), "取消授权",0).show();
+		}
+	};
+
+5、创建第4步的登陆监听，和授权监听用的是同一个
+private UMAuthListener getInfoListener = new UMAuthListener() {
+		
+		@Override
+		public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
+			Toast.makeText(getActivity(), "登陆异常",0).show();			
+		}
+		
+		@Override
+		public void onComplete(SHARE_MEDIA arg0, int arg1, Map<String, String> data) {
+			Toast.makeText(getActivity(), "登陆成功",0).show();
+			//在这个监听里就可以使用Map获取用户APP的个人信息，
+			//openid 是APP返回的加密id，用这个ID发个自己的服务器，用户判断该用户是否授权过、登陆过、注册过等等			
+			//最好把Map里的所有信息都发送给服务器，具体情况看需求
+			//arg0 可以判断是哪个类型的APP	if(arg0 == SHARE_MEDIA.WEIXIN)
+			userinfo = new Userinfo();
+			userinfo.openid = data.get("openid");
+			
+			String url = ServerURL.URL_LOGIN;
+			//使用Post方式把数据发送给服务器
+			RequestParams params = new RequestParams("UTF-8");
+			params.addBodyParameter("openid", userinfo.openid);
+			
+			mHttpUtils.send(HttpMethod.POST, url, params, requestCallBack);
+		}
+		
+		@Override
+		public void onCancel(SHARE_MEDIA arg0, int arg1) {
+			Toast.makeText(getActivity(), "取消登陆",0).show();				
+		}
+	};

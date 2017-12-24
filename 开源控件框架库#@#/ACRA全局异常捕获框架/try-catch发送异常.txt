@@ -1,0 +1,6 @@
+如果有try-catch的语句，一般不会发送报告，需要自己手动去调用
+try{
+
+}catch(NullPointException e){
+ACRA.getErrorReporter().handleException(e);		//主动发
+}

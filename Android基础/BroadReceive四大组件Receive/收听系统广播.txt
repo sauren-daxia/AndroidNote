@@ -1,0 +1,40 @@
+开机广播：
+	action = android.intent.action.BOOT_COMPLETED
+	category = android.intent.category.DEFAULT
+
+	权限:<RECEIVE_BOOT_COMPLETED>
+
+网络状态：
+	action = android.net.conn.CONNECTIVITY_CHANGE
+
+	权限：<ACCESS_NETWORK-STATE>
+
+	在Receive中获取NetWork网络状态
+
+	ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE)
+	NetWorkInfo info = cm.getActivityNetworkInfo();
+
+	if(info != null && info.isAvailable){		//判断网络是否可用，有些网络连上了，也没数据传输
+		String nae = info.getType()+"";		//可能为空，NetWorkInfo可获取很多网络相关的内容
+	}
+	TYPE_WIFI		//WIFI
+	TYPE_
+		
+
+电池变化：
+
+静态注册的Receive需要等待
+	action = android.intent.action.BATTERY_OKEY	//电池充满
+	action = android.intent.action.BATTERY_CHANGED	//每隔一分钟变化一次电池的值
+
+	在Receive中获取电池值
+	int current = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)	//当前电池值
+	int max = intent.getIntExtra(BattertManager.EXTRA_SCALE, 1);	//电池总值
+	int percent = current *100 / max; //百分比
+代码注册可立即获取电量
+	IntentFilter filter = new IntentFilter();
+	filter.addAction("android.intent.action.BATTREY_CHANGD");
+	Intent battery = getApplicationContext().registerReceiver(null,filter);	
+	int current = battery .getIntExtra(BatteryManager.EXTRA_LEVEL, 0)	//当前电池值
+	int max = battery .getIntExtra(BattertManager.EXTRA_SCALE, 1);	//电池总值
+	int percent = current *100 / max; //百分比

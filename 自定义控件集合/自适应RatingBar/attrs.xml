@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomRatingBar">
+        <attr name="maxCount" format="integer"/>
+        <attr name="progress" format="integer"/>
+        <attr name="un_select_icon" format="reference"/>
+        <attr name="select_icon" format="reference"/>
+        <attr name="isTouch" format="boolean"/>
+        <attr name="starCount" format="integer"/>
+        <attr name="distance" format="integer"/>
+    </declare-styleable>
+</resources>

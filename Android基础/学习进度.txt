@@ -1,0 +1,312 @@
+1、带返回值的Intent传递
+	startActivityForResult()、setResult()、onActivityResult()
+
+2、重写返回键
+	onBackPerssed()、onKeyDown()
+
+3、生命周期
+	onCreate()、onStart()、onResume()、onPause()、onStop()、onDestory()、onRestart()
+
+	两个Activity跳转的声明周期：
+		完全遮盖情况：
+		onCreate A -> onStart A -> onResume A -> onPause A -> onCreate B -> onStart B -> onResume B -> onStop A - > ↓
+					onStop onResume A <- onStart A <- onReStart A  <- onDestory B <- onStop B<- onPause B
+		没有完全遮盖：
+		onCreate A -> onStart A -> onResume A -> onPause A -> onCreate B -> onStart B -> onResume B -> onPause B -> onStop B -> onDestory B 
+
+4、横竖屏切换
+	 a) 如何为横竖屏对应两套布局
+ 	* b) 生命周期问题
+ 	* 		1.默认情况下横竖屏切换的时候，Activity会销毁并重新创建(会调用哪些生命周期方法？)
+ 	* 		2.横竖屏切换的时候，不重新创建的方法：
+ 	* 		在配置文件中设置Activity的android:configChanges="orientation|keyboardHidden|screenSize"
+ 	* 		3.禁止横竖屏：android:screenOrientation="portrait"   竖屏
+ 	*           		      android:screenOrientation="landscape"  横屏
+
+5、Activity意外退出时存储数据与恢复数据
+	onSaveInstanceState()、onRestoreInstanceState()
+
+6、Intent隐式启动
+	setAction()、addCategory()、setData(Uri.parse("smsto:10086"))
+
+7、启动发短信，发信息
+	a)发短信
+		intent.setData(Uri.parse("smsto:xxx"))
+	b)直接发信息
+		SmsManager sm = SmsManager.getDefault()
+		ArrayList<String> arr =sm.divideMessage("xxx");
+		sm.sendTextMessage("10086",null,arr.get(0),null,null);	//限制只能发70个字
+		权限：<uses-permission android:name = "android.permission.SEND_SMS">
+	c)跳转拨号
+		Intent intent = new Intent(Intent.ACTION_DIA);
+		setActivity(intent);
+		setData(Uri.parse("tel:10086"));
+	d)直接拨号
+		Intent intent = new Intent(Intent.ACTION_CALL);
+		setActivity(intent);
+		setDate(Uri.parse("tel:10086"))
+		权限:<uses-permission android:name = "android.permission.CALL_PHONE">
+
+8、Application的使用
+	创建一个类继承Application，重写onCreate(),在其他界面调用getApplication()获取对象
+	Application声明周期最长，返回键不能销毁，只有在彻底结束程序才会被销毁
+	并且在配置文件<Application>中添加 android:name"xxx.xxx.xx" 属性
+
+9、对话框使用
+
+10、自定义对话框
+
+11、帧动画
+	AnimationDrawable ad = xx.getBackground();		//获取对象背景动画
+	<animation-list>
+		<imte android:duration="100" android:drawable = "@drawable/xx"> //s
+
+12、补间动画
+	透明：alpha
+	旋转：rotate
+	缩放：scale
+	移动：translate
+	
+
+13、Activity的四种加载默认
+	Activity的结构是栈类型结构，先进后出的原则
+
+	四种模式：在配置文件<activity>中添加 launchMode = "xxxx"
+		1、standard	//每次跳转都会创建新的Activity对象
+		
+		2、singleTop	//如果跳转自身，不会创建对象，栈顶是自身
+
+		3、singleTask	//如果跳转的Activity已经打开过，就不需要创建，并且把它之上的Activity弹出
+
+		4、singleInstance 	//会为该Activity单独创建一个栈，并且该栈只有一个Activity，可以让多个应用共享该Activity
+					//如果支付宝要跳转天猫，淘宝也要跳转天猫，则天猫不会创建多次，其他模式则创建多次
+
+14、高级控件
+	Adapter：
+		ListView、GirdView、Spinner
+	系统提供适配器：
+		ArrayAdapter	//只能显示文本，并且根布局只能是TextView
+	
+		SimpleAdapter
+	
+		SimpleCursorAdapter
+
+15、自定义适配器 extends  BaseAdapter
+	重写四个方法：
+		1、getCount()		//return list.size()返回数据源长度
+
+		2、getItem()		//return list.get(position)返回数据源中Position位置对应的对象
+
+		3、getItemId()		//return position 返回选中的ID
+		
+		4、getView()		//return R.layout.xx 返回布局，为每个Item设置
+
+		5、getItemViewType()	//返回Item的样式类型
+		
+		6、getViewTypeCount()	//返回Item样式的总数
+		
+			 convertView优化：不用每次创建Item
+			 ViewFolder优化：不用每次都找控件
+
+16、Android数据存储
+
+	1、内部存储（data/data/）
+		SharedPreference 、 SQLite数据库
+	
+			SharedPreFerence : 用于储存一些简单数据，例如配置文件、设置信息，密码等
+						存储对应位置在：data/data/包名shared_prefs,以XML文件保存，会随APP卸载而删除
+
+	2、外部存储
+		Environment:用于储存一些大文件，如图片，歌曲等等，并且不会随APP卸载而删除
+
+	3、网络存储
+	
+	读写权限：
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+
+	五种存储方法：
+
+		sharedPreference
+
+		文件存储
+
+		SQLite存储
+
+		ContentProvider
+
+		网络存储
+
+	URI：统一资源标识符，标识本地资源
+
+	URL：统一资源定位符，标识网络资源
+
+使用已存在的数据库
+	
+	在res文件夹下创建一个 raw 文件夹，将已有的数据库文件放到该文件下
+
+	获取res文件下文件的数据输出流
+	getResoureces().openRawResourece(R.raw.weathercity)	//假如获取raw文件的某个数据库文件
+	getDatabasePath("weathercity").getAbsolutePath()	//在数据库文件夹中创建一个weathercity数据库文件，并获取绝对路径
+
+17、SQLite
+		SQLiteOpenHelper :  数据库类，用于创建和修改数据库信息
+		
+		SQLiteDatabase ：数据库增删改查类
+			增：ContentValues
+			查：Cursor
+
+ContentProvide
+		ContentProvide用于自定义内容提供
+
+		ContentResolver用于获取系统资源
+
+18、 Fragment
+
+		生命周期：onAttach() -> onCreate() -> onCreateView() -> onActivityCreated() -> onStart() ↓
+			     onDetach()<-onDestroy()<- onDestroyView() <- onStop() <-onPuase()<- onResume() 
+
+		Fragment必须要依附在Activity中
+
+		加载方式两种：
+				直接写在XML中，固定的 使用app.fragment包，需要在配置文件中设置最小版本为11
+	
+					創建一個類繼承Fragment
+
+					Fragment有getView（）方法，使用該方法才能使用findviewbyid方法找控件
+	
+					重写方法：
+							onCreateView()	//创建每个碎片
+			
+							onActivityCreate()	//需找每个碎片的控件	
+
+				在代码中动态添加
+
+		在Fragment中与Activity通讯的方法：getActivity()
+
+		在Activity中与Fragment通讯：FragmentManager.findFragmentByTag()
+
+		在Fragment中与Fragment通讯：getFragmentManager.findFragmentByTag();
+
+19、BroadReceive
+	广播分类：
+		1、系统广播
+		2、自定义广播
+	
+	有三种广播方式：		
+		1、普通广播	
+		2、有序广播	优先级范围-1000~1000
+		3、粘滞广播	最后一条广播会在系统里残留
+	
+	广播注册方式：
+		1、动态注册：
+				在代码中注册，一旦注册广播接收者的组件销毁了，广播接收者也失效了
+				并且需要在Activity的onDestroy()方法中取消注册广播接收者	，调用unregisterReceiver（）		
+		2、静态注册：
+				只要安装运行过APP，该广播接收者会一直有效
+				需要定义一个类继承BroadcastReceiver，再在配置文件的<Application>中添加<receive name=类名>
+				再在<receive>的<intent-filter>中定义接收的<action>广播类型，
+
+20、Service
+
+			
+
+		两种启动方式
+				1、startService，不能获取Service对象
+				2、Bind，能获取Service对象，但会随则Activity销毁而销毁
+		
+		Service使用方式：生命周期： onCreate 、 onStartCommand 、 onDestroy	
+					在Activity中使用startService./stopService
+					在配置文件中配置Service
+	
+		Bind启动方式：生命周期： onCreate 、 onBind 、 onUnBind 、 onDestroy
+					在Activity中使用
+							bindService(intent , conn , Context.BIND_AUTO_CREATE)
+							unbindService(conn)	
+
+21、Parcelable序列化
+		用于
+			：永久储存对象
+			：网络传递对象
+			：进程传递对象
+
+22、MediaPalyer	：音乐播放
+		MediaPlayer只能同时播放一个音频，适合播放比较大比较长久的音乐，内存占用多
+
+23、SoundPool :音效播放
+		SoundPool是音频池
+		soundPool支持同时播放多个音频,适合播放比较小的，急促的音效，比如按钮点击音效等等。如果使用SoundPool播放长音乐会报错
+
+24、Json文件解析
+
+		外层对象判断：
+				[  ]	//为集合
+				{  }	//为对象
+
+		内层对象判断：键统一为String
+				
+				值：
+					13	//int
+
+					""	//字符串
+			
+					[]	//集合
+
+					{}	//对象
+25、LruCache 缓存对象
+		
+26、XML解析		
+
+27、Bitmap压缩和处理
+
+28、Async 异步任务
+
+29、Timer、TimerTask 定时器任务
+
+30、自定义控件
+
+31、事件分发机制：
+
+容器事件分发机制有三种情况：
+	
+	dispatchTouchEvent (事件分发)
+		
+		返回true:停止往下分发事件，也不交给onInterceptTouchEvent （事件拦截），也不让onTouchEvent(事件响应(事件处理))处理
+
+		返回false:向下分发事件，先传给当前的View（或者容器）的onInterceptTouchEvent，然后再传递给子控件的onTouchEvent处理
+
+	onInterceptTouchEvent （事件拦截）
+
+		返回true:拦截事件 ，交给当前View（或者容器）onTouchEvent处理，	
+
+		返回false:不拦截，将事件传递给子控件的onTouchEvent处理
+
+	onTouchEvent(事件响应(事件处理))
+
+		返回treu:表示自己处理该事件，执行到这里时候有两种情况
+
+			情况一：事件传递给了子控件，但是子控件没有处理，又往上一级返回事件
+
+			情况二：当当前的onInterceptTouchEvent （事件拦截）把事件拦截后，将直接交给自己的onTouchEvent处理
+
+			情況三：如果第一次事件自己沒有处理，之后的事件就不会传递到onTouchEvent
+
+		返回false:不处理事件，并且向上返回事件，如果事件没有处理，则返回到最上级后消失
+
+最底层控件只有一种情况：
+		
+	onTouchEvent(事件响应(事件处理))
+
+		返回true:事件是从父容器传递过来的，返回true则处理该事件，事件到此结束，也不会向上级返回
+
+		返回false:不处理事件，并且向上返回
+
+例如一种情况：容器是Viewpager，容器里有一个控件，当触摸该控件时，父容器分发事件，也不拦截事件，子控件可以处理事件，
+	      但如果触摸子控件的触电移动了5dp，就可以在父容器的
+
+32、scrollTo() scrollBy()
+
+	scrollTo():将容器内的内容指定移动到一个范围，固定，不能动
+	
+	scrollBy():记录当前的容器位置，移动到下一个位置，可实现拖动容器的效果

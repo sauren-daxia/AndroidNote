@@ -1,0 +1,23 @@
+Datapicker
+
+属性：
+-------------------------------------
+
+
+
+方法：
+-------------------------------------
+init(year,month,day,new OnDataPickerListener)		//初始化控件，第一个是当前年份，第二个是当前月份，
+							  月份最好直接使用calendar.get(Month)不需要+1，第三个是当前日期，第四个是监听器
+
+
+
+
+
+
+
+事件：
+------------------------
+OnDataPickerListener()			//日期改变事件
+
+onDataChanged(D d,int year, int month , int day)	//参数列表的参数都是用户改变过后的属性，Month的月份是从0开始的

@@ -1,0 +1,2 @@
+以后就别用Service了，用LifeCycleService，实现了LefyCycle的接口，可以观察生命周期
+	getLifeCycler().addaddObserver(....)

@@ -1,0 +1,57 @@
+单个视图使用方式：
+	方式一：如果数据交互少，可以直接使用，holder定义了很多控件设置参数的方法
+
+		recyclerView.setAdapter(new RecyclerAdapter<TextBean>(this,list,R.layout.layout_test_item_right){
+		    @Override
+		    protected void convert(ViewHolder holder, TextBean textBean, int position) {
+		        holder.setText(R.id.btn1,textBean.getText())
+		    }
+		});
+
+	方式二：继承RecyclerView
+
+		class Adapter extends RecyclerAdapter<Object>{
+
+		   public Adapter(Context mContext, List<Object> mData, int layoutId) {
+			    super(mContext, mData, layoutId);
+			}
+
+			@Override
+			protected void convert(ViewHolder holder, Object o, int position) {
+            
+		   }
+		}
+
+多个视图使用方式：
+	1、继承BaseMultiItemTypeRecyclerAdapter，什么都不用干
+
+	class RecyclerMultiItemAdapter<Object> extends BaseMultiItemTypeRecyclerAdapter {
+		public RecyclerMultiItemAdapter(Context mContext, final List mData) {
+			super(mContext, mData);
+		}
+	}
+
+	2、将每个视图定义成一个类并且实现ItemViewDelegate
+
+	class ClassDelegate implements ItemViewDelegate<TextBean>{
+
+		@Override
+		public int getItemViewLayoutId() {
+			return R.layout.layout;		//返回视图
+		}
+
+		@Override
+		public boolean isForViewType(TextBean item, int position) {
+		   //判断当前Position获取的对象与多视图获取的对象是否一致
+		   return item instanceof TextBean && mData.get(position) instanceof TextBean;
+		 }
+
+		@Override
+		public void convert(ViewHolder holder, TextBean textBean, int position) {
+
+		}
+	}
+
+	3、添加到Adapter中，有几个视图就创建多少个，添加多少个，尽量做到解耦
+	recyclerViewAdapter.addItemViewDelegate(new ClassDelegate());	
+

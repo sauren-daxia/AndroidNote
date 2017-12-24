@@ -1,0 +1,27 @@
+LinearLayout :线型布局 
+
+
+属性：（ViewGroup）
+----------------------------------
+background 			//容器背景
+
+layout_width			//容器宽度
+
+layout_height			//容器高度
+
+orientation			//设置布局排列方式，LinearLayout的属性
+vertical			//垂直	
+horizontal			//水平
+------------------------------------	
+layout_weight			//按权重波比例分配控件大小，可为每个容器里面的控件进行比例分配大小
+------------------------------------
+android:gravity				//设置内容的 "上、下、左、右" 对其方式
+
+center					//水平对其
+-------------------------------------
+android:paddingTop ="10dp"		//设置内边距
+android:paddingBottom = "20dp"
+--------------------------------------------------
+android:layout_marginLeft		//设置外间距
+android:layout_marginTop		//设置外间距
+--------------------------------------------------

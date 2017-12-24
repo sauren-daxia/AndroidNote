@@ -1,0 +1,15 @@
+TimePickerDialog ：是一个类，也是屏幕的时间对话框，直接new就可以使用，new出来之后直接显示在屏幕上
+
+构造：
+----------------------------------
+new TimePickerDialog(this,new OnTimeSetListener()).show(),int hour,int minute, boolean true)			//一定要show()
+
+第一个参数：自己本身this
+
+第二个参数：时间监听器
+
+第三个参数：时针时间，使用calendar获取即可
+
+第四个参数：分针时间，使用calendar获取即可
+
+第五个参数：是否使用24小时方式显示时间

@@ -1,0 +1,10 @@
+步骤、
+
+会在data/data/包名 下新建一个 files 文件夹
+
+1、获取读写流对象
+
+ FileOutputStream = openFileOutput("xxx",Context.MODE_APPEND)	//向文件追加写入
+
+ FileInputStream = openFileInput("xxx")		//读取文件
+

@@ -1,0 +1,32 @@
+ViewFlipper:侧滑视图
+
+1、在XML中放一个ViewFlipper控件，在控件里面可以放各种视图，可以是容器视图，或者是控件视图，一个控件表示一个界面
+
+	<ViewFlipper>
+
+	<LinearLayout />	
+	<ImageView/>
+	..
+	</ViewFlipper>
+
+2、在代码中找到ViewFlipper
+
+3、设置Touch监听，
+	private int startX;
+	private int toX;
+
+	MotionEvent_ACTION_DOWN:
+
+	startX = event.getX();
+
+	MotionEvent_ACTION_MOVE:
+	toX = event.getX();	
+	if(startX - toX > 40){
+		viewFlipper.setInAnimation();
+		ViewFlipper.setOuAnimation();
+		viewFlipper.showNext();		//显示下一个视图
+	}else if(toX - startX > 40){
+		viewFlipper.setInAnimation();
+		ViewFlipper.setOuAnimation();
+		viewFlipper.showProvious();	//显示上一个视图
+	}

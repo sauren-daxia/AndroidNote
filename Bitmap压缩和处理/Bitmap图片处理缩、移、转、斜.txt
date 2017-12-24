@@ -1,0 +1,21 @@
+1、获取Bitmap源
+
+	Bitmap srcBitmap = BitmapFactory.decodeResource(getResources().R.drawable.xx)
+
+2、创建一个矩阵对象
+
+	Matrix m = new Matrix()
+
+3、设置矩阵各种属性
+
+	m.setRotate(120)  m.postRotate(120)  m.preRotate(-120);
+
+	m.setTranslate(50,50)  m.postTranslate(50,50)  m.preTranslate(50,50)
+
+	m.setScale(0.6f,0.6f,50,50)  m.postScale(0.6f,0.6f,50,50)  m.preScale(0.6f,0.6f,50,50)
+
+	m.setSkew(0.3f,0.3f)  m.postSkew(0.3f,0.3f)  m.preSkew(0.3f,0.3f)
+
+4、将设置好的属性设置到ImagView中
+
+	Bitmap bitmap = Bitmap.createBitmap(srcBitmap, 0 , 0 ,srcBitmap.getWidth() ,srcBitmap.getHeight() ,m , true)

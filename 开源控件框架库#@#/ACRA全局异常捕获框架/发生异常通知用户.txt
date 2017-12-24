@@ -1,0 +1,49 @@
+1、Toast方式通知
+
+@ReportsCrashes(formUri = "http://yourserver.com/yourscript",		//配置日志发送的地址
+                mode = ReportingInteractionMode.TOAST,			//设置模式
+                resToastText = R.string.crash_toast_text		//异常提示信息，必须在资源文件夹里定义好
+)
+public class MyApplication extends Application {
+
+}
+
+2、Dialog方式通知
+@ReportsCrashes(formUri = "http://yourserver.com/yourscript",		//配置日志发送的地址
+                mode = ReportingInteractionMode.DIALOG,			//设置模式
+                resToastText = R.string.crash_toast_text, 		//Toast异常提示信息，必须在资源文件夹里定义好
+                resDialogText = R.string.crash_dialog_text,		//Dialog异常提示信息
+                resDialogIcon = android.R.drawable.ic_dialog_info, 	//图片
+                resDialogTitle = R.string.crash_dialog_title, 		//标题
+                resDialogCommentPrompt = R.string.crash_dialog_comment_prompt, //评论提示语，dialog默认提供对此异常的评论编辑框
+                resDialogEmailPrompt = R.string.crash_user_email_label, //电子邮件地址，估计是接收用户评论的内容
+                resDialogOkToast = R.string.crash_dialog_ok_toast 	//当用户点击发送之后Toast提示信息？
+                resDialogTheme = R.style.AppTheme_Dialog,		 //Dialog主题，需要自己配置
+)
+public class MyApplication extends Application {
+
+}
+
+3、自定义Dialog
+	1)、定义一个类然后将org.acra.dialog.CrashReportDialog所有内容复制到类里面
+	2)、修改自己需要定制的内容
+	3)、在Manifest中当Activity配置这个类，如下
+		<activity
+            android:name=".CustomCrashReportDialog"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Dialog" />
+	4)、在@ReportsCrashes中配置这个Dialog
+		reportDialogClass = XXXDialog.class;
+
+4、Notification方式通知
+@ReportsCrashes(// Enter values from DIALOG section of wiki here!
+                resNotifTickerText = R.string.crash_notif_ticker_text,	//状态栏提示信息
+                resNotifTitle = R.string.crash_notif_title,		//标题
+                resNotifText = R.string.crash_notif_text,		//内容
+                resNotifIcon = android.R.drawable.stat_notify_error 	//图片
+                )
+public class MyApplication extends Application {
+
+}

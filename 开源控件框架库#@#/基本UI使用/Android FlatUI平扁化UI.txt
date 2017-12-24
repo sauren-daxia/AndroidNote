@@ -1,0 +1,55 @@
+1、引入库
+  compile 'com.github.eluleci:flatui:3.0.0'
+
+2、APPlication使用
+	
+	//设置适配，可使它兼容dp
+	FlatUI.initDefaultValues(this);
+
+	//设置主题，可以设置自带的主题，也可以设置自定义的
+	FlatUI.setDefaultTheme(FlatUI.DEEP);
+	FlatUI.setDefaultTheme(R.array.my_custom_theme); 
+
+	//让动作条冲放。
+	//甚至怪异的问题可能会同时改变操作杆可在运行时发生。
+	//你可以尝试套动作栏标题无效后，设置背景。
+	---------------不知道干嘛用，还是弄上去吧
+	getActionBar().setBackgroundDrawable(FlatUI.getActionBarDrawable(FlatUI.DEEP, false));
+	getSupportActionBar().setBackgroundDrawable(FlatUI.getActionBarDrawable(FlatUI.DEEP, false));
+
+3、XML使用
+	xmlns:flatui="http://schemas.android.com/apk/res-auto"
+
+    通用属性？：
+	flatui:fl_theme="@array/sand"		//设置主题样式
+	flatui:fl_textAppearance="fl_dark"	//元素的文本颜色。黑暗或光明的主题颜色。（没有，黑暗，光）
+	flatui:fl_fontFamily="roboto"		//字体名称（字符串）,字体的，不知道啥
+	flatui:fl_fontWeight="light"		//文本的字体重量（字符串）（ExtraLight、光、常规，大胆，粗黑体）,字体的，不懂
+	flatui:fl_fontExtension="ttf"		//字体的延伸。如果不使用TTF（字符串）,字体扩大，什么鬼啊
+	flatui:fl_borderWidth="2dp"		//元素的边框宽度。（尺寸），什么鬼啊
+	flatui:fl_cornerRadius="5dp"		//边框的圆角度
+	flatui:fl_size="20dp"			//元素的大小，什么鬼啊
+	
+	<com.cengalabs.flatui.views.FlatTextView	//文本控件
+	//独有属性
+		flatui:fl_textColor=main			//文本颜色
+		flatui:fl_backgroundColor=darker		//文本背景	
+		flatui:fl_customBackgroundColor=#00aff0		//不知道什么的背景
+	/>
+
+	<com.cengalabs.flatui.views.FlatEditText/>	//文本输入控件。
+
+	<com.cengalabs.flatui.views.FlatSeekBar/>	//进度条
+
+	int[] myColors = {Color.RED, Color.BLUE, Color.GREEN, Color.BLACK};
+
+	((FlatSeekBar) findViewById(R.id.seekbar)).getAttributes().setColors(myColors);	//设置进度条的第一，二，三颜色
+
+	<com.cengalabs.flatui.views.FlatButton/>	//按钮
+
+	<com.cengalabs.flatui.views.FlatCheckBox/>	//多选按钮
+
+	<com.cengalabs.flatui.views.FlatRadioButton/>	//单选按钮
+
+	<com.cengalabs.flatui.views.FlatToggleButton/>	//双状态按钮
+

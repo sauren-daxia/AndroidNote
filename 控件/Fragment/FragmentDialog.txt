@@ -1,0 +1,27 @@
+至少要重写OnCreateView或者OnCreateDialog其中一个方法
+
+onCreateView的话跟正常的Fragment没什么区别
+
+onCreateDialog的话，就需要使用AlterDialog创建一个Dialog
+	
+	//获取Dialog创建者
+ 	AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());  
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();  
+
+        View view = inflater.inflate(R.layout.fragment_login_dialog, null);  
+
+        builder.setView(view)  
+                // Add action buttons  
+                .setPositiveButton("Sign in",  
+                        new DialogInterface.OnClickListener()  
+                        {  
+                            @Override  
+                            public void onClick(DialogInterface dialog, int id)  
+                            {  
+                            }  
+                        }).setNegativeButton("Cancel", null);  
+	//设置好Dialog各种属性，最后返回即可
+        return builder.create();  
+
+至于与Activity通讯，要使用回调的第二种方法

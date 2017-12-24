@@ -1,0 +1,15 @@
+
+public void onScrollStateChanged(AbsListView view, int scrollState){
+
+	swich(scrollState){		//先判断操作状态
+
+	case SCROLL_STATE_FLING :	//在下拉时候加载
+		Map<String,Objeect> map = new HashMap<String,Object>();
+		map.put("xxx","xxx");
+		map.put("xxxx",xx);
+		list.add(map);
+		simpleAd.notifyDataSetChanged()	//使用适配器方法通知主线程更新数据，不然会报错
+	
+	}
+
+}

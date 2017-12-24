@@ -1,0 +1,43 @@
+SoundPool
+
+构造
+----------------------------
+	newSoundPool(int ,AudioManager.STREAM_MUSIC,int)
+
+	第一参数：同时播放音效的数量
+
+	第二参数：使用的声音类型
+
+	第三参数：声音品质
+
+方法：
+------------------------------
+play(int soundID, float leftVolume, float rightVolume, int priority, int loop, float rate) ,
+
+play(souds.get(1),1,1,0,0,1) ,
+
+ID可以使用SparseIntArray对象存的文件
+
+其中leftVolume和rightVolume表示左右音量，
+
+priority表示优先级,
+
+loop表示循环次数,
+
+rate表示速率，如  //速率最低0.5最高为2，1代表正常速度 
+-------------------------------------------------------------
+load(context, int resouce)	//获取raw的音频文件转换为int值
+
+int  load(String path, int priority)  //从完整文件路径名载入 最后一个参数为优先级。
+
+SparseIntArray : 存储SoundPool的资源
+
+构造：
+---------------------------------
+SparseIntArray sounds = new SparseIntArray();
+
+put(int , int)			// 存储键值对数据源，值是raw文件的音频
+
+get(int)			//获取键对应的值
+
+put(1,soudpool.load(this,R.raw.xx))

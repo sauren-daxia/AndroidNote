@@ -1,0 +1,54 @@
+1、zip操作符，将事件合并，并且以最小的事件结束
+	第一个事件:1,    2,     3,    4
+	第二个事件,1.2,  2.3,   3.4
+	只会合并最小的，多出的则不接受
+
+	 Observable.zip(new Observable<Integer>() {
+            @Override
+            protected void subscribeActual(Observer<? super Integer> observer) {
+                observer.onNext(1);
+		observer.onNext(2);
+		observer.onNext(3);
+		observer.onNext(4);
+            }
+        }, new Observable<String>() {
+            @Override
+            protected void subscribeActual(Observer<? super String> observer) {
+                observer.onNext("1.2");
+		observer.onNext("2.3");
+		observer.onNext("3.4");
+
+            }
+        }, new BiFunction<Integer, String, Double>() {
+            @Override
+            public Double apply(Integer integer, String s) throws Exception {
+                return Double.valueOf(s)+integer;
+            }
+        }).subscribe(new Consumer<Double>() {
+            @Override
+            public void accept(Double aDouble) throws Exception {
+                     //输出结果= 2.2 ,  4.3 ,  6.4
+            }
+        });
+
+2、例子，将两个请求数据合并一起
+	Observable<UserBaseInfoResponse> observable1 =                                            
+        api.getUserBaseInfo(new UserBaseInfoRequest()).subscribeOn(Schedulers.io());      
+
+	Observable<UserExtraInfoResponse> observable2 =                                           
+        api.getUserExtraInfo(new UserExtraInfoRequest()).subscribeOn(Schedulers.io());    
+
+	Observable.zip(observable1, observable2,                                                  
+        new BiFunction<UserBaseInfoResponse, UserExtraInfoResponse, UserInfo>() {         
+            @Override                                                                     
+            public UserInfo apply(UserBaseInfoResponse baseInfo,                          
+                                  UserExtraInfoResponse extraInfo) throws Exception {     
+                return new UserInfo(baseInfo, extraInfo);                                 
+            }                                                                             
+        }).observeOn(AndroidSchedulers.mainThread())                                      
+        .subscribe(new Consumer<UserInfo>() {                                             
+            @Override                                                                     
+            public void accept(UserInfo userInfo) throws Exception {                      
+                //do something;                                                           
+            }                                                                             
+        });

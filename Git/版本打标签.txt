@@ -1,0 +1,40 @@
+目的：在某个版本上打标签
+
+首先要切换需要标签的分支上
+
+git tag v0.1		//默认标签打在该分支最新commit
+
+如果发布的版本不是最新的commit，就需要查找发布版本的commit历史记录的ID
+
+git log --pertty=oneline --abbrev--commit	//查找历史commit
+
+git tag v0.2 89886f	//为某个commit ID打标签	
+
+查看标签
+
+git tag			//查看所有标签
+
+git show v0.9		//查看某个版本的标签
+
+指定打标签
+
+git tag -a v0.3 -m"version v0.3" 09808f			//指定打标签 -a=指定标签名,-m=说明 -09808f=commit ID
+
+git tag -s v0.2 -m "signed version 0.2 released" fec145a	//私钥标签，必须配置PGP KEY
+
+删除标签
+
+git tag -d v0.1		//删除当前分支的某个版本标签
+
+删除远程标签
+
+git tag -d v0.9				//先删本地
+
+git push origin :refs/tags/v0.9		//再删远程,注意有冒号的
+
+
+推送标签
+
+git push origin v1.0	//推送某个标签
+
+git push origin --tags		//推送所有标签

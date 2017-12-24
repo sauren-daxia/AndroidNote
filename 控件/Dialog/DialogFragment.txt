@@ -1,0 +1,64 @@
+1、关于:
+	DialogFragment有APP包和V4包的，两个的用法基本无差
+	DialogFragment有着与Fragment一致的生命周期，并且也可以像Fragment一样嵌入Activity
+
+2、创建：
+	继承DialogFragment。实现onCreateView或者onCreateDialog
+
+	onCreateView类似Fragment的onCreateView，将布局文件加载进来return 的时候返回View就行了
+
+	public View onCreateView(LayoutInflate inflate,X x,X x){
+		View view = inflate.inflate(R.layout.dialog,null);
+		return view;
+	}
+
+	onCreateDialog就是利用原生的AlterDialog创建
+	public View onCreateDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());  
+		LayoutInflater inflater = getActivity().getLayoutInflater();  
+		View view = inflater.inflate(R.layout.fragment_login_dialog, null);  
+		builder.setView(view)  
+			.setPositiveButton("Sign in",  
+				new DialogInterface.OnClickListener()  
+				{  
+				@Override  
+				public void onClick(DialogInterface dialog, int id)  
+				{  
+				}  
+				}).setNegativeButton("Cancel", null);  
+		return builder.create(); 
+	}
+
+3、用法：
+	APP包下用法：
+		MyDialogFragment dialog = new MyDialogFramgent();
+		dialog.show(getFragmentManager(),"MyDialog");
+
+	V4包下用法：
+		MyDialogFragment dialog = new MyDialogFragment();
+		dialog.show(getSupportFragmentManager(),"MyDialog");
+
+	PS:show()的第二个参数只是一个Tag，但是最好定义一个唯一的
+
+4、显示：
+	DialogFragment有两种显示方式：
+	1、以Dialog对话框的方式显示：
+		MyDialogFragment dialog = new MyDialogFragment();
+		dialog.show(getSupportFragmentManager(),"MyDilaog");
+
+	2、以Fragment方式嵌入Activity显示：
+		SupportFragmentManager manager = getSupportFragmentManager();
+		FragmentTransaction ft = manager.beginTransaction();
+		ft.setTransaction(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		fragmentTransaction.replace(R.id.frame,dialogFragment);
+                fragmentTransaction.commit();
+
+5、与Activity交互
+	使用回调的方式
+
+6、旋转问题
+	不必考虑，自带保存
+
+
+		
+

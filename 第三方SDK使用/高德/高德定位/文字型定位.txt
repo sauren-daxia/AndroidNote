@@ -1,0 +1,97 @@
+将下载的SDK中jar包，放到Project视图中的libs中，同步一下即可
+
+1、创建应用并获取SHA1，使用代码获取
+
+ public static String sHA1(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), PackageManager.GET_SIGNATURES);
+            byte[] cert = info.signatures[0].toByteArray();
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            byte[] publicKey = md.digest(cert);
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < publicKey.length; i++) {
+                String appendString = Integer.toHexString(0xFF & publicKey[i])
+                        .toUpperCase(Locale.US);
+                if (appendString.length() == 1)
+                    hexString.append("0");
+                hexString.append(appendString);
+                hexString.append(":");
+            }
+            String result = hexString.toString();
+            return result.substring(0, result.length()-1);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+2、在官网的控制台获取KEY并配置到Manifest中
+	 <meta-data android:name="com.amap.api.v2.apikey"
+            android:value="2556b29a2a180668893f237f4d22eb64">
+        </meta-data>
+
+3、添加权限
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
+4、添加service
+    <service android:name="com.amap.api.location.APSService"></service>
+   
+5、声明定位类，定位设置类，定位监听类
+	//声明定位类对象
+	public AMapLocationClient mLocationClient = null;
+	//声明定位回调监听器
+	public AMapLocationListener mLocationListener = new LocationListener();	//监听器最好自己定义一个类实现它
+	//声明设置对象
+	public AMapLocationClientOption mLocationOption = null;
+
+6、实例化三个类，并设置一些定位的参数
+	 mLocationClient = new AMapLocationClient(getApplicationContext());
+	 mLocationClient.setLocationListener(mLocationListener);
+	 mLocationOption = new AMapLocationClientOption();
+
+	 设置定位模式：
+	//设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+	//设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
+	mLocationOption.setLocationMode(AMapLocationMode.Battery_Saving);
+	//设置定位模式为AMapLocationMode.Device_Sensors，仅设备模式。
+	mLocationOption.setLocationMode(AMapLocationMode.Device_Sensors);
+
+	设置定位频率：
+		单次定位,返回3s内最精准的定位街而过：
+			mLocationOption.setOnceLocation(true);		//默认为false
+			mLocationOption.setOnceLocationLatest(true);	//默认为false
+
+		连续定位
+			mLocationOption.setInterval(1000);	//设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+
+	mLocationOption.setNeedAddress(true);			//设置是否返回地址信息（默认返回地址信息）
+	mLocationOption.setWifiActiveScan(false);		//设置是否强制刷新WIFI，默认为true，强制刷新。
+	mLocationOption.setMockEnable(false);			//设置是否允许模拟位置,默认为false，不允许模拟位置
+
+7、将监听类和参数类设置到定位类中
+	mLocationClient.setLocationOption(mLocationOption);
+	mLocationClient.setLocationListener(mLocationListener);
+
+8、开启或定制定位
+	mLocationClient.startLocation();		//开启
+	mLocationClient.stopLocation();			//停止
+	mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。

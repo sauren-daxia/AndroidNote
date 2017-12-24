@@ -1,0 +1,81 @@
+
+
+2、方法引用
+	String::toUpperCase			//表示使用这个对象的某个方法，也相当于创建了这个对象，简写
+
+3、流式函数编程
+	 strings
+                .stream()
+                .filter(s -> s.contains("I"))
+                .map(String::toUpperCase)
+                .forEach(System.out::println);
+
+	PS：将一个集合像流一样输出每个元素，然后用lambda表达式过滤每个流元素，接着用方法引用转换并生成新的流元素，最后遍历出每个新的流元素
+
+4、流式高级函数
+	.filter() 接收的是一个返回值为boolean类型的lambda表达式或者是一个Predicate对象，注意并不是boolean类型的变量
+
+		Predicate方法：
+
+	.map()    接收的是一个Function<Object,Object>的对象或者是lambda表达式，
+		  Function<>第一个泛型是传入进来的参数类型，第二个参数是转换之后传出去的参数类型
+		  比如我要传Integer类型进来，但是我想转换成一个String类型的变量，Function<Integer,String>
+
+		Function方法：Function<输入类型，输出类型>
+		.apply()		//返回一个输出类型		
+	
+	.mapToInt()		//输出为int的函数，接收一个返回int的lambda表达式
+		
+		.sum()		//求和
+		.max()		//最大值
+		.sorted()	//排序
+
+	.reduce()		//比较器,具体lambda：(name1,name2) -> name1.length() > name2.length()?name1:name2
+				//用于比较流中所有元素，然后返回比较结果，有一点要注意，name1是每次比较的结果，name2是被比较的对象，可以说是迭代的对象
+				//.reduce()返回一个Optional对象
+	.reduce(T,BinaryOperator<T>) //和上面的比较器一样，只是第一个参数作为比较的默认值，第二个参数还是lambda表达式
+				//这个函数返回的是入参的类型，也就是集合类型是什么就返回什么，因为有默认值所以不会为空
+	
+	.sorted()		//和reduce一样都是比较，不过它可以将比较出来的结果排序,接收一个lambda表达式生成的Comparator<T>对象
+
+	.collect()		//
+				//Collectors.joining("")
+
+	"ABCD".chars()		//字符串的流，得到一个stream()，不过是整型的，需要强转为字符
+5、消除冗余
+	
+	//可理解版
+	//先将条件生成对象，流式编程除了接收lambda表达式也接收对象，这个对象也是由lambda表达式生成的
+	final Predicate startsWithN = name -> name.startsWith("N");
+	Function<String, String> function = String::toUpperCase;
+
+	strings
+                .stream()
+                .filter(startsWithN)
+                .map(function)
+                .forEach(System.out::println);
+
+	//终极版
+	//表示只有一个参数letter的方法里面有一个只有一个参数name的方法返回了一个用lambda创建Predicate对象
+	final Function<String,Predicate<String>> startWith = letter -> name -> name.contains(letter); 
+
+        strings
+                .stream()
+                .filter(startWith.apply("I"))
+                .forEach(System.out::println);
+
+6、Optional对象
+	.stream()的子方法.findFrist()可以返回第一个元素，但不是这个元素本身的类型，而是：
+	Optional<?>类型，这个类型可以免空指针错误
+
+	Optional方：
+	.orElse()		//如果没有这个元素，就给一个默认的元素，改元素类型必须一致
+	.orElseGet()		//如果没有这个元素，请提供一个元素，和.orElse()差不多
+	.orElseThrow()		//如果没有这个元素，请提供一个异常
+	.ifPresent()		//如果有这个元素，那么可以使用一个lambda表达式做一个功能
+	.isPresent()		//判断是否有这个元素，返回boolean
+	.get();			//获取这个元素
+	
+7、新方法
+	String.join(String,Arrays<T>)  //拼接，第一个参数拼接的分隔符,第二个参数集合，例如1,2,3,4
+	Collectors.joining(String)	//拼接，参数为分隔符

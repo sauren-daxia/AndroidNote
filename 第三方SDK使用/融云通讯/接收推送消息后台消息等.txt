@@ -1,0 +1,28 @@
+1、自定义Reciver类，继承PushMessageReciver
+	public class MyNotificationReceiver extends PushMessageReceiver {
+    @Override
+    public boolean onNotificationMessageArrived(Context context, PushNotificationMessage pushNotificationMessage) {
+        //收到的推送消息的展示
+        //返回false表示使用融云默认展示
+        //需要自定义通知栏展示的话，在这里写代码，并返回true
+        return false;
+    }
+    @Override
+    public boolean onNotificationMessageClicked(Context context, PushNotificationMessage pushNotificationMessage) {
+        //用户点击Notifycation时的跳转
+        //返回false表示使用默认
+        return false;
+    }
+}
+
+2、在Manifest中注册广播
+	 <receiver
+            android:exported="true"
+            android:name=".MyNotificationReceiver">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>

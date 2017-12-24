@@ -1,0 +1,123 @@
+1、初始化框架：
+    在application中调用Rx.init(Context context);
+
+2、配置gradle里面的参数
+    buildTypes {
+            debug{                      //线下模式
+                minifyEnabled false
+                buildConfigField("boolean", "LOG_DEBUG", "false");
+                buildConfigField("String", "BASE_URL", "\"http://192.168.1.35:8080/\"")
+            }
+
+            release {                   //线上模式
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                buildConfigField("boolean", "LOG_DEBUG", "true");
+                buildConfigField("String", "BASE_URL", "\"http://192.168.1.35:8080/\"")
+            }
+        }
+
+     参数说明：
+           LOG_DEBUG    日志输出开关
+           BASE_URL     base链接
+
+3、自定义一个Interface作为借口请求类：
+    写法：
+         @POST("CrashAction")
+         Observable<BaseBean<Object>> Login();
+
+         PS：要把返回的实体类包上BaseBean，BaseBean主要是一些请求时通用的参数比如code,message等，根据业务不同自己去BaseBean里面修改
+
+4、访问请求拦截在RequestInterceptor里面做处理，目前没设置头部参数，只设置请求参数，根据业务要求去修改头部参数
+
+5、数据返回在RxObserver里做处理，这里是已经Gson过的数据，一些code判断，数据保存可以在这里处理
+
+6、调用写法：
+        HashMap<String, Object> requestMap = MapUtils.Builder()
+                        .put("UNITID", UserSession.getInstance().getOrgUnit().getId())
+                        .builder();
+         RxRetrofit.request(RxRetrofit.create(requestMap, RequestUrl.class).Login(), new RxObserver<UserBean>() {
+                    @Override
+                    public void onSuccess(UserBean o) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onDisposable(Disposable d) {
+
+                    }
+                });
+
+         参数说明：
+                   requestMap       参数的键值对
+                   ReqeustUrl       对应第3条的Interface接口
+                   RxObserver       请求回调结果，需要指定类型
+
+7、上面这种方式只适合在Activity\Fragment调用，然后通过Activity定义一个CompositeDisposable对象，在onDisposable()中add(Disposable)
+   然后在Activity的OnDestroy里面调用clear()
+
+8、直接使用存在Rxjava内存泄漏的问题，所以引入MVP模式去处理
+    1)Module写法：
+            IMainModule 需要继承 BaseModule
+
+            IMainModule的Callback需要继承IBaseCallback
+
+            MainModuleImpl 需要实现 IMainModule
+
+            调用网络请求时:
+                                   public void onDisposable(Disposable d) {
+                                        if(callBack!=null){                 //主要把开关保存
+                                            callBack.onDisposable(d);
+                                        }
+                                    }
+
+                                    @Override
+                                   public void onSuccess(UserBean o) {
+                                        if(callBack!=null){                 //这里返回请求成功的数据
+                                            callBack.onSuccess(userBean);
+                                        }
+                                    }
+
+                                    @Override
+                                   public void onFailure(Throwable e) {
+                                        if (callBack != null) {             //这里回调请求异常
+                                                callBack.onFailure(e);
+                                            }
+                                    }
+
+
+    2)Presenter写法：
+            IMainPresenter 继承 IBasePresenter 然后里面写控制方法
+
+            MainPresenterImpl 需要继承 BasePresenter<V,M> 实现 IMainPresenter
+                    写法：public class MainPresenterImpl extends Base<IMainView,IMainModule> implement IMainPresenter{
+
+                            @Override   //这个是Module访问的话就会有一个Callback，Callback里面会回调这个方法出来
+                            public void onDisposable(Disposable d) {
+                                mCompositeSubscription.add(d);          //重点要添加到管理
+                            }
+
+                            @Override
+                                public void unSubscribe() {              //需要让View在onDestroy手动调用
+                                    cancelSubscribe();
+                             }
+
+                          }
+
+    3)View写法：
+            IMainView  写控制方法
+
+            MainActivity 实现 IMainView 定义一个IMainPresenter就完了，最重要的是在onDestroy里面调用Presenter的unSubscribe()方法
+            另外：IMainView里面要定义一些方法，获取Activity里面的控件的数据等，然后MainActivity要在这里方法里面返回控件的数据
+
+
+
+
+
+
+

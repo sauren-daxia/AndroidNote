@@ -1,0 +1,59 @@
+Buttom : 点击按钮
+
+属性：
+--------------------------------------------------
+android:visibility = "visible"		设置控件的显示
+visible		//可见
+isvisible	//不可见，但还占位置
+gone		//完全不可见
+--------------------------------------------------
+android:enable = "true"			//设置能否点击
+
+--------------------------------------------------
+android:id				//控件名称
+
+--------------------------------------------------
+android:layout_width			//控件宽度
+
+wrap_content				//包裹实际文本内容，文本有多长宽度就有多长
+match_parent				//当前控件铺满父类容器---->2.3API之后出现
+fill_parent				//当前控件铺满父类容器---->2.3API之前出现
+--------------------------------------------------
+android:layout_marginLeft		//设置间距
+android:layout_marginTop		//设置间距
+--------------------------------------------------
+android:layout_height			//控件高度
+
+
+wrap_content				//包裹实际文本内容，文本有多长宽度就有多长
+match_parent				//当前控件铺满父类容器---->2.3API之后出现
+fill_parent				//当前控件铺满父类容器---->2.3API之前出现
+--------------------------------------------------
+
+android:text				//文本内容
+
+android:textSize			//本文大小
+
+android:textColor			//文本颜色
+
+android:background			//控件背景
+
+
+方法：
+--------------------------------------------------
+setVisibility(View.INVISIBLE)		//代码中设置显示
+View.VISIBLE		//可见
+View.INVISIBLE		//不可见占坑
+View.GONE		//完全不可见
+
+setEnabled()		//设置是否可点击	
+setAlpha(float f)			//设置图片透明度，0-255	
+
+
+
+Button事件：
+先得到btn对象
+
+button btn = (Button)findViewById(R.id.btn)		//通过R文件的静态属性去获取btn的静态值。返回view，要强转
+-------------------------------------
+setOnClickListener(new OnClickListener())		//点击事件，需要一个接口，选择view类型的，重写该接口的onClick即可

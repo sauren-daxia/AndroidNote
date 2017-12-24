@@ -1,0 +1,14 @@
+在项目全局的gradle.properties中配置
+org.gradle.parallel=true
+org.gradle.daemon=true
+org.gradle.configureondemand=true
+org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+
+在全局的gradle.build中配置
+
+//最高等级
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}

@@ -1,0 +1,23 @@
+layer-list
+
+	|<item>
+	|--------------------------------
+	|id = "@android:id/background"		//进度背景色
+	|id = "@android:id/secondaryprogress"	//第二进度
+	|id = "@android:id/progress"		//第一进度
+	|
+	|
+	|		|<clip>
+	|		|----------------------	
+	|		|
+	|		|
+	|		|
+	|		|
+	|		|
+
+
+
+<item android:id = "@android:id/secondaryprogress">		//设置第一进度，第二进度的格式
+	<clip>
+		<shape>
+			....

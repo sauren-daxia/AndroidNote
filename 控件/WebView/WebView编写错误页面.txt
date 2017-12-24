@@ -1,0 +1,36 @@
+1.写好一个本地的HTML网页文件放在assets中
+
+2、在错误方法中调用
+	web.setWebViewClient(new WebViewClient(){
+		public void onReceivedError(WebView view ,int errorCode , String desription,String failingUrl){
+			super();
+			String path = "file:///android_asset/文件名";
+			web.load(path);
+		}
+	})
+
+获取assets文件路径的方法
+
+第一种方法：
+String path = "file:///android_asset/文件名";
+
+第二种方法：
+    InputStream abpath = getClass().getResourceAsStream("/assets/文件名");
+
+
+若要想要转换成String类型
+
+String path = new String(InputStreamToByte(abpath ));
+
+
+    private byte[] InputStreamToByte(InputStream is) throws IOException {
+        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+        int ch;
+        while ((ch = is.read()) != -1) {
+            bytestream.write(ch);
+        }
+        byte imgdata[] = bytestream.toByteArray();
+        bytestream.close();
+        return imgdata;
+    }
+

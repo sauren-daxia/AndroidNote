@@ -1,0 +1,5 @@
+依赖包报错：
+	Failed to resolve: com.android.support:appcompat-v7:26.0.0
+
+	需要在项目build.gradle中配置，原因是因为26以上的版本都要配置
+	maven { url "https://maven.google.com" }

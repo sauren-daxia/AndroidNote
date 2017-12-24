@@ -1,0 +1,21 @@
+问题：在上游和下游不处于同步的时候，如果上游发送的事件数量超大，就会导致OOM，解决方法在于上游发送的频率处理
+
+1、通过速度控制
+	//在上游每发完一个事件停顿一下
+	Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                for (int i = 0; ; i++) {
+                    emitter.onNext(i);
+                    Thread.sleep(2000);  //每次发送完事件延时2秒
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.d(TAG, "" + integer);
+                    }
+                });
+	

@@ -1,0 +1,36 @@
+SurfaceView 、 TopView、 BottomView三个控件是相互依赖的，必须三个都要使用
+
+1、在Activity中调用SurfaceView的init(int , int)的方法，但这种方法会造成代码冗余
+
+	xx.init(R.layout.xx,R.layout.xx);		//这个方法是将两个布局ID添加到View中，这两个布局分别是TopView的布局和BottomView的布局
+
+PS：这套模版也可以做成两个Fragment，更好的管理界面，
+
+2、在Activity中调用SurfaceView的init(SupportFragmentManager , Fragment, Fragment)的方法，
+
+	xx.init(getSupportFragmentManager().new XXFragment() , new XXFragment());
+	
+	//这个方法是将两个Fragment做为每一页的布局，代码分开写，程序机构比较清晰，推荐!!!
+
+PS：使用这个方法有几个步骤：这个貌似懒加载？如果是的话，忽略这个，直接使用懒加载；
+
+	1、两个Fragment必须有一个BaseFragment，而且这个BaseFragment是抽象的，还提供一个抽象方法
+	public abstract void onPageChange(int index);	//在Activity中创建这个BaseFragment的实现类后，当SurfaceView回调的时候就调用这个方法
+
+	2、分别在BaseFragment的实现类中实现onPageChange(int index)这个方法，通过Index判断当前是第几页并且做一些数据加载的工作
+
+	3、在Activity中，通过SurfaceView的onPageListener()回调返回的index值，传给BaseFragment的实现类的onPageChange(int index)，
+	最后BaseFragment的实现类根据index状态，做数据加载或其他的操作
+	mContainer.setOnPageChangeListener(new ContainerScrollView.OnPageChangeListener() {
+            @Override
+            public void onPageChange(int index) {
+             //两个Fragment都要传参
+                mTopFragment.onPageChange(index);
+                mBottomFragment.onPageChange(index);
+            }
+        });
+
+如果上页或者下页里面有ListView之类的，一定要在OnMesure里面设置最大高度
+
+
+	

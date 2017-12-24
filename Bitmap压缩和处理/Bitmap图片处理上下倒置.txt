@@ -1,0 +1,26 @@
+1、获取Bitmap源
+	
+	Bitmap srcBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.xx);
+
+2、创建与Bitmap大小的画布
+	Bitmap bitmap = Bitmap.createBitmap(srcBitmap.getWidth(), srcBitmap.getHeight(), Config.ARGB_8888);
+	
+	Canvas canvas = new Canvas(bitmap)
+
+3、通过矩阵实现倒置
+
+		Matrix matrix = new Matrix();
+
+		matrix.setScale(1, -1); 	//X轴不变，Y长度从+1缩放到-1
+
+		matrix.postTranslate(0, srcBitmap.getHeight());		//此时图像不在原位，需要移动到原位
+
+		canvas.drawBitmap(srcBitmap, matrix , null);		//将位置设置到画布中
+
+		Paint paint = new Paint();				//创建笔
+
+		paint.setColor(0xffff0000);				//设置笔颜色
+
+		canvas.drawCircle(100, 100, 50, paint);			//在画布花一个圆
+
+		img.setImageBitmap(bitmap);				//设置到ImageView

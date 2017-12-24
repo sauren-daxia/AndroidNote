@@ -1,0 +1,56 @@
+有序广播用于优先级广播接收者，等级越高越早接收
+
+发送广播
+		Intent intent = new Intent("abc.abc");
+		sendOrderedBroadcast(intent, null);
+
+abortBroadcast()	//拦截广播，是BroadCastReceive的方法
+
+
+在接受到广播的时候，可以设置数据，传递给下一个接受者
+
+	boradcatReceive.setResultExtras(Bundle b);
+
+也可以接收数据
+	boradCastReceive.getResultExtras(false)	//如果没有数据则不创建Bundle
+
+
+接收两种注册方式：
+
+1、动态注册
+	
+	1.定义一个内部类继承BroadCastReceive
+
+	2.创建好内部类对象
+
+	3、定义一个IntentFilter类用于广播接收者的注册,并设置优先级
+		IntentFilter if = new IntentFilter();
+		
+		if.addAction(xx);
+
+		if.setPriority()	//设置优先级
+
+		registerReceiver(xx,if);
+
+	4、内部类的方法中intent参数，获取Action值用于判断是哪个广播
+
+		intent.getAction().equals(xx);
+
+	5、在Activity的onDestroy方法中取消注册
+
+		unRegisterReceiver(xxx);
+
+
+2、静态注册广播接收者
+
+	1、定义一个类继承自BroadCastReceive
+
+	2、在配置文件中<application>中自定义一个<receive>标签，在<receive name = 类名>标签中定义一个<action name = xx>
+
+	3、内部类的方法中intent参数，获取Action值用于判断是哪个广播
+
+		intent.getAction().equals(xx);
+
+	4、在Activity的onDestroy方法中取消注册
+	
+		unRegisterReceiver(xxx);

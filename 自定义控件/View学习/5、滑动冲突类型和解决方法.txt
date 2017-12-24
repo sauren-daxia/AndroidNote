@@ -1,0 +1,35 @@
+1、横向和竖向滑动冲突
+	这种冲突一般可以判断滑动的方向进行拦截
+		1、在外层拦截(外层肯定是容器)
+			onInterceptTouchEvent(MotionEvent event){
+				boolean b = false;
+				int currentX = getX();
+				int currentY = getY();
+				if(event.getAction == MotionEvent.ACTION_MOVE){
+					//fristX是在分发中记录的点击位置
+					if(Math.abs(fristX - currentX) > Math.abs(fristY - currentY)){	
+						b = true;
+					}else{
+						b = false;
+					}
+				}
+
+				fristX = currentX;
+				fristY = currentY;
+				return  b;
+			}
+
+		2、在内部拦截
+
+2、相同方向滑动冲突
+	重写子控件的测量方法，使它最大化即可
+	
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+		heightMeasureSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,  MeasureSpec.AT_MOST); 	
+		//测量一定要写在调用父类的方法之前
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);  
+
+		MeasureSpec.AT_MOST	//以最大值进行测量
+	}
+
+3、第一种+第二种的混合冲突

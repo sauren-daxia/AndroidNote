@@ -1,0 +1,5 @@
+右键图片->convert webp 
+	lossy encoding		//有损图片
+	use lossless encoding	//无损图片，建议无损
+
+最低支持4.3，最好用fresco加载

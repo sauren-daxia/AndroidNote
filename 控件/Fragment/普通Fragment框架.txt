@@ -1,0 +1,24 @@
+ private void replaceFragment(Class<?> c) {
+        if (fragmentIndex != null && fragmentIndex.getClass().getName().equals(c.getName())) {
+            return;
+        }
+        Fragment fragmentTag = fragmentManager.findFragmentByTag(c.getName());
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragmentTag == null) {
+            try {
+                fragmentTag = (BaseFragment) c.newInstance();
+                fragmentTransaction.add(R.id.frame, fragmentTag, c.getName());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            fragmentTransaction.show(fragmentTag);
+        }
+        if (fragmentIndex != null) {
+            fragmentTransaction.hide(fragmentIndex);
+        }
+        fragmentIndex = fragmentTag;
+        fragmentTransaction.commit();
+    }

@@ -1,0 +1,39 @@
+############腾讯的BuglySDK###################
+
+1、集成收集库
+
+defaultConfig {
+    
+ndk {// 设置支持的SO库架构
+    abiFilters 'armeabi'	// 'x86', 'armeabi-v7a', 'x86_6 4', 'arm64-v8a'
+     }
+}
+
+dependencies {
+    //-------bugly腾讯日志收集库
+    compile 'com.tencent.bugly:crashreport:latest.release' //其中lat est.release指代最新版本号，也可以指定明确的版本号，例如2.1.5
+    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+    //-------bugly腾讯日志收集库
+}
+
+2、集成符号表，用于输出有意义，能看懂的日志
+
+1)app/build.gralde中添加代码
+apply plugin: 'bugly'
+
+bugly {
+    appId = '1105502617'
+    appKey = 'iukpXubg0OIoA6ba'
+}
+
+2)在根目录的gralde中添加
+ dependencies {
+        classpath 'com.tencent.bugly:symtabfileuploader:1.3.9'  //腾讯bugly符号表
+    }
+
+如果同步失败，请不要放弃，再试几次！！！！！！！
+
+在混淆配置文件中添加代码，避免被混淆
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+############腾讯的BuglySDK###################

@@ -1,0 +1,1 @@
+1、如果要穿FragmentManage的就传getChildFragmentManager()

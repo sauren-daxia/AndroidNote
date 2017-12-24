@@ -1,0 +1,73 @@
+使用场景：
+	优点：
+		有效的把类的核心功能和附加功能区分开
+
+	在对同一个对象增加相同功能的不同实现的时候可以使用
+	例如QQ秀需求：
+			1、可以对同一个人穿着各个部位的衣服
+			2、可以不分先后的穿着衣服
+			3、可以嵌套衣服
+	
+	都是同一个对象————人，但是穿着的服饰类型不一样，没有先后顺序，可以互相嵌套
+
+	基本使用：
+		interface 装扮{
+			void show();
+		}
+
+		class 人 implements 装扮{
+
+			private 名字 A;
+
+			public 人(名字 A){
+				this.A = A;
+			}
+
+			public void show(){
+				
+			}
+		}
+
+		class abstract 服装 implements 装扮{
+			private 装扮 A;
+
+			public void setDressUp(装扮 A){
+				this.A = A;
+			}
+
+			public void show(){
+				if(A != null){
+					A.show();
+				}
+			}
+		}
+
+		class T恤 extends 服饰{
+
+			public void show(){
+				super.show();
+				System.out.println("蓝色的T恤");
+				//super在前在后影响的是顺序，在前是顺叙，在后是倒叙
+			}
+		}
+
+		class 牛仔裤 extends 服饰{
+			public void show(){
+				super.show();
+				System.out.println("黑色的牛仔裤");
+			}
+		}
+
+		main(){
+			人 a = new 人();
+			牛仔裤 b = new 牛仔裤();
+			T恤 c = new T恤();
+			
+			b.setDressUp(人);
+			c.setDressUp(b);
+			c.show();
+		}
+
+	主要核心就是在各个组件重写show()方法的时候，
+	调用setDressUp()传进来组件的show()方法，
+	过程类似递归，不断的调用上一级的show()方法，

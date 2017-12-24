@@ -1,0 +1,9 @@
+LinearLayout :线性布局,特点，要么从上到下，要么从左到右
+
+RelativeLayout : 相对布局，根据相对位置来控制控件的摆放位置
+
+FrameLayout : 帧布局
+
+TableLayout : 表格布局
+
+AbsoluteLayout : 绝对布局

@@ -1,0 +1,4 @@
+1、检查有没有settings.gradle,没有的话要自己新建一个，里面的内容如下
+include ':app'
+
+PS：有多个模块也一同写全

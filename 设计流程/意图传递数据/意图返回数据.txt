@@ -1,0 +1,35 @@
+接收数据步骤：
+
+1、定义一个标记，用户传送和接收时判断是否为同一个东西
+public static final int A = 1;
+
+2、定义意图，并传送数据
+setClass(Main.this,myMain.this);
+putExtra(String , xx);
+
+3、调用方法传递意图并且传递标记
+
+startActivityForResult(it,A)
+
+4、重写方法,用于接收数据
+onActivityResult(int resultCode , int , Intent data){
+	if(resultCode == RESULT_OK (2)//2是什么个鬼 ){	//判断目标界面是否结束
+		if(requestCode == A){		//判断是否时同一个东西
+			date.getIntExtra();	//取值
+			
+		}
+	}
+}
+
+
+返回数据步骤：
+
+1、定义意图
+Intent it = new Intent()
+2、将数据通过意图传输
+putExtra(string,xx)
+3、返回标记和意图
+setResult(2,it)
+
+4、结束当前界面生命周期
+finish()

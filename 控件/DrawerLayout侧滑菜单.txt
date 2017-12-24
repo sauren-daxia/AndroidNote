@@ -1,0 +1,20 @@
+1、XML布局
+<android.support.v4.widget.DrawerLayout>
+	//主题内容一定要放在侧滑控件之前
+	<FrameLayout>
+
+	//左侧滑
+	<FrameLayout
+	android:layout_gravity = "start"	//只有设置位置，DrawerLayout才会判断它是哪边的菜单
+	>
+	//右侧滑
+	<FrameLayout
+	android:layout_gravity = "end"	//只有设置位置，DrawerLayout才会判断它是哪边的菜单
+	>
+</android.support.v4.widget.DrawerLayout>
+
+2、如果主题内容如果是放FrameLayout，可以使用普通Fragment框架实现
+
+3、DrawerLayout的一些方法
+	layout.openDrawer(Gravity.LEFT);	//打开左边菜单，当然也可以打开右边
+	layout.closeDrawer(Gravity.RIGHT)	//关闭右边菜单

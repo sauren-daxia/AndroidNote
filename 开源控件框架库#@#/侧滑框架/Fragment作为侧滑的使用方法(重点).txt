@@ -1,0 +1,42 @@
+1、定义好左边或者右边，或者两边的Fragment，作为侧滑主体
+
+2、Activity继承SlidingFragmentActivity
+
+3、在Activity中初始化Fragment，并设置为侧滑主体，下面是双向侧滑的例子；模式设置为哪边，哪边就是一级菜单
+
+	setBehindContentView(R.layout.leftmeun_fragment);		
+	//给一级侧滑菜单设置一个布局文件,这个布局文件里面有一个Framelayout，要将我们的LeftFragment放进去
+
+	//获取创建Fragment，添加到侧滑菜单的布局文件里
+	LeftFragment left = new LeftFragemtn();
+	//替换掉原有的？不太懂，反正也这是一种添加Fragment的方法
+	getSupportFragmentManager().beginTransaction().replace(R.id.left_meun_fragment,left).commit();
+	
+	//设置菜单的模式，因为这个Activity本身就是一个侧滑控件，所以可以通过getSlidingMenu()获取
+	SlidingMenu menu = getSlidingMenu();
+	menu.setMode(SlidingMenu.LEFT_RIGHT);		//设置成双向菜单
+
+	//设置各种属性
+	menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN)	//设置为全屏都能拉出来还是只能从边缘拉出来
+	menu.setShadoWidth(100)			//设置阴影效果宽度
+	menu.setShadowDrawable(R.drawable.xx)	//设置阴影效果图
+	menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);	// 设置滑动菜单视图的宽度
+	menu.setFadeDegree(0.35f);		// 设置渐入渐出效果的值
+	....
+
+	//设置二级菜单
+	menu.setSecondaryMenu(R.layout.right_menu_frame);
+	Fragment rightMenuFragment = new MenuRightFragment();
+	getSupportFragmentManager().beginTransaction().replace(R.id.id_right_menu_frame, rightMenuFragment).commit();
+
+	//设置的方法跟一级菜单大体相同，也就是setSecondaryXXXX()，多了个Seconday
+
+	//提供一个点击监听，点击显示第一菜单或第二菜单
+	onclick(){
+		case xx:
+		getSlidingMenu().showMenu();
+		break;
+		case xx:
+		getSlidingMenu().showSecondaryMenu();
+		break;
+	}

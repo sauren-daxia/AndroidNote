@@ -1,0 +1,29 @@
+1、需要自定义一个属性
+	在values资源文件下创建attrs文件夹，添加一条属性，属性名称如下
+	  <declare-styleable name="SlidingMenu">
+		<attr name="rightPadding" format="dimension"/>
+	  </declare-styleable>
+
+2、定义两个布局，一个是侧滑菜单的布局，一个是主界面布局
+
+3、将定义好的两个布局使用<include>引用到侧滑菜单容器里，如下:
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.jasonchen.myapplication_1.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/sliding_menu"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	app:rightPadding="62dp">		//自定义侧滑后保留多少主界面的宽度，比如QQ只保留一个头像的宽度
+
+	<LinearLayout				//需要用到横向的布局
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="horizontal">			//只能引用两个布局界面，一个菜单布局，一个主页面布局
+		<include layout="@layout/layout_home_menu"/>
+		<include layout="@layout/layout_home_content"/>
+	</LinearLayout>
+
+</com.example.jasonchen.myapplication_1.SlidingMenu>
+
+4、代码使用
+toggleMenu()			//展开或收起侧滑菜单

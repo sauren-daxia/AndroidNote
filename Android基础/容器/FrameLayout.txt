@@ -1,0 +1,15 @@
+FrameLayout:	帧布局
+
+属性：
+----------------------------
+layout_gravity = "center"		//让子控件自己排列对应的位置。父容器无法让子控件按指定的排列方式排列
+
+foreground = "#0045043"		//设置前景色
+
+top
+
+bottom
+
+left
+
+right

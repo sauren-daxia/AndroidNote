@@ -1,0 +1,47 @@
+步骤：
+
+1、定义一个XML布局用于Fragment碎片的布局
+
+2、定义一个Fragment子类初始化布局
+
+3、重写Fragment的方法
+	
+	onCreateView()
+		return inflater.inflater(R.layout.xx,null);	//这个方法用于加载布局文件
+
+	onAvtivity()			//这个方法相当与Activity的onCreate方法，用于在里面实现各个控件的操作
+		getView()	//该方法可以获取到包含该Fragment的Activity的上下文，通过这个方法链式调用findviewbyid()方法得到控件
+
+4、先在XML文件中定义一个容器，再在代码中定义一个Fragment操作类，用于添加Fragment到容器里
+	
+	FragmentManager fm = getFragmentManager()		//获取Fragment管理对象
+
+	FragmentTransaction ft = fm.beginTransaction();		//使用Fragment管理对象获取一个Fragment操作对象
+
+	MyFragment mf = new MyFragment();			//把已经定义好的Fragment子类创建
+
+	ft.add(R.id.fragmentlayout , mf , MyFragment.class.CanonicalName() )	//使用操作对象，添加到fragmentlayout布局里，并设置一个tag名
+
+	ft.commit()		//使用完操作对象一定要提交
+
+5、找到每个Fragment碎片
+	
+	Fragment  fragment = fm.findViewByTag("my_fragment")	//通过tag去找每个碎片
+	
+	FragmentTransaction ft = fm.beginTransaction();
+
+	ft.hide(fragment)		//隐藏碎片
+
+PS：每个FragmentTransaction只能提交一次，提交完毕不能再使用
+
+FragmentTransaction方法：
+
+--------------------------
+add(int , object , String)	//添加碎片方法
+
+remove(fragment)		//移除
+
+hide(fragment)			//显示
+
+
+

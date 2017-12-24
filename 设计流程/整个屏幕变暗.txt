@@ -1,0 +1,5 @@
+
+//获取整个屏幕的布局参数
+WindowManager.LayoutParams lp = confirmActivity.getWindow().getAttributes();
+lp.alpha = 1f;
+confirmActivity.getWindow().setAttributes(lp);

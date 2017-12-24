@@ -1,0 +1,12 @@
+使用runOnUiThread
+
+具体用法：
+
+public void setUI(final int i){			//再定义一个方法,否则不能调用非常量
+	runOnUiThread(new Runnable(){
+
+		run(){		//重写run方法，不需要start
+			...
+		}
+	});
+}

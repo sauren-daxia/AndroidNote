@@ -1,0 +1,21 @@
+RelativeLayout:
+
+属性
+---------------------------------
+alignBaseline = "@id/..."		//控件的内容与指定控件的内容显示在同一水平位
+
+layout_centerHorizontal = "true"	//水平居中
+
+layout_centerVertical = "true"			//垂直居中
+
+layout_centerInparent = "true"		//水平垂直居中
+
+layout_alignParentRight = "true"	对其父容器右边 ，有左右上下四种对其
+
+layout_toLeftOf = "@id/btn1"		//设置到btn1的左边
+layout_toRightOf =  "@id/btn1"		//设置到btn1的右边
+layout_above =  "@id/btn1"		//设置到btn1的上边
+layout_below =  "@id/btn1"		//设置到btn1的下边
+
+layout_alignTop = "@id/btn1"		//上对其btn1的高度
+

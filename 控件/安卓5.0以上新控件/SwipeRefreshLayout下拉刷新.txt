@@ -1,0 +1,13 @@
+XML用法：
+	<android.support.v4.widget.SwipeRefreshLayout
+	 android:scrollbars="vertical" 	//貌似可以横向刷新
+	>
+		<TextView />
+	</android.support.v4.widget.SwipeRefreshLayout>
+貌似只能添加一个子控件，如果想添加多个，就要加一个容器
+
+基本方法：
+	setOnRefreshListener(OnRefreshListener):	添加下拉刷新监听器，关于刷新的内容在这里面执行
+	setRefreshing(boolean):				显示或者隐藏刷新进度条
+	isRefreshing():					检查是否处于刷新状态
+	setColorSchemeResources():			设置进度条的颜色主题，最多设置四种，以前的setColorScheme()方法已经弃用了。

@@ -1,0 +1,35 @@
+ProgressBar
+
+属性：
+----------------------------------
+style = "?Android:attr/progressBarStyle..."		//设置进度条的样式
+
+max = "10000"				//最大进度
+
+progress = "100"			//当前进度
+
+secondaryProgress = "20"		//第二进度
+
+indeterminate = "true"			//是否精确显示进度	//true为不精确，设置后对进度条设置任何进度都无效，并且是一直在动的，在一些不确定时间上使用
+
+
+
+方法：
+-----------------------------------
+setProgress(int i )			//设置进度
+
+setSecondaryProgress()			//设置第二进度
+
+getProgress()				//获取第一进度值
+
+getSecondaryProgress()			//获取第二进度值
+
+incrementProgressBy()			//增加或减少第一进度
+
+incrementSecondaryProgressBy()		//增加或减少第二进度
+
+getMax()				//获取最大进度值
+
+获取第一进度和第二进度的百分比公式
+
+(int)(first /(float)max * 100 )

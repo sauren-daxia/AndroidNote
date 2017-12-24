@@ -1,0 +1,130 @@
+1、方法的定义
+	明确返回值类型方法定义：
+		fum abs(a :String ,b:String?) : Int{  }//返回类型为Int
+
+	不明确返回值类型方法定义：
+		fum abs(a : Boolen , b : Int) = if(a == true) a else b //如果判断通过则返回Boolean类型，不通过则返回Int类型
+
+	无返回值方法定义：
+		fun abs(){  }
+
+2、变量定义
+	只读类型val,只可赋值一次
+		val a : Int = 1		//立即赋值
+		val b = 1		//推断赋值
+		val c : Int		//暂不赋值
+		c = 1			//明确赋值
+
+	可读可写类型var
+		var a = 1		
+
+3、字符串模板
+	普通使用
+		val a : String = "a"
+	
+	带参使用
+		val a = 1
+		val b : String = "a = $a, b = $5"	//$a表示引用一个变量，$5表示引用一个常量
+
+	带表达式使用
+		val a :String = "a = ${1 + 5}"		//引用表达式需要加括号${}
+
+4、if条件语句
+	//普通使用
+		if(1 == 0){
+
+		}else{
+	
+		}
+
+	//表达式使用
+	fum abs(a : Int , b : Int) = if(a == 1) a else b
+	
+5、使用空类型
+	声明空类型
+		var a : Int? = 4			//声明可空类型一定要赋值，但后面的操作可以为它赋值null  
+		使用可空类型
+			a!! * 5				//在空类型后面加!!表示可使用空类型变量
+
+	参数空类型
+		fum abs(a : String?)
+
+6、空监测
+	判断空类型如果不为空即可直接使用
+		var a : Int? =4
+		if(a !=null){
+			a * 7				//如果判断通过则可以不用加!!
+		}
+
+7、is类型判断，判断通过会自动转换类型
+	第一种自动转换
+		fum sum(obj : Any){
+			if(obj is String){
+				obj.toString()		//如果判断通过就会自动转换为判断的类型使用
+			}
+		}
+
+	第二种
+		if(obj !is String) return		//如果不为目标类型则一定要退出，如果是目标类型，接下来就会自动转换
+
+		obj.toString();
+
+	第三种即时判断即时转换
+		if(obj is String && obj.length() > 1)	//当条件成功立马可以使用目标类型
+
+8、for循环
+	第一种
+		for(bean in list){			//增强for的用法
+			println(bean.name)
+		}
+
+	第二种
+		for(i in list.indices){
+			println(list[i])		//迭代用法
+		}
+		
+	第三种
+		list.foreach{bean -> bean.name}		//lambda用法
+
+9、while
+	和Java一样使用
+
+10、when判断
+	普通使用
+		when(obj){
+			1		-> println("one")		//如果等于1
+			"hello"		-> println("two")		//如果与字符串相等
+			is Long		-> println("three")		//如果为Long类型
+			!is Boolean     -> println("four")		//如果不为Boolean类型
+			else		-> println("five")		//否则，普通判断可以不加else
+		}
+
+	判断使用
+		when{
+			a in 1..10	-> println("one")
+			a in -9 downTo 0 -> println("two")
+			a is Int	-> println("three")
+		}
+
+	表达式使用
+		fum abs(obj: Any) : String = when(obj){
+			1		-> println("one")		//如果等于1
+			"hello"		-> println("two")		//如果与字符串相等
+			is Long		-> println("three")		//如果为Long类型
+			!is Boolean     -> println("four")		//如果不为Boolean类型
+			else		-> println("five")		//否则，表达式判断一定要加else
+		}
+
+11、in区间判断，一个数在某个数到某个数之间
+	if(1 in 1..10)		//1是否在1到10之间
+
+	if(1 !in 1..10)		//1是否不在1到10之间
+
+12、in、downTo迭代和step间隔迭代
+
+	for(i in 1..5)		//迭代循环从1到5
+
+	for(i in 9 donwTo 0)	//倒叙迭代从9到0
+
+	for(i in 1..5 step 2)	//每隔两位数迭代一次
+	

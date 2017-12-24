@@ -1,0 +1,28 @@
+GitHub：https://github.com/JakeWharton/scalpel
+
+1、依赖
+	compile 'com.jakewharton.scalpel:scalpel:1.1.2'
+
+2、在视图最根布局套用Layout
+	<com.jakewharton.scalpel.ScalpelFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+   	 >
+	</com.jakewharton.scalpel.ScalpelFrameLayout>
+
+3、开启模式
+	 if(BuildConfig.DEBUG){
+            View inflate = getLayoutInflater().inflate(R.layout.activity_widget, null);
+            scalpelView = new ScalpelFrameLayout(this);
+            scalpelView.addView(inflate);
+            setContentView(scalpelView);
+            scalpelView.setLayerInteractionEnabled(true);		//开启3D视图
+            scalpelView.setDrawViews(true);				//切换线框显示
+            scalpelView.setDrawIds(true);				//切换视图ID显示
+            scalpelView.setChromeColor(0xFF54687);			//线条颜色
+            scalpelView.setChromeShadowColor(0xFF03a2ed);    		//线条颜色
+        }else{
+            setContentView(R.layout.activity_widget);    
+        }
+
+Github: https://github.com/danielzeller/Depth-LIB-Android-

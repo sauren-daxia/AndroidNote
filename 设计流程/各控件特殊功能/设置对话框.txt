@@ -1,0 +1,3 @@
+设置界面为对话框：
+
+android:theme = "@android:style/Theme.Dilog"

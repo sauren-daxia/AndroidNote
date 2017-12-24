@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/colorFDFDFD"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp"
+    app:cardMaxElevation="3dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <LinearLayout
+            android:id="@+id/llty_select"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/tv_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bottom_left_round_rect_5dp_00ad92_false"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/colorFFFFFF" />
+
+            <Button
+                android:id="@+id/tv_sure"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bottom_right_round_rect_5dp_919298_false"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/colorFFFFFF" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_above="@id/llty_select"
+            android:id="@+id/tv_content"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="@color/color45474E"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

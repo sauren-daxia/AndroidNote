@@ -1,0 +1,5 @@
+//自定义分割线类
+mRecyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
+
+//使用Drawable的Shape定义分割线
+mRecyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, R.drawable.divider_mileage));

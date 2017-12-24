@@ -1,0 +1,68 @@
+WebView 
+
+1、设置访问资源链接
+	webview.loadUrl("http://www.baidu.com")
+
+2、改写默认访问方式
+	webview.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView w, String url){
+                w.loadUrl(url);
+                return true;
+            }
+        });
+PS:上面这种方式可能出现ERR_UNKNOWN_URL_FOUND找不到页面，需要用下面这种方式
+
+webview.setWebChromeClient(new WebChromeClient(){});
+
+
+3、启用javaScript，让页面更好看？并设置缓存，提升访问效率
+	WebSettings setting = webview.getSettings();
+	settings.setJavaScriptEnabled(true);
+	settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+
+4、改写返回键
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		if(keyCode == KeyEvent.KEYCODE_BACK){	//判断是否按了返回键
+			if(webview.canGoBack()){	//判断是否有上一级页面
+				webview.goBack();	//如果有上一级页面，有则返回
+				return true;
+			}else{
+				System.exit(0);		//如果没有上一级页面则退出程序
+			}
+		}
+		return super.onKeyDown(keyCode,event);
+	}
+5、设置加载进度监听
+public void onProgressChanged(WebView view, int newProgress) {
+	if (newProgress == 100) {
+		if (pd != null && pd.isShowing()) {	//当进度条值等于100并且还在显示时，就把它关闭
+			pd.dismiss();
+			pd = null;
+		}
+	} else {
+
+		if (pd == null) {
+			pd = new ProgressDialog(Web.this);
+			pd.setTitle("正在玩命加载");
+			pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		}
+		pd.setProgress(newProgress);
+		pd.show();
+		}
+	}
+});
+
+
+方法：
+-----------------
+loadUrl(String url)		//设置访问网址
+getUrl()			//获取访问中的网址
+reload()			//刷新页面
+setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//设置缓存模式
+loadDataWithBaseURL(baseUrl, content.toString(), "text/html", "utf-8",null);  //加载html
+loadData(url,"text/html", "utf-8");		//加载html
+
+监听：
+-----------------
+setWebChromeClient()
+	public void onReceivedTitle(WebView webView, String title)	//第二个参数是当前网页的名字，可以在这里设置标题

@@ -1,0 +1,1 @@
+XMPPException：conflict - cancel		//冲突，目前发现是昵称相同发生的

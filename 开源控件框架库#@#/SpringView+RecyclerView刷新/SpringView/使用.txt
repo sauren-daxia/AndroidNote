@@ -1,0 +1,47 @@
+
+
+1、依赖
+	compile 'com.liaoinstan.springview:library:1.2.6'
+
+2、XML使用：
+	<com.liaoinstan.springview.widget.SpringView
+		android:id="@+id/springview"
+		android:layout_width="300dp"
+		android:layout_height="400dp"
+		android:layout_centerInParent="true">
+
+		//需要上拉下拉的空间，和ScrollView一样只能放一个
+
+	</com.liaoinstan.springview.widget.SpringView>
+
+3、代码使用
+	springview.addHeader(BaseHeader());	//添加头部，可使用自带的
+	springView.addFooter(BaseFooter());	//添加尾部，可使用自带的
+
+	springView.setListener(new SpringView.OnFreshListener() {	//上拉下拉监听，使用Handler延时能使滑动顺畅，当然其他也行
+            @Override
+            public void onRefresh() {
+              
+               new Handler().postDelayed(new TimerTask() {
+                   @Override
+                   public void run() {
+			//结束加载
+                       springview.onFinishFreshAndLoad();
+                   }
+               },1000);
+
+            }
+
+            @Override
+            public void onLoadmore() {
+            
+                new Handler().postDelayed(new TimerTask() {
+                    @Override
+                    public void run() {
+			//结束加载
+                        springview.onFinishFreshAndLoad();
+                    }
+                },1000);
+
+            }
+        });

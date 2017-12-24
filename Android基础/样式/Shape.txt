@@ -1,0 +1,51 @@
+Shape
+
+在Drawable里创建Shape文件
+
+属性：
+-----------------------------
+Shape = "line"		//设置为线型，默认为矩形
+Shape = "oval"		//设置为圆形
+		|stroke		虚线
+ 		|------------------
+		|color		//颜色
+		|width		//长度
+		|dashWidth	//每根虚线的长度
+		|dashGap = "3"	//虚线之间的间隙长度
+		|
+		|sollid		//填充Shape的颜色
+		|------------------
+		|color=  "#FFFFFF"	
+		|
+		|corners 		//设置四边角度
+		|------------------
+		|radius = "10dp"		//四角角度
+		|topLaftRadius = "5dp"	//左上角角度
+		|....
+		|
+		|gradient		//设置渐变
+		|------------------
+		|centerColor		//中间颜色		
+		|endColor		//结束颜色
+		|angle	= "30"		//设置渐变方向
+		|
+		|
+		
+android:state_pressed 是否按下，如一个按钮触摸或者点击。
+android:state_focused 是否取得焦点，比如用户选择了一个文本框。
+android:state_hovered 光标是否悬停，通常与focused state相同，它是4.0的新特性
+android:state_selected 被选中，它与focus state并不完全一样，如一个list view 被选中的时候，它里面的各个子组件可能通过方向键，被选中了。
+android:state_checkable 组件是否能被check。如：RadioButton是可以被check的。
+android:state_checked 被checked了，如：一个RadioButton可以被check了。
+android:state_enabled 能够接受触摸或者点击事件
+android:state_activated 被激活(例子)
+android:state_window_focused 应用程序是否在前台，当有通知栏被拉下来或者一个对话框弹出的时候应用程序就不在前台了
+
+ 
+
+注意:如果有多个item，那么程序将自动从上到下进行匹配，最先匹配的将得到应用。（不是通过最佳匹配）
+如果一个item没有任何的状态说明，那么它将可以被任何一个状态匹配。
+
+ 
+
+详细的请看官方的API，那里写的更详细~！http://developer.android.com/guide/topics/resources/drawable-resource.html#StateList

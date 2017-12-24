@@ -1,0 +1,29 @@
+   @Override
+    public void onCreate() {
+        super.onCreate();
+	if (getApplicationContext().getApplicationInfo().packageName.equals(App.getCurrentName(this))) {
+
+		registerActivityLifecycleCallbacks(ActivityManager.getInstance());//监听activity生命周期
+		Rx.init(this,BuildConfig.DEBUG,BuildConfig.BASE_URL)                       //网络框架初始化
+		Fresco.initialize(this);    //图片初始化
+		if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
+		    ARouter.openLog();     // 打印日志
+		    ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+		    Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder().tag("APPLOG").methodCount(5).build()));  //初始化日志
+		}
+		ARouter.init(this); // 尽可能早，推荐在Application中初始化
+		ToastManager.init(this);    //全局弹dialog
+		SharedPUtils.init(this);    //全局获取本地数据
+	}
+    }
+
+    public static String getCurrentName(Context con) {
+        int pid = android.os.Process.myPid();
+        android.app.ActivityManager systemService = (android.app.ActivityManager) con.getSystemService(Context.ACTIVITY_SERVICE);
+        for (android.app.ActivityManager.RunningAppProcessInfo info : systemService.getRunningAppProcesses()) {
+            if (info.pid == pid) {
+                return info.processName;
+            }
+        }
+        return null;
+    }

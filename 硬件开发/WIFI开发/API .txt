@@ -1,0 +1,24 @@
+1、权限
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+
+2、获取管理对象
+wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+2、获取当前连接的WIFI
+wifiInfo = wifiManager.getConnectionInfo();
+
+------------------------------------------------WifiManager方法--------------------------------------
+方法
+---------------------------
+setWifiEnabled(true);		//是否开启WIFI
+startScan();			//扫描WIFI
+
+
+获取
+---------------------------
+getWifiState();			//获取WIFI状态
+getScanResults();		//获取扫描结果，前提先扫描
+
+判断
+---------------------------
+isWifiEnabled();			//判断是否打开wifi 0 == 关闭 1 == 关闭 2 == 打开

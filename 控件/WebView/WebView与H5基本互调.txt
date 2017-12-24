@@ -1,0 +1,97 @@
+webview基本设置
+mWebView.setWebViewClient(new WebViewClient() {			//设置在APP内部打开web
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                mWebView.loadUrl(url);
+                return true;
+            }
+        }
+    });
+
+webView.requestFocus();						//取消
+webview.requestFocusFromTouch();				//支持手势焦点以便可以输入账号等内容
+mWebView.getSettings().setJavaScriptEnabled(true);		//支持JS
+webView.getSettings().setSavePassword(false);			//不保存密码
+webView.getSettings().setSaveFormData(false);			//不保存提交数据
+webView.getSettings().setSupportZoom(true);			//双击缩放
+webView.getSettings().setBuiltInZoomControls(true);		//设置缩放，设置改属性SupportZoom自动为true
+webView.getSettings().setUseWideViewPort(true);			//自由大小缩放,将图片调整到适合webview的大小 
+webView.getSettings().setLoadWithOverviewMode(true);		//缩放
+webView.setVerticalScrollBarEnabled(false);			//取消竖向滚动条
+webView.setHorizontalScrollBarEnabled(false);			//取消横向滚动条
+webView.getSettings().setDomStorageEnabled(true);		//取消缓存
+webView.setPluginsEnabled(true);				//支持插件 
+webView.setAllowFileAccess(true);				//设置可以访问文件 
+setting.setLoadsImagesAutomatically(true);			//支持自动加载图片	
+webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);//5.0以上加载不了HTTPS需要设置
+
+public boolean onKeyDown(int keyCode, KeyEvent event) {		//返回上一级浏览页面
+        if ((keyCode == KeyEvent.KEYCODE_BACK) &&   mWebView .canGoBack()) {         
+            webview.goBack();         
+                   return true;         
+        }         
+        return super.onKeyDown(keyCode, event);         
+    }  
+
+
+
+1、点击改变H5,在点击事件里面loadUrl,放心不会改变界面的
+//无参
+mWebView.loadUrl("JavaScript:changeH5()");			//"JavaScript:changeH5()",JavaScript是声明,changeH5()是JS方法
+//有参
+mWebView.loadUrl("javascript:javacalljswith(" + "'http://blog.csdn.net/Leejizhou'" + ")");
+//有返回值
+ mWebView.evaluateJavascript("sum(1,2)", new ValueCallback<String>() {
+        @Override
+        public void onReceiveValue(String value) {
+            Log.e(TAG, "onReceiveValue value=" + value);
+        }
+    });
+
+
+
+
+2、点击调用Android
+	1、定义接口
+	//无参
+	public class JsInteration {
+	    @JavascriptInterface	//只要注入在方法前就行了
+	    public String back() {
+		  return "hello world";
+	    }
+	}
+
+	//有参
+	@JavascriptInterface
+	public void startFunction(final String text){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+               new AlertDialog.Builder(MainActivity.this).setMessage(text).show();
+
+            }
+        });
+    }
+
+	2、设置WebView提供方法
+	 mWebView.addJavascriptInterface(MainActivity.this,"android");		//第一个参数是实例对象，第二个参数是对象变量名
+	 //H5调用的时候的格式window.android.xx;	//表示andoird这个对象下面的某个方法
+
+3、拦截点击目标
+mWebView.setWebViewClient(new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            //判断url拦截事件
+            if (url.equals("file:///android_asset/test2.html")) {
+                Log.e(TAG, "shouldOverrideUrlLoading: " + url);
+                startActivity(new Intent(MainActivity.this,Main2Activity.class));
+                return true;
+            } else {
+                mWebView.loadUrl(url);
+                return false;
+            }
+        }
+    });
+
+
+PS：所有交互都是在子线程的

@@ -1,0 +1,14 @@
+ContentResolver
+
+构造：
+	ContentResolver cr = getContentResolver();
+
+方法：
+
+Uri		insert()	//增
+
+int		delete()	//删
+
+int		update()	//改
+
+Cursor		query()		//查

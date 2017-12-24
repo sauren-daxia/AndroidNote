@@ -1,0 +1,5 @@
+1、settings.gradle没有
+	自己新建一个，然后在里面
+	include ':app'
+
+2、plugin插件管理中把Android support和App links assistant勾上，再点确定

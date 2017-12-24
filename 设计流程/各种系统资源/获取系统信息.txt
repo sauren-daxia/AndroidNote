@@ -1,0 +1,7 @@
+获取系统版本号：
+	PackageInfo info = getPackageManager.getPackageInfo(getPackageName() , 0)
+	info.versionName 	//系统版本号
+获取系统界面的跳转Intent
+	打开模拟器，点击进入想要跳转的系统界面，在logcat中会显示出该界面的包名和类名，然后使用Intent跳转
+	Intent intent = new Intent();
+	intent.setClassName("com.xx.xx.xx" , "com.xx.xx.xx.Wlecome"); //类名一定要加上包名

@@ -1,0 +1,32 @@
+一、压缩：
+	质量压缩：改变的只是转为Bitmap后再转为File的大小，不会对Bitmap产生影响
+				常见错误：IllegalArgumentException quality must be 0..100	//不能压缩那么小
+
+1 、获取Bitmap对象
+
+2、获取存储路径的File
+
+3、设置压缩
+	ByteArrayOutputStream baos = new ByteArrayOutputStream();	//用于压缩后图片字节的存储，并计算大小
+
+	int quality = 100;			//压缩图片的百分比	
+
+	bitmap.compress(CompressFormat.JPEG, quality , baos);	
+
+4、循环判断压缩大小
+
+	while(baos.toByteArray().length() > size*1024){
+		
+		quality -= 5;		//再减少百分之5,
+
+		baos.reset();		//清空流内容
+
+		bitmap.compress(CompressFormat.JPEG, quality , baos);		//继续将再缩小的比例写入流中
+	}
+
+5、写入File
+	
+	BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+	bos.write(baos.toByteArray());
+			
+

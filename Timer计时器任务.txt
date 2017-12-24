@@ -1,0 +1,29 @@
+1、定义一个Timert，用于执行TimerTask任务
+
+2、定义一个TimeTask，最好在方法里再创建出来
+
+3、重写TimerTask的run()方法，在里面写执行内容，不需要写重复
+
+4、调用Timer的方法，每间隔多少时间执行一次TimerTask任务
+	
+	timer.schedule(timertask,1000,1000);
+
+	第一个参数：TimerTask任务对象
+
+	第二个参数：第一次执行时延迟多少毫秒执行
+
+	第三个参数：每间隔多少毫秒执行一次
+
+5、定义一个方法用于取消任务
+
+	if(task != null){
+		task.cancel();
+		task = null;
+	}
+
+6、在onDestroy()方法也取消Timer
+
+	if(timer != null){
+		timer.cancel();
+		timer = null;
+	}

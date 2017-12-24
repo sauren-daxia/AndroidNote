@@ -1,0 +1,3 @@
+OkHttpClient okClient = new OkHttpClient.Builder()
+			.cache(new Cache(new File("xxx"), 20 * 1024  ))		//设置缓存文件以及缓存大小，单位bytes
+			.build();

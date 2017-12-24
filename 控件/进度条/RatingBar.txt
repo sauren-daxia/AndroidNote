@@ -1,0 +1,23 @@
+RatingBar
+
+属性：
+------------------------------
+numstars = "6"		//星星数量
+stepSize = "0.1"	//将每个星星分为多少份
+
+rating= "3.5"		//设置星星的默认选中个数
+
+isIndicator ="true" 		//不能触动
+
+方法L：
+-------------------------------
+setRating(float f)	//设置星星个数
+getRating()		//获取星星个数
+
+
+
+事件：
+--------------------------------
+setOnRatingBarChangeListener(new OnRatingBarChangeListener)		//监听
+
+onRatingChanged(R r , float f,boolean)		//第二个参数是选中的个数，第三个是判断是否手动

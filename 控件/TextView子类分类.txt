@@ -1,0 +1,14 @@
+View
+	|---TextView
+		
+		|---Button
+			
+			|---CheckBox
+			
+			|---RedioButton
+			
+			|---ToggleButton
+			
+			|---Switch
+
+	|---EditText

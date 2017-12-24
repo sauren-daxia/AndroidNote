@@ -1,0 +1,91 @@
+一、只有一种tag是Item的
+
+	1、将XML文件放入assets文件夹中，放入该文件夹的文件不会在R文件产生静态值
+
+	2、定义一个与XML里每个Item对属性对应的类
+
+	3、获取本地XML文件资源对象，并获取文件的输入流
+	
+		AssetsManager am = getAsssets();
+
+		InputStream  is = am.open("data.xml")		//如果文件不是放在assets根目录，则要加上每一层的文件路径
+
+	4、获取XML对象解析XML文件
+
+		XmlPullParser xpp =Xml.newPullParser();
+	
+		parser.setInput(is,"UTF-8")		//通过某种编码读取
+
+		parser.setInput(new StringReader("这里是xml数据对应的字符串"))	//如果是纯字符串的XML文件格式的话可以用这种方法解析
+
+	5、获取外层读取状态
+
+	int event = parser.getEventType()		
+
+	6、用while循环判断状态是否为读取完毕
+
+	while(event != XmlPullParser.END_DOCUMENT)	//判断是否外层读取完毕
+
+	7、在while循环里定义switch判断是哪种状态，做对应的操作
+
+	状态分类：
+
+		XmlPullParser.START_DOCUMENT	//当最外层开始读取时的状态，没有太大用处
+
+		XmlPullParser.END_DOCUMENT	//当最外层读取完毕时的状态，没有太大用处
+
+		XmlPullParser.START_TAG		//每个Item被读取时，也就是每个TAG被读取时的状态，可在里面获取每个Item的各种属性
+
+		XmlPullParser.END_TAG		//每个Item读取完毕时的状态，可保存当前Item的属性到List集合中
+
+	8、获取标签名进行判断并获取Item里的每个属性值
+
+ 	String name = parserName();
+	if(name.equals("id"))		//判断是否该标签，如果是则获取里面内容或属性
+
+	<id>abc</id>
+
+	int abc = parser.nextText();	//获取标签里的内容
+
+	<url url = "xxx"></url>
+
+	String url = parser.getAttributeVaule(null,"url");  //获取标签属性值
+
+	9、读取下一个事件
+
+	event = parser.next();		//每个开始标签<a>和结束标签</a>都是一个事件
+
+二、每个Tag里面还嵌套标签的
+
+	1、参考上述前7个步骤
+
+	2、在XmlPullParser.START_TAG状态中获取标签名并多重判断
+
+	String name = parser.getName();		
+	if(name.equals("id")){
+	
+	}else if(name.equals("url")){
+
+	}....
+
+AssetManager assets = getAssets();
+			InputStream open = assets.open("data");
+			XmlPullParser  parser = Xml.newPullParser();
+			parser.setInput(open,"UTF-8");
+			int type = parser.getEventType();
+			while(type!=XmlPullParser.END_DOCUMENT){
+				switch (type) {
+				case XmlPullParser.START_TAG:
+					String name = parser.getName();
+					if("item".equals(name)){
+						Item item = new Item();
+						item.setId(parser.getAttributeValue(null, "id"));
+						item.setUrl(parser.getAttributeValue(null, "url"));
+						item.setText(parser.nextText());
+						list.add(item);
+					}
+					break;
+					
+				}
+				parser.next();
+			}

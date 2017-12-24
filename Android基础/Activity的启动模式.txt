@@ -1,0 +1,30 @@
+Activity的四种加载默认
+	Activity的结构是栈类型结构，先进后出的原则
+
+	四种模式：在配置文件<activity>中添加 launchMode = "xxxx"
+		1、standard	//每次跳转都会创建新的Activity对象
+		
+		2、singleTop	//如果盏顶是本身，则不会再创建，如果不是，则创建
+
+		3、singleTask	//如果跳转的Activity已经打开过，就不需要创建，并且把它之上的Activity弹出
+
+			如果没有创建过跳转到该Activity的生命周期：onCreate,onStart,onResume
+
+			如果创建过：OnRestart,OnStart,OnResume
+
+
+		4、singleInstance 	//会为该Activity单独创建一个栈，并且该栈只有一个Activity，可以让多个应用共享该Activity
+					//如果支付宝要跳转天猫，淘宝也要跳转天猫，则天猫不会创建多次，其他模式则创建多次
+		
+		singleInstance的跳转过程 A:stander B:SingleInstance
+
+		A 跳 A ，新建
+		
+		A 跳 B ，新建栈
+
+		A 跳 B 跳 A ，新建栈，再回到A栈新建A,返回顺序，A - A - B 应用结束
+
+		A 跳 B 跳 B ，新建栈，只会执行onPause,onResume 返回顺序，B - A 
+
+
+PS:除却standard外，自己跳自己都是OnPause，onResume

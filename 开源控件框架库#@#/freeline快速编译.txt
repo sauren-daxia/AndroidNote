@@ -1,0 +1,42 @@
+1、安装Python2.7并且配置环境变量，路径就是安装的路径
+
+2、在项目的Build.gradle下配置
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.antfortune.freeline:gradle:0.8.2'	//配置
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+3、APP的Build.gradle下配置
+apply plugin: 'com.antfortune.freeline'
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+    buildTypes {
+
+    }
+    freeline{
+        hack true;		//配置
+    }
+}
+
+4、在Application中初始化
+   FreelineCore.init(this);
+
+5、使用控制台下载依赖
+可以使用Android studio自带控制台
+输出这句话：静候十几二十分钟
+gradlew initFreeline -Pmirror
+
+6、调用控制台代码编译，改编译会与Android studio自带编译出问题，二者选一
+freeline.py -f		//第一次编译，或者删除后第一次编译
+
+freeline.py		//第一次编译后使用
+
+7、不用代码编译可以使用插件，安装Android studio插件 run freeline

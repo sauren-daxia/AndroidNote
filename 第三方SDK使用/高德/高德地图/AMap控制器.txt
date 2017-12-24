@@ -1,0 +1,25 @@
+1、获取AMap
+	if(amap ==null){
+		AMap aMap = mapView.getMap();
+	}
+
+2、设置
+aMap.setMyLocationStyle(MyLocationStyle locationStyle);                    //设置定位蓝点
+
+aMap.getUiSettings().setMyLocationButtonEnabled(true);     //是否显示定位按钮
+
+aMap.setMyLocationEnabled(true);                           //是否开启定位
+
+aMap.showIndoorMap(true);                                  //是否显示室内地图
+
+aMap.setMapType(AMap.MAP_TYPE_SATELLITE);		   //设置地图模式，有卫星，导航，白昼，夜间模式
+
+MAP_TYPE_NAVI		//导航地图
+
+MAP_TYPE_NIGHT		//夜景地图
+
+MAP_TYPE_NORMAL		//白昼地图（即普通地图）
+
+MAP_TYPE_SATELLITE	//卫星图
+
+aMap.setTrafficEnabled(true);				//是否显示实时路况

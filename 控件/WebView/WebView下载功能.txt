@@ -1,0 +1,7 @@
+当点击WebView中的链接，就会调用该监听，监听每个点击的链接，然后通过onDownload（）的第一个参数获得链接地址
+
+web.setOnDownloadListeren(new OnDownloadListener(){
+	onDownload(String url ,String userAgent){
+		if(url.endWith(xxx))		//判断url是否是目标文件后缀结尾的，是就下载
+	}
+})

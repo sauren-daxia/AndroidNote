@@ -1,0 +1,23 @@
+public abstract class ImsEweiShopProperty implements PropertyConverter<List<ImsEweiShopActivityBean>,String> {
+    private final Gson mGson;
+
+    public ImsEweiShopProperty() {
+        mGson = new Gson();
+    }
+
+    @Override
+    public List<ImsEweiShopActivityBean> convertToEntityProperty(String databaseValue) {
+
+        Type type = new TypeToken<ArrayList<ImsEweiShopActivityBean>>() {
+        }.getType();
+        ArrayList<ImsEweiShopActivityBean> itemList= mGson.fromJson(databaseValue, type);
+        return itemList;
+    }
+
+
+    @Override
+    public String convertToDatabaseValue(List<ImsEweiShopActivityBean> entityProperty) {
+        String dbString = mGson.toJson(entityProperty);
+        return dbString;
+    }
+}

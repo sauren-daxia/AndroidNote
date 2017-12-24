@@ -1,0 +1,44 @@
+第一种方法：
+
+1、//设置一个全局变量
+private Toast toast;
+
+2、定义一个方法判断Toast	//因为makeText每次都会创建新的Toast，如果只使用一个对象的话，就可以快速的改变TOast的显示内容
+
+public void showToast(String text){
+if(toast == null){
+	toast = Toast.makeText(this,String,Toast.LENGTH_SHORT);
+}else{
+	toast.setText(String);
+}
+toast.show();
+}
+
+
+3、调用该方法		
+showToast();
+
+
+第二种方法： 重点！！！！！！！！
+
+1、//设置一个全局变量
+private Toast toast;
+
+2、定义一个样式XML文件
+
+3、定义一个方法判断Toast
+public void showToast(String text){
+
+	if(toast = null){
+	toast = new Toast(this);				//先创建一个Toast
+	LayoutInflater inflater = LayoutInflater.from(this);	//获取布局加载器
+	View view = inflater.inflate(R.layout.toast,null);	//转换样式
+	toast.setView(view)					//设置Toast显示视图
+	toast.setDuration(Toast.LENGTH_SHORT);			//设置显示时间
+	tv1 = (TextView)view.findViewById(R.id.tv1)		//获取到样式
+	toast.setGravity(Gravity.CENTER,0,0);			//设置显示的位置，0,0是居中，单位是像素
+	tv1.setText(text);					//设置自定义的Toast显示的文本
+	toast.show();		
+	}
+
+}

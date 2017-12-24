@@ -1,0 +1,107 @@
+创建聊天室：		接口：https://api.cn.ronghub.com/chatroom/create.json
+	KEY:
+		chatroom[id]=name	String			id:要创建聊天室的ID，name:聊天室的名字
+	
+	代码：
+                String time = System.currentTimeMillis()+"";
+                String num = (long)(Math.random()*1098798790)+"";
+                String secret = "qN3yuvkQsGuc4";
+                String str = secret + num + time;
+
+		Headers headers = new Headers.Builder()
+                        .add("App-Key","6tnym1brnndu7")
+                        .add("Nonce",num)
+                        .add("Timestamp",time+"")
+                        .add("Signature",sha1(str))		//SHA1哈希计算
+                        .build();
+
+		FormEncodingBuilder builder = new FormEncodingBuilder();
+		builder.add("chatroom[1000]","9527");				//ID要自己写
+
+		Request r = new Request.Builder()
+                        .headers(headers)
+                        .url("https://api.cn.ronghub.com/chatroom/create.json").post(builder.build()).build();
+
+		OkHttpClient client = new OkHttpClient();
+                client.newCall(r).enqueue(new Callback())
+
+
+加入聊天室：		接口：https://api.cn.ronghub.com/chatroom/join.json
+	KEY:	
+		userId			String			要加入聊天室的用户ID，最多只能50个，一次性？
+		chatroomId		String			要假如聊天室的ID
+
+销毁聊天室：		接口：https://api.cn.ronghub.com/chatroom/destroy.json
+	KEK:
+		chatroomId		String			要销毁的聊天室 Id
+
+查询聊天室信息：	接口：https://api.cn.ronghub.com/chatroom/query.json
+	KEY:
+		chatroomId		String			要查询的聊天室id
+
+	返回值：
+		chatRooms		String[]		聊天室信息组，什么鬼？
+		chrmId			String			聊天室ID
+		name			String			聊天室名称
+		time			String			聊天室创建的时间
+
+查询聊天室内用户：	接口：https://api.cn.ronghub.com/chatroom/user/query.json
+	KEY:
+		chatroomId		String			要查询的聊天室ID
+		count			String			需要获取的成员人数，最多500，超过500也返回500
+		order			String			排序，按照加入聊天室的时间先后顺序排序，1为正序，2为倒序
+	
+	返回值：
+		total			int			聊天室中用户数
+		users			String[]		用户数组
+		id			String			用户数组中的用户ID
+		name			String			用户数组中的用户名
+
+聊天室禁言：		接口 ：https://api.cn.ronghub.com/chatroom/user/gag/add.json
+	KEY:
+		uesrId			String			要禁言的用户ID
+		chatroomId		String			要操作禁言的聊天室ID
+		minute			String			要禁言的时长，以分钟为单位，最大值为43200分钟
+
+移除禁言聊天室成员：	接口：https://api.cn.ronghub.com/chatroom/user/gag/rollback.json
+	KEY:
+		userId			String			要解除禁言的用户ID
+		chatroomId		String			要操作解除禁言的聊天室ID
+
+查询禁言的所有用户	接口：https://api.cn.ronghub.com/chatroom/user/gag/list.json
+	KEY:	
+		chatroomId		String			要查询的聊天室ID
+
+	返回值：
+		users			String[]		被禁言的用户数组
+		userId			String			数组中的用户ID
+		time			String			数组中的禁言时间		
+
+封禁成员，也就是踢出并在一段时间不能再进聊天室		接口：https://api.cn.ronghub.com/chatroom/user/block/add.json
+	KEY:
+		userId			String			封禁的用户ID
+		chatroomId		String			要操作封禁的聊天室的ID
+		minute			String			封禁时长，以分钟为单位，最大值为43200分钟
+
+移除封禁成员		接口：https://api.cn.ronghub.com/chatroom/user/block/rollback.json
+	KEY
+		userId			String			要移除封禁的用户ID
+		chatroomId		String			要操作移除封禁的聊天室的ID
+	
+查询被封禁的所有成员	接口：https://api.cn.ronghub.com/chatroom/user/block/list.json
+	KEY:
+		chatroomId		String			要查询的聊天室ID
+
+	返回值：
+		users			String[]		被封禁的所有用户数组
+		time			String			数组中每个用户被封禁的时长
+		userId			String			数组中的每个用户的ID
+
+停止聊天室消息分发，服务器不再发送消息给用户	接口：https://api.cn.ronghub.com/chatroom/message/stopDistribution.json
+	KEY:
+		chatroomId		String			需要停止消息分发的聊天室的ID
+
+恢复聊天室消息分发	接口：https://api.cn.ronghub.com/chatroom/message/resumeDistribution.json
+	KEY:
+		chatroomId		String			需要恢复消息分发的聊天室的ID
+

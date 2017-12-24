@@ -1,0 +1,49 @@
+优点
+	可在子线程中更新UI
+	封装、简化异步操作
+
+1、定义一个类继承AsyncTask<T,T,T>
+
+	第一个参数是：执行类型		//doInBackground()需要的参数
+
+	第二个参数是：进度参数		//设置进度条时传递的参数
+
+	第三个参数是：结果参数		//这里的参数就是doInBackgroud中的返回参数
+
+2、重写方法，至少重写一个doInBackground()	
+
+	doInBackground()		//该方法会在子线程执行，主体功能在这里写
+	return null
+					
+	onPostExecute()			//在doInBackground()后执行，由主线程调用执行后台任务时候被调用
+	//这里可以做一些UI的更新
+	
+	onProgressUpdata()		//设置进度的，也是由主线程执行，可以在这里设置进度条的进度
+					//需要调用publishProgress()方法才会执行该方法
+
+	onPreExecute()			//最先执行，用户数据初始化	
+
+	onCancelled()			//在取消任务时被调用
+
+3、创建类对象，调用方法开启任务
+
+	MyAsyncTask mat = new MyAsyncTask();
+	
+	mat.execute(urlString);		//调用这个方法启动doInBackground()
+
+	PS:如果有多个异步任务，只会一个一个执行，如果要多个任务同时执行则需要线程池
+
+	Executor es = Executors.newFixedThreadPool(5)
+	
+	mat.executeOnExecutor(es,urlString)
+
+4、在Activity中的onPause停止
+	if(es != null && es.getStatus() == es.status.RUNNING)		//判断es是否在运行中
+	es.cancel(true)	//停止
+	
+	//在doInBackgroud()中判断是否cancel
+	if(isCancelled())		//如果外部调用了cancel就return 或break；
+
+AsyncTask内部只有128个线程长度，并且只能同时执行5个线程，还有一个缓存队列，如果调用了128次并且缓存队列满了，就会异常，处理方式是启动一个线程去判断，满了就休眠，没满就执行
+
+同一个对象只能调用一次

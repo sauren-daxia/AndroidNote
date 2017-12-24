@@ -1,0 +1,13 @@
+安装完成需要创建：
+	$ git config --global user.name "Your Name"		//账号
+	$ git config --global user.email "email@example.com"	//密码
+
+创建库1：
+	$ mkdir learngit
+	$ cd learngit
+	$ pwd
+	/Users/michael/learngit
+
+创建库2：
+	$ git init
+	Initialized empty Git repository in /Users/michael/learngit/.git/	//将目录改变成管理库

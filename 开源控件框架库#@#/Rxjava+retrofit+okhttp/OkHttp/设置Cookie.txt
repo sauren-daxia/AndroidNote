@@ -1,0 +1,14 @@
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+              .cookieJar(new CookieJar() {
+                  @Override
+                  public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+				// 保存cookie通常使用SharedPreferences
+                  }
+
+                  @Override
+                  public List<Cookie> loadForRequest(HttpUrl url) {
+                    // 从保存位置读取，注意此处不能为空，否则会导致空指针
+                      return new ArrayList<>();
+                  }
+              })
+              .build();

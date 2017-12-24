@@ -1,0 +1,24 @@
+RadioButton ：  需要配合RedioGroup容器使用
+
+属性：
+--------------------------------
+android:checked = "true"	//默认选中
+
+
+
+方法：
+---------------------------------
+boolean			isChecked()	//判断按钮是否选中
+
+
+事件：
+---------------------------------
+setOnCheckedChangeListener(new OnCheckedChangeListener)		//选择状态监听
+		
+onCheckedChanged(T t, boolean isChecked)		//监听是否选中
+
+PS：去掉圆圈的两种方式：
+
+1、在XML文件里面的属性设置 button = "@null"
+
+2、在selector中设置drawable = "@drawable/xx"

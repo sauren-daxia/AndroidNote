@@ -1,0 +1,10 @@
+1、安装好插件
+
+2、选择ctrl + shift + s 为插件添加依赖包，再Dependencies选项卡中选择添加Library dependencies选择添加：
+	com.jakewharton:butterknife:8.2.1		//版本随时更新
+
+3、在项目builde.Gradler中修改版本等级，修改为
+	compile 'com.jakewharton:butterknife:7.0.0'
+
+	//目前暂时还没支持8.0.0以上的版本，待Butterknife插件版本更高的时候可能就支持了
+	

@@ -1,0 +1,22 @@
+
+//先获取传感器管理
+	SensorManager sm = (SensorManager)getSystemService(SensorManager)
+
+//获取手机支持的所有传感器的类型
+	List<Sensor> sensors = sm.getSensorList(Sensor.TYPE_ALL);
+
+//获取传感器的名字
+	sensor.getName();
+
+//注册、注销传感器
+	最好在OnResume中注册
+		sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) , SensorManager.SENSOR_DELAY_UI);
+		
+		第一个参数：实现传感器的类；	
+		第二个参数：传感器的类型
+		第三个参数：传感器的采集频率
+
+	在OnPause中注销
+		sm.unregisterListener(this);	
+		
+		第一个参数：实现传感器的类；	

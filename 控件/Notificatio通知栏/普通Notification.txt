@@ -1,0 +1,66 @@
+1、构造通知栏条目，最高高度64dp
+
+	NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+	//设置三个主要属性，必须设置的
+	builder.setSmallIcon(R.drawable.xx)	//设置小图标
+
+	builder.setContentTitle("")	//设置标题
+
+	builder.setContentText("")	//设置内容
+
+2、创建一个通知栏对象
+
+	Notigication n = builder.build();
+
+3、设置通知栏点击事件
+
+	Intentn intentn = new Intent(thi,xx.class);
+	PendingIntent pi = PendingIntent.getAcitivity(this, 0 , intent, PengdingIntent.FLAG_UPDATE_CURRENT);
+
+	PengdingIntent.FLAG_UPDATE_CURRENT	//如果pi存在则更新Intent，没有则创建
+	PengdingIntent.FLAG_CANCEL)CURRENT	//取消当前pi，创建新的
+	PengdingIntent.FLAG_NO_CREATE		//如果有则创建，没有则不创建
+	PengdingIntent.FLAG_ONE_SHOT		//只使用一次
+	
+	builder.setContentIntent(pi)
+
+	setProgress(100 , 3, false)		//如果需要进度条的话，第一个参数是总长，第二个是绝对值，第三个是否不精确显示
+	setProgress(0 , 0, false)	//设置为0，0则取消Progress
+
+4、获取系统通知栏管理器，然后发送通知
+
+	NotificationManager nm = (Notification)getSystemService(Context.NOTIFICATION_SERVICE);
+
+	int NID = 0x1;
+	nm.notify(NID_1, n);		//发送通知
+
+
+
+Notification各种设置方法：
+
+setSmallIcon(R.drawable.xx)	//设置小图标
+
+setContentTitle("")	//设置标题
+
+setContentText("")	//设置内容
+
+setOngoing(true)	//设置是否常驻通知栏，也就是不能被清除
+
+setAutoCancel(true)	//设置是否自动清除
+
+setNumber(19)		//设置提示有多少条消息
+
+setTicker("")		//在通知栏没下拉时，提示一下
+
+setDefaults(Notification)	//设置有通知时，震动或者响铃或者呼吸灯
+
+DEFAULT_ALL    使用所有默认值，比如声音，震动，闪屏等等
+DEFAULT_LIGHTS 使用默认闪光提示
+DEFAULT_SOUNDS 使用默认提示声音
+DEFAULT_VIBRATE 使用默认手机震动 
+【说明】：加入手机震动，一定要在manifest.xml中加入权限：
+<uses-permission android:name="android.permission.VIBRATE">
+以上的效果常量可以叠加,即通过
+notification.defaults =DEFAULT_SOUND|DEFAULT_VIBRATE;  
+notification.defaults |= DEFAULT_SOUND (最好在真机上测试，震动效果模拟器上没有)

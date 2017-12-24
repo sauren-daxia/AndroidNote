@@ -1,0 +1,70 @@
+public abstract class LazyFragment extends Fragment {  
+    
+	//用于判断Fragment是否显示
+	protected boolean isVisible;  
+    /** 
+     * 在这里实现Fragment数据的缓加载. 
+     * @param isVisibleToUser 
+     */  
+    @Override  
+    public void setUserVisibleHint(boolean isVisibleToUser) {  
+        super.setUserVisibleHint(isVisibleToUser);  
+        if(getUserVisibleHint()) {  
+            isVisible = true;  
+            onVisible();  
+        } else {  
+            isVisible = false;  
+            onInvisible();  
+        }  
+    }  
+  
+    protected void onVisible(){  
+        lazyLoad();  
+    }  
+	
+//主要重写该方法，需要加载的方法重写在里面，  
+    protected abstract void lazyLoad();  
+
+//不可见的时候调用，可以想OnVisible一样写一个抽象方法在里面调用
+    protected void onInvisible(){}  
+}  
+
+
+1、重新创建一个Fragment类继承上面的LazyFragment
+
+2、定义一个变量用于判断是否初始化完成；
+
+3、在初始化完成后调用父Fragment的抽象方法，并将判断初始化的变量设置为true
+
+4、重写父Fragment抽象方法，在里面先判断，初始化变量是否为true，或者判断isVisible是否为可见的
+
+5、如果都为true，说明是第一次显示该界面，如果为false说明已经加载过了，就不需要再加载了
+
+这个是设置viewpager保留多少个显示界面
+
+pager.setOffscreenPageLimit(3);
+
+PS:正常情况下，使用懒加载是没有问题的，但是如果隔着几个fragment跳转的话，会报空指针异常。
+
+问题所在：
+	
+	fragment的判断显示与否方法会在fragment的onActivityCreated方法之前调用，
+	
+	而一般初始化控件的方法在onActivityCreated方法中调用。
+
+	所以直接使用懒加载的话，会报空指针异常，因为懒加载的时候控件或者类还没初始化。
+
+解决方法：
+
+	在OnAttach方法中使用布局加载器把fragment布局加载进来，对所有要初始化的东西进行初始化。
+	private View convertView;
+		onAttach(){
+		convertView = LayoutInflater.xx.xx();
+		convertView.findViewById(xxxxx);
+	}
+
+	在onCreateView中就不需要inflater.inflater了，把onAttach加载进来的布局定义成全局，直接返回布局变量即可
+		return convertView;
+	
+
+	

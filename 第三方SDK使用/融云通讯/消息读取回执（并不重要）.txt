@@ -1,0 +1,5 @@
+就是，如果A给B发送了消息，如果B看了消息，A的消息界面会显示B已查看消息
+
+可以通过 rc_config.xml 里的开关开启消息的已读回执功能，目前仅支持单聊。默认 true 是开启，设置为 false 为关闭。
+
+    <bool name="rc_read_receipt">true</bool>

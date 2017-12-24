@@ -1,0 +1,56 @@
+package com.kotlin;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.*;
+import io.netty.util.CharsetUtil;
+
+import java.io.UnsupportedEncodingException;
+
+/**
+ * Created by Jason Chen on 2017/9/22.
+ !!!!!!!!!!!!!!!!!一定要加上@ChannelHandler.Sharable这个注解
+ */
+@ChannelHandler.Sharable
+public class EchoServerHandler extends ChannelHandlerAdapter  {
+    private int count;
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		//TODO 这里这个msg 有可能是ByteBuf类型，如果是的话请按照下面代码处理，也有可能是String，直接强转就好了
+
+        try {
+//            ByteBuf in = (ByteBuf) msg;
+//            byte[] bytes = new byte[in.readableBytes()];        //readableBytes获取缓冲区可读字节
+//            in.readBytes(bytes);                                //读取缓冲区字节
+//            String body = new String(bytes, "UTF-8");//转换编码
+
+
+            String body = (String) msg;
+
+            System.out.println("Server received 1 >>>>>>>>>> 收到消息: body = "+body +",\t count = "+ ++count);   //  ⇽---  将消息记录到控制台
+            body+="####";
+            ctx.writeAndFlush(Unpooled.copiedBuffer(body.getBytes())); //　⇽---　将接收到的消息写给发送者，而不冲刷出站消息
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @Override
+//    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf byteBuf) throws Exception {
+//        System.out.println("Server received 0 >>>>>>>>>> 收到消息: " + byteBuf.toString(CharsetUtil.UTF_8));   //  ⇽---  将消息记录到控制台
+//        ctx.writeAndFlush(byteBuf.toString(CharsetUtil.UTF_8)+"\n"); //　⇽---　将接收到的消息写给发送者，而不冲刷出站消息
+//    }
+
+//    @Override
+//    public void channelReadComplete(ChannelHandlerContext ctx) {
+//        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE); //　⇽---　将未决消息冲刷到远程节点，并且关闭该Channel
+//    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        cause.printStackTrace();   //  ⇽---  打印异常栈跟踪
+        ctx.close();//　⇽---　关闭该Channel
+    }
+
+}

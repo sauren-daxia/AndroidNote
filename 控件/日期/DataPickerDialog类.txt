@@ -1,0 +1,15 @@
+DataPickerDialog ：是一个类，也是屏幕的日历对话框，直接new就可以使用，new出来之后直接显示在屏幕上
+
+构造：
+-----------------------------------------
+new DataPickerDialog(this,new OnDataPickerListener(),year,month,day)
+
+第一个参数：自己本身.this.
+
+第二个参数:日历监听器
+
+第三个参数：年份，使用calendar获取即可
+
+第四个参数：月份，使用calendar获取即可
+
+第五个参数：日期，使用calendar获取即可

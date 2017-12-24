@@ -1,0 +1,23 @@
+步骤：
+
+1、申请一个全局变量AlertDialog
+
+AlertDialog ad;
+
+2、在方法里先判断AlertDialog是否为空，不为空则创建
+
+AlertDialog.Builder adb = new Builder(this);		//先获取一个心脏
+
+LayoutInflater inflater = LayoutInflater.from(this);	//获取格式化对象
+			
+View view = inflater.inflater(R.xx.xx)			//格式化XML文件
+
+adb.setView(view)					//设置样式
+
+btn1 = (xxx)view.findViewById(xxx).setOnClickListener(xx)//获取按钮，并设置监听
+
+ad = adb.create();					//最后将设置好的心脏赋值给他爹
+
+3、show()出来啊
+
+ad.show()

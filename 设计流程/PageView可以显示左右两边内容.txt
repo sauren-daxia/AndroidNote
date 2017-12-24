@@ -1,0 +1,15 @@
+1、只需要将ViewPager和它的父容器都设置一个属性即可
+	android:clipChildren="false"
+
+	该属性的左右是，将超出视图外的子view不被截掉
+	
+2、可以设置一下ViewPager的子view的宽度，具体自己调整
+	ViewGroup.LayoutParams layoutParams = viewpager.getLayoutParams();
+	layoutParams.width = PhoneUtils.ScreenWidth() - PhoneUtils.dip2px(80);
+	viewpager.setLayoutParams(layoutParams);
+
+3、可以设置一下ViewPager子view的间隔宽度，与上面的view的宽度不一样
+	pager.setPageMargin(80);
+
+3、设置ViewPager的缓存数量，减少内存消耗
+	viewPager.setOffscreenPageLimit(2);

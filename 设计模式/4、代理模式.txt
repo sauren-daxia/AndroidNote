@@ -1,0 +1,63 @@
+使用场景；
+	
+
+
+
+
+	基本使用：
+		abstract class 需求{
+			public abstract 需求1();
+			public abstract 需求2();
+			public abstract 需求3();
+		}
+
+		class 执行人 extends 需求{
+		
+			public void 需求1(){
+				System.out.println("买车");
+			}
+
+			public void 需求2(){
+				System.out.println("买房");
+			}
+
+			public void 需求3(){
+				System.out.println("养狗");
+			}
+		}
+
+		class proxy代理 extends 需求{
+			
+			private 执行人 A;
+
+			public proxy代理( 执行人 A ){
+				this.A = A;
+			}
+
+			public void 需求1(){
+				A.需求1();
+			}
+
+			public void 需求2(){
+				//可以在提需求之前在操作
+
+				A.需求2();
+			}
+
+			public void 需求3(){
+				//觉得这个需求不合理可以不输出
+
+				//A.需求3();
+			}
+		
+		}
+
+		main(){
+			
+			执行人 A  = new 执行人();
+			Proxy代理 proxy = new Proxy代理(A);
+			
+			proxy.需求1();
+			proxy.需求2();
+			proxy.需求3();
+		}

@@ -1,0 +1,17 @@
+1、重写ListView
+
+2、重写ListView中的 onMeasure()方法
+
+	//重新测量ListView的高度即可，因为暂时只影响高度，宽度一般都是Match_Parent
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+		
+		heightMeasureSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,  MeasureSpec.AT_MOST); 
+		
+		//测量一定要写在调用父类的方法之前
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);  
+
+		MeasureSpec.AT_MOST	//以ListView的最大值进行测量
+
+		
+		
+	}

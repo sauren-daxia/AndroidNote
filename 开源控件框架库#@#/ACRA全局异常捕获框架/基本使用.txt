@@ -1,0 +1,25 @@
+1、依赖
+	  compile 'ch.acra:acra:4.9.2'
+
+2、自定义Application继承Application并初始化
+
+@ReportsCrashes(
+        formUri = "http://192.168.1.35:8080/TestAndroidCrash/servlet/CrashAction",			//使用Http发送log日志
+        mode = ReportingInteractionMode.DIALOG,								//提示用户崩溃的方式,参考"发生异常通知用户"
+        httpMethod = org.acra.sender.HttpSender.Method.POST,						//向服务器提交的方式，可选POST,PUT
+        reportType = org.acra.sender.HttpSender.Type.JSON,						//向服务器提交数据的模式，可选JSOM,FORM
+        resDialogText =R.string.carch_error,								//提示信息，参考"发生异常通知用户"
+	socketTimeout = 2000										//链接超时
+
+)
+public class MyApp extends Application {
+
+	  @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+        ACRA.init(this);			//初始化，这样就完成了基本配置，但是数据发送有很多不必要的字段，所以基本使用是不够的。
+    }
+
+
+}

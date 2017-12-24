@@ -1,0 +1,42 @@
+在app目录下得build.gralder中配置
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.example.jasonchen.myapplication_1"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        
+	//添加这段话
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    //添加这个方法
+    compile 'com.android.support:multidex:1.0.1'
+    
+}
+
+如果未使用Application，则需要在Manif中配置Application
+ <application
+        ...
+        android:name="android.support.multidex.MultiDexApplication">
+        ...
+    </application>
+
+在Application中重写
+ @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }

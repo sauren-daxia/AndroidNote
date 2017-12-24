@@ -1,0 +1,37 @@
+VideoWidgetView:
+-----------------------------------------------
+
+videoWidgetView.seekTo();				//设置跳转到某一帧
+
+videoWidgetView.setVolume();				//设置播放音量，0.0f到1.0f
+
+videoWidgetView.getDuration();				//获取当前播放时间,貌似和当前帧是同一个值
+
+videoWidgetView.getCurrentPosition();			//获取当前播放帧
+
+videoWidgetView.playVideo();				//开发播放，要在资源正确加载后才能调用，否则会异常
+
+videoWidgetView.pauseVideo();				//暂停播放，要在资源正在播放的时候调用，否则会异常
+
+videoWidgetView.pauseRendering();			//生命周期相关，对应onPause();
+
+videoWidgetView.resumeRendering();			//生命周期相关，对应onResume();
+
+videoWidgetView.shutdown();				//生命周期相关，对应onDestroy();，在这之前必须调用pauseRendering()
+
+videoWidgetView.loadVideoFromAsset("", options);	//加载assets文件下的资源，第一个参数为文件名，第二个为Options对象
+
+videoWidgetView.loadVideo(uri,options);			//可加载网络资源，第一个参数为URI类型，第二个参数为Options对象，链接、路径都可以转换Uri
+
+videoWidgetView.setFullscreenButtonEnabled();		//是否显示全屏按钮，是
+
+videoWidgetView.setInfoButtonEnabled();			//是否显示详情按钮，这个貌似不重要，可以隐藏
+
+videoWidgetView.setStereoModeButtonEnabled();		//是否显示VR头盔模式，是
+
+videoWidgetView.setTouchTrackingEnabled();		//是否启用手势操作VR，是
+
+videoWidgetView.setTransitionViewEnabled();		//是否显示提示放到VR设备的一个过渡图，是
+
+videoWidgetView.setEventListener();			//设置对播放的监听
+

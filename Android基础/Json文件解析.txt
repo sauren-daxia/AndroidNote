@@ -1,0 +1,53 @@
+24、Json文件解析
+
+		外层对象判断：
+				[  ]	//为集合
+				{  }	//为对象
+
+		内层对象判断：键统一为String
+				
+				值：
+					13	//int
+
+					""	//字符串
+			
+					[]	//集合
+
+					{}	//对象
+
+获取解析对象
+
+JSONObject jsonObject = new JSONObject(String)	//本地Json文件通过getResources().getString()方法获取
+
+JSONArray jsonArray = new JSONArray(String)
+
+方法：
+-----------------------
+getInt
+
+getString
+getBoolean
+....
+
+getJSONObject()
+
+getJSONArray()
+
+
+判断：
+一个外部为对象的JSON，内部也有一个对象，那就把这个对象定义为该对象的静态内部类
+
+Gson;
+
+--------------------
+Gson g = new Gson();
+
+如果JSON文件格式是以｛｝包含内容的：
+T		g.fromJSON(String,XX.class)	//解析JSON格式的字符串，并且与JSON内容匹配的类.class，该类的内容必须与JSON文件的内容一致
+
+如果JSON文件格式是以[]包含内容的：
+T<>		g.fromJSON(String,new TypeToken<List<XX>>(){}.getType());
+
+http://www.bejson.com/json2javapojo/		//一键生成JSON文件需要的类
+
+PS：JSON解析包需要放在libs文件下~~~！！！！

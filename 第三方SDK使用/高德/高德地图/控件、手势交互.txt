@@ -1,0 +1,51 @@
+1、交互控件对象构造
+	 UiSettings mUiSettings = aMap.getUiSettings();
+
+2、设置
+-------------------------------------控件-----------------------------------
+mUiSettings.setZoomControlsEnabled(boolean b);		//是否显示缩放按钮
+
+mUiSettings.setZoomPosition(int position);		//设置缩放按钮的显示位置
+
+mUiSettings.setCompassEnabled(boolean b);		//是否显示指南针
+
+mUiSettings.setMyLocationButtonEnabled(true);           //是否显示定位按钮
+
+mUiSettings.setScaleControlsEnabled(true);              //控制比例尺控件是否显示
+
+mUiSettings.setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);              //设置高德logo位置
+
+* LOGO位置
+* AMapOptions.LOGO_POSITION_BOTTOM_LEFT          //LOGO边缘MARGIN（左边）
+* AMapOptions.LLOGO_MARGIN_BOTTOM                //LOGO边缘MARGIN（底部
+* AMapOptions.LOGO_MARGIN_RIGHT                  //LOGO边缘MARGIN（右边）
+* AMapOptions.LOGO_POSITION_BOTTOM_CENTER        //Logo位置（地图底部居中）
+* AMapOptions.LOGO_POSITION_BOTTOM_LEFT          //Logo位置（地图左下角）
+* AMapOptions.LOGO_POSITION_BOTTOM_RIGHT         //Logo位置（地图右下角）
+
+mUiSettings.getZoomPosition();				//获取缩放按钮的位置
+-------------------------------------控件-----------------------------------
+-------------------------------------手势-----------------------------------
+默认全部开启
+UiSettings.setScrollGesturesEnabled(true);	//是否开启滑动手势
+
+UiSettings.setZoomGesturesEnabled(true);	//是否开启缩放手势
+
+UiSettings.setTiltGesturesEnabled(true);	//是否开启倾斜手势
+
+UiSettings.setRotateGesturesEnabled(true);	//是否开启旋转手势
+
+UiSettings.setAllGesturesEnabled(true);	//是否开启以上所有手势
+
+
+UiSettings.isRotateGesturesEnabled();		//判断旋转手势是否生效
+
+UiSettings.isZoomGesturesEnabled();		//判断缩放手势是否生效
+
+UiSettings.isScrollGesturesEnabled()l		//判断滑动手势是否生效
+
+UiSettings.isTiltGesturesEnabled();		//判断倾斜手势是否生效
+-------------------------------------手势-----------------------------------
+
+3、按钮监听
+aMap.setLocationSource(this);                           //通过aMap对象设置定位数据源的监听,监听后定位按钮将失去原有效果

@@ -1,0 +1,77 @@
+1、map操作符，作用：将原类型转换任意类型
+	//这里将Integer转为String
+	Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                
+            }
+        }).map(new Function<Integer, String>() {
+            @Override
+            public String apply(Integer integer) throws Exception {
+                return integer+"__String";
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                
+            }
+        });
+
+2、flatMap操作符，无序将事件串联
+	//这里
+	Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+
+            }
+        }).doOnNext(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+
+            }
+        }).flatMap(new Function<Integer, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(Integer integer) throws Exception {
+                ArrayList<String> strings = new ArrayList<>();
+                for (int i = 0; i < i; i++) {
+                    strings.add(i+"");
+                }
+                return Observable.fromIterable(strings).delay(10, TimeUnit.MILLISECONDS);
+            }
+        }).subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                
+            }
+        });
+
+3、concatMap操作符，有序将事件串联
+	//串联请求
+	api.register(new RegisterRequest())            //发起注册请求
+                .subscribeOn(Schedulers.io())               //在IO线程进行网络请求
+                .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求注册结果
+                .doOnNext(new Consumer<RegisterResponse>() {
+                    @Override
+                    public void accept(RegisterResponse registerResponse) throws Exception {
+                        //先根据注册的响应结果去做一些操作
+                    }
+                })
+                .observeOn(Schedulers.io())                 //回到IO线程去发起登录请求
+                .flatMap(new Function<RegisterResponse, ObservableSource<LoginResponse>>() {
+                    @Override
+                    public ObservableSource<LoginResponse> apply(RegisterResponse registerResponse) throws Exception {
+                        return api.login(new LoginRequest());
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())  //回到主线程去处理请求登录的结果
+                .subscribe(new Consumer<LoginResponse>() {
+                    @Override
+                    public void accept(LoginResponse loginResponse) throws Exception {
+                        Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Toast.makeText(MainActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                    }
+                });

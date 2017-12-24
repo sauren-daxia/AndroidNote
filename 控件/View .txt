@@ -1,0 +1,1 @@
+layerType = "software"		//ÉèÖÃÈí¼şÏÔÊ¾

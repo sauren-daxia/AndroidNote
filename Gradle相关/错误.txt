@@ -1,0 +1,2 @@
+Error:Gradle DSL method not found: apply
+	//在出错的gradle同级目录创建一个build.gradle，把之前的内容复制进去就行了

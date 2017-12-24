@@ -1,0 +1,13 @@
+Options.inputFormat：确定播放类型
+---------------------------------------
+FORMAT_DASH		//使用MPEG-DASH格式播放
+FORMAT_DEFAULT		//使用MP4、WEBM、OGG、AAC格式播放
+FORMAT_HLS		//使用HTTP格式播放
+			
+
+Options.TYPE：确定播放状态
+----------------------------------------
+TYPE_MONO		//每一帧是一个单眼equirectangular全景
+TYPE_STEREO_OVER_UNDER  //每一帧是一个两个垂直堆积的equirectangular全景
+			
+			PS:这两个常量功能区别不大

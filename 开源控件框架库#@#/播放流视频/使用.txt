@@ -1,0 +1,60 @@
+1、配置gradle
+android {
+    compileSdkVersion 24
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.hx.ijkplayer_demo"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"		//可能
+    }
+    
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']  /**在libs文件夹下找so文件*/		//必须
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs' /**在libs文件夹下找aar文件*/			//必须
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    testCompile 'junit:junit:4.12'
+    compile(name: 'ijkplayer-java-release', ext: 'aar') /**编译ijkplayer-java-release.aar文件*/			//必须
+}
+
+2、使用
+	初始化播放
+	PlayerManager player = new PlayerManager(this);
+        player.setFullScreenOnly(true);
+        player.setScaleType(PlayerManager.SCALETYPE_FILLPARENT);
+        player.playInFullScreen(true);				
+        player.setPlayerStateListener(this);		//监听
+        player.play(MyApp.url5);			//流链接
+
+	支持：
+	1、"rtmp://203.207.99.19:1935/live/CCTV5";
+	2、"http://zv.3gv.ifeng.com/live/zhongwen800k.m3u8";
+	3、"rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
+	4、"http://42.96.249.166/live/24035.m3u8";
+	5、"http://pull4.a8.com/live/1493278832740518.flv";
+
+3、控制播放控件亮度等，在activity监听
+@Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (player.gestureDetector.onTouchEvent(event))
+            return true;
+        return super.onTouchEvent(event);
+    }

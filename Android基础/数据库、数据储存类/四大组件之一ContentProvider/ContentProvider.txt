@@ -1,0 +1,26 @@
+ContentProvider 是内容提供类
+
+使用步骤：
+
+1、继承ContentProvider 类，并实现它的方法
+
+	private SQLiteDatabase sd;
+	private MySQLiteOpenHelper mso;
+	private UriMathcer matcher;
+
+	delete(xx)	//数据的删除方法，根据Uri删除selection指定的条件所匹配的全局记录
+	
+	insert(xx)	//根据Uri插入values对应的数据
+
+	update(xx)	//根据Uri修改selection指定条件所匹配的全部记录
+
+	query(xx)	//根据Uri查询出selection指定条件所匹配的全部记录，
+
+	onCreate()	//在ContentProvider创建后调用
+		mso = new MySQLiteOpenHelper();
+		sd = mso.getReadableDatabse();
+		matcher = new UriMatcher(UriMatcher.ON_MATCHER);
+
+	getType()	//返回当前Uri的MIME类型，如果该Uri对应的数据包括多条，
+			那么MIME类型字符串就是以vnd.android.dir/开头，如果该Uri对应的数据只有一条记录
+			该MIME类型字符串，就是以vnd.android.cursor.item/开头	

@@ -1,0 +1,2 @@
+在Item的根布局下添加：
+android:descendantFocusability="blocksDescendants"

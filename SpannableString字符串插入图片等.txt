@@ -1,0 +1,39 @@
+
+1、在输入框插入图片
+		
+	SpannableString string = new SpannableString("[可爱]");			//可爱作为一个图片的Key
+
+	ImageSpan span = new ImageSpan(MainActivity.this, R.drawable.d_lang);	//如果触发Key，就通过ImageSpan去找对应的图片
+
+	string.setSpan(span, 0, string.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);	//通过图片去替换string构造的值
+	第一个参数是：插入的类型
+	第二个参数是：从第几个字符开始
+	第三个参数是：到第几个字符结束
+	第四个参数是：常量值，固定
+
+	int start = mEt.getSelectionStart();	//获取用户的光标开始的地方
+
+	int end = mEt.getSelectionEnd();	//获取用户的光标结束的地方
+
+	mEt.getText().delete(start, end);	//删除用户光标包含的内容
+
+	mEt.getText().insert(start, string);	//插入内容
+
+总体流程：先判断用户的选择，然后获取对应的图片，再把用户光标所在的内容删掉，无论是否包含内容，最后插入图片
+
+URLSpan span = new URLSpan("tel:0123456789");  	//超链接插入
+
+BackgroundColorSpan span = new BackgroundColorSpan(Color.YELLOW);  	//背景颜色插入
+
+ForegroundColorSpan span = new ForegroundColorSpan(Color.BLUE); 	//字体颜色插入
+
+AbsoluteSizeSpan span = new AbsoluteSizeSpan(36);  		//字体大小插入
+
+StyleSpan span = new StyleSpan(Typeface.BOLD_ITALIC);  		//斜体粗体插入
+
+StrikethroughSpan span = new StrikethroughSpan();  		//删除线插入
+
+UnderlineSpan span = new UnderlineSpan();  			//下划线插入
+
+PS：并不是所有的插入都是要删除光标位置的内容，string.setSpan(),最后一个参数都是相同的
+

@@ -1,0 +1,19 @@
+RedioGroup
+
+属性：
+-------------------------------
+width				//宽度
+height				//高度
+id				//控件名
+orientation			//排列
+layout_weight			//按比例分配空间
+
+方法：
+-------------------------------
+int			getCheckedRedioButtonId()	//返回选中的按钮的ID值，没选中则返回-1
+
+事件：
+-------------------------------
+setOncheckedChangeListener(new RedioGroup.OncheckedChangeListener)	//按钮监听
+
+onCheckedChanged(R r, int checkedId)		//第二个参数是选中了的按钮的R.id的静态值

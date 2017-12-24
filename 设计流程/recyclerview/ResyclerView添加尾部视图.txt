@@ -1,0 +1,35 @@
+1、首先定义两个值判断要加载的视图是普通Item还是尾部Item
+	private int ITEM = 0;
+	private int FOOTER =1;
+
+2、getItemCount()的返回值要+1，因为多了视图
+	return list.size()+1;
+
+3、定义两个HolderView,初始化都一样的
+	class MyHolder
+
+	class MyFooter
+
+4、在getItemViewType()中判断返回的是哪个视图的标记
+	if(position+1 == this.getItemCount){
+		//如果进来了，说明该Item是倒数第二个了，下一个可以放Footer		
+		return FOOTER;
+	}else{
+
+	}
+	
+5、在创建视图OnCreateViewHolder中判断要加载哪种类型的布局
+	if(type ==0){
+	View view = inflater.inflater(R.layout.xx)
+		return new MyHolder(view)
+	}else if(type = 1){
+	View view = inflater.inflater(R.layout.xx)
+		return new MyFooter(view)
+	}
+
+6、在绑定视图OnBindViewHolder()中判断View的类型
+	if(holder instance MyHolder){
+
+	}else if(holder instance MyFooter){
+
+	}

@@ -1,0 +1,24 @@
+1、如果在app.gradle中使用，只需要依赖
+  compile 'com.jakewharton:butterknife:8.8.1'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+2、如果是在Library中使用
+	1)需要在项目gralde添加
+		classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'	//比当前版本低一些就可以了
+
+	2)在Library.gralde中
+		apply plugin: 'com.jakewharton.butterknife'
+
+		//-------------------------Butterkinife
+		compile 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
+		annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
+
+	3)在Library代码中
+		 @OnClick({R2.id.text_cancel})		//原本使用R.id.xx的需要改成R2.id.xx
+
+			public void onViewClicked(View view) {
+				switch (view.getId()) {
+				case R2.id.text_cancel:
+					break;
+			}
+		}

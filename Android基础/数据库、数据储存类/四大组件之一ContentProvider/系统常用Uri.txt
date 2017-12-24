@@ -1,0 +1,51 @@
+联系人Uri：
+	Contacts.CONTENT_URI	//联系人Uri
+
+		id值：Contacts._ID
+		name值：Contacts.DISPLAY_NAME
+
+	ContactsContract.CommonDataKinds.Phone.CONTENT_URI	//电话号码Uri
+	
+		外键：Phone.CONTACT_ID
+		值：Phone_NUMBER
+		类型：Phone_TYPE
+			TYPE类型：
+				Phone.DISPLAY_NAME //联系人名字
+				TYPE_HOME	//住宅电话
+				TYPE_MOBILE	//手机号码
+				TYPE_WORK	//公司电话
+
+	ContactsContract.CommonDataKings.Email.CONTENT_URI	//电子邮箱Uri
+
+		外键：ContactsContract.CommonDataKings.Email.CONTENT_ID
+		值：ContactsContract.CommonDataKings.Email.DATA
+		类型：Email_TYPE
+			TYPE类型：
+				Email.TYPE_HOME		//住宅电话
+				Email.TYPE_MOBILE	//手机号码
+				Email.TYPE_WORK		//工作邮箱
+			
+多媒体Uri
+
+	音频文件：
+		MediaStore.Audio.Media.INTERNAL_CONTENT_URI	//内部存储音频文件
+
+		MediaStore.Audio.Media.EXTERNAL_CONTENT_URI	//sd存储音频文件
+			
+			值：Media.TITLE	 //歌曲名
+			值：Media.ARTIST //歌手名
+			值：Media.DATA	//路径
+			值：Media.DURATION //获取时长
+
+	图片文件：
+		MediaStore.Audio.Images.INTERNAL_CONTENT_URI	//内部存储图片文件
+
+		MediaStore.Audio.Image.EXTERNAL_CONTENT_URI	//sd存储图片文件
+
+				值：Media.DISPLAY_NAME	//图片名
+				值：Media.DESCRIPTION	//详细描述
+
+	视频文件：
+		MediaStore.Audio.Video.INTERNAL_CONTENT_URI	//内部存储视频文件
+
+		MediaStore.Audio.Video.EXTERNAL_CONTENT_URI	//sd存储视频文件

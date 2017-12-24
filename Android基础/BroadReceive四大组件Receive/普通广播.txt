@@ -1,0 +1,44 @@
+发送方式：
+		Intent intent = new Intent("abc.abc");
+
+		sendBroadcast(intent);
+
+PS：在Android studio中要注意，Android studio会在配置文件中自动注册四大组件，如果要使用动态注册，则要去配置文件中删掉静态注册
+
+接收两种方式：
+
+1、动态注册广播接收者（常用）
+
+	1.定义一个内部类继承BroadCastReceive
+
+	2.创建好内部类对象
+
+	3、定义一个IntentFilter类用于广播接收者的注册
+		IntentFilter if = new IntentFilter();
+		
+		if.addAction(xx);
+
+		registerReceiver(xx,if);
+
+	4、内部类的方法中intent参数，获取Action值用于判断是哪个广播
+
+		intent.getAction().equals(xx);
+
+	5、在Activity的onDestroy方法中取消注册
+
+		unRegisterReceiver(xxx);
+	
+
+2、静态注册广播接收者
+
+	1、定义一个类继承自BroadCastReceive
+
+	2、在配置文件中<application>中自定义一个<receive>标签，在<receive name = 类名>标签中定义一个<action name = xx>
+
+	3、内部类的方法中intent参数，获取Action值用于判断是哪个广播
+
+		intent.getAction().equals(xx);
+
+	4、在Activity的onDestroy方法中取消注册
+	
+		unRegisterReceiver(xxx);

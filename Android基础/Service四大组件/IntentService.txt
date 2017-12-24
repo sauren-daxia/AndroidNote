@@ -1,0 +1,11 @@
+PS：IntentService适用于一次性调用
+
+特点：会自动stopService，会自动创建线程执行
+
+每次startService会新建一个Service，但是会以队列的方式执行任务，一个个执行。
+
+1、继承IntentService，重写OnHanlderIntent()和添加构造方法
+
+2、构造方法用于给当前的Service命名和给IntentService内部的线程命名
+
+3、主要的方法写在OnHandlerIntent()中，该方法执行完后会自动调用StopService

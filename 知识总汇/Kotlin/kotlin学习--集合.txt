@@ -1,0 +1,27 @@
+1、可以变集合和不可变集合
+	集合分两种，可变集合和不可变集合，可变集合就是可以增删元素的，不可变集合就是一旦初始化，就不可以改变集合长度以及元素，只提供读取数据的方法
+		不可变构造
+			listOf(1,2,3)
+			
+			setOf(1,2,3)
+
+		可变构造
+			mutableListOf(1,2,3)
+
+			mutableSetOf(1,2,3)
+
+2、Map
+		不可变构造
+			mapOf()
+
+		可变构造
+			mutableMapOf()
+
+		map添加元素的方法
+			1)
+				mapOf("Jake" to 22, "Jason" to 23)		//用to关键字分开键值
+
+			2)
+				mutableMapOf(Pair("Jake",23),Pair("Json",23))	//用Pair对象创建键值对
+
+		

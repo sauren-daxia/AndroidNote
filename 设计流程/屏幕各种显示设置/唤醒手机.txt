@@ -1,0 +1,5 @@
+
+window win = getWindow();
+
+win.addFlags(WindowManager.LayyoutParams.FLAG_DISMISS_KEYGUARD |  WindowManager.LayyoutParams.FLAG_SHOW_WHEN_LOCKED );
+win.addFlags(WindowManager.LayyoutParams.FLAG__KEEP_SCREEN_NO  |  WindowManager.LayyoutParams.FLAG_TURN_SCREEN_NO)

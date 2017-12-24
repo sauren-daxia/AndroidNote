@@ -1,0 +1,127 @@
+一、编写js代码
+	Android studio:右键APP -> folder -> Assets Folder ->新建记事本，后缀为.js	如：imageListener.js
+	Eclipse:直接在assets中新建一个记事本，后缀为.js
+
+javascript:(function(){
+
+	var biaoqian = document.getElementsByName("recipe");		//var是任意变量类型，getElementsByName()表示获取包含该属性的所有标签的集合
+	for(var i = 0; i < biaoqian.length ; i++){
+		
+		var imgs = biaoqian[i].getElementsByTagName("img")		//获取标签集合中的某个标签的内标签，getElementsByTagName（）表示获取包含该Tag的所有标签
+
+		for(var j=0;j<imgs.length;j++){					//循环获取到的每个标签
+
+			imgs[j].setAttribute("id", recipes[i].getAttribute("recipe_id"));	
+			
+			//给每个标签设置一个值，"id"这个值，如果不存在就设置，存在则替换。给这个<img>标签设置一个id，是为了可以在点击这个链接的时候获取
+			这个链接里面包含的信息，recipes[i].getAttribute("recipe_id")是我们需要的信息，可是<img>中并没有，所以想要在点击<img>的时候获取信息
+			就只能给它设置一个属性
+
+			imgs[j].onclick=function(){		//为每一个<img>标签设置一个点击事件
+	
+				JS.clickRecipe(this.id);	
+				//JS：是在设置mWebView.addJavascriptInterface(new JavascriptInterface(this), "JS")的时候的标签。一定不能弄错
+				//clickRecipe：是JavascriptInterface的方法
+			}
+		}
+	}
+
+	//这个原理与上面的一样，只是获取的属性不一样。
+	var avas = document.getElementsByClassName("ava");
+
+	for(var i=0;i<avas.length;i++){
+
+		var imgs = avas[i].getElementsByTagName("img");
+
+		for(var j=0;j<imgs.length;j++)  {	
+		
+			imgs[j].setAttribute("id", avas[i].getAttribute("href"));
+
+			imgs[j].onclick=function()  {
+
+				JS.clickUser(this.id);		
+				//这里用了另一个方法是为了区别<img>之间的不同
+				//有的<img>标签需要跳转Activity，有的则需要做别的操作等，不是每个<img>都要执行一样的方法
+			}	
+		}	
+	}
+})()
+
+使用JS获取html的格式解读
+<a href = "xxxxxxxx"   name = "recipe">
+
+	<img src="xxxxxx.jpg" >		
+	//没设置id属性，也没有设置click点击事件的时候是这样的,虽然<a>标签里有我们需要的信息，但是不能够直接识别我们需要的是哪个<a>的信息
+	只能够通过<a>标签所包含的图片来标识每个<a>标签,所以当我们看到<img>图片的时候就知道它的<a>标签是不是我们需要的，是，就设置属性
+</a>
+
+
+二、创建一个读取assets文件的工具，用于读取上面所有的内容，下面代码复制粘贴即可
+	public static String readAssetFile(Context context, String path){
+        AssetManager assetManager = context.getAssets();
+        try {
+            InputStream is = assetManager.open(path);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuffer sb = new StringBuffer();
+            String line;
+            while((line = br.readLine()) != null){
+                sb.append(line);
+            }
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+三、创建JS调用的类，最好在WebView控件的Activity中写的内部类
+	private class JavascriptInterface {
+        private Context context;
+        public JavascriptInterface(Context context) {
+            this.context = context;
+        }
+        @android.webkit.JavascriptInterface
+        public void clickRecipe(String recipe_id) {
+            Toast.makeText(context, recipe_id, Toast.LENGTH_LONG).show();
+        }
+        @android.webkit.JavascriptInterface
+        public void clickUI(String href) {
+            Toast.makeText(context, "" + href, Toast.LENGTH_SHORT).show();
+        }
+}
+
+四、最重要一步
+
+	 // 注入js函数监听
+	 private void addImageClickListner() {
+
+			// 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
+			String imgListenerJsString = IO.readAssetFile(this, "imageListener.js");
+			mWebView.loadUrl(imgListenerJsString);
+
+	 }
+
+	mWebView = (WebView) findViewById(R.id.mView);					//初始化控件
+        WebSettings settings = mWebView.getSettings();					//获取WebView的设置对象
+        settings.setDefaultTextEncodingName("utf-8");					//设置默认编码			
+        settings.setJavaScriptEnabled(true);						//允许JavaScript
+        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);			//设置缓存模式
+        mWebView.addJavascriptInterface(new JavascriptInterface(this), "JS");		//设置JS调用的方法，以及给这个类命名,在JS代码编写需要用到
+        mWebView.loadUrl("http://m.meishij.net/huodong/zt.php?zt_id=180");		//设置WebView的访问网页
+        mWebView.setWebViewClient(new WebViewClient() {					//设置不调用系统浏览器
+	    @Override
+            public void onPageFinished(WebView view, String url) {			//最主要的JS交互在这里设置，该方法是在页面加载完整后调用
+                super.onPageFinished(view, url);
+                addImageClickListner();							//当页面加完整后，为网页中的每一个img标签注册单击监听器
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.contains("id=")) {
+                    view.loadUrl(url);
+                }
+                return true;
+            }
+        });
+
+  

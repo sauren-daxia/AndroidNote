@@ -1,0 +1,46 @@
+
+
+			//通过反射拿到 TelephonyManager类里面的getITelephony方法(私有的)
+			
+			Method method = TelephonyManager.class.getDeclaredMethod("getITelephony");
+			
+			method.setAccessible(true); 
+			
+			ITelephony telephony = (ITelephony) method.invoke(tm);
+			
+			telephony.endCall();	//调用挂断电话方法
+
+			//注册广播
+
+			PhoneReceiver receiver = new PhoneReceiver();
+		
+			IntentFilter filter = new IntentFilter();
+			
+			filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
+		
+			registerReceiver(receiver, filter);
+
+			//通过广播接受者，判断是否来电。
+
+			String action = intent.getAction();
+		
+			if(TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(action)){
+				
+			TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+				
+			switch (tm.getCallState()) {
+				
+				case TelephonyManager.CALL_STATE_RINGING:
+				
+					String incomeNumber = intent.getStringExtra("incoming_number");
+			
+					endCall(); //来电就挂断
+		
+					break;
+				case TelephonyManager.CALL_STATE_IDLE:
+			
+					incomeNumber = intent.getStringExtra("incoming_number");
+			
+					break;
+				}
+			}

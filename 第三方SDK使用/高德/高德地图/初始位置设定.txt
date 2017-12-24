@@ -1,0 +1,18 @@
+1、初始显示位置
+
+CameraUpdate mCameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(39.977290,116.337000),18,30,0));
+//参数依次是：视角调整区域的中心点坐标、希望调整到的缩放级别、俯仰角0°~45°（垂直与地图时为0）、偏航角 0~360° (正北方为0)
+
+具体可以初始什么可以参考官方的CameraUpdate的构造:http://a.amap.com/lbs/static/unzip/Android_Map_Doc/3D/com/amap/api/maps/CameraUpdateFactory.html
+
+aMap.animateCamera(CameraUpdate cameraupdate,long duration,AMap.CancelableCallback cancelablecallback);	//添加初始对象，带动画
+
+aMap.moveCamera(CameraUpdate cameraupdate);		//添加初始对象，不带动画
+
+2、限制显示区域
+
+LatLng southwestLatLng = new LatLng(33.789925, 104.838326);		//最小范围
+LatLng northeastLatLng = new LatLng(38.740688, 114.647472);		//最大范围
+LatLngBounds latLngBounds = new LatLngBounds(southwestLatLng, northeastLatLng);
+aMap.setMapStatusLimits(latLngBounds);
+

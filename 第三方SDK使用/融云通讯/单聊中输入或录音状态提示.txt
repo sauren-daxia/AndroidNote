@@ -1,0 +1,40 @@
+就是单聊中，会在标题栏提示，用户正在输入或录音...
+融云默认是开启这个功能的，可以在rc_configuration.xml文件中设置，true开启，false关闭
+
+===============
+融云只提供了Fragment，并没有提供标题栏，需要自己添加。只需要在集成单聊的Activity中回调下面方法，监听输入状态即可
+
+当前会话正在输入的用户有变化时，会触发 onTypingStatusChanged()，回调里携带有当前正在输入的用户列表。对于单聊而言，
+
+当对方正在输入时，监听会触发一次；当对方不处于输入状态时，该监听还会触发一次，但是回调里上来的输入用户列表为空，开发者需要在此时取消正在输入的显示，显示原有的标题。
+===============
+
+RongIMClient.setTypingStatusListener(new RongIMClient.TypingStatusListener() {
+    @Override
+    public void onTypingStatusChanged(Conversation.ConversationType type, String targetId, Collection<TypingStatus> typingStatusSet) {
+        //当输入状态的会话类型和targetID与当前会话一致时，才需要显示
+        if (type.equals(mConversationType) && targetId.equals(mTargetId)) {
+            //count表示当前会话中正在输入的用户数量，目前只支持单聊，所以判断大于0就可以给予显示了
+            int count = typingStatusSet.size();
+            if (count > 0) {
+                Iterator iterator = typingStatusSet.iterator();
+                TypingStatus status = (TypingStatus) iterator.next();
+                String objectName = status.getTypingContentType();
+
+                MessageTag textTag = TextMessage.class.getAnnotation(MessageTag.class);
+                MessageTag voiceTag = VoiceMessage.class.getAnnotation(MessageTag.class);
+                //匹配对方正在输入的是文本消息还是语音消息
+                if (objectName.equals(textTag.value())) {
+                    //显示“对方正在输入”
+                    mHandler.sendEmptyMessage(SET_TEXT_TYPING_TITLE);
+                } else if (objectName.equals(voiceTag.value())) {
+                    //显示"对方正在讲话"
+                    mHandler.sendEmptyMessage(SET_VOICE_TYPING_TITLE);
+                }
+            } else {
+                //当前会话没有用户正在输入，标题栏仍显示原来标题
+                mHandler.sendEmptyMessage(SET_TARGETID_TITLE);
+            }
+        }
+    }
+});

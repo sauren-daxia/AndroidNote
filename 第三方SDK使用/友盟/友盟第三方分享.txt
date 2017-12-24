@@ -1,0 +1,73 @@
+1、在Application中声明需要推送的APP
+	
+	//微信分享
+	PlatformConfig.setWeixin("wx43e239707cddd1aa", "3b29d9b0fe37548888e2b33db1c676b6");
+	//QQ分享
+	PlatformConfig.setQQZone("1105524960", "PbtfKBXP29ktg0k3"); 
+
+	PS:key需要挨个开发者平台申请
+
+2、添加Manifest权限
+	具体权限上友盟复制粘贴
+
+3、点击分享的跳转
+	在Activity中定义全局变量：
+		private UMShareAPI mShareAPI;
+		mShareAPI = UMShareAPI.get(this);
+
+	使用自带跳转方法
+		mShareAPI.doOauthVerify(getActivity(), SHARE_MEDIA.QQ, umAuthListener);		//第三个方法是回调
+	
+	第一次回调，但拿不到返回的数据
+		private UMAuthListener umAuthListener = new UMAuthListener() {
+		
+		@Override
+		public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
+			Toast.makeText(getActivity(), "授权异常",0).show();
+		}
+		
+		@Override
+		public void onComplete(SHARE_MEDIA arg0, int arg1, Map<String, String> arg2) {
+			Toast.makeText(getActivity(), "授权成功",0).show();
+			
+			//使用第二次回调才会拿到数据
+			mShareAPI.getPlatformInfo(getActivity(), arg0, getInfoListener);
+		}
+		
+		@Override
+		public void onCancel(SHARE_MEDIA arg0, int arg1) {
+			Toast.makeText(getActivity(), "取消授权",0).show();
+		}
+	};
+
+	第二次回调：
+	private UMAuthListener getInfoListener = new UMAuthListener() {
+		
+		@Override
+		public void onError(SHARE_MEDIA arg0, int arg1, Throwable arg2) {
+			Toast.makeText(getActivity(), "登陆异常",0).show();			
+		}
+		
+		@Override
+		public void onComplete(SHARE_MEDIA arg0, int arg1, Map<String, String> data) {
+			Toast.makeText(getActivity(), "登陆成功",0).show();
+			
+			userinfo.token = data.get("token");
+			userinfo.openid = data.get("openid");
+			
+			if(arg0 == SHARE_MEDIA.WEIXIN){
+				userType = ServerURL.TYPE_WEIXIN;
+			}else if(arg0 == SHARE_MEDIA.QQ){
+				userType = ServerURL.TYPE_QQ;
+			}else if(arg0 == SHARE_MEDIA.SINA){
+				userType = ServerURL.TYPE_SINA;
+			}
+			
+			//获取到APP返回的信息一般要Post上传到自己服务器的
+		}
+		
+		@Override
+		public void onCancel(SHARE_MEDIA arg0, int arg1) {
+			Toast.makeText(getActivity(), "取消登陆",0).show();				
+		}
+	};

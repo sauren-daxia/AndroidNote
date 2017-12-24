@@ -1,0 +1,48 @@
+﻿1、
+    到InterctorManager里面设置拦截的内容
+
+2、
+    到BaseSubscriber里面onNext方法里面设置数据返回后的逻辑处理
+
+3、
+    到RxHttpUrl里面定义接口
+
+4、
+    到BaseApiService里面定义BaseUrl
+
+5、
+    定义BaseResponse和TokenBean的实体类
+
+6、
+    所有SDK统一使用DevelopBean的变量，并且在上线后设置为false
+
+7、
+    如果想使用RxBus异步返回数据，就继承SuperBaseActivity
+    发送：
+        RxBus.getInstance.sendData("MainToSecond_Time",Object o);
+        参数一：标识码，用于标记谁给谁传递数据，传输什么哪方面的数据，最好用使用一个接口将全局的标记都集中记录起来
+            Main    //谁发的
+            Second  //发给谁
+            Time    //发送什么
+        参数二：具体内容
+
+8、
+    上传文件的一些请求设置到UpLoadRequestBuild里面处理
+
+9、如果使用FragmentActivity的话，Fragment会获取不到Activity，这时候请求就会报错
+	解决方法：
+	  private Activity mActivity;
+ 
+   	 @Override
+    	public void onAttach(Activity activity) {
+    	    super.onAttach(activity);
+ 
+   	     mActivity=activity;
+   	 }
+或
+protected Context context;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+

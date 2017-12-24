@@ -1,0 +1,46 @@
+1、只需要单独定义一个Activity，用于承载Fragment即可，因为融云的会话界面是以Fragment展示的
+   使用GUI版的SDK无需自己写界面，只需要引用SDK提供的界面即可。
+
+   PS：这里可能会出现错误，当前是创建了一个Fragment的，layout属性也是引用Fragment的布局，官方并没有标明，然而不引用的话，右边视图会报错
+	报错最后一行提供一个Fragment布局选择，可以尝试选择那里的布局
+
+	<?xml version="1.0" encoding="utf-8"?>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		 xmlns:tools="http://schemas.android.com/tools"
+		 android:layout_width="match_parent"
+		  android:layout_height="match_parent"
+		  android:orientation="vertical">
+
+	 <fragment
+		   android:tag="cc.xx"
+		 android:id="@+id/subconversationlist"
+		   android:name="io.rong.imkit.fragment.SubConversationListFragment"
+		   android:layout_width="match_parent"
+		  android:layout_height="match_parent"
+		 tools:layout="@layout/null_" />
+	</LinearLayout>
+
+2、Activity的配置
+
+	 <!--聚合会话列表-->
+        <activity
+            android:name=".SubConversationListActivtiy"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.android.mywechat"
+                    android:pathPrefix="/subconversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+3、有了布局界面还需要跳转，但跳转并不是使用Intent，而是使用SDK内置的跳转方法
+
+	if (RongIM.getInstance() != null)
+                   RongIM.getInstance().startSubConversationList(this, Conversation.ConversationType.GROUP);

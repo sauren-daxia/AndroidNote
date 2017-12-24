@@ -1,0 +1,10 @@
+settings.setDefaultTextEncodingName("utf-8") ;		//设置后不会显示乱码
+
+settings.setUseWideViewPort(true);			//设置适应屏幕大小显示
+
+settings.setJavaScriptEnabled(true);			//设置支持JavaScript
+
+settings.setDomStorageEnabled(true);			//对JS效果支持	
+
+settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);	//缓存
+        

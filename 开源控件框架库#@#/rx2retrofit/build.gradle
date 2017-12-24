@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug{
+            minifyEnabled false
+            buildConfigField("boolean", "LOG_DEBUG", "false");
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.35:8080/TestAndroidCrash/servlet/\"")
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "LOG_DEBUG", "true");
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.35:8080/TestAndroidCrash/servlet/\"")
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+
+
+
+    //------------------------------------retrofit2 ---------------------------------------------------
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'      //支持GSON
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'       //支持Rx
+//    compile 'com.squareup.retrofit2:adapter-java8:2.0.2'        //java8支持
+
+    //------------------------------------okhttp3 ---------------------------------------------------
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
+    //------------------------------------rxjava2 ---------------------------------------------------
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    //------------------------------------rxlifecycle ---------------------------------------------------
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.0.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+
+}

@@ -1,0 +1,22 @@
+1、移除无用、僵尸代码，直接体现就是Dex的体积会变小
+
+2、移除无用的库，或功能雷同的库
+
+3、如果不是需求过多的话，能用原生的就不要用SDK，比如定位
+
+4、使用混淆
+
+5、移除无用资源、右击res->refactor->remove unused resources
+shrinkResources需要配合minifyEnabled一起使用,无用的资源还是会被打进Apk中，只是变成一张黑图，体积也非常小，只有不到100b。
+
+6、drawable资源不要过多套，保留一到两套即可
+
+7、让UI使用可以考虑使用TinyPng、pngquant、ImageOptim等工具对图片进行压缩，这些工具可以减少PNG文件大小，同时保持图像质量。
+	如果使用以上的优化工具优化过的图片，最好是所有图片如此，就需要设置builder.gradle不使用默认的AAPT优化，否则可能会增大图片
+	aaptOptions {
+	   cruncherEnabled = false
+	}
+
+8、使用SVG
+
+9、使用微信资源混淆库：AndResGuard

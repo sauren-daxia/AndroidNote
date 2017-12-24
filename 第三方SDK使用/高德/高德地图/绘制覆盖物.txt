@@ -1,0 +1,138 @@
+1、绘制默认覆盖物
+	LatLng latLng = new LatLng(39.906901,116.397972);	//设定覆盖物的坐标
+
+	final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title("北京").snippet("DefaultMarker"));	//创建覆盖物
+
+2、自定义覆盖物
+	final Marker marker = aMap.addMarker(
+                new MarkerOptions()		//覆盖物设定对象
+                .position(new LatLng(39.906901,116.397972))		//覆盖物坐标
+                .title("北京")			//覆盖物标题
+                .snippet("DefaultMarker")	//覆盖物信息
+                .draggable(true)		//是否可以拖动覆盖物
+                .visible(true)			//是否显示覆盖物
+                .anchor(0.5f, 1.2f)		//覆盖物锚点
+                .alpha(0.5f)			//覆盖物透明度
+		//覆盖物图标
+                .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.location)))
+                .setFlat(true));		//是否平贴地图
+
+3、给覆盖物设置动画
+Animation animation = new RotateAnimation(marker.getRotateAngle(),marker.getRotateAngle()+180,0,0,0);
+        long duration = 1000L;
+        animation.setDuration(duration);
+        animation.setInterpolator(new LinearInterpolator());
+        marker.setAnimation(animation);
+        marker.startAnimation();
+
+4、直接显示覆盖物信息窗口
+marker.showInfoWindow();		//不调用的话，需要点击覆盖物才会显示，如果动态更改覆盖物信息，也需要再次调用这个方法
+
+marker.hideInfoWindow();		//隐藏信息窗口
+
+5、自定义信息窗口
+
+aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+		//返回一个布局View即可
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+		//此处也是返回一个布局View，但是默认有边框，不能改
+                return null;
+            }
+        });
+
+
+6、信息窗口的点击事件
+OnInfoWindowClickListener listener = new OnInfoWindowClickListener() {
+ 
+    @Override
+    public void onInfoWindowClick(Marker arg0) {
+        
+        arg0.setTitle("infowindow clicked");
+    }
+};
+//绑定信息窗点击事件
+aMap.setOnInfoWindowClickListener(listener);
+
+7、监听覆盖物点击事件
+// 定义 Marker 点击事件监听
+AMap.OnMarkerClickListener markerClickListener = new AMap.OnMarkerClickListener() {
+    // marker 对象被点击时回调的接口
+    // 返回 true 则表示接口已响应事件，否则返回false
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+};
+mAMap.setOnMarkerClickListener(markerClickListener);
+
+8、监听覆盖物拖拽事件
+// 定义 Marker拖拽的监听
+AMap.OnMarkerDragListener markerDragListener = new AMap.OnMarkerDragListener() {
+
+    // 当marker开始被拖动时回调此方法, 这个marker的位置可以通过getPosition()方法返回。
+    // 这个位置可能与拖动的之前的marker位置不一样。
+    // marker 被拖动的marker对象。
+    @Override
+    public void onMarkerDragStart(Marker arg0) {
+        // TODO Auto-generated method stub
+
+    }
+
+    // 在marker拖动完成后回调此方法, 这个marker的位置可以通过getPosition()方法返回。
+    // 这个位置可能与拖动的之前的marker位置不一样。
+    // marker 被拖动的marker对象。
+    @Override
+    public void onMarkerDragEnd(Marker arg0) {
+    // TODO Auto-generated method stub
+
+    }
+
+    // 在marker拖动过程中回调此方法, 这个marker的位置可以通过getPosition()方法返回。
+    // 这个位置可能与拖动的之前的marker位置不一样。
+    // marker 被拖动的marker对象。
+    @Override
+    public void onMarkerDrag(Marker arg0) {
+        // TODO Auto-generated method stub
+
+    }
+};
+// 绑定marker拖拽事件
+// 定义 Marker拖拽的监听
+AMap.OnMarkerDragListener markerDragListener = new AMap.OnMarkerDragListener() {
+
+    // 当marker开始被拖动时回调此方法, 这个marker的位置可以通过getPosition()方法返回。
+    // 这个位置可能与拖动的之前的marker位置不一样。
+    // marker 被拖动的marker对象。
+    @Override
+    public void onMarkerDragStart(Marker arg0) {
+        // TODO Auto-generated method stub
+
+    }
+
+    // 在marker拖动完成后回调此方法, 这个marker的位置可以通过getPosition()方法返回。
+    // 这个位置可能与拖动的之前的marker位置不一样。
+    // marker 被拖动的marker对象。
+    @Override
+    public void onMarkerDragEnd(Marker arg0) {
+    // TODO Auto-generated method stub
+
+    }
+
+    // 在marker拖动过程中回调此方法, 这个marker的位置可以通过getPosition()方法返回。
+    // 这个位置可能与拖动的之前的marker位置不一样。
+    // marker 被拖动的marker对象。
+    @Override
+    public void onMarkerDrag(Marker arg0) {
+        // TODO Auto-generated method stub
+
+    }
+};
+// 绑定marker拖拽事件
+aMap.setOnMarkerDragListener(markerDragListener);
+

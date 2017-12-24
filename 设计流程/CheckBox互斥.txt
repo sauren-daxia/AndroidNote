@@ -1,0 +1,3 @@
+只能通过setOnclickListener去判断点击了哪个，然后去取消其他按钮的状态
+
+如果通过setOnCheckedListener去判断会出现错乱

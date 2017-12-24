@@ -1,0 +1,11 @@
+用户信息提供者作用：
+	根据服务器返回的ID，在本地查找用户的Img信息，用户名等。
+
+	  RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String userId) {
+		//刷新用户数据？暂未知什么作用
+                RongIM.getInstance().refreshUserInfoCache(new UserInfo("userId", "啊明", Uri.parse("http://rongcloud-web.qiniudn.com/docs_demo_rongcloud_logo.png")));
+                return new UserInfo(userId,"jason", Uri.parse(img));//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+            }
+        }, true);		//此时最好将本参数设置为 true，由 IMKit 将用户信息缓存到本地内存中。否则影响加载速度

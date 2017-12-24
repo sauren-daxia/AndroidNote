@@ -1,0 +1,31 @@
+http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0105/2264.html
+步骤
+
+1、创建Spinner控件
+
+2、创建数组适配器
+	ArrayAdapter ad = new ArrayAdapter(this,android.R.layout.simple_spinner_item,list)
+
+3、设置下拉样式
+	ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+4、加载适配器
+	spinner.setAdapter(ad);
+
+
+
+xml设置：
+---------------------------------
+android:spinnerMode="dialog"	//使用Dialog方式显示列表集合
+android:spinnerMode="dropdown"	//使用下拉列表方式显示集合
+
+方法：
+---------------------------------
+getSelectItemPosition();	//获取选中项的对象
+
+
+
+
+事件
+-----------------------------------
+onItemSelected()		//选中项

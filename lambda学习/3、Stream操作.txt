@@ -1,0 +1,47 @@
+1、所有的集合或者数组都可以进行流操作
+	list.stream();
+	arrays.stream();
+
+2、生成stream的四种方式
+	list.stream()			//直接通过集合获取
+	Arrays.stream(Arrays)		//通过数组生成
+	Stream.iterate(0,(x) -> x+2);	//创建无限流
+	Stream.generate(()->Math.random());//生成无限流
+
+3、Stream操作种类
+	.filter(Comsumer<T>)		//接收一个断言接口，用于过滤判断
+
+	.limit(int)			//用于提取前几个元素
+
+	.skip(int)			//用于提取后几个元素
+
+	.distinct()			//去重操作，原理是通过hascode和equals
+
+	.map(Function<T,R>)		//单个类型转换单个
+
+	.flatMap()			//单个类型转换集合，然后合并集合
+
+	.sorted()			//排序，可以无参，有参的为Comparetor
+
+	.allMatch(Predicate)		//判断某个属性是不是全局匹配
+
+	.anyMatch(Predicate)		//判断某个属性是否至少有一个元素匹配
+
+	.noneMatch(Predicate)		//判断某个属性是否一个都没匹配
+
+	.findFirst()			//返回结果的第一个
+
+	.findAny()			//返回匹配到的任意一个
+
+	.count()			//返回结果总数
+
+	.max(Comparator<T>)		//返回某个属性在元素中最大的值
+
+	.min(Comparator<T>)		//返回某个属性在元素中最小的值
+
+	.reduce(int,(T1,T2) -> R)	//从某个索引开始/也可以不用索引默认为0，根据两个元素生成一个新的元素，新元素的值会代替T1
+
+	.collect(Collects.toList())	//将结果转换为一个集合，Collects有多个方法可以使用:分组、分区、算术、转换集合
+
+
+PS：如果没有终止操作，所有的操作都不会执行，这种叫做延迟执行或者是惰性执行

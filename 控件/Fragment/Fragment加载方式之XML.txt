@@ -1,0 +1,22 @@
+
+步骤：
+
+1、定义一个XML的布局文件用于Fragment碎片的布局
+
+2、定义一个类继承子Fragment，注意的是包名，如果用的是app.Fragment包则需要修改配置文件的版本登记
+
+3、重写Fragment的方法
+	
+	onCreateView()
+		return inflater.inflater(R.layout.xx,null);	//这个方法用于加载布局文件
+
+	onAvtivity()			//这个方法相当与Activity的onCreate方法，用于在里面实现各个控件的操作
+		getView()	//该方法可以获取到包含该Fragment的Activity的上下文，通过这个方法链式调用findviewbyid()方法得到控件
+
+4、在XML文件中设置<fragment>的各项属性
+
+	name = "xxx.xx.myfragment"		//这是重写的Fragment子类，每个<fragment>对应一个独立的类
+
+	tag or id = "xx"			//设置一个标记，用于查找
+
+5、Fragment子类可重用，只需该变tag or id 即可

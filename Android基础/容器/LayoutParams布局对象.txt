@@ -1,0 +1,16 @@
+
+构造：
+-------------------------
+LayoutParams lp = new LayoutParams(int,int)	大小
+
+
+方法：
+--------------------------
+lp.rightMargin = int		
+
+
+
+
+
+
+view.getLayoutParams(lp);

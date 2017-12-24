@@ -1,0 +1,68 @@
+https://github.com/burgessjp/ThemeSkinning
+
+1、继承
+	所有Activity继承SkinBaseActivity
+	所有Fragment继承SkinBaseFragment
+	Application继承SkinBaseApplication
+
+2、读写内存权限
+	
+
+3、静态控件改变
+	在需要更改的View中添加一个属性
+	  xmlns:skin="http://schemas.android.com/android/skin"
+	  skin:enable="true"
+
+4、动态控件改变
+
+	dynamicAddSkinEnableView(view,attrName,resultId);		
+	//改变一个view的某个属性
+	第一个参数：改变的view
+	第二个参数：属性的名称，例如：background,textcolor
+	第三个参数：资源文件ID，R.color.xx等
+
+	dynamicAddSkinEnableView(View view, List<DynamicAttr> pDAttrs)
+	//改变一个view的多个属性
+	第一个参数：改变的view
+	第二个参数：一个属性对象的集合，该对象只有两个成员变量，一个属性名称，一个资源文件ID
+
+5、调用换肤
+	  String skinFullName = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"skin_night.skin";
+                FileUtils.moveRawToDir(MainActivity.this, "skin_night.skin", skinFullName);
+                File skin = new File(skinFullName);
+                if (!skin.exists()) {
+                    Toast.makeText(MainActivity.this, "请检查" + skin.getName() + "是否存在", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(MainActivity.this, "存在", Toast.LENGTH_SHORT).show();
+                SkinManager.getInstance().load(skin.getAbsolutePath(),
+                        new ILoaderListener() {
+                            @Override
+                            public void onStart() {
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(MainActivity.this, "换肤成功", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailed() {
+                                Toast.makeText(MainActivity.this, "换肤失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+6、还原皮肤
+	  SkinManager.getInstance().restoreDefaultTheme();
+
+7、生成插件包
+	新建一个项目，不包含任何类，出默认的MainActivity外
+	只操作资源文件，并且资源文件与原项目的资源文件名一致，只改内容。
+	改完之后build编译，将生成的APK改名为xxx.skin
+	最后将文件放到SD卡中，路径自己定义
+
+PS：暂时不支持字体大小修改，可以修改颜色，drawable
+
+PS：如果SkinBaseActivity继承的是AppCompatActivity话，会出现换肤后，控件往上移，解决方法，让SkinBaseActivity继承Activity
+
+	

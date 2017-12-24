@@ -1,0 +1,46 @@
+1、添加ImageSwitcher控件
+
+2、实现ImageSwitcher的图片制造工厂借口
+	Activity implements ViewFactory
+	
+	//这里只用于第一张图片的初始化，没有任何别的功能，最好把图片都放在集合里
+	@overrride
+	public View makeView(){
+		ImageView view = new ImageView(this)
+		view.setImageResource(images[0])
+		return view
+	}
+
+3、实现ImageSwitcher的Touch接口
+	float startX,endX;
+
+	public boolean OnTouch(){
+
+		switch(event.getaction()){
+		
+		case down:
+		startX = event.getX();
+
+		case move;
+
+		endX= event.getX();
+
+		if(startX - endX > 30){
+			index = index+1 < images.length?++index:index;
+			//设置图片切换时的进出动画
+			imageSwitcher.setInAnimation(this,android.R.anim.fade_in)			
+			imageSwitcher.setInAnimation(this,android.R.anim.fade_out)			
+		}else if(endX -startX > 30){
+			index = index-1>=0?--index : index; 
+				
+			imageSwitcher.setInAnimation(this,android.R.anim.fade_out)
+			imageSwitcher.setInAnimation(this,android.R.anim.fade_in)			
+			
+		}		
+		imageswitcher.setimageResource(images[index]);
+		return true;
+		case up;			
+		
+		}	
+
+	}

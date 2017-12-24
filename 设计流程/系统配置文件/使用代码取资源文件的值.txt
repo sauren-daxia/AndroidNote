@@ -1,0 +1,26 @@
+
+
+String.xml 
+
+getResource.getString()
+
+getResourcr.getText()
+-----------------------------------
+arrays.xml
+
+getResourcr.getStringArrat()
+
+-----------------------------------
+colors.xml
+
+getResource.getDarwable()
+
+getResource.getColor();
+
+-----------------------------------
+dimens.xml
+
+getResource.getDimension()
+
+------------------------------------
+style.xml		//不需要取值

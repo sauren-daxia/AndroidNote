@@ -1,0 +1,54 @@
+
+1、  //先传URL进去看看状态，是否已经下载过，或者正在下载等等，如果不需要根据状态下载，可以直接到第二步
+
+  RxDownload.getInstance(this).receiveDownloadStatus(url)
+                .subscribe(new Consumer<DownloadEvent>() {
+                    @Override
+                    public void accept(@NonNull DownloadEvent event) throws Exception {
+                        LogUtils.d("RxDownload status = "+event.getFlag());
+                        Log.d("CHEN", "accept: status ="+event.getFlag());
+                    }
+ });
+
+2、 //添加任务到列表，订阅没啥用，但是要订阅才生效，可以添加自己的Retrofit端，但是下载文件没啥特殊要求就不用了
+    RxDownload.getInstance(this)
+                .serviceDownload(url)
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(@NonNull Object o) throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+
+                    }
+                });
+
+3、暂停下载
+rxDownload.pauseServiceDownload(url).subscribe();
+
+4、继续下载和添加任务一样，只要URL一样就会继续下载
+
+5、获取下载记录
+
+mRxDownload.getTotalDownloadRecords()
+    .subscribe(new Action1<List<DownloadRecord>>() {
+        @Override
+        public void call(List<DownloadRecord> list) {
+            mAdapter.addAll(list);
+        }
+    });
+
+6、获取下载文件
+1)
+//利用url获取
+File[] files = rxDownload.getRealFiles(url);
+if (files != null) {
+	File file = files[0];
+}
+2)
+//利用saveName及savePath获取
+File file = rxDownload.getRealFiles(saveName,savePath)[0];

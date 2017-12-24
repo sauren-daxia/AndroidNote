@@ -1,0 +1,119 @@
+首先要在mob.com官网后台控制中创建应用，然后在社会化平台设置中添加每个分享平台的KEY等等！！！！！！！！！
+
+切记上面这点！！！！！
+
+1、登录mob.com申请KEY
+
+2、选择ShareSDK for Android 下的 QuickIntegrater.jar 选择需要分享的平台。
+	PS:.jar文件如果被解压工具关联了是点不开的
+
+3、将QuickIntegrater.jar 生成的文件夹下的libs的.jar文件全部复制到app -> libs 下，然后同步一下
+
+4、将QuickIntegrater.jar 生成的文件夹下的assets文件复制到main下
+
+5、将QuickIntegrater.jar 生成的文件夹下的res下的所有文件复制app -> main -> res 下
+
+6、将QuickIntegrater.jar 生成的文件夹下的src -> cn 复制到 main -> java 下
+
+7、配置权限：
+	<uses-permission android:name="android.permission.GET_TASKS" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+<!-- 蓝牙分享所需的权限 -->
+  <uses-permission android:name="android.permission.BLUETOOTH" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+8、配置必须的Activity到manifast中
+	<activity
+        android:name="com.mob.tools.MobUIShell"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:screenOrientation="portrait"
+       android:windowSoftInputMode="stateHidden|adjustResize" >
+<!-- QQ和QQ空间分享 QQ登录的回调必须要配置的 -->
+    <intent-filter>
+           <data android:scheme="tencent100371282" />
+           <action android:name="android.intent.action.VIEW" />
+           <category android:name="android.intent.category.BROWSABLE" />
+           <category android:name="android.intent.category.DEFAULT" />
+    </intent-filter>
+
+    <!-- 新浪微博客户端分享回调必须配置 -->
+        <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+</activity>
+
+PS:scheme="tencent100371282" 将后面的数字替换为申请的appID
+
+9、其他页面分享
+
+<!--微信分享回调 -->
+<activity
+     android:name=".wxapi.WXEntryActivity"
+     android:theme="@android:style/Theme.Translucent.NoTitleBar"
+     android:configChanges="keyboardHidden|orientation|screenSize"
+     android:exported="true"
+     android:screenOrientation="portrait" /> 
+
+<!--易信分享回调 -->
+<activity
+    android:name=".yxapi.YXEntryActivity"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:exported="true"
+    android:screenOrientation="portrait" />
+
+<!-- 支付宝分享回调 -->
+<activity
+    android:name=".apshare.ShareEntryActivity"
+    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+    android:configChanges="keyboardHidden|orientation|screenSize"
+    android:exported="true"/>
+
+PS：如果其他分享爆红，说明没有这个Activity，要到QuickIntegrater.jar 生成的文件夹中找
+
+10、修改assets下的ShareSDK.xml里面的key
+	PS:貌似QQ，QQ空间，或者微信好友，微信朋友圈这样的，key或ID设置为一样的就行了
+
+11、在需要分享的界面初始化SDK
+	ShareSDK.initSDK(this,"");	//第二个参数填不填无所谓，如果填，需要填ShareSDK的Key
+
+12、在点击事件里调出分享界面
+	onClick(){
+		show();
+	}
+	
+private void show() {
+        ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+//关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间等使用
+        oks.setTitle("标题");
+// titleUrl是标题的网络链接，QQ和QQ空间等使用
+        oks.setTitleUrl("http://sharesdk.cn");
+// text是分享文本，所有平台都需要这个字段
+        oks.setText("我是分享文本");
+// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+//oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+// url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://sharesdk.cn");
+// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+// site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+// 启动分享GUI
+        oks.show(this);
+    }
+	

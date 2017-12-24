@@ -1,0 +1,46 @@
+SQLiteDatabase
+
+增：
+	ContentValues values = new ContentValues()	
+	values.put("name","男");			
+	db.insert("my_sql",null,values)
+
+	
+	db.execSql("inset into xxx (name,age) value('nan',123)")
+
+删
+	String whereClause = "age = ? and name = ?"	//查询的条件
+	String[] whereArgs = {"22","xx"};		//查询的值
+	db.delete("my_sql",whereClause,whereArgs);
+
+	db.execSQL("delete from xxx ");		//清空
+	db.execSQL("delete from xxx where name = 'xx'")	//条件删除
+
+改
+
+	ContentValues values = new ContentValues()	
+	values.put("name","男");	
+	String whereClause = "age = ? and name = ?"	//查询的条件
+	String[] whereArgs = {"22","xx"};		//查询的值		
+	db.update("my_sqlite",values，whereClause,whereArgs)
+
+
+查
+	String columns= new String[]{"name"}		//指定字段
+	String selection = "name = ?"			//指定规则
+	String selectionArgs = "李四"			//规则字段
+	String groupBy = ??				//分组
+	String having = ?? 				//未知
+	String orderBy = "age"				//按指定字段排序
+ 	String limit = "5,10"				//从第几条数据开始，只取十条	
+
+
+	Cursor cursor = dp.query("my_sqlite",columns,selection,selectionArgs,null,null,orderBy,limit);
+	
+	cursor.getString(cursor.getColunmnIndex("xx"))	//获取String类型的值
+	
+	第一个参数：表名
+	
+	第二个参数：指定列表项，也就是筛选出来后只有指定个字段，如果再获取别的字段会报错
+
+	

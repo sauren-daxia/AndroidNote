@@ -1,0 +1,79 @@
+http://www.jianshu.com/p/4e6d72e7f57a
+
+1、添加依赖
+	在项目的builde.gradle中配置
+dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'   //<------添加
+    }
+
+	在app的builde.gradle中配置
+apply plugin: 'org.greenrobot.greendao'  //<-----在头部前几行添加
+
+greendao {   //<------与dependencies同级
+
+    schemaVersion 1			//数据库版本
+    //自动生成的文件所在目录
+    daoPackage 'com.example.greendao.greendao.gen'	//生成实体类对应操作类的包名，最好是项目包名加上greendao.gen
+    targetGenDir 'src/main/java'		//表示放在哪个目录下
+
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'org.greenrobot:greendao:3.2.0'     //<------添加
+}
+
+2、创建实体类
+@Entity					//<---标注为GreenDao的实体类，一个类为一个表
+public class PersonEntity{
+	@Id 				//<---必须添加的ID，用来设置为主键
+	private Long _id;		//<---字段名为_id,测试过id,但不能识别不会自增，所以还是要命名为_id，类型暂时测试Long，或许long也可以，但只能是这两个类型
+
+	private String name;
+
+}
+
+3、创建好实体类之后点击菜单栏Build ---> MakeProject，之后自动生成相关的内容，是否生成成功可在app的builde.gradle配置的daoPackage包下查看有没有生成相关的类即可
+
+4、添加操作接口IDatabase
+
+5、继承AbstractDatabaseManager进行某个实体类的增删改查
+public class ManManager extends AbstractDatabaseManager<ManEnetity,Long> {	//<------继承，泛型1为需要操作的实体类，泛型2暂可以理解为主键类型
+
+    private static ManManager manager;			//<-----单例，每个管理类必须写单例
+    public static ManManager getInstance(){
+        if(manager == null){
+            synchronized (ManManager.class){
+                if(manager == null){
+                    manager = new ManManager();
+                }
+            }
+        }
+        return manager;
+    }
+
+    @Override
+    protected AbstractDao<ManEnetity, Long> getAbstractDao() {		//<----只需要返回相对的EntityDao即可，就按照这个格式写就行了
+        return daoSession.getManEnetityDao();
+    }
+}
+
+6、在Application中的onCreate()初始化
+	   AbstractDatabaseManager.initOpenHelper(getApplicationContext());
+
+7、使用
+	ManManager.getInstance().insert(new ManEntity());
+
+8、已经写好的一些方法
+insert(T t);			//插入一个对象
+insertList(List<T> t);		//插入一个集合
+
+insertOrReplace(T t);		//替换一个对象，有则替换，没有则插入
+insertOrReplaceList(List<T> t);	//替换一个集合，有则替换，没有则插入
+
+getQueryBuilder().list();	//查询所有对象
+
+delete(T t);			//删除一个对象
+deleteAll();			//删除所有
+...其余自己测试吧,其实我也不知道

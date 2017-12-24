@@ -1,0 +1,82 @@
+ private class SocketChannelHandler extends ChannelHandlerAdapter {
+
+        public SocketChannelHandler() {
+        }
+
+	//关闭流
+        @Override
+        public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+            System.out.println("ctx close");
+            super.channelInactive(ctx);
+        }
+
+	//连接成功
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            System.out.println("client  :连接--成功");
+//            byte[] bytes = PackageUtils.getInstance().DataPackaging("  :连接--成功",1);
+            for (int i = 0; i < 10; i++) {
+
+                ctx.writeAndFlush(Unpooled.copiedBuffer("HI Lilinfeng. Welcome to Netty.####".getBytes()));
+            }
+        }
+
+	//发送成功
+        @Override
+        public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+            ctx.flush();
+        }
+
+
+	//接收消息的回调
+        @Override
+        public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		//TODO 这里这个msg 有可能是ByteBuf类型，如果是的话请按照下面代码处理，也有可能是String，直接强转就好了
+
+            try {
+//                ByteBuf buf = (ByteBuf) msg;
+//                byte[] buff = new byte[buf.readableBytes()];
+//                buf.readBytes(buff);
+//                System.out.println("数据未解包：" + new String(buff) + ", count =" + ++count);
+
+		System.out.println("数据未解包：" + msg + ", count =" + ++count);
+//                buf.retain();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+	//异常断开连接
+        @Override
+        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+	//断开连接之后要把数据流关闭close
+            cause.printStackTrace();
+            System.out.println(":通道关闭 error！！！" + cause.getMessage());
+            ctx.close();
+            open.close();
+            open = null;
+        }
+
+	//发送心跳包
+        @Override
+        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+            if (evt instanceof IdleStateEvent) {
+                IdleStateEvent e = (IdleStateEvent) evt;
+                if (e.state() == IdleState.READER_IDLE) {
+//                    LogUtil.d(TAG,"READER_IDLE 读超时");
+                } else if (e.state() == IdleState.WRITER_IDLE) {
+//                    LogUtil.d(TAG,"WRITER_IDLE 写超时");
+                } else if (e.state() == IdleState.ALL_IDLE) {
+//                    LogUtil.d(TAG, "all idle超时");
+                    System.out.println("发送心跳包~~~");
+                    String ping = "bat_msg";
+                    byte[] bytes = ping.getBytes();
+                    byte[] bytes1 = PackageUtils.getInstance().DataPackaging(bytes, 12);
+                    ByteBuf buffer = Unpooled.buffer(bytes1.length);
+                    buffer.writeBytes(bytes1);
+                    open.writeAndFlush(buffer);
+                    isSendPonG = true;
+                }
+            }
+        }
+    }

@@ -1,0 +1,31 @@
+selector
+
+@1、如果设置字体颜色，还需要另外在res文件夹里创建一个color文件夹
+
+属性
+-------------------------------------
+state_checkable 	//可被点击的控件
+state_checked		//不可点击
+state_pressed		//可否被点击
+state_enabled		//可否被点
+		|<item>	
+		|--------------------
+		|state_pressed = "true"		//是否为点中状态
+		|
+		|drawable = "@drawable/..."	//设置图片
+		|
+		|color = "#111111"		//设置颜色 注释@1
+		|
+		|	
+		|	
+			|<Shape>
+			|-------------
+			|...
+			|
+			|		
+		
+		
+		
+		
+		
+		

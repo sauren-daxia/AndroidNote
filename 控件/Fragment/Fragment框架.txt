@@ -1,0 +1,62 @@
+
+步骤：
+
+1、定义好Fragment碎片的子类，使用V4包
+
+2、定义好界面布局
+
+3、在主界面继承FragmentActivity，需要使用getSupportFragmentManager()方法获取FragmentManager()
+
+	MainActivity extends FragmentActivity
+
+4、初始化Fragment数组和FragmentManager对象
+
+	Fragment[] fragments = {new QQ_XX}
+	fm = getSuuportFragmentManager()
+		
+	inite();		//初始化子空间
+	switchTab(0)		//设置初始碎片
+
+5、初始化选项按钮控件，使用容器对象获取子控件，并赋值给控件数组
+		
+	LinearLayout linear = findViewBy(R.id.linear)
+	
+	CheckedTextView[] c = new CheckedTextView[linear.getChildCount]
+	
+	for( i < linear.getChildCount())	
+
+	c[i] = linear.getChildAt(i)		//获取每个子空间
+	c[i].setOnClickListener(this)		//设置点击事件
+
+6、设置点击事件
+
+	for()
+	if(c[i]==v)		//循环判断点击的是数组中的哪个控件
+	switchTab(i)		//调用方法用于显示控件，隐藏控件，设置子控件点击状态
+
+7、设置switchTab方法,定义一个记录变量，记录上一个点中的按钮
+	private indexTab = -1;
+
+	if(i == indexTab)     //如果点击是同一个就return
+
+	f = fm.findFragmentByTag(fragments[index].getClass.getCanonicalName())	//通过索引获取数组中的Fragment对象，并获取该对象类名
+	ft = fm.beginTransaction()	//获取操作对象
+
+	if(f==null)
+		ft.add()	//如果选中页面的碎片不存在则添加进去
+
+	else{}
+		ft.show()	//否则就让它显示
+
+	if(indexTab!=-1)	
+		ft.hide()	//让上一个碎片隐藏
+		c[i].toggle	//让选中的按钮设置选中
+		c[indexTab].toggle	//让上一个按钮取消选中
+		
+		ft.commit()	//提交操作内容
+
+		indexTab = index //重新赋值选中项
+
+	再回到初始化方法调用该方法
+
+	

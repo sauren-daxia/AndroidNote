@@ -1,0 +1,8 @@
+比如修改EditText底部默认线条颜色
+<!-- Edit样式 -->
+    <style name="my_edti_style" parent="Theme.AppCompat.Light" >
+        <item name="colorControlNormal">#218ed6</item>
+        <item name="colorControlActivated">#CBCBCB</item>
+    </style>
+
+其他控件都可以这样做
