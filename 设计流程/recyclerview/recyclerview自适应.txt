@@ -1,0 +1,6 @@
+GridManager manage = new GridManager(this, 5, LinearLayoutManager.VERTICAL, false);
+manage.decoration(true, true, DisplayUtil.dip2px(this, 5));//有则必须
+manage.setAutoMeasureEnabled(false);//必须
+rv.setHasFixedSize(false);//必须
+
+GridManager在RecyclerViewManager文件夹里有

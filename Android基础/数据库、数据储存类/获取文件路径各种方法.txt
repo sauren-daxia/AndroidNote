@@ -46,7 +46,7 @@ getExternalCacheDir().getAbsolutePath()：
 可以作为外部缓存的路径,卸载app时，会自动删除文件 
 /storage/emulated/0/Android/data/packagename/cache
 
-
+//内置存储根路径
 Environment.getExternalStorageDirectory().getAbsolutePath()：
 
 /storage/emulated/0

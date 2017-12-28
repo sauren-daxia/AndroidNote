@@ -122,3 +122,39 @@ SimpleDraweeView imageView = new SimpleDraweeView(getActivity());
         hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
         holder.adverSldv.setHierarchy(hierarchy);
         holder.adverSldv.setImageURI(mList.get(position).getImgUrl());
+
+/**
+     * 这里使用FRESCO来获取Bitmap
+     *
+     * @param url 最好用Application的上下文避免加载时候内存泄漏
+     */
+    public void loadVR(String url) {
+
+        ImageRequest imageRequest = ImageRequestBuilder
+                .newBuilderWithSource(Uri.parse(url))
+                .setProgressiveRenderingEnabled(true)
+                .build();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, MyApp.getContext());
+        dataSource.subscribe(new BaseBitmapDataSubscriber() {
+            @Override
+            protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
+                ToastManager.getInstance().showToast("全景图加载错误");
+            }
+
+            @Override
+            public void onNewResultImpl(Bitmap bitmap) {
+                if (bitmap == null) {
+                    ToastManager.getInstance().showToast("全景图加载错误");
+                    return;
+                }
+                VrPanoramaView.Options option = new VrPanoramaView.Options();
+                option.inputType = VrPanoramaView.Options.TYPE_MONO;
+                try {
+                    ((VRHolder) vrView.getTag()).vrPhoto.loadImageFromBitmap(bitmap, option);
+                }catch (Exception e){
+                    ToastManager.getInstance().showToast("报错了");
+                }
+            }
+        }, CallerThreadExecutor.getInstance());
+    }
