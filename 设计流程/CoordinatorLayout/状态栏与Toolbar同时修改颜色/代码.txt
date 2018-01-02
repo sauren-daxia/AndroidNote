@@ -6,7 +6,10 @@
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                 float alpha = (-verticalOffset * 1f / (viewPager.getHeight() - toolbar.getHeight())) * 2;
+                float alpha = (-verticalOffset * 1f / (banner.getHeight() - toolbar.getHeight()));//这里一定是appbarlayout的子控件高度，比如banner图
+                if(alpha>1){
+                    alpha = 1;
+                }
 //                toolbar.setAlpha(alpha);
 
                 String color = "#";

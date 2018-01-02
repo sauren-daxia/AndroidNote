@@ -1,0 +1,154 @@
+public class BannerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener, View.OnTouchListener {
+    private List<MediaBean> banners = new ArrayList<>();
+    private List<View> views = new ArrayList<>();
+    private ViewPager vp;
+    private Context con;
+    private int index = 0;              //下一页的指标
+    private long lastMoveTime;          //上次移动的时间
+    private boolean isTouch = false;     //是否用手触动
+    private Disposable d;                  //RxJava发射器
+
+
+    public BannerAdapter(Context con, List<MediaBean> banners, ViewPager vp) {
+        this.banners = banners;
+        this.con = con;
+        this.vp = vp;
+        initTimer();
+        initViews();
+    }
+
+    /**
+     * 启动循环轮播
+     */
+    private void initTimer() {
+        if(banners.size()<=0){
+            return;
+        }
+        Observable.
+                interval(2000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        BannerAdapter.this.d = d;
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        index++;
+                        if (!isTouch) {
+                            vp.setCurrentItem(index, true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void initViews() {
+        vp.addOnPageChangeListener(this);
+        vp.setOnTouchListener(this);
+        for (int i = 0; i < banners.size(); i++) {
+            if ("img".equals(banners.get(i).getType()) || "rv-img".equals(banners.get(i).getType())) {
+                views.add(initPhoto(banners.get(i)));
+            } else if ("video".equals(banners.get(i).getType()) || "rv-video".equals(banners.get(i).getType())) {
+                views.add(initVideo(banners.get(i)));
+            }
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return banners.size()==0?0:Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view == object;
+    }
+
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        container.addView(views.get(position % views.size()));
+        return views.get(position % views.size());
+    }
+
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView(views.get(position % views.size()));
+    }
+
+    /**
+     * 初始化IMG类型
+     *
+     * @param
+     * @param bean
+     */
+    private View initPhoto(MediaBean bean) {
+        View rootView = LayoutInflater.from(con).inflate(R.layout.item_banner_img, null);
+        SimpleDraweeView fresco = (SimpleDraweeView) rootView.findViewById(R.id.fresco);
+        FrescoLoad.loadImg(bean.getThumb_pic(), fresco);
+        return rootView;
+    }
+
+    /**
+     * 初始化Video类型
+     *
+     * @param
+     * @param bean
+     */
+    private View initVideo(MediaBean bean) {
+        View rootView = LayoutInflater.from(con).inflate(R.layout.item_banner_video, null);
+        SimpleDraweeView fresco = (SimpleDraweeView) rootView.findViewById(R.id.fresco);
+        FrescoLoad.loadImg(bean.getThumb_pic(), fresco);
+        return rootView;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("CHEN---------- : ", "onPageSelected: index"+index);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    /**
+     * 销毁vp监听和rxjava发射器
+     */
+    public void onDestroy() {
+        vp.removeOnPageChangeListener(this);
+        if (d != null) {
+            d.dispose();
+        }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isTouch = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                isTouch = false;
+                break;
+        }
+        return false;
+    }
+}
