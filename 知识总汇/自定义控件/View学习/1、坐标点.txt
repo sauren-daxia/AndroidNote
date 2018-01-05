@@ -1,0 +1,40 @@
+一个View有四个坐标点:
+	top、left、right、bottom
+
+	top:	相对于父控件而言，是左上角的横边
+	left:	相对于父控件而言，是左上角的竖边
+	right:	相对于父控件而言，是右下角的横边
+	bottom: 相对于父控件而言，是右下角的竖边
+
+		|top			|
+		|			|
+		|			|
+	--------|------left		|
+		|   |———————————|	|
+		|   |		|	|
+		    |		|	|
+		    |		|	|
+		    |___________|	|	
+					|
+	--------------------------------|---------right		
+					|bottom
+
+	相关公式：
+		width = right - left
+		
+		height = bottom - top
+
+View的X、Y、translationX、translationY
+
+	X、Y:				在父容器里的左上角的坐标位置
+	translationX、translationY:	在父容器里的左上角的偏移量
+
+	PS：
+	1、translationX，translationY的默认值为0
+	2、在平移过程，top、left表示的依然是原始位置的信息，改变的只是X、Y、translationX、translationY的值
+
+	相关公式：
+		X = left + translationX
+
+		Y = top + translationY
+

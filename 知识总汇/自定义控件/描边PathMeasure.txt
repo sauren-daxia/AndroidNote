@@ -1,0 +1,28 @@
+只能对用Path画出来的东西进行描边
+
+1、构建
+PathMeasure measure = new PathMeasure(path , true);
+
+2、使用动画进行值的获取
+	float[] mCurrentPosition = new float[2];
+
+	ValueAnimator valueAnim = ValueAnimator.ofFloat(0,measure.length());
+	//减速，可要可不要
+	valueAnim.setInterpolator(new DecelerateInterpolator());
+	valueAnim.setDuration(3000);
+	valueAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                // 获取当前Path上指定距离的坐标点到mCurrentPosition后供onDraw()方法使用
+                mPathMeasure.getPosTan(value, mCurrentPosition, null);
+                invalidate();
+            }
+        });
+        valueAnimator.start();
+
+3、在OnDraw中不断绘制
+	canvas.drawCircle(mCurrentPosition[0],mCurrentPosition[1],10,point);
+
+这样画出来的一个原点就会围绕PathMeasure构造时的path路径走一圈。
+但是Path就算没闭环也会认为Path闭环的走一圈，最后到初始点。

@@ -1,0 +1,135 @@
+BlurMaskFilter :模糊效果
+
+构造：
+------------------------
+BlurMaskFilter m = new BlurMaskFilter(float , BlurMaskFilter.Blur.NORMAL);
+
+属性：
+-----------------------
+BlurMaskFilter.Blur.NORMAL：内外模糊
+
+BlurMaskFilter.Blur.OUTER：外部模糊
+
+BlurMaskFilter.Blur.INNER：内部模糊
+
+BlurMaskFilter.Blur.SOLID：内部加粗，外部模糊
+
+EmbossMaskFilter : 浮雕
+构造：
+EmbossMaskFilter emboss=new EmbossMaskFilter(float[] direction, float ambient, float specular, float blurRadius); 
+
+属性：
+direction：浮点型数组，用于控制x,y,z轴的光源方向
+ambient：设置环境光亮度，0到1之间
+specular：镜面反射系数
+blurRadius：模糊半径
+
+
+Paint（画笔）类：
+构造
+-------------------------
+Paint paint = new Paint();
+
+方法：
+-------------------------
+setColor(0xff33778855)		//设置画笔颜色
+
+setAntiAlias(true)		//设置抗锯齿
+
+setStyle()			//设置画笔空心或其他，FILL：实心。 FILL_OR_STROKE：同时实心和空心。 STROKE：空心。
+
+setStrokeWidth()		//设置画笔宽度
+
+setAlpha()			//设置透明度
+
+void setDither(boolean dither)	//设置是否防抖动，true
+
+void setFilterBitmap(boolean filter)	//图像过滤，true
+
+setMaskFilter(MaskFilter mm)	
+
+void		setStrokeCap(Paint.Cap cap)	//设置画笔开始时和离开是绘制的样式，Cap.BUTT,Cap.ROUND,Cap.SQUARE
+
+void		setStrokeJoin(Paint.Join join)	//设置画笔连接处的样式，Join.MITER,Join.ROUND,Join.BEVEL
+
+void		setStrokeMiter(float miter)	//设置画笔倾斜度
+
+void		setShadowLayer(float radius, float dx, float dy, int shadowColor) //设置阴影层和颜色，譬如绘制一个圆，在圆周给一个阴影扩散效果就可用它。
+
+void		clearShadowLayer()		//清除阴影，设置阴影必须关闭硬件加速,  setLayerType(LAYER_TYPE_SOFTWARE, null);
+
+float		getFontSpacing()		//获取字符行间距。
+
+float		getLetterSpacing()		//获取字符间距
+
+void		setLetterSpacing(float letterSpacing)	//设置字符间距
+
+boolean		isUnderlineText()		//判断是否有下划线
+
+void		setUnderlineText(boolean underlineText) //设置下划线
+
+boolean		isStrikeThruText()		//判断是否有删除线
+
+void		setStrikeThruText(boolean strikeThruText)	//设置删除线
+
+float		getTextSize()			//获取字符大小
+
+void		setTextSize(float textSize)	//设置字符大小，单位px,TextView设置的大小是sp
+
+Typeface	getTypeface()			//获取字体样式.
+
+Typeface	setTypeface(Typeface typeface)  //设置字体样式:BOLD(加粗)、BOLD_ITALIC(加粗并倾斜)、ITALIC(倾斜)、NORMAL(正常)，我们也可以通过Typeface类来自定义个性化字体。
+
+boolean hasGlyph(String string)			//确定Paint设置的Typeface是否支持该字符串。
+
+float getTextSkewX()				//获取文字倾斜度
+
+void setTextSkewX(float skewX)			//设置文字倾斜，参数没有具体范围，官方推荐值为-0.25，值为负则右倾，为正则左倾，默认值为0。
+
+float getTextScaleX()				//获取文本X轴缩放
+
+void setTextScaleX(float scaleX)		//设置文本X轴缩放,默认为1，当值大于1会沿X轴水平放大文本，当值小于1会沿X轴水平缩小文本，不仅会改变文本宽度，还会拉伸或压缩字符。
+
+Paint.Align getTextAlign()			//获取文本对齐方式
+
+void setTextAlign(Paint.Align align)		//设置文本对齐方式,取值为CENTER、LEFT、RIGHT，也就是文字绘制是左边对齐、右边还是局中的。
+
+$$$计算指定参数长度能显示多少个字符，同时可以获取指定参数下可显示字符的真实长度$$$
+int breakText(char[] text, int index, int count, float maxWidth, float[] measuredWidth) 
+
+int breakText(CharSequence text, int start, int end, boolean measureForwards, float maxWidth, float[] measuredWidth) 
+
+int breakText(String text, boolean measureForwards, float maxWidth, float[] measuredWidth) 
+$$$----$$$
+
+
+
+
+
+
+
+
+Canvas（画布）类：
+---------------------------
+绘制直线：canvas.drawLine(float startX, float startY, float stopX, float stopY, Paint paint);
+
+	
+
+绘制矩形：
+	canvas.drawRect(float left, float top, float right, float bottom, Paint paint);
+	React react = new React(float left, float top, float right, float bottom)	//矩阵对象
+			
+
+
+绘制圆形：canvas.drawCircle(float cx, float cy, float radius, Paint paint);
+
+绘制弧形：canvas.drawArc(RectF oval, float startAngle, float sweepAngle, boolean useCenter, Paint paint)
+
+绘制字符：canvas.drawText(String text, float x, float y, Paint paint);
+
+	//设置字体基准线
+
+	FontMetrics fontMetrics = mPaint.getFontMetrics();
+	baseline = (oval.bottom + oval.top - fontMetrics.bottom - fontMetrics.top) / 2;		
+
+绘制图形：canvas.drawBirmap(Bitmap bitmap, float left, float top, Paint paint);

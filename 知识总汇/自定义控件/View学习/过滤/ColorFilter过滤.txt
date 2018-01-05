@@ -1,0 +1,47 @@
+使用Paint方法，进行过滤
+	paint.setColorFilter(ColorFilter);
+
+ColorFilter有三个子类：
+
+	ColorMatrix(色彩矩阵颜色过滤器):
+		ColorMatrix colorMatrix = new ColorMatrix(new float[]{  
+			  1, 0, 0, 0, 0,		//R
+			  0, 1, 0, 0, 0,		//G
+			  0, 0, 1, 0, 0,		//B
+			  0, 0, 0, 1, 0,		//A
+			}); 
+	
+
+	LightingColorFilter(光照颜色过滤器)
+		LightingColorFilter lightingColorFilter = new LightingColorFilter(0xFFFF00FF, 0x00000000);
+
+		//使用16进制为单位，第一个参数是颜色倍增，第二个参数是颜色添加
+
+	PorterDuffColorFilter(混合模式)
+		PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(Color.RED, PorterDuff.Mode.DARKEN);
+
+		//就是指将两种颜色混合，第一个参数是需要混合的颜色，第二个参数是混合的模式
+
+		混合模式种类：
+		1.PorterDuff.Mode.CLEAR		2.PorterDuff.Mode.SRC		3.PorterDuff.Mode.DST
+		所绘制不会提交到画布上。	显示上层绘制图片		显示下层绘制图片
+
+		4.PorterDuff.Mode.SRC_OVER	5.PorterDuff.Mode.DST_OVER	6.PorterDuff.Mode.SRC_IN	
+		正常绘制显示，上下层绘制叠盖。	上下层都显示。下层居上显示。	取两层绘制交集。显示上层。
+		
+		7.PorterDuff.Mode.DST_IN	8.PorterDuff.Mode.SRC_OUT	9.PorterDuff.Mode.DST_OUT
+		取两层绘制交集。显示下层。	取上层绘制非交集部分。		取下层绘制非交集部分。
+
+		10.PorterDuff.Mode.SRC_ATOP	11.PorterDuff.Mode.DST_ATOP	12.PorterDuff.Mode.XOR
+		取下层非交集部分与上层交集部分	取上层非交集部分与下层交集部分	异或：去除两图层交集部分
+			
+		13.PorterDuff.Mode.DARKEN	    14.PorterDuff.Mode.LIGHTEN		15.PorterDuff.Mode.MULTIPLY
+		取两图层全部区域，交集部分颜色加深  取两图层全部，点亮交集部分颜色	取两图层交集部分叠加后颜色
+			
+		16.PorterDuff.Mode.SCREEN
+		取两图层全部区域，交集部分变为透明色
+			
+
+			
+
+			

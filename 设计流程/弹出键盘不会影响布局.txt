@@ -1,3 +1,0 @@
-1、在androidmanifest.xml中配置Activity
-	android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan"
