@@ -1,0 +1,1 @@
+1、封装一个List类型的Activity

@@ -1,3 +1,25 @@
+package com.nanbo.vocationalschools.adapter;
+
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.View;
+
+import com.chenzj.baselibrary.base.views.dialog.PhotoSelectDialog;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.nanbo.vocationalschools.R;
+import com.nanbo.vocationalschools.entity.resulte.UploadPhotoBean;
+import com.nanbo.vocationalschools.utils.FrescoLoad;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
+
+import java.util.List;
+
+/**
+ * Created by Jason Chen on 2017/12/11.
+ * 上传图片专用
+ */
+
 public class UploadPhotoAdapter extends CommonAdapter<UploadPhotoBean> {
     private PhotoSelectDialog dialog;
     private int currentPosotion = 0;
@@ -10,8 +32,9 @@ public class UploadPhotoAdapter extends CommonAdapter<UploadPhotoBean> {
     @Override
     protected void convert(ViewHolder holder, UploadPhotoBean bean, final int position) {
         SimpleDraweeView fresco = (SimpleDraweeView) holder.getView(R.id.fresco);
+        holder.setText(R.id.tv_size, "添加图片(" + (mDatas.size() - 1) + "/3)");
         if (TextUtils.isEmpty(bean.getUrl())) {
-            FrescoLoad.loadImg("", fresco);
+            FrescoLoad.loadImg("https://developer.android.com/static/images/footer/logo-twitter.svg", fresco);//非要加一张错误的图片才可以清空上次选择的
             holder.setVisible(R.id.llty_defalut, true);
             holder.setVisible(R.id.iv_del, false);
         } else {
@@ -20,6 +43,7 @@ public class UploadPhotoAdapter extends CommonAdapter<UploadPhotoBean> {
             holder.setVisible(R.id.llty_defalut, false);
             holder.setVisible(R.id.iv_del, true);
         }
+
 
         holder.setOnClickListener(R.id.iv_del, new View.OnClickListener() {
             @Override
@@ -35,10 +59,11 @@ public class UploadPhotoAdapter extends CommonAdapter<UploadPhotoBean> {
                 //添加图片
                 currentPosotion = position;
                 if (mContext instanceof AppCompatActivity && !((AppCompatActivity) mContext).isFinishing()) {
-                    dialog.show(((AppCompatActivity) mContext).getSupportFragmentManager(), "dialog");
+                    dialog.show(((AppCompatActivity) mContext).getSupportFragmentManager(), 3);
                 }
             }
         });
+
     }
 
     /**
@@ -65,24 +90,13 @@ public class UploadPhotoAdapter extends CommonAdapter<UploadPhotoBean> {
             if (currentPosotion < 2) {
                 mDatas.add(new UploadPhotoBean());
             }
+            currentPosotion++;
+            if (currentPosotion == mDatas.size()) {
+                currentPosotion = mDatas.size() - 1;
+            }
         } else {
             mDatas.set(currentPosotion, new UploadPhotoBean(url));
         }
-        notifyDataSetChanged();
-    }
-
-    /**
-     * 存储本地图片和网路图片，但只加载本地图片
-     */
-    public void setPhoto(String url) {
-        UploadPhotoBean photoBean = new UploadPhotoBean();
-        photoBean.setUrl(url);
-        mDatas.set(currentPosotion, photoBean);
-        if (mDatas.size() < 3 && mDatas.size() - 1 == currentPosotion) {
-            UploadPhotoBean bean = new UploadPhotoBean();
-            mDatas.add(bean);
-        }
-        dialog.dismiss();
         notifyDataSetChanged();
     }
 }
