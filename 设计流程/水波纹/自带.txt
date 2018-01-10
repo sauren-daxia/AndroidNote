@@ -6,3 +6,7 @@ android:foreground="?android:selectableItemBackgroundBorderless"
 非button需要加
 android:clickable="true"
 android:focusable="true"
+
+button需要加，掩饰默认的阴影，image不需要加
+style="?android:attr/borderlessButtonStyle"
+

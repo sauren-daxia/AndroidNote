@@ -1,0 +1,10 @@
+使用ConstraintSet的注意事项：
+1、约束后必须再次设置宽高，否则为0,0
+
+set.constrainWidth(contentTv.getId(),0);
+set.constrainHeight(contentTv.getId(),ConstraintSet.WRAP_CONTENT);
+
+2、间距只能对START和END使用，其他的TOP、BOTTOM等无用
+
+set.setMargin(contentTv.getId(),ConstraintSet.START, DisplayUtil.dip2px(this,5));
+set.setMargin(contentTv.getId(),ConstraintSet.END, DisplayUtil.dip2px(this,10));

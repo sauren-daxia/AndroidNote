@@ -1,0 +1,117 @@
+文档：http://mp.weixin.qq.com/s/vI-fPaNoJ7ZBlZcMkEGdLQ
+
+
+app:layout_constraintBottom_toBottomOf="parent"		
+
+			//表示控件的底部与容器或者某个控件的底部对齐，如果约束父容器与layout_alignParentBottom类似，如果约束子控件与layout_alignBottom类似
+
+app:layout_constraintLeft_toLeftOf="parent"		
+
+			//表示控件的左边与容器或某个控件的左边对齐，如果约束父容器与layout_alignParentLeft类似，如果约束子控件与layout_alignLeft类似
+
+app:layout_constraintRight_toRightOf="parent"		
+
+			//表示控件的右边与容器或某个控件的右边对齐，如果约束父容器与layout_alignParentRight类似，如果约束子控件与layout_alignRight类似
+
+app:layout_constraintTop_toTopOf="parent"		
+
+			//表示控件的顶部与容器或某个控件的顶部对齐，如果约束父容器与layout_alignParentTop类似，如果约束子控件与layout_alignTop类似
+
+app:layout_constraintLeft_toRightOf="@+id/btn"
+
+			//表示控件的左边在某个控件的右边，约束子控件与layout_toRighttOf类似，不建议使用parent
+
+app:layout_constraintRight_toLeftOf="@+id/but"
+			
+			//表示控件的右边在某个控件的左边，约束子控件与layout_toLefttOf类似，不建议使用parent
+
+app:layout_constraintTop_toBottomOf="@id/but"
+	
+			//表示控件的顶部在某个控件的底部，约束子控件与layout_below类似，不建议使用parent
+
+app:layout_constraintBottom_toTopOf="@id/but"
+
+			//表示控件的底部在某个控件的顶部，约束子控件与layout_above类似，不建议使用parent
+
+app:layout_constraintBaseline_toBaselineOf="@id/tv_1"
+	
+			//表示控件的字体基准线与某个控件的字体基准线对齐
+
+//偏移百分比
+app:layout_constraintHorizontal_bias="0.0"
+
+			//表示控件在水平位置移动多少百分点，水平位置必须先对该控件的左边和右边进行约束，值为0f-1f
+
+app:layout_constraintVertical_bias="0.0"
+
+			//表示控件在垂直位置移动多少百分点，水平位置必须先对该控件的顶部和底部进行约束，值为0f-1f
+
+//隐藏
+android:visibility="gone"  
+			
+			//这里的隐藏和其他容器隐藏不一样，这里隐藏的话是将控件的宽高设为0，margin为0
+			//所以如果某个控件约束了当前控件，当该控件隐藏时整体布局并不会改变太大
+
+边距
+android:layout_marginLeft="0dp"
+
+android:layout_marginTop="0dp"
+
+android:layout_marginRight="0dp"
+
+android:layout_marginBottom="0dp"
+
+//隐藏边距，当依赖约束的控件隐藏后
+layout_goneMarginLeft="0dp"
+layout_goneMarginTop="0dp"
+layout_goneMarginRight="0dp"
+layout_goneMarginBottom="0dp"
+
+//宽高比例
+app:layout_constraintDimensionRatio="2:1"		
+
+			//设置宽高比例，前提必须宽或高，或者两者都为0dp，必须约束topTotop,BottomToBottom或leftToleft,rightToright
+
+//权重模式
+app:layout_constraintHorizontal_chainStyle="spread_inside"     
+				
+			//1、spread		//均匀分布
+			  2、spread_inside      //左右靠边，中间占最大
+			  3、packed		//往中间挤
+//权重
+app:layout_constraintHorizontal_weight	
+app:layout_constraintVertical_weight		
+
+			//水平方向权重或水平方向权重，前提条件：
+						
+						1、必须先约束
+						父←←←←控件1←←←←控件2→→→→控件3→→→→父
+						或者
+						控件1←←←←控件2→→→→控件3
+						
+						2、必须为控件1设置权重模式
+
+						3、控件1,2,3，都需要设置权重比
+
+						PS:想均分每个控件宽高的话就需要设置为0dp,spread或spread_inside模式均可
+
+						PS:packed模式下，可以控制偏移百分比，但宽高不可为0dp,并且也只能设置控件1
+
+//wrap_content不受约束
+app:layout_constrainedWidth=”true|false”
+app:layout_constrainedHeight=”true|false”
+
+
+问题思考：
+1、
+	当控件2依赖控件1的时候，控件1如果有固定宽高，那么可以在控件2设置goneMargin的值为控件1的宽高，这样当控件1被隐藏就不会改变整体布局位置
+	可是如果控件1的宽高为match_parent或者为wrap_content的时候，就无法这样操作
+
+2、
+	marginTop只能使用在被约束过的控件里，如果当前控件没有被约束是无法使用marginTop的，其他的margin可以使用
+
+	答：假如想要marginLeft的话，left的方向必须要有约束才能margin，不然无法识别
+
+3、	absolutY和absolutX不能在约束后使用
+	
+	答：这本来就是控件的绝对坐标，不能同时约束又使用绝对坐标，二选一,约束了左右就不能使用absoluteX，约束了上下就不能使用absoluteY

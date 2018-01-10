@@ -1,0 +1,43 @@
+1、在onCreate(){
+	setSupportActionBar(toolbar);
+
+	   StatusUtil.immersive(this);
+        StatusUtil.setPaddingSmart(this, toolbar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                float alpha = (-verticalOffset * 1f / (banner.getHeight() - toolbar.getHeight()));//这里一定是appbarlayout的子控件高度，比如banner图
+                if(alpha>1){
+                    alpha = 1;
+                }
+//                toolbar.setAlpha(alpha);
+
+                String color = "#";
+                String a = Integer.toHexString((int) (255 * alpha));
+                if(a.length()<=1){
+                    a=0+a;
+                }
+                color+=a;
+                color+=Integer.toHexString(Integer.parseInt("8fd263",16));
+
+                toolbar.setBackgroundColor(Color.parseColor(color));
+//                toolbar.getBackground().mutate().setAlpha(verticalOffset);
+            }
+        });
+}
+
+注意事项：
+	如果在XML中不为CollapsingToolbarLayout设置
+		app:contentScrim="@color/transparent"
+                app:statusBarScrim="@color/transparent"
+	
+	会造成状态栏的颜色在还没改变的时候先变成半透明或白色或黑色等，体验不好
+
+具体实现
+	1、将同样大小的Toolbar放到CollapsingToolbarLayout中，可以做到占位，防止TabLayout滑过头
+	
+	2、将具体操作的Toolbar放到CoordinatorLayout中，并设置    android:fitsSystemWindows="true"，可让Toolbar穿透状态栏
+
+	3、使用工具类可以生成一个与状态栏相同的一个view，并且会随着toolbar颜色一起变动
+
+	4、利用APPbarlayout计算滚动可实现alpha的计算

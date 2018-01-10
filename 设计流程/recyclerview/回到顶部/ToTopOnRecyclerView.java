@@ -22,17 +22,20 @@ public class ToTopOnRecyclerView implements View.OnClickListener {
     }
     public void init(){
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int oldX,oldY,mScrollX,mScrollY;
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(layoutManager.findFirstVisibleItemPosition() < 1 && floatView.getVisibility() == View.VISIBLE){
-                    ToTopBehavior.scaleShow(floatView);
-                    return;
+                if (mScrollX != dx || mScrollY != dy) {
+                    int oldX = mScrollX;
+                    int oldY = mScrollY;
+                    mScrollX = dx;
+                    mScrollY = dy;
                 }
-                if(dy > 0 && floatView.getVisibility() == View.VISIBLE){
-                    ToTopBehavior.scaleShow(floatView);
-                }else if(dy < 0 && floatView.getVisibility() != View.VISIBLE){
-                    ToTopBehavior.scaleHide(floatView);
+                if (oldY < mScrollY && floatView.getVisibility() != View.VISIBLE) {
+                    ScaleAnimUtils.scaleShow(floatView);
+                } else if (oldY > mScrollY && floatView.getVisibility() == View.VISIBLE) {
+                    ScaleAnimUtils.scaleHide(floatView);
                 }
             }
         });

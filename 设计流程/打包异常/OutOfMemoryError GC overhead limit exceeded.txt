@@ -1,0 +1,6 @@
+在gradle里
+android{
+dexOptions {
+        javaMaxHeapSize "4g"
+    }
+}
