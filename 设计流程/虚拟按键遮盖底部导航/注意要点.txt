@@ -1,0 +1,10 @@
+1、第一层容器一定要是Constraintlayout
+
+2、activity的theme不能加的属性
+
+<item name="android:windowTranslucentNavigation">true</item>
+
+3、使用SystemUIVisibility.setMarginNavigationBar方法，把一切置底的控件都用上这个方法，避免被覆盖
+这个方法可用可不用，看具体效果
+
+4、如果又想适配虚拟按键，又想穿透状态栏，就加一个APPbarlayout，然后设置fitssystemwindows = true
