@@ -1,6 +1,9 @@
-package com.dinghong.studyviewdemo1.view;
+package com.nanbo.vocationalschools.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
@@ -12,6 +15,7 @@ import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,8 +35,12 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
     private View emptyView;         //空视图布局
     private View loadingView;       //加载中布局
     private View netErrorView;      //网络异常布局
+    private View requestErrorView;
+    private boolean isEnabledShow = true;  //是否启用
+    private boolean isShow;             //是否显示错误布局
 
     private Context con;
+    private Build build;
 
     //----------------处理嵌套滑动相关，完全不用理会------------------------
     private NestedScrollingParentHelper mParentHelper;  //嵌套滑动父类帮助类
@@ -216,7 +224,7 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
     }
 
     public Build Build() {
-        return new Build();
+        return build = new Build();
     }
 
 
@@ -226,6 +234,12 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
      * @param view
      */
     private void show(View view) {
+        if (view == null) {
+            return;
+        }
+        if (isEnabledShow == false) {
+            return;
+        }
         if (statusView != null) {
             removeView(statusView);
         }
@@ -249,12 +263,54 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
                 getChildAt(i).setVisibility(GONE);
             }
         }
+        isShow = true;
+        showAnim();
+    }
+
+    private void showAnim() {
+        if (build != null) {
+            //播放loadingAnim
+            if (loadingView != null && statusView.getId() == loadingView.getId()) {
+                if (build.getLoadingAnimIv() != null && build.getLoadingAnimIv().getBackground() != null) {
+                    ((AnimationDrawable) build.getLoadingAnimIv().getBackground()).start();
+                }
+            }
+            else if (netErrorView != null && statusView.getId() == netErrorView.getId()) {
+                if (build.getLoadingAnimIv() != null && build.getNetErrorAnimIv().getBackground() != null) {
+                    ((AnimationDrawable) build.getNetErrorAnimIv().getBackground()).start();
+                }
+            }
+
+        }
+    }
+
+    private void cancalAnim() {
+        if (build != null) {
+            //播放loadingAnim
+            if (loadingView != null && statusView.getId() == loadingView.getId()) {
+                if (build.getLoadingAnimIv() != null && build.getLoadingAnimIv().getBackground() != null) {
+                    if (((AnimationDrawable) build.getLoadingAnimIv().getBackground()).isRunning()) {
+                        ((AnimationDrawable) build.getLoadingAnimIv().getBackground()).stop();
+                    }
+                }
+            }
+            else if (netErrorView != null && statusView.getId() == netErrorView.getId()) {
+                if (build.getLoadingAnimIv() != null && build.getNetErrorAnimIv().getBackground() != null) {
+                    if (((AnimationDrawable) build.getNetErrorAnimIv().getBackground()).isRunning()) {
+                        ((AnimationDrawable) build.getNetErrorAnimIv().getBackground()).stop();
+                    }
+                }
+            }
+        }
     }
 
     /**
      * 隐藏布局，如果当前子view是状态布局则隐藏并且移除，否则显示其他子view
      */
     public void hide() {
+        if (isEnabledShow == false) {
+            return;
+        }
         if (statusView == null) {
             return;
         }
@@ -265,12 +321,46 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
                 getChildAt(i).setVisibility(VISIBLE);
             }
         }
+        cancalAnim();
         removeView(statusView);
         statusView = null;
+        isShow = false;
+
     }
+
+    public void hideAnim() {
+        if (isEnabledShow == false) {
+            return;
+        }
+        if (statusView == null) {
+            return;
+        }
+        if (statusView.getAnimation() != null) {
+            statusView.getAnimation().cancel();
+        }
+        statusView
+                .animate()
+                .alpha(0f)
+                .setDuration(200)
+                .setInterpolator(new FastOutLinearInInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        hide();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        super.onAnimationCancel(animation);
+                        hide();
+                    }
+                });
+    }
+
 
     /**
      * 找控件
+     *
      * @param id
      * @param <T>
      * @return
@@ -297,10 +387,43 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
     }
 
     /**
+     * 自动判断显示网络错误布局
+     */
+    public void showNetErrorLayout(Exception e) {
+        boolean isNetError = false;
+        if (e.getMessage().contains("SocketException")) {
+            isNetError = true;
+        } else if (e.getMessage().contains("ConnectException")) {
+            isNetError = true;
+        } else if (e.getMessage().contains("EOFException")) {
+            isNetError = true;
+        } else if (e.getMessage().contains("analysisExcetpion")) {
+            isNetError = true;
+        } else if (e.getMessage().contains("UnknownHostException")) {
+            isNetError = true;
+        } else {
+            isNetError = false;
+        }
+        if (isNetError) {
+            show(netErrorView);
+        } else {
+            //TODO 此处需要显示一个未知错误
+        }
+    }
+
+    /**
      * 显示加载布局
      */
     public void showLoadingLayout() {
         show(loadingView);
+    }
+
+
+    /**
+     * 显示请求错误页面
+     */
+    public void showRequestErrorLayout() {
+        show(requestErrorView);
     }
 
     /**
@@ -312,11 +435,38 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
         show(view);
     }
 
+    /**
+     * 获取是否被禁用了
+     *
+     * @return
+     */
+    public boolean isEnabledShow() {
+        return isEnabledShow;
+    }
+
+    /**
+     * 设置是否禁用
+     *
+     * @param enabledShow
+     */
+    public void setEnabledShow(boolean enabledShow) {
+        isEnabledShow = enabledShow;
+    }
+
+    /**
+     * 获取是否显示
+     *
+     * @return
+     */
+    public boolean isShow() {
+        return isShow;
+    }
 
     public class Build {
         private int emptyLayoutId;      //空视图布局
         private int loadingLayoutId;    //加载中布局
         private int netErrorLayoutId;   //网络异常布局
+        private int requestErrorLayoutId;//请求错误布局
 
         private int emptyTipsId;        //空视图提示语
         private int emptyImageId;       //空视图图片
@@ -326,6 +476,21 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
         private int netErrorTipsId;     //网络状态错误提示语
         private int netErrorLoadAgainId;//网络状态错误重新加载
         private String netErrorTips;    //提示语
+        private int netErrorImageId;    //网络错误图片控件
+        private int netErrorAnimRes;    //网络错误图片资源
+
+
+        private int requestErrorTipsId;    //请求错误提示控件
+        private String requestErrorTips;    //请求错误提示语
+
+        private int loadingImageId;          //显示loading的控件
+        private int loadingAnimRes;         //帧动画
+        private int loadingTipsId;          //loading提示控件
+        private String loadingTips;         //loading提示语
+
+        private ImageView loadingAnimIv;    //loading控件
+        private ImageView netErrorAnimIv;   //网络错误控件
+
 
         private ClickAdapter clickAdapter;   //点击事件
 
@@ -340,7 +505,7 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
          * @param layoutID 显示空视图的布局ID
          * @return
          */
-        public Build setEmptyLayout(@LayoutRes int layoutID) {
+        public Build setEmptyLayoutId(@LayoutRes int layoutID) {
             this.emptyLayoutId = layoutID;
             return this;
         }
@@ -413,7 +578,74 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
         }
 
         /**
+         * 设置请求错误布局
+         *
+         * @param layoutId 需要显示请求错误布局的ID
+         * @return
+         */
+        public Build setRequestError(@LayoutRes int layoutId) {
+            this.requestErrorLayoutId = layoutId;
+            return this;
+        }
+
+        /**
+         * 设置网络错误提示语
+         *
+         * @param requestErrorTipsId 需要显示提示语的控件ID
+         * @param text               提示语
+         * @return
+         */
+        public Build setRequestErrorTipsId(@IdRes int requestErrorTipsId, String text) {
+            this.requestErrorTipsId = requestErrorTipsId;
+            this.requestErrorTips = text;
+            return this;
+        }
+
+
+        /**
+         * 设置加载中的控件
+         *
+         * @param loadingAnimId  需要显示加载中动画的控件
+         * @param loadingAnimRes 加载中动画资源
+         * @return
+         */
+        public Build setLoadingAnimId(@IdRes int loadingAnimId, @DrawableRes int loadingAnimRes) {
+            this.loadingImageId = loadingAnimId;
+            this.loadingAnimRes = loadingAnimRes;
+            return this;
+        }
+
+
+        /**
+         * 设置加载中提示语
+         *
+         * @param loadingTipsId 需要显示加载中提示语的控件ID
+         * @param text          提示语
+         * @return
+         */
+        public Build setLoadingTipsId(@IdRes int loadingTipsId, String text) {
+            this.loadingTipsId = requestErrorTipsId;
+            this.loadingTips = text;
+            return this;
+        }
+
+        /**
+         * 设置网络错误图片的控件
+         *
+         * @param netErrorImageId  需要显示加载中动画的控件
+         * @param netErrorAnimRes 加载中动画资源
+         * @return
+         */
+        public Build setNetErrorAnimId(@IdRes int netErrorImageId, @DrawableRes int netErrorAnimRes) {
+            this.netErrorImageId = netErrorImageId;
+            this.netErrorAnimRes = netErrorAnimRes;
+            return this;
+        }
+
+
+        /**
          * 设置点击事件
+         *
          * @param clickAdapter
          * @return
          */
@@ -426,6 +658,23 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
             initNetErrorLayout();
             initEmptyLayout();
             initLoadingLayout();
+            initRequestErrorLayout();
+        }
+
+        /**
+         * 初始化请求错误视图
+         */
+        private void initRequestErrorLayout() {
+            if (requestErrorLayoutId != 0) {
+                requestErrorView = LayoutInflater.from(getContext()).inflate(requestErrorLayoutId, null);
+                //获取网络错误提示语控件并设置提示语
+                if (requestErrorView != null && requestErrorTipsId != 0) {
+                    View tipsView = requestErrorView.findViewById(requestErrorTipsId);
+                    if (tipsView != null && tipsView instanceof TextView) {
+                        ((TextView) tipsView).setText(requestErrorTips);
+                    }
+                }
+            }
         }
 
 
@@ -436,6 +685,21 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
             if (loadingLayoutId != 0) {
                 loadingView = LayoutInflater.from(getContext()).inflate(loadingLayoutId, null);
 
+                //获取网络错误提示语控件并设置提示语
+                if (loadingView != null && loadingTipsId != 0) {
+                    View tipsView = loadingView.findViewById(loadingTipsId);
+                    if (tipsView != null && tipsView instanceof TextView) {
+                        ((TextView) tipsView).setText(loadingTips);
+                    }
+                }
+
+                //获取空视图图片控件并设置图片
+                if (loadingView != null && loadingImageId != 0) {
+                    loadingAnimIv = loadingView.findViewById(loadingImageId);
+                    if (loadingAnimIv != null && loadingAnimIv instanceof ImageView) {
+                        ((ImageView) loadingAnimIv).setBackgroundResource(loadingAnimRes);
+                    }
+                }
             }
         }
 
@@ -466,6 +730,13 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
                     }
                 }
 
+                //获取空视图图片控件并设置图片
+                if (netErrorView != null && netErrorImageId != 0) {
+                    netErrorAnimIv = netErrorView.findViewById(netErrorImageId);
+                    if (netErrorAnimIv != null && netErrorAnimIv instanceof ImageView) {
+                        ((ImageView) netErrorAnimIv).setBackgroundResource(netErrorAnimRes);
+                    }
+                }
             }
         }
 
@@ -488,10 +759,28 @@ public class StatusLayout extends RelativeLayout implements NestedScrollingParen
                 if (emptyView != null && emptyImageId != 0) {
                     View imgView = emptyView.findViewById(emptyImageId);
                     if (imgView != null && imgView instanceof ImageView) {
-                        imgView.setBackground(con.getDrawable(emptiImage));
+                        ((ImageView) imgView).setImageResource(emptiImage);
                     }
                 }
             }
+        }
+
+        /**
+         * 获取加载中动画控件
+         *
+         * @return
+         */
+        public ImageView getLoadingAnimIv() {
+            return loadingAnimIv;
+        }
+
+        /**
+         * 获取网络错误动画控件
+         *
+         * @return
+         */
+        public ImageView getNetErrorAnimIv() {
+            return netErrorAnimIv;
         }
     }
 
