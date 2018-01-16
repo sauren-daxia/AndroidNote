@@ -1,0 +1,66 @@
+1、数据必须申明在第一层容器之前
+<layout>
+	<data>
+	</data>
+	<RelativeLayout>
+	</RelativeLayout>
+</layout>
+
+2、自定义DataBinding的类名和生成路径
+	1)第一种
+	<layout class="CustomDataBiding">		//未知效果
+	</layout>
+
+	2)第二种
+	<layout class=".CustomDataBinding">		//未知效果
+	</data>
+
+2、数据引用
+	1)第一种
+	<data>
+		<variable
+			name="userBean"						//变量名,变量名不能包含下划线_字符
+			type="com.example.chen.vr_demo.bean.UserBean"		//类全路径
+		/>
+	</data>
+	
+	2)第二种,假如在data里面使用了同一个包下面的多个类：
+	<data>
+		<import type="com.example.chen.vr_demo.bean"/>		//建议还是用第一种方式
+		<variable name="userBean" type="UserBean"/>
+		<variable name="moneyBean" type="MoneyBean"/>		
+	</data>
+
+3、include引用数据
+	1)需要先在include文件里先定义传递的变量名
+		<layout>
+			<data>
+				<variable
+					name="user"		//这里先定义变量名，然后传过来的时候需要指定这个变量名传递
+					type="com.example.chen.vr_demo.bean.UserBean"/>		//定义类型
+				<varialbe
+					name="userName"
+					type="String"/>
+			</data>
+		</layout>
+	
+	2)在引用的页面传递
+		<layout>
+			<data>
+				<variable
+					name="userBean"
+					type="com.example.chen.vr_demo.bean.UserBean"/>
+			</data>
+			<RelativeLayout>
+				<include
+					layout="@layout/include_mvvm"
+					bind:user="@{userBean}"			//使用bind:<变量名>传递数据，这个变量名就是include定义的数据类型的变量名
+					bind:userName="@{userBean.name}"	//bind注意需要使用apk/res-auto命名空间
+					/>
+			</RelativeLayout>
+		</layout>
+
+3、使用数据
+	<TextView
+		android:text="@{userBean.name}"			//实体类里的变量get方法直接忽略，变成public方式调用即可
+	/>
