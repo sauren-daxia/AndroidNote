@@ -24,7 +24,6 @@ bind(View root)
 
 bind(View root, DataBindingComponent bindingComponent)
 
-  
 // 布局
 inflate(LayoutInflater inflater, int layoutId, ViewGroup parent, boolean attachToParent, DataBindingComponent bindingComponent) // 组件
 
