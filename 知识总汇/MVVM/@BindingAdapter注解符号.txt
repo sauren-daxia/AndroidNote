@@ -1,0 +1,50 @@
+@BindingAdapter
+	由于不能识别每个控件的属性，所以需要做一个适配，做法如下
+
+	Java:
+		定义一个类，在定义一个静态方法，然后在方法里处理
+		public claas CustomAdapter{
+			@BindingAdapter(value = "imageUri" , requireAll = false)
+			public void static loadImg(SimpleDraweeView fresco,String url){
+				if(TextUtils.isEmpty(url)){
+					return;
+				}
+				fresco.setImageUri(url);
+			}
+		}
+
+	kotlin:
+		定义一个kt文件，不需要写在类里，直接写方法
+		@BindingAdapter(value = "custom:imageUri" , requireAll = false)
+		fun loadImg(fresco : SimpleDraweeView , url : String){
+			if(TextUtils.isEmpty(url)){
+				return
+			}
+			fresco.setImageUri(url)
+		}
+
+
+	xml使用
+		<SimpleDraweeView
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			custom:imageUri="@{user.headimg}"
+		>
+
+	代码说明：
+		@BindingAdapter(value)		//value的值表示在xml的属性，可一个或多个
+						//单个写法(value = "imageUri") ，多个写法(value = {"imageUri,error"})
+						//多个属性是分开写，而不是一个属性传两个值，如：
+						//custom:imageUrl , custom:error
+						//参数类型不知道是不是一样，所以暂时不建议多个属性一起写
+
+		@BindingAdapter(requireAll)	//requireAll默认为true，要求所有参数都需要写，
+						//如果为false，就需要在自定意义的方法里面判断空，一定要判断!!!!!!!!
+
+		fun loadImage()			//定义的方法第一个参数必须是控件，第二个是参数类型，
+						//不确定能定义几个，最好是第一个是控件第二个是值
+
+		custom:imageUri			//在定义value值的时候如果写了custom:iamgeUri，属性就一定要写全
+						//如果只是定义了imageUri，那么命名空间可以随意，任意，但最好规范一些
+
+		
