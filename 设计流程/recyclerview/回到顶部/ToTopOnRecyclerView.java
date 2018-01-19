@@ -14,11 +14,16 @@ public class ToTopOnRecyclerView implements View.OnClickListener {
     private RecyclerView recyclerView;
     private View.OnClickListener clickListener;
 
+
     public ToTopOnRecyclerView(View floatView, RecyclerView recyclerView, View.OnClickListener clickListener) {
+        this(floatView, recyclerView);
+        this.clickListener = clickListener;
+    }
+
+    public ToTopOnRecyclerView(View floatView, RecyclerView recyclerView) {
         this.floatView = floatView;
         this.floatView.setOnClickListener(this);
         this.recyclerView = recyclerView;
-        this.clickListener = clickListener;
         init();
     }
 
