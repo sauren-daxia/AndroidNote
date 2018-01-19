@@ -1,0 +1,9 @@
+1、
+   // ActivityMainBinding这个类根据布局文件名生成(id+Binding)
+    ActivityMainBinding viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+    UserBean userBean = new UserBean();
+    userBean.setUserName("姜涛");
+
+    // setUser这个方法根据Variable标签的name属性自动生成
+    viewDataBinding.setUser(userBean);

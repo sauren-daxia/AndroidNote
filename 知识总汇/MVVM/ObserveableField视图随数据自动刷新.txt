@@ -1,0 +1,54 @@
+1、自动刷新数据类型
+BaseObservable			//这个需要继承，有点麻烦不介绍
+
+ObservableField<T>		//泛型自动刷新数
+
+ObservableInt			//int自动刷新数据
+
+ObservableLong			//long自动刷新数据
+
+ObservableShort			//short自动刷新数据
+
+ObservableByte			//byte自动刷新数据
+
+ObservableFloat			//float自动刷新数据
+
+ObservableDouble		//double自动刷新数据
+
+ObservableBoolean		//boolean自动刷新数据
+
+ObservableChar			//char自动刷新数据,String需要用ObservableField<String>
+
+ObservableParcelable<T extends Parcelable>	//实现序列化的对象自动刷新数据
+
+ObservableArrayMap		//ArrayMap自动刷新数据
+
+ObservableArrayLis		//ArrayList自动刷新数据
+
+ObjservableMap			//未知
+
+ViewDataBinding			//未知
+
+2、定义
+public class Data{
+	ObservableInt age = new ObservableInt();
+	ObservableBoolean isYoung = new ObservableBoolean(true);		//可以带值
+}
+
+3.1、代码使用
+public static void main(String[] args){
+	Data data = new Data();
+	data.age.get();
+	data.age.set(22);
+}
+
+3.2、XML使用
+android:text="@{data.age.get()}"
+
+4、数据监听事件
+data.age.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                
+            }
+        });

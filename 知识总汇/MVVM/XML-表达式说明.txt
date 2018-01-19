@@ -1,0 +1,44 @@
+1、不会有空指针出现，官方已经处理了
+
+2、集合引用
+	<varialbe
+		name="list"
+		type="java.util.List&lt;String&gt;">	//需要引用全路径
+
+	<variable
+		name="map"
+		type="java.util.Map&lt;String, String&gt;"/>
+	
+	不能直接写Map<String,String>，不能包含"<"，需要转换，常用字符串转换
+		空格		&nbsp；		&#160；
+	<	小于号		&lt；		&#60；
+	>	大于号		&gt；		&#62；
+	&	与号		&amp；		&#38；
+	"	引号		&quot；		&#34；
+	‘	撇号		&apos；		&#39；
+	×	乘号		&times；	&#215；
+	÷	除号		&divide；	&#247；
+
+3、使用字符串，三种方式
+	andtoid:text="@{'CHEN'}"		//单引号
+
+	android:text='@{"CHEN"}'		//双引号
+
+	android:text="@{@string/appname}"	//资源
+
+4、使用其他控件的属性
+
+	<TextView
+		android:id="@+id/title"
+		android:text="@{'陈'}"
+	>
+
+	<TextView
+		android:text="@{title.text}"
+	>
+
+	注意：如果控件名为:tv_name，可以写做tvName
+
+
+
+
