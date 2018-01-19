@@ -1,6 +1,5 @@
 package com.nanbo.vocationalschools.utils;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -13,16 +12,20 @@ public class ToTopOnRecyclerView implements View.OnClickListener {
     private int maxSmoothScrollPosition = 12;
     private View floatView;
     private RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
-    public ToTopOnRecyclerView(View floatView, RecyclerView recyclerView) {
+    private View.OnClickListener clickListener;
+
+    public ToTopOnRecyclerView(View floatView, RecyclerView recyclerView, View.OnClickListener clickListener) {
         this.floatView = floatView;
         this.floatView.setOnClickListener(this);
         this.recyclerView = recyclerView;
-        layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        this.clickListener = clickListener;
+        init();
     }
-    public void init(){
+
+    public void init() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private int oldX,oldY,mScrollX,mScrollY;
+            private int oldX, oldY, mScrollX, mScrollY;
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -33,6 +36,7 @@ public class ToTopOnRecyclerView implements View.OnClickListener {
                     mScrollY = dy;
                 }
                 if (oldY < mScrollY && floatView.getVisibility() != View.VISIBLE) {
+
                     ScaleAnimUtils.scaleShow(floatView);
                 } else if (oldY > mScrollY && floatView.getVisibility() == View.VISIBLE) {
                     ScaleAnimUtils.scaleHide(floatView);
@@ -43,7 +47,12 @@ public class ToTopOnRecyclerView implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        layoutManager.scrollToPosition(0);
+        for (int i = 0; i < 5; i++) {
+            recyclerView.getLayoutManager().scrollToPosition(0);
+        }
         ToTopBehavior.scaleHide(floatView);
+        if (clickListener != null) {
+            clickListener.onClick(v);
+        }
     }
 }
