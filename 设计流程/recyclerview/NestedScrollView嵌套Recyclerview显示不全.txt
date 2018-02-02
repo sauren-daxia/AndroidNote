@@ -1,0 +1,5 @@
+只需要把NestedScrollView的第一级子View改成RelativeLayout即可
+	<NestedScrollView>
+		<RelativeLayout>
+			<LinearLayout>
+				....
