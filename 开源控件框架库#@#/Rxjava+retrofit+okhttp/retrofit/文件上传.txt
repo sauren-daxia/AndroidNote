@@ -17,3 +17,25 @@ public interface FileUploadService {
             @Part MultipartBody.Part file2);
 }
 
+
+2、加强版 ，参数和文件一起传
+
+ @Multipart
+@POST(RxUrl.PUSH_ACTIVE_CIRCLE)
+Observable<String> pushActiveCircle(@PartMap Map<String, RequestBody> map, @Part List<MultipartBody.Part> files);
+
+ List<MultipartBody.Part> parts = new ArrayList<>();
+        for (int i = 0; i < photoList.size(); i++) {
+            if (TextUtils.isEmpty(photoList.get(i).getUrl())) {
+                break;
+            }
+            File file = new File(photoList.get(i).getUrl());
+            RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            parts.add(MultipartBody.Part.createFormData("pic[" + i + "]", file.getName(), body));
+        }
+
+Map<String, RequestBody> map = new HashMap<>();
+map.put("content", RequestBody.create(MediaType.parse("text/plain"), appraiseEt.getText().toString().trim() + ""));
+
+api.setFiles(parts);
+api.setBodyMap(map);
