@@ -1,0 +1,14 @@
+点击Item的时候会出现ArrayIndexOutOfBoundsException: length=13; index=-1
+
+解决方案1：
+	 loadMoreWrapper.notifyItemRangeChanged(0,list.size()-1);
+
+	 使用notifyItemRangeChanged刷新
+
+解决方案2：
+    @Override
+    public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+        holder.getAdapterPosition();
+    }
+
+	使用holder.getAdapterPosition()代替position
