@@ -1,0 +1,70 @@
+class Default{
+    constructor()
+
+    constructor(int: Int) {
+        println("one param")
+    }
+}
+
+data class Person(val name: String, var age: Int){
+	fun aFun(){
+
+	}
+	fun bFun(name:String){
+		println("bFun $name")
+	}
+}
+
+1、添加依赖：
+	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+2、获取KClass
+	1)第一种
+		var kclass = Default::class
+
+	2)第二种				//暂不推荐使用
+		var default = Default()
+		var kclass = default::class		
+
+3、实例化对象
+	1)主构造实例化
+		var kClass = Default::class
+		val default = kClass.primaryConstructor?.call()
+
+		PS:call()是构造方法，可变参数
+
+	2)次构造实例化
+		var kClass = Default::class
+		var constructors = kClass.constructors as List	//返回一个Collection，不好获取子元素，只好强转List
+		var default1 =  constructors[0].call();
+		var default1 =  constructors[1].call();
+
+4、获取变量
+	val person = Person("chen",23)
+	val kClass = Person::class
+	val param = kClass.memberProperties.first { it.name == "name" }.get(person)
+
+	PS:所有变量存在一个集合之中，只能通过遍历去找到对应的name是否相等，first操作符功能是遇到第一个等于的立即中断并返回
+
+5、设置变量
+	val person = Person("chen",23)
+	val kClass = Person::class
+	(kClass.memberProperties.first { it.name == "age" }as? KMutableProperty1<Person,Int>)?.set(person,18)
+
+	PS:首先获取到目标变量，已知目标变量为可变类型var，不过在强转的时候还是要加上是否能强转as?
+	   接着强转为可变类型的顶级父接口KMutableProperty1，泛型为改变的对象类型，和改变的参数类型
+	   最后实用KMutableProperty1接口提供的set()方法修改参数
+
+6、调用方法
+	val person = Person("chen",23)
+	val kClass = Person::class
+	kClass.memberFunctions.first { it.name == "aFun" }.call(person)	//无参
+
+	kClass.memberFunctions.first{ it.name == "bFun" }.call(person,"CHEN") //带参
+
+
+PS：目前不建议使用Kotlin反射，原因：
+	1：包太大，Jar包占2.5M大小
+	2：反射效率太低，耗时是JAVA的20倍左右
+	3：支持性不好，对集合类型的支持性不够，会出异常
+

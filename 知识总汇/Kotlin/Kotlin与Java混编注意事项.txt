@@ -1,0 +1,93 @@
+1、Kotlin与JAVA成员互调
+	Kotlin调用Java代码时候，如果需要可空或不可空的返回值或参数的时候，Java代码最好经常使用注解来解决这些麻烦
+		//返回不可空
+		public @NotNull Runnalbe aFun(){}
+
+		//参数可空
+		public void bFun(@Nullable Runnalbe run){}
+		
+	Java调用Kotlin属性的时候，最好都加上注解
+		@JvmField	//属性注解
+		val a = 1
+
+		@JvmStatic	//简化Java调用Kotlin静态方法的繁琐，只需通过类名或文件名直接使用，就像Java静态一样用
+		fun aFun(){}
+
+		@JvmOverloads	//当使用Kotlin的默认属性的时候，JAVA调用并不能识别，所以需要注解，凡是有默认属性的都用注解就对了
+		fun aFun(aInt : Int = 1){} 
+		
+
+
+
+
+
+2、SAM ，支持JAVA的单一接口，通过lambda表达式使用，但不支持Kotlin的单一接口
+
+	Java类
+		public class A{
+			public void addTask(Runnable run){}
+
+			public void removeTask(Runnable run){}			
+		}
+
+	Kotlin类
+		typealias Runable = ()->Unit
+
+		class B{
+			fun addTask(Runnable run){}
+
+			fun removeTask(Runnable run){}
+		}
+
+	var a = A()
+
+	//A符合SAM的规则，JAVA的单一接口，所以可以使用两种方式调用方法
+	//第一种
+		a.addTask(object:Runnable{
+			override fun run(){
+
+			}
+		})
+
+	//第二种，使用SAM方式的lambda表达式
+		a.addTask{
+		
+		}
+
+	PS：注意事项
+
+	var lambda = {
+		println("运行线程")
+	}
+
+	a.addTask(lambda)
+	a.addTask(lambda)
+
+	a.removeTask(lambda)
+	a.removeTask(lambda)
+
+	PS：addTask()虽然可以添加一个lambda变量，多次添加的时候，其实lambda会新new一个参数对象的实例，类似于匿名类，所以在remove的时候并没有一个具体的变量引用匿名类，就无法移除
+
+	val b = B()
+
+	//B虽然也是单一接口，但是B是Kotlin类，Kotlin本身不支持SAM，可能在以后会支持，但如果也想用的话，就用typealias定义，这样就可以像Java一样使用，typealias最好定义在类所在的文件里面
+
+	b.addTask(object:Runnable{		//没有别名时候
+		override fun run(){}
+	})
+
+	b.addTask{
+		println("运行别名")
+	}
+
+3、Java调用Kotlin集合
+	object A{
+		var list = listOf(1,2,3)
+	}
+
+	Java
+		public static void main(String[] args){
+			B.INSTANCE.getList().add(3);		//报错
+		}
+
+	PS：虽然Java会把Kotlin里面的List转换为Java的List，但是两个List是不一样的，Kotlin的List是没有add或remove方法的，所以调用起来就会报错，如果需要互调，建议使用MutableList

@@ -1,0 +1,62 @@
+1、Kotlin中没有静态方法这一说，但是可以通过类内部持有的一个伴生对象提供出可直接访问的权限
+	class Person{
+		companion object{
+
+			fun age() = 18
+
+			fun eat(str : Bananer){
+				println("eat $str")
+			}
+		}
+	}
+
+在Kotlin中调用
+	fun main(arrar : Arrar<String>){
+		pringln(Person.age)	//与Java中没什么特别
+	}	
+
+在Java中
+	public static void main(String[] args){
+		Person.Companion.eat();	//获取到伴生对象后才能调用
+	}
+
+2、静态成员，Kotlin中也没静态成员的说法，也是通过在伴生对象中定义的一个变量才能可以通过类直接使用
+	class Person{
+		companion object{
+			val age = 1
+		}
+	}
+
+在Kotlin中使用
+	fun main(args : Arrar<String>){
+		Person.age
+	}
+
+在Java中使用
+	public static void main(String[] args){
+		Person.Companion.getAge();
+	}
+
+3、简化Java调用Kotlin静态成员时候的繁琐
+	class Person{
+		companion object{
+			@JvmStatic		//修饰方法也可以修饰属性，因为属性自带get()set()
+			fun fly(){}
+
+			@JvmField		//修饰属性
+			val age = 1
+		}
+	}
+	
+在Java中使用
+	public static void main(String[] args){
+		Person.age		//用 @JvmField修饰
+		Person.getAge()		//用 @JvmStatic修饰
+	}
+
+4、object单例对象
+	object Manager{
+		
+	}
+
+	//object 和class一样，拥有类的一切特性，只是object是全局单例，没有构造，可是实现接口，可以继承类

@@ -1,0 +1,24 @@
+fun fun1() {}
+
+fun fun2(args: Int) {}
+
+fun fun3(args: Int): Int {
+    return 1
+}
+
+var fun4 = {}  // 等价于 var fun4 = {()-Unit}   fun4的类型 = () -> Unit
+
+var fun5 = { args: Int -> Unit } // 等价于 var fun5 = {(args :Int) -> Unit}    fun5的类型 = (Int) -> Unit
+
+var fun6 = { args: Int -> 1 } //等价于 var fun6 = {(args : Int -> Int)}        fun6的类型 = (Int) -> Int
+
+fun doLambdaFun() {
+    (1..5).forEach { fun4 }                   //这是神马鬼
+    (1..5).forEach { ::fun4 }                 //这是神马鬼
+    (1..5).forEach { ::fun4 }                 //这是神马鬼
+    (1..5).forEach(::println)                 //这是神马鬼
+}
+
+var funfun = {string: String -> ""}
+
+var fun7 = { args: String, invoke: String -> String }       //等价于 (String,String) : Unit = {} 最后那个String只是一个静态变量并不是返回值

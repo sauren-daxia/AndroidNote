@@ -1,0 +1,39 @@
+1、函数复合就是将两个函数合并成一个新的函数，减少相同的操作
+
+	var aFun = fun(aInt: Int): Int {
+		return (aInt + 5).toInt()
+	}
+
+	var bFun = fun(aInt: Int): Int {
+		return aInt * 2
+	}
+
+	fun  Function1<Int,Int>.add(function2 : Function1<Int,Int>) : Function1<Int,Int>{
+		return fun(function1 : Int):Int{
+			return function2.invoke(this.invoke(function1))
+		}
+	}
+
+	fun main(args: Array<String>) {
+
+		aFun(bFun(3))  //初始写法
+
+		val add = aFun.add(bFun)
+		println(add(5))		//复合写法
+	}
+
+	//过程其实很简单，首先给两个需要合并的函数其中一个写扩展方法，扩展方法的参数的类型是函数二的类型，返回的值也需是一个函数类型
+	  接着写返回值，那么返回值既然是一个函数，就按照规定的返回参数类型写即可，然后在返回函数里面，用函数二调用函数一，函数一则传参
+	  这个操作其实和初始写法一样，但是将操作封装在了一个新的函数体里
+	  
+
+
+
+
+2、泛型写法，仅供参考，泛型写起来不好理解,如果都是返回Int的话，R1,R2,R使用哪个都无所谓
+infix fun <R1, R2, R> Function1<R1, R2>.andThen(function: Function1<R2, R>): Function1<R1, R> {
+    return fun(r1: R1): R {
+        println(this)
+        return function.invoke(this(r1))
+    }
+}

@@ -1,0 +1,19 @@
+1、与java一样
+try{
+
+}catch(e : Exception){
+
+}finally{
+
+}
+
+2、可以作为表达式使用
+	var result = try{
+			0
+		}catch(e : Exception){
+			1
+		}finally{
+			2
+		}
+
+3、与Java一样，如果是try或catch中有返回语句，那么有finally的话一定会先执行finally

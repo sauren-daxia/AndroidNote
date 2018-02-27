@@ -1,0 +1,63 @@
+
+data class Person(val name:String, val age : Int)
+
+class DefaultConstructor(){
+	fun aFun(){}
+	fun bFun(name:String){}
+}
+
+
+1、获取Class的方式
+	
+
+	1)第一种
+		val clazz = Person:class.java
+
+	2)第二种
+		val perosn = Person("CHEN",16)
+		val clazz = person.javaClass
+
+	3)第三种
+		val perosn = Person("CHEN",16)
+		val clazz = person::class.java
+
+2、实例化类
+	1)无参构造实例
+			val defaultClass = DefaultConstructor::class.java.newInstrace()
+
+	2)有参构造实例
+			val clazz = Person::class.java
+			val personClass = clazz.getConstructor(String::class.java,Int::class.java).newInstance("CHEN",18)
+
+			PS:getConstructor()是获取某个构造方法，参数为构造的参数的类型，接着newInstance传参
+
+3、获取变量，在kotlin里面统一使用getDeclaredXxx，一定要设置权限isAccessible = true，这里获取的变量只是幕后属性
+		val person = Person("CHEN",18)
+		val clazz = Person::class.java
+		val field = clazz.getDeclaredField("name").apply { isAccessible = true }.get(person)
+
+4、设置变量
+		val person = Person("CHEN",18)
+		val clazz = Person::class.java
+		val field = clazz.getDeclaredField("name").apply { isAccessible = true }.set("YANG")
+
+5、获取方法
+	1)无参方法
+		val default = Default()
+		val clazz = Default::class. 
+		val method = clazz.getDeclaredMehod("aFun").apply{ isAccessible = true }.invoke(default)
+
+	2)有参方法
+		val default = Default()
+		val clazz = Default::class.java
+		val method = clazz.getDeclaredMethod("bFun", String::class.java).apply{ isAccessible = true }.invoke(defualt, "CHEN")
+
+6、获取扩展方法
+	
+	
+
+
+
+
+
+		

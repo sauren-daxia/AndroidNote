@@ -1,0 +1,5 @@
+1、在官网下载https://gradle.org安装包
+
+2、添加环境变量,和JDK一样配置就好了
+
+3、验证cmd窗口 gralde -v

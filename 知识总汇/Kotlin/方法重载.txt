@@ -1,0 +1,24 @@
+1、与Java一致，方法重载与方法名和参数列表的个数或类型有关，与返回值无关
+	fun a(){}
+
+	fun a(value : Int){}
+
+	fun a(value : String){}
+
+2、默认参数值
+	fun a(value : Int = 0)
+
+	//如果有默认参数值，则可以不穿参数
+
+	fun main(args : Array<String>){
+		a()
+	}
+
+3、Java调用默认参数方法
+	@JvmOverloads			//添加注解，Java才能识别
+	fun a(value : Int = 0){}
+
+	public static void main(String[] args){
+		a();
+	}
+

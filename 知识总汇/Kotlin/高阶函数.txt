@@ -1,0 +1,53 @@
+1、包级函数写法
+	fun main(args : Array<String>){
+		args.forEach(::println)
+	}
+
+	//forEach()需要传入一个单个参数无返回的函数，所以println刚好满足条件
+	  因为println()是包级函数，无处不在，所以::前并不需要加类型
+
+2、扩展函数或类静态方法写法
+	fun main(args : Array<String>){
+		args.filter(String::isNotEmpty)
+	}
+
+
+	//filter()需要传入的是一个单个参数并且返回Boolean的函数，而String的扩展函数isNotEmpty刚好满足条件
+	  但是isNotEmpty是String的扩展函数，无法直接::，所以只需要在::加上该方法所属的类型即可
+
+3、类函数写法
+	class A{
+		fun println(any : Any){
+			Kotlin.io.println(any)
+		}
+	}
+
+	fun main(args: Array<String>){
+		val a : A()
+		args.forEach( a::println )
+	}
+
+	//因为类A的函数println虽然符合forEach()的条件，但是因为println并不是静态或者是包级的
+	  难免函数中可能包含类A的属性成员，所以直接使用类名::方法名是不可以的，那么可以使用该类的实例调用即可
+
+4、高阶函数写法
+	class A{
+		fun show() = () -> Unit
+	}
+
+	fun a(action : () -> A ) : () -> Unit {
+		return action()::show
+	}
+
+	//方法a()的参数本身就是一个高阶函数，又需要返回一个高阶函数，这时候只需要return的时候调用一个没有返回值的方法即可
+          但是上面的例子是解释如果高阶函数的实例就有一个无返回的高阶函数，
+	  那么调用的写法可以写成:
+		<高阶函数变量名>()::<高阶函数>
+
+		完整的写法是
+			<高阶函数变量名>.invoke()::<高阶函数>
+			
+			PS：如果不懂为什么action.invoke()可以写成action()，请看lambda笔记
+
+PS:
+	高阶函数只是简化了方法调用时的繁琐，比如不需要再将参数写到参数列表中

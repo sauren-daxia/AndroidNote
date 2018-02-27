@@ -1,0 +1,123 @@
+package com.dinghong.studyviewdemo1.activity
+
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import org.apache.http.HttpException
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.coroutines.experimental.*
+
+/**
+ * Created by marti on 2018/2/24.
+ */
+fun main(args: Array<String>) {
+
+    startCoroutineTask {
+        /**
+         * 当走到这一步的时候，协程会在内存里保存闭包状态，等待协程返回结果的时候再从内存里获取挂起时的状态，接着继续执行
+         */
+        val bitmap = loadFile("")
+        //这里可以给控件设置图片
+    }
+}
+
+//定义一个可执行协程的方法，参数为suspend ()->Unit
+fun startCoroutineTask(action: suspend () -> Unit) {
+    action.startCoroutine(ContextContinuation(MyCoroutineContext()))
+}
+
+//定义一个Continuation，提供给协程方法做启动，定义一个默认的构造参数，以防没有传递
+class ContextContinuation(var coroutineContext : CoroutineContext = EmptyCoroutineContext) : Continuation<Unit> {
+    override val context: CoroutineContext = coroutineContext
+
+
+    override fun resume(value: Unit) {
+
+    }
+
+    override fun resumeWithException(exception: Throwable) {
+
+    }
+}
+
+//定义一个Continuation用于在内部切换线程
+class UIContinuationWrapper<T>(var continuation: Continuation<T>) : Continuation<T> {
+
+    override val context: CoroutineContext = EmptyCoroutineContext
+
+    /**
+     * 当拿到协程方法里的Continuation后，把它传进来，然后用自己的resume去拿到结果，当结果回到这个方法的时候,
+     * 先做一个线程调度切回主线程，再用协程里的Continuation把结果返回出去，协程的结果一定是协程里的Continuation操作的
+     */
+    override fun resume(value: T) {
+        Observable.create<Unit> {
+            it.onNext(Unit)
+            it.onComplete()
+        }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    continuation.resume(value)
+                }
+    }
+
+    /** 原理同上，只不过这里做异常抛出 **/
+    override fun resumeWithException(exception: Throwable) {
+        Observable.create<Throwable> {
+            it.onError(exception)
+            it.onComplete()
+        }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    continuation.resumeWithException(it)
+                }
+    }
+}
+
+//定义自己的上下文，并实现拦截器功能，把Context丢启动协程的Continuation里面
+class MyCoroutineContext : AbstractCoroutineContextElement(ContinuationInterceptor), ContinuationInterceptor {
+    /**
+     * 协程运行的过程中可能有N多拦截器，在执行到自己的拦截时候，把协程里的Continuation篡改为自己的UIContinuationWrapper
+     * 然后就可以在UIContinuationWrapper里面做线程调度
+     */
+    override fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T> {
+
+        /**
+         *  首先这里是肯定要返回自己的UIContinuationWrapper的，但在构造的时候先去判断当前的continuation是不是需要串改的
+         *  先使用fold从当前的continuation开始循环，如果element，也就是下一个continuation元素，不等于自己并且也是可以有
+         *  篡改能力的，那么就让别人串改，否则则是用自己的
+         *
+         *  还有一点，continuation在协程中是一串拼接起来的，并不是一个，所以自己定义的continuation加入到协程任务后，想要对它
+         *  修改就必须得找到它，AbstractCoroutineContextElement构造的时候需要一个Key，这个Key就是找到它的关键，
+         *  但是ContinuationInterceptor本身就是一个Key，所以可能所有拦截器都用这一个Key，如果我们只做一次篡改不做判断
+         *  那么很有可能后面加进来的Continuation无法去修改自己想要的结果，该Key暂时用ContinuationInterceptor，可能有更好的方案
+         */
+        return UIContinuationWrapper(continuation.context.fold(continuation) { continuation, element ->
+            if (element != this@MyCoroutineContext && element is ContinuationInterceptor) {
+                element.interceptContinuation(continuation)
+            } else {
+                continuation
+            }
+        })
+    }
+}
+
+//定义一个协程方法，用于执行异步操作，最终返回值类型写在suspendCoroutine<T>泛型里面
+suspend fun loadFile(url: String) = suspendCoroutine<Bitmap> { continuation ->
+    val continu = UIContinuationWrapper(continuation)
+    Thread {
+        val conn = URL(url).openConnection() as HttpURLConnection
+        var bys = conn.inputStream.use { it.readBytes() }
+        if (bys != null)
+            BitmapFactory.decodeByteArray(bys, 0, bys.size).let ( continu::resume )
+        else
+            continu.resumeWithException(HttpException())
+    }.start()
+}
+
+
+
+
+
+

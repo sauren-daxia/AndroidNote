@@ -1,0 +1,114 @@
+1、let
+	class A{
+		fun show()
+	}
+
+	fun main(args : Array<String>){
+		val a = A().let{
+				it.show()
+				it
+			}
+	}
+
+	//let的作用是传入实例本身，可以有返回值，返回值的类型根据{}最后一句推导
+
+2、apply
+	class A{
+		fun show()
+	}
+
+	fun main(args : Array<String>){
+		var a = A().apply{
+			show()
+			this
+		}
+	}
+
+	//apply和let很相似，只不过let是一个方法，传入的参数为lambda表达式，而apply是一个扩展方法
+	  所以let的调用需要用到it，apply直接使用，因为扩展函数可以获取实例本身，最后也是根据最后一句推导返回值类型
+
+3、with
+	fun main(args : Array<String>){
+		var bf = BufferedReader(FilterReader("hello.txt"))
+		with(bf){
+			readLine()
+			close()
+		}
+	}
+
+	//with和apply很相似，只不过with是相对安全的，with必须传一个对象进去，这个对象不可为空
+	  然后内部其实也是一个扩展方法，和apply一样都是可以直接调用类成员的
+
+4、use
+	fun main(args : Array<String>){
+		var text = BufferedReader(FileReader("hello.txt")).use{
+			it.readText(
+		}
+	}
+
+	//use的作用是自动关闭流，传入的类型一定是Closeable的子类，只有Colseable的子类才有close()方法
+	  虽然use也是扩展方法，如果直接调用方法的会调用的会是Closeable的方法，而不是子类的，所以还是需要加it调用
+	  同样也是有返回值的，返回值类型根据最后一句推导
+
+、map
+	fun main(args : Array<String>){
+		val newList = args.map{
+				  it::toDouble
+			      }
+	}
+
+	//map的作用是遍历一个数组，将每个元素转换后返回一个新的数组，{}里面的内容可以转换任意类型
+
+	PS：使用场景，批量String转Int
+
+、flatMap
+	fun main(args : Array<String>){
+		val newList = args.flatMap{ ff ->
+			ff.map{
+				""	
+			}
+		}
+	}
+
+	//flatMap的作用是遍历一个数组，这个数组的元素可以是一个变量的，也可以是一组数组，最后得到一个新的数组，新的数组是一个一维数组。
+		val array1 = intArrayOf(1,2,3,4,5)
+		val array2 = listOf( 1..5 , 6..10 , 11..15 , 16..20)
+
+	  flatMap遍历出的每一个元素也一定是一个数组，即遍历array1的话，每个元素需要转换成一个数组，
+	  遍历array2的话则无改变，因为array2的每一个元素本身就是数组,最后会将所有遍历转换成数组的元素,addAll一下成一个一维数组
+
+	  PS:	
+		使用场景，二维数组转一维数组
+		flatMap与Map的不同处在于, map只是将元素的类型转换成另一个类型，而flatMap是将元素转换成一个数组，类型不限
+
+、reduce
+	fun main(args : Array<String>){
+		(1..10).reduce{acc , i -> acc + i}
+	}
+
+	//reduce的作用是将当前元素与下一个元素进行组合转换，所得的结果继续与下一个元素组合转换
+	
+	PS：使用场景，累加，累乘、字符串拼接等
+
+、fold
+	fun main(args : Array<String>){
+		(1..10).fold(5){
+			a,b -> a+ b
+		}
+	}
+	  
+	//fold与reduce相似，只不过多了一个起始值，起始值的类型即为a的类型，最后a与b的组合也必须是a的类型
+	
+	PS:使用场景，暂无
+
+、takeWhile
+	fun main(args : Array<String>){
+		("text","img","video","music","PDF").takeWhile{ 
+			it.equlas("text") || it.equlas("img") || it.equlas("video")
+		}
+	}
+
+	//takeWhile的作用是当遇到判断条件不符的时候立刻终止，并返回之前相符的元素
+	  上面的例子遇到"music"后会立刻终止，返回一个数组{"text","img","video"}
+
+	PS：使用场景，暂无

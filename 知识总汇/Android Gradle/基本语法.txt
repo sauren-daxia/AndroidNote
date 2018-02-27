@@ -1,0 +1,47 @@
+1、分号是可选的,与Kotlin一样
+	int a = 1
+
+2、属性自带get()set(),与Kotlin一样
+	class Person{
+		int a = 1
+	}
+
+	Person p = new Person()
+	println(a)
+
+3、== 表示equals() ，并且自带空判断，任何情况不相等都为false 不会报错
+	Person p1 = new Person()
+	Person p2 = null
+	p1 == p2
+
+4、如果方法是有返回值的，最后一句可以不写return，和Kotlin一样
+	public int aFun(){
+		1 * 1
+	}
+
+5、类型推导，groovy语言是弱类型，和Kotlin自动推导一样
+	def a = 1
+
+6、括号是可选的
+	println a
+
+7、字符串，groovy没有字符，需要字符需要 as char强转，但是并没有什么卵用
+	def a = ''	//字符串
+	def b = "$a"	//可引用变量或表达式和Kotlin一样
+	def b = '''grald''' //和Kotlin字符串模板一样，只是这里是三个单引号，Kotlin是三个双引号
+
+8、断言，断言不相等一定会报错
+	def a = 1
+	assert a == 2 
+
+9、list,默认是ArrayList
+	def list = ['a','b']	//定义字符串集合
+	list << 'c'		//add元素
+	list.get(1)		//获取元素
+
+10、map,默认是LikedHashMap
+	def map = ['name':'CHEN','age':'18']
+	map.sex = 'man'		//添加元素
+	println map.name	//获取元素
+	println map['name']	//获取元素
+

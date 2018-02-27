@@ -1,0 +1,43 @@
+package com.dinghong.studyviewdemo1.activity
+
+import java.io.BufferedInputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.coroutines.experimental.startCoroutine
+import kotlin.coroutines.experimental.suspendCoroutine
+
+/**
+ * Created by marti on 2018/2/24.
+ * 协程封装
+ */
+
+fun main(args: Array<String>) {
+    actionCoroutine {
+        var result = actionTask {
+            downloadFile("http://www.baidu.com")
+        }
+    }
+}
+
+//还是最基础的操作，固定了的
+fun actionCoroutine(action: suspend () -> Unit) {
+    action.startCoroutine(ContextContinuation(MyCoroutineContext()))
+}
+
+//封装的方法
+suspend fun <T> actionTask(action: () -> T) = suspendCoroutine<T> { continuation ->
+    //这里应该是要调用Rx来做比较好
+    Thread {
+        try {
+            action().let(continuation::resume)
+        } catch (e: Exception) {
+            continuation.resumeWithException(e)
+        }
+    }.start()
+}
+
+//普通耗时操作方法
+fun downloadFile(url: String): ByteArray {
+    var conn = URL(url).openConnection() as HttpURLConnection
+    return BufferedInputStream(conn.inputStream).use { it.readBytes() }
+}

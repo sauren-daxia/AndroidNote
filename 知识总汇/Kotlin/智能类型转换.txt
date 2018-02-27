@@ -1,0 +1,17 @@
+1、判断过就不需要强转
+	var parent : Parent = Child()
+
+	if(parent is Child)
+		parent.getName()
+
+	is等价于instanceOf 只要判断过，使用时无需再强转
+	
+2、绝对继承关系强转
+	var chile : Chile = Parent() as Child
+
+	as等价于extends，是用来判断继承关系的，这种写法必须保证有绝对的继承关系，不会出错的，不然会报转换异常
+
+3、不确定继承关系强转
+	var child : Child? = Person() as? Child
+
+	as?判断如果非继承关系的货返回null，这时候变量类型必须为可控类型

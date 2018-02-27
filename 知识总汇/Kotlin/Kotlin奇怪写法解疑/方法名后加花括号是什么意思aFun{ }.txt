@@ -1,0 +1,131 @@
+一个方法的参数为无参无返回的写法
+	fun aFun(action:() -> Unit){
+		
+	}
+
+	fun main(args : Array<String>){
+		aFun{
+			println("kotlin")
+		}
+	}
+
+	1)  Kotlin语法的规则是，如果方法参数最后一个参数为函数体，那么函数体可以不写在括号里面，可以写在括号后面
+		正确的写法：
+			aFun( { } )
+
+	2)  { }在这里是一个类型，可以当成lambda简化的接口，举个栗子：
+	Java
+		lambda写法：
+			view.setOnClickListener{ view -> { } }
+
+	Kotlin
+		普通写法：
+			view.setOnClickListener( { } )
+
+		lambda写法：
+			view.setOnclickListener{  }
+		
+		PS：在Java的lambda写法中必须要指定参数变量名，其中view就是参数名
+		    但在Kotlin中优化了，默认有it为参数名，所以可以直接写{ }
+
+	3)  结构写完之后，实现里面的功能
+		aFun{
+			println("Kotlin")
+		}
+
+		这里相当于aFun需要一个无参无返回的接口，然后通过lambda语法，创建了一个匿名的无参无返回接口，并实现了里面的内容pritnln("Kotlin")
+
+		假如aFun的参数变一下，其实就能看懂了
+			fun aFun(action:(MotionEvent) -> Boolean){}
+
+		这样的方法，和onTouch的接口一样，写法就成了
+			aFun{
+
+				when(it.getAction){
+					MotionEvent.UP -> println("UP")
+				}
+
+				false
+			}
+
+PS:所以，aFun{ }的写法就是我们实现了这个这个类型的接口，内容就是我们重写的内容，至于怎么执行就要看aFun里面的操作了
+
+
+各种例子:
+	无参无返回：
+		fun aFun(action:() -> Unit){
+			println("等会会打印Kotlin哦")
+			action()
+		}
+
+		fun main(args :Array<String>){
+			aFun{
+				println("Kotlin")
+			}
+		}
+	
+	正常函数实现的写法：
+		val param : () - > Unit = { println("") }
+		
+
+	有参无返回
+		fun aFun(action:(String) -> Unit){
+			action("Function")
+		}
+
+		fun main(args : Array<String>){
+			aFun{
+				println("这里的it会输出Function哦 = $it")
+			}
+			//只管实现就好了，参数是从调用的地方来的
+		}
+
+	正常函数实现的写法：
+		val param : (String) - > Unit = { println("$it") }
+
+	无参有返回
+		fun aFun(action:() -> String){
+			val text = action()
+			println("这里会打印一个单词叫：Kotlin = $text")
+		}
+
+		fun main(args : Arrar<String>){
+			aFun{
+				println("我想返回一个单词叫：Kotlin")
+				"Kotlin"
+			}
+			//kotlin的lambda的关系，如果方法有返回值，最后一句就是返回值类型，可以不写return
+		}
+
+	正常函数实现的写法：
+		val param : () - > String = { 
+			println("Kotlin") 
+			"Kotlin"
+		}
+
+	有参有返回，这里多加一个参数，没影响的
+		fun aFun(type:String, action:(String) -> Boolean){
+			var b = action(type)
+			if(b)
+				println("真的傻")
+			else
+				println("傻得很")
+		}
+
+		fun main(args : Array<String>){
+			aFun("你是不是傻"){
+			
+				return if(it.contains("是傻")){
+						true
+					}else{
+						false
+					}
+			}
+		}
+
+	正常函数实现的写法：
+		val param : (String) - > Boolean = { 
+			println("Kotlin") 
+			false
+		}
+

@@ -1,0 +1,30 @@
+1、标准函数，无参无返回
+	fun main(){}
+
+2、标准函数，有参无返回
+	fun main(var aInt : Int){}
+
+3、标准函数，有参有返回
+	fun main(var aInt : Int , var bInt : Int) : Int{
+		return aInt + bInt
+	}
+
+4、简写，无参无返回
+	fun main() = println()
+		//这种写法必须要在方法体内做操作并且语句只有一条并且是无返回的操作，当然有返回也是可以，但就不是无返回类型函数
+
+5、简写，有参无返回
+	fun main(args : String) = println(args)
+		//这种写法和无参无返回一样，只是在内容使用了参数，但也和无参无返回一样，必须在方法体内有操作
+
+6、简写，有参有返回
+	fun main(aInt : Int , bInt : Int) = aInt + bInt
+		//这种写法是需要返回值的，当然不返回也没什么，kotlin会有类型推导识别你到底返回没返回值
+
+7、匿名函数/变量函数
+	var args = fun(aInt : Int) = aInt.toString()
+
+	使用：
+		var value = args(5)
+
+	//这种只是将函数当成一个变量使用，可以不写方法名，但是用法还是一样的，并且比普通函数还麻烦些

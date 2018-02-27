@@ -1,0 +1,22 @@
+1、闭包的作用可以让函数内的变量存在内存中不被销毁，前提是获取到函数的类型
+	
+	fun aFun(a: Int): (c: Int) -> Unit {
+		var b = a
+		println("这里是  aFun $b")
+		return  return fun(d: Int) {
+			println(b++)
+			println()
+		}
+	}
+
+	fun main(args: Array<String>) {
+		val a = aFun(1)
+		a(1)
+		a(1)
+	}	
+
+	//当持有函数的引用的时候，引用内的数据就不会被回收，而且被保留下来继续使用
+	  闭包的写法是一个函数A中返回另一个函数B，那么拿到的引用就是B函数的引用，
+	  B函数没被回收前，会持有A函数所有的状态，这时去操作B函数，B函数里有调用A函数的变量的话
+	  就不会被重置
+	

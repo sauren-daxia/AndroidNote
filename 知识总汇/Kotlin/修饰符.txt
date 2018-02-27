@@ -1,0 +1,11 @@
+1、public
+	整个程序可见
+
+2、private
+	类内部可见
+
+3、protected
+	类内部、子类可见
+
+4、internal
+	module内可见

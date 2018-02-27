@@ -1,0 +1,43 @@
+1、可以简化属性的相关操作，交给代理类去实现
+	val str by lazy{
+		"hello world"
+	}
+
+	//这段的意义是，通过lazy的实现，返回一个"hello world"值，也可以用来做延迟初始化
+	//代理属性在被第一次调用的时候才会实例化值，大大减少了内存开销
+
+2、自定义val类型代理，因为val只读的，所以只有getValue方法
+
+	class dy{
+		private str : String? = null
+		operator fun getValue(thisRef : Any? property : KProperty<*>):String{
+			return str?:""
+		}
+	}
+
+	使用：
+		val str by dy()			//这里可是()不是{}了，所有的操作均在代理中实现
+
+3、自定义var类型代理，因为var是可读写的，所有需要重写getValue和setValue
+
+	class dy{
+		private str : String? = null
+		operator fun getValue(thisRef : Any? property : KProperty<*>):String{
+			return str?:""
+		}
+
+		operator fun getValue(thisRef : Any? property : KProperty<*>,value : String){
+			this.str = value
+		}
+	}
+
+	使用：
+		var str by dy()			//这里可是()不是{}了，所有的操作均在代理中实现
+
+
+PS:
+	1、Kproperty可以获取代理对象
+		property.name
+
+	2、thisRef可以获取到代理对象所在的类
+	

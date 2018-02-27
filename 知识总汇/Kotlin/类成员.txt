@@ -1,0 +1,7 @@
+初始化延迟加载
+	lateinit var s : String
+
+使用到再加载
+	val handler : Handler by lazy{
+		Handler(Handler.Callbak....) //这里初始化，第一次使用就会加载否则不加载
+	}

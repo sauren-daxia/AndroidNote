@@ -1,0 +1,56 @@
+1、Kotlin内部类与Java内部类相似
+	class Person{
+		class Child{}
+	}
+
+	使用：
+		fun main(args : Array<String>){
+			Person.Child()			
+		}
+
+		//这里注意了，这里并没有把Person先实例再实例Child，因为在Kotlin里，在一个类里直接写class
+		  默认的是静态的类，与普通类没什么区别，所以可以通过Person.Child()的写法实例
+
+2、inner修饰内部类，为非静态内部类
+	class Person{
+		inner class Child{}
+	}
+
+	使用
+		fun main(args : Array<String>){
+			Person().Child()
+		}
+
+		//inner修饰后的内部类就为非静态的，和Java相反，Java默认就是非静态的
+
+3、内部类调用外部类
+	class Person{
+		val a = "Person"
+		inner class Child{
+			val a = "Child"
+
+			fun main(){
+				println(this@Person.a)	//这样才能调用外部类的成员
+				println(a)		//内部类的成员调用并无太大差别
+			}
+		}
+	}
+
+4、匿名内部类
+	view.setOnClickListener(object : OnClickListener{
+		//
+	})
+
+5、Kotlin匿名内部类特点，可以继承，可以实现
+
+	class A
+
+	interface B
+
+	fun main(args : Array<String>){
+		var innerClass  = object : A() , B{
+			//
+		}
+	}
+
+PS:匿名内部类其实有名字的，在编译的时候会分配一个名字，可以通过反射去调用

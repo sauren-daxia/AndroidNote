@@ -1,0 +1,20 @@
+1、柯里化函数其实和链式函数一样，只不过写法有点不一样，概念也有点不一样
+	基本写法
+		fun log(tag:String, msg:String, target:OutputStream){
+			target.write("$tag -> $msg".toByteArray())
+		}
+
+	柯里化写法
+		fun log(tag:String)
+			=fun(msg:String)
+			=fun(target:OutputStream)
+			=target.write("$tag -> $msg".toByteArray())
+
+	使用:
+		fun main(args : Array<String>){
+			log("CHEN")("ohh")(System.out)
+		}
+
+	//和链式函数差不多。但是不需要用.分割，格式很清晰，第一个方法返回了一个方法的引用，那么方法的引用当然可以直接写()
+	  完整写法：
+		log("").invoke("ohh").invoke(System.out)

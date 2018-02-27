@@ -1,0 +1,27 @@
+1、定义类型可空
+	var name : String? = null
+
+	只需要在类型后面加?符号，但是值还是要写的
+
+2、不为空执行
+	var name : String? = null
+
+	println(name?.toString())
+
+	只需要在类型调用其内部成员的时候，在变量后面加?符号，如果该变量为空则不会执行后面内容，并且返回null
+
+3、为空返回
+	var name : String? = null
+	
+	fun filter(){
+		name?:return
+	}
+
+	只需要在变量后加?:即可，等价于if(name == null) return
+
+4、不为空断言
+	var name : String? = "HelloWorld"
+
+	println(name!!.toString())
+
+	只需要在变量后面加!!符号，告诉编译器这个一定不为null，否则编译器不让直接使用可空类型

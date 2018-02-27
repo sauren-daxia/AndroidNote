@@ -1,0 +1,70 @@
+https://www.jianshu.com/p/f3455ecaa56e
+https://www.jianshu.com/p/7436a1a32891
+
+1、在build.gradle中开启混淆
+buildTypes {
+        release {
+            minifyEnabled true		//开启混淆，建议在release开启
+	    zipAlignEnabled true	//资源按4字节对齐，减少运行时内存消耗
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled false		//关闭混淆，建议在测试无误之后开启混淆继续测试
+	    zipAlignEnabled false	//资源按4字节对齐，减少运行时内存消耗
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+}
+
+2、基本语法
+-dontshrink					//关闭压缩，默认开启
+
+-dontoptimize					//关闭优化，默认开启
+
+-optimizationpasses 5				//表示proguard对代码进行迭代优化的次数，Android一般为5
+
+-dontobfuscate					//关闭混淆，默认开启
+
+-keep class cn.hadcn.test.**			//两颗星表示，不混淆该包下所有类，包括子包
+
+-keep class cn.hadcn.test.*			//一颗星表示，不混淆该包下所有类
+
+-keep class cn.hadcn.test.* {*;}		//不混淆该包所有类及类内容
+
+-keep public class * extends android.app.Activity //不混淆该类所有继承的子类
+
+-keep public class * implement android.view.View.OnclickListener //不混淆该接口所有实现类
+
+-keepclassmembers class com.jasonchen.test.ui.fragment.ScriptFragment$JavaScriptInterface {	//不混淆该类的内部类中所有public内容
+	public *;
+}
+
+-keep class com.jasonchen.test.utils.TestUtils{		//不混淆类中 某些内容，可以是属性，方法，构造，可指定public、private 、native内容不被混淆
+	public <methods>;	//所有public方法不被混淆
+	public <fields>;	//所有public属性不被混淆
+	public <init>;		//所有public构造不被混淆
+	public <init>(java.long.Object); //某个参数为Object的构造方法不被混淆
+}
+
+3、保留关键字
+-keep class		//保留类和成员不被混淆
+
+-keepclassmembers	//仅保留类成员，不保留类
+
+-keepclasseswithmembers //如果保留了类成员，类也被保留
+
+
+PS:混淆后默认会在工程目录app/build/outputs/mapping/release下生成一个mapping.txt文件，这就是混淆规则。
+   我们可以根据这个文件把混淆后的代码反推回源本的代码，所以这个文件很重要，注意保护好
+
+4、混淆规则
+	1，jni方法不可混淆，因为这个方法需要和native方法保持一致；
+	2，反射用到的类不混淆(否则反射可能出现问题)；
+	3，AndroidMainfest中的类不混淆，所以四大组件和Application的子类和Framework层下所有的类默认不会进行混淆。自定义的View默认也不会被混淆
+	4，与服务端交互时，使用GSON、fastjson等框架解析服务端数据时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象；
+	5，使用第三方开源库或者引用其他第三方的SDK包时，如果有特别要求，也需要在混淆文件中加入对应的混淆规则；
+	6，有用到WebView的JS调用也需要保证写的接口方法不混淆，原因和第一条一样；
+	7，Parcelable的子类和Creator静态成员变量不混淆，否则会产生Android.os.BadParcelableException异常；
+	8，使用enum类型时需要注意避免以下两个方法混淆，因为enum类的特殊性，以下两个方法会被反射调用，见第二条规则。
+
+PS:原则上，代码混淆后越乱越无规律越好，但有些地方我们是要避免混淆的，否则程序运行就会出错，
+   所以就有了下面我们要教大家的，如何让自己的部分代码避免混淆从而防止出错

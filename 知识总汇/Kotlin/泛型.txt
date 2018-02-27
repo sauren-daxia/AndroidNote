@@ -1,0 +1,91 @@
+1、泛型类型
+
+<out T>		形变		泛型只能作为返回值，也就是只读的		泛型传子类   例如: var list : List<Parent> = arrayListOf<Child>()
+
+<in T>		逆变		泛型只能作为参数，也就是只写			泛型传父类   例如: var list : List<Child> = arrayListOf<Parent>()
+
+<T>		不变		泛型能作为参数也可作为返回值，可读写		泛型传相同   例如: var list : List<Child> = arrayListOf<Child>()
+
+PS：
+	1、如果形变想作为参数，需要添加 @UnsafeVariance,同样逆变想作为返回值也需要加这个注解
+
+2、类型限定
+	
+	open class A
+
+	open class B : A()
+
+	class C : B()
+
+	<T : A>	//类型只能是自身或子类，并且类型一一对应
+		
+		var p : Person<A> = Person<A>()
+
+		或者
+
+		var p : Person<B> = Person<B>()
+
+		不能
+
+		var p : Person<B> = Person<A>()	 //类型限定的泛型规定只能是同样的类型
+
+		或不能
+
+		var p : Person<C> = Person<A>()	 //类型限定的泛型规定只能是同样的类型
+
+	<out T : A>	
+		//out协变，限定形参类型等级最高只能为A,实参低等级不限，只要是子类即可
+		
+		var p : Person<A> = Person<A>		//out协变可以为自身或子类，<out T : A> 表示最高等级为A，子类B、C都可以
+
+		或者
+
+		var p : Person<A> = Person<B>()		//out协变可以为自身或子类，<out T : A> 表示最高等级为A，子类B、C都可以
+
+		或者
+
+		var p : Person<A> = Person<C>()		//out协变可以为自身或子类，<out T : A> 表示最高等级为A，子类B、C都可以
+
+		或者
+
+		var p : Person<B> = Person<B>()		//out协变可以为自身或子类，如果传入的形参类型是A的其中一个子类，那么实参类型的等级则不能高于这个子类，只能是这个子类的子类或者自身
+
+		或者
+
+		var p : Person<B> = Person<C>()		//out协变可以为自身或子类，如果传入的形参类型是A的其中一个子类，那么实参类型的等级则不能高于这个子类，只能是这个子类的子类或者自身
+
+		不能					
+
+		var p : Person<B> = Person<A>()		//out协变是只读类型，只能传入子类或自身
+		
+		或不能
+
+		var p : Person<C> = Person<B>()		//out协变是只读类型，只能传入子类或自身
+		
+		或不能
+		var p : Person<C> = Person<A>()		//out协变是只读类型，只能传入子类或自身
+
+	
+
+	<in T : B>		
+		//in形变，限定形参类型等级最高只能为B，实参等级不能高于B，只要是子类的自身或者小于等于B的都行
+		
+		var p : Person<B> = Person<B>()		//in形变可以传入自身，或自身的父类，但父类等级不能高于B
+
+		或
+
+		var p : Person<C> = Person<B>()		//in形变可以传入自身，或自身的父类，但父类等级不能高于B
+
+		或
+
+		var p : Person<C> = Person<C>()		//in形变可以传入自身，或自身的父类，但父类等级不能高于B
+		
+		不能
+
+		var p : Person<C> = Person<A>()		//in形变是只写类型，传入的父类等级不能高于B或者自身，否则高于B的父类，没有该功能，则操作异常
+
+		或不能
+		
+		var p : Person<B> = Person<A>()		//in形变是只写类型，传入的父类等级不能高于B或者自身，否则高于B的父类，没有该功能，则操作异常
+
+		

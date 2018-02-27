@@ -1,0 +1,6 @@
+1、扩展方法
+	fun String.add(ch : Char) : String{
+		return this+ch;
+	}
+
+	//没什么特别
