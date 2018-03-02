@@ -1,0 +1,21 @@
+List集合是有序的集合，可对集合精准操作，并且可重复元素的集合，所以遍历集合的元素的时候也是有序的。
+
+特有方法
+添加：
+void		add(int index, object o)	//在指定位置添加元素，不能超过元素长度+2的添加
+获取：
+object		get(int index, object o)	//获取指定位置元素，不能越界
+删除：
+object		remove(int index)		//删除指定索引元素，并且返回被删除的元素，不能越界
+修改
+object		set(int index, object o)	//修改指定索引元素，并且返回被修改的元素，不能越界
+
+
+
+
+
+
+get() + size()	== 遍历		//使用size作为遍历长度，get获取元素，可以成为一个迭代器
+
+------------------------------
+一般方法参考collection类

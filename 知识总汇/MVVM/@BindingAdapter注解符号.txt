@@ -34,9 +34,7 @@
 	代码说明：
 		@BindingAdapter(value)		//value的值表示在xml的属性，可一个或多个
 						//单个写法(value = "imageUri") ，多个写法(value = {"imageUri,error"})
-						//多个属性是分开写，而不是一个属性传两个值，如：
-						//custom:imageUrl , custom:error
-						//参数类型不知道是不是一样，所以暂时不建议多个属性一起写
+						//多个属性是分开写，而不是一个属性传两个值，如： @BindingAdapter({"imageUrl","drawable"})
 
 		@BindingAdapter(requireAll)	//requireAll默认为true，要求所有参数都需要写，
 						//如果为false，就需要在自定意义的方法里面判断空，一定要判断!!!!!!!!
@@ -45,6 +43,6 @@
 						//不确定能定义几个，最好是第一个是控件第二个是值
 
 		custom:imageUri			//在定义value值的时候如果写了custom:iamgeUri，属性就一定要写全
-						//如果只是定义了imageUri，那么命名空间可以随意，任意，但最好规范一些
+						//如果只是定义了imageUri，那么命名空间可以随意，比如：app:imageUrl，但最好规范一些
 
 		

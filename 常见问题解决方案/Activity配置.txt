@@ -1,0 +1,5 @@
+ <activity android:name=".CitySelectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            />

@@ -1,0 +1,6 @@
+在其他控件设置两个属性：
+	 android:focusable="true"
+            android:focusableInTouchMode="true"
+
+然后再代码找到这个控件再设置一个方法
+sendBtn.requestFocus();

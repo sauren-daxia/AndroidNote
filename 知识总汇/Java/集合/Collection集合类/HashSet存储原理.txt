@@ -1,0 +1,17 @@
+hashSet存储的唯一性，是通过Map类的put方法判断储存对象的三个值是否相等
+
+	1.hashCode值是否相等		//hashCode是可变的，相当门牌号
+
+	2.地址值是否相等		//地址值是不可变的，因为物理空间是固定的
+
+	3.equals值是否相等		//判断内容是否一致
+
+String类改写了hashCode和equals的值，String值相同的hashCode值就相同，根本不用判断地址或equals
+
+其他自定义类因为hashCode值不一定相同，所以只能通过地址值判断或者equals判断。一般说成equals判断即可
+
+hashSet的储存过程：
+
+	1、首先获取对象的hashCode值
+	2、再获取hashSet的长度
+	3、然后进行每个元素的hashCode值、地址值、equals值是否相同来判断添加元素

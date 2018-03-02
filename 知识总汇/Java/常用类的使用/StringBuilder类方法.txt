@@ -1,0 +1,23 @@
+﻿StringBuffer类的方法：安全性高，但效率低
+StringBuilder类的方法：（常用）	安全性低，但效率高。
+StringBuffer和StringBuilder使用相同
+构造方法:
+	public StringBuilder();	//无参构造
+	public StringBuilder(int capacity)	//指定对象的容量
+	public StringBuilder(String str)		//将字符串转为StringBuffer
+方法：
+int	 capacity()		//返回对象的理论容量
+int	 length()		//返回对象实际长度
+添加方法：
+StringBuilder append(object)	//可追加添加任意类型的变量，可返回								StringBuffer类，并返回自身原地址。
+StringBuilder insert(int ,object)	//可在指定位置插入任何类型的变量，返回同上
+删除方法：
+StringBuilder deleteCharAt(int)		//删除指定位置的字符。返回同上
+StringBuilder delete(int,int)		//删除指定位置至指定位置内的内容。
+替换方法：
+StringBuilder replace(int, int , String)		//将指定位置内容替换
+翻转方法：
+StringBuilder reverse()		//将元素翻转。
+截取方法
+String subString(int)		//截取
+String subString(int,int)		//截取

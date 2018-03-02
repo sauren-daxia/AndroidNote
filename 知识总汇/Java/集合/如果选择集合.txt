@@ -1,0 +1,23 @@
+
+	是否是键值对形式
+		是：Map
+			键是否需要排序
+				是：TreeMap
+				否：HahsMap
+
+		否：Collections
+			元素是否唯一
+				是：Set
+					元素是否需要排序
+						是：TreeSet
+						否：HashSet
+
+					不知道就用HashSet
+				否：List
+					要安全吗？
+
+						是：Vector
+						否：ArrayList	或 LinkedList
+							增删多：LinkedList
+							查询多：ArrayList
+				不知道就用ArrayList

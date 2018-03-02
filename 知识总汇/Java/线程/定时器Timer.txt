@@ -1,0 +1,15 @@
+Timer:
+
+构造：
+-------------------
+public		Timer()
+
+启动方法：
+----------------------
+void		schedule(TimerTask tt ,long time)		//需要一个继承TimerTask的类，定时的时间。
+
+void		schedule(TimerTask tt ,long time,long time)	//需要一个继承TimerTask的类，定时的时间,重复执行的时间
+void		cancel()		//终止任务,需要在实现TimerTask的run方法体里使用，需要传自身过去；
+
+
+继承TimerTask类重写run方法，才可以用Timer执行。

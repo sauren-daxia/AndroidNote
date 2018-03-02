@@ -1,0 +1,36 @@
+			for (int i = 0; i < oneClassBean.size(); i++) {
+			//为List添加每个指示器的文字
+                                tables.add(oneClassBean.get(i).getName());
+			//为TabLayout创建TextView控件并添加每个指示器的文字
+                                tabs.addTab(tabs.newTab().setText(oneClassBean.get(i).getName()));
+			//为List添加Fragment。这种Fragment构建方式是在构建的时候传递数据并保持不丢失
+                                fragments.add(new ClassifyListFragment().newInstance(oneClassBean.get(i).getCid()));
+                            }
+			//创建FragmentPagerAdapter
+                            ClassFragmentPageAdapter classFragmentPageAdapter = new ClassFragmentPageAdapter(getActivity().getSupportFragmentManager(), fragments, tables);
+			//为ViewPager设置Adapter
+                            pager.setAdapter(classFragmentPageAdapter);
+			//让ViewPager初始化在第一个页面
+                            pager.setOffscreenPageLimit(0);
+			//为TabLayout添加ViewPager引用产生关联
+                            tabs.setupWithViewPager(pager);
+			//为TabLayout添加ViewPager的Adapter引用产生关联
+                            tabs.setTabsFromPagerAdapter(classFragmentPageAdapter);
+			//监听滑动
+                            pager.setOnPageChangeListener(ClassifyFragment.this);
+
+
+			 @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        //滑动到某个页面的监听
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }

@@ -1,0 +1,52 @@
+横竖屏切换的问题
+
+1、对应两套布局
+
+	1.1、
+		1.创建一个layout-land文件夹
+		2.创建视图界面，并且名字跟竖屏视图界面的文件名一致，系统会自动匹配
+	
+
+2、生命周期的问题
+
+	2.1、默认情况下切换横竖屏的时候，ACtivity会销毁再重建
+
+		过程：竖->onCreate -> onStart ->onResume -> onPause -> onStop -> onDestroy|
+											  |
+		onDestroy <- onStop <- onPause <- onResume <- onStart <-onCreate <-  横 <-
+
+	2.2、横竖屏切换不销毁的方法：
+
+		在配置文件的<activity>中添加属性
+		android:configChanges="orientation|keyboardHidden|screenSize"
+	
+	2.3、禁止横竖屏
+		
+		在配置文件的<activity>中添加属性
+		android:screenOrientation = "portrait"		//设置竖屏
+		android:screenOrientation = "landscape"		//设置横屏
+
+3、又要切换横屏布局，又不能销毁原布局
+	3.1在配置文件<Activity>中添加一个属性 : 
+		android:configChanges = ""		//判断什么条件下不重新创建Activity
+
+		Keyboard : 虚拟键盘调用时，会缩小Activity原来的尺寸，有可能会重新创建
+
+		screenSize : 屏幕大小变化，在4.0之后，横竖屏切换也算是大小变化
+
+		orientation : 屏幕方向
+	
+	3.2在Activity中重写onConfigurationChanged()	
+
+
+4、代码实现横竖屏转换，要在setContentView之前使用
+	setRequestedOrientation()
+		ActivityInfo.SCREE_ORIENTATION_PORTRAIT		//竖屏
+		ActivityInfo.SCREE_ORIENTATION_LANDSCAPE	//横屏
+		
+
+
+事件：
+--------------------------------------
+onConfigurationChanged(Configuration tion)		//监听横竖屏切换时
+

@@ -1,5 +1,0 @@
-if(this@FiringActivity.isFinishing == true){
-                return false
-            }
-            println("isFinishing = ${isFinishing}")
-startActivity(Intent(this@FiringActivity, MainActivity::class.java))

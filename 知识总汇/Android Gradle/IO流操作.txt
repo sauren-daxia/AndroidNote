@@ -1,0 +1,54 @@
+1、读取每一行
+	def file = new File("build.gralde")
+	file.eachLine{
+		println it
+	}
+
+2、一次性获取byte[]
+	def file = new File("build.gradle")
+	file.bytes
+	
+3、操作读写流
+	def file = new File("build.gradle")
+	//字节流
+	file.newInputStream()			//这个是BufferedInputStream
+	file.newOutputStream()			//这个是BufferedOutputStream
+	//字符流
+	file.newReader()			//这个是BufferedReader
+	file.newWriter()			//这个是BufferedWriter
+
+	//其他流也类似
+
+	file.close				//关闭流
+
+4、自动关闭流的扩展方法，和kotlin的use扩展方法一样
+	def file = new File("build.gradl")
+	file.withInputStream{
+		it
+	}
+
+	file.withOutputStream{
+		it
+	}
+
+	file.withReader{
+		it
+	}
+
+	file.withWriter{
+		it
+	}
+
+	//其他也类似
+
+5、例子：
+	(1)copy文件
+		def reader = new File("A.java")
+		def writer = new File("B.java")			//文件不存在会自动创建，同样,delete不存在不会执行
+		writer.withOutputStream {
+			write ->
+			file.withInputStream {
+				read ->
+					write << read		//运算符重载，将读取到的流传到写入流
+			}
+		}

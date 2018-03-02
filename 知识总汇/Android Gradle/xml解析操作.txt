@@ -1,0 +1,55 @@
+例子1：
+<response version-api="2.0">
+    <value>
+        <books>
+            <book available="20" id="1">
+                <title>Don Xijote</title>
+                <author id="1">Manuel De Cervantes</author>
+            </book>
+            <book available="14" id="2">
+                <title>Catcher in the Rye</title>
+                <author id="2">JD Salinger</author>
+            </book>
+            <book available="13" id="3">
+                <title>Alice in Wonderland</title>
+                <author id="3">Lewis Carroll</author>
+            </book>
+            <book available="5" id="4">
+                <title>Don Xijote</title>
+                <author id="4">Manuel De Cervantes</author>
+            </book>
+        </books>
+    </value>
+</response>
+
+task hello{
+	//通过XmlSlurper类解析XML文件，得出的是一个GPathResult类，这个类不能显示构造
+	def parse = new XmlSlurper().parse("xxxxx.xml")
+
+	//通过gpathResult.xx的方式获取某一层的内容，这里获取的是books第四个book标签
+	def book4 = parse.value.books.book[3]
+	println "--------------book4 $book4"
+
+	//通过book4可以调用里面的子节点
+	def author = book4.author
+	println "--------------author $author"
+
+	//通过子节点获取textvalue
+	def text = author.text()
+	println "----------------author.text()"+
+
+	//通过子节点获取属性
+	def id = author.@id
+	println "-----------id $id"
+	
+	//同样的获取某个子节点的内容
+	println "-----title "+book4.title.text()
+
+	PS:以上代码通通没有提示，只能自己手写
+}
+
+例子2：获取AndroidManifest中的版本号
+	def parse = new XmlSlurper().parse("AndroidManifest.xml")
+
+	//解析出来的对象就是根节点，根节点有这个属性可以直接这样获取
+	println parse.@'android:versioName'

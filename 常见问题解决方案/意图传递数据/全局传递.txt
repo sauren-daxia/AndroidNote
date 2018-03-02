@@ -1,0 +1,30 @@
+全局传递步骤如下：
+
+1、定义一个额外类继承Appliction
+
+public Student extends Appliction
+
+2、定义属性，get、set方法
+getXX() setXX()
+
+3、重写onCreate,设置setContentView()
+
+4、调用getAppliction()获取对象
+Student stu = (Student)getAppliction();
+
+5、设置对象属性
+setXX()
+6、定义意图传递
+...
+
+
+获取全局数据
+
+1、调用getAppliction()获取对象
+Student stu = (Student)getAppliction();
+
+2.获取属性
+getXX()
+
+
+PS!!! ：使用全局传递数据的类，必须在配置文件<Appliction>属性中添加name = ".Student" ，确保<Appliction>下的每个界面都可获取数据

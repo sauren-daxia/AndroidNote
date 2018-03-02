@@ -1,0 +1,2 @@
+1、BindException		//端口被占用
+2、ConnectionException		//访问异常

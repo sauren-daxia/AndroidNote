@@ -1,0 +1,10 @@
+应该是给全局的控件做一些基础平缓的动画
+
+ binding.addOnRebindCallback(new OnRebindCallback() {
+            @Override
+            public boolean onPreBind(ViewDataBinding binding) {
+                ViewGroup root = (ViewGroup) binding.getRoot();
+                TransitionManager.beginDelayedTransition(root);
+                return true;
+            }
+        });

@@ -1,0 +1,11 @@
+1、复用表达式，假如控件A使用了一个属性，并且做了表达式处理，控件B也需要使用这个属性，也需要处理，那么可以复用A的，例如
+<TextView
+	android:id="@+id/view1"
+	android:visibility="@{people.dia ? View.GONE : View.VISIBLE]"
+/>
+
+<TextView
+	android:visibility="@{view1.visibility]"		//找到控件，然后获取他的属性就行了，不管有没有复用，都可以这样使用
+/>
+
+

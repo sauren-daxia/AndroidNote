@@ -1,0 +1,22 @@
+
+URL构造：
+------------------------------
+URL url = new URL(String http);		
+
+方法：-
+------------------------------
+Connection		openConnection();
+
+HttpURLConnection构造：
+------------------------------
+HttpURLConnection hc = (HttpURLConnection)url.openConnection();
+
+方法：
+------------------------------
+setRequestMethod("GET")		//获取资源
+
+setConnectTimeout(5000)		//超时连接
+
+conn.setRequestProperty("User-Agent","Mozilla/4.0 (compatible; MSIE 8.0; windows NT 5.1; Trident/4.0; .NET CLR 2.050727)")	//伪装浏览器
+
+int 	getContentLength()	//获取文件长度

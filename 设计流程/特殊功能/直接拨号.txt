@@ -1,8 +1,0 @@
-
-Intent intent = new Intent();
-
-intent.setaction(Intent.ACTION_CALL);
-
-intent.setData(Uri.parse("tel:"+110));
-
-È¨ÏÞ£ºCALL_PHOME

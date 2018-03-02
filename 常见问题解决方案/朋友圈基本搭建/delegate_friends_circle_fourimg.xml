@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F1F1F1"
+    android:orientation="vertical">
+
+    <com.dsfa.common.ui.widget.CircleImageView
+        android:id="@+id/civ_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/civ_head"
+        android:layout_toRightOf="@id/civ_head"
+        android:text="姓名"
+        android:textColor="#546a92" />
+
+    <com.dsfa.lovepartybuild.ui.widget.friendcircle.ExpandTextView
+        android:id="@+id/tv_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/civ_head" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:id="@+id/recycler_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_expand"
+        android:layout_toRightOf="@id/civ_head" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/civ_head"
+        android:layout_below="@id/recycler_img"
+        android:id="@+id/include"
+        layout="@layout/include_friends_comment_module"/>
+
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/include"
+        android:background="#E8E8E8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</RelativeLayout>

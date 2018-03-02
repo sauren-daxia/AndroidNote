@@ -1,0 +1,5 @@
+1、Gradle编译错误提示
+	file -> settings -> build,execution,deployment -> compiler ->command-line options 
+	输入：--stacktrace
+
+	当Dex合并的时候报错的异常更清晰

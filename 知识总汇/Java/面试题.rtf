@@ -1,0 +1,206 @@
+{\rtf1\ansi\ansicpg936\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset134 \'cb\'ce\'cc\'e5;}{\f1\fnil Consolas;}}
+{\colortbl ;\red255\green0\blue0;\red0\green0\blue0;\red42\green0\blue255;\red127\green0\blue85;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.10586}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang2052\par
+\'c3\'e6\'ca\'d4\'cc\'e21\'a3\'ba\'bd\'ab\'c1\'bd\'b8\'f6\'d5\'fb\'ca\'fd\'cf\'e0\'bb\'a5\'d7\'aa\'bb\'bb\'ca\'fd\'d6\'b5\'a3\'a8\'b2\'bb\'d3\'c3\'b5\'da\'c8\'fd\'b7\'bd\'b1\'e4\'c1\'bf\'bd\'bb\'bb\'bb\'a3\'a9\par
+\tab\tab int a = 10; int b = 20;\par
+\tab\'b4\'f0\'b0\'b8\'a3\'ba\tab a = a ^ b;\tab\tab a = a + b;\tab\tab b = ( a + b ) - ( a = b );\par
+\tab\tab b = a ^ b;\tab\tab b = a - b;\par
+\tab\tab a = a ^ b;\tab\tab a = a - b;\par
+\'c3\'e6\'ca\'d4\'cc\'e22\'a3\'ba\'cf\'c2\'c3\'e6\'c1\'bd\'be\'e4\'b4\'fa\'c2\'eb\'c4\'c4\'be\'e4\'b1\'e0\'d2\'eb\'ca\'a7\'b0\'dc\'a3\'bb\par
+\tab\tab byte b1 = 3, b2 = 4, b;\par
+\tab\tab b = b1 + b2;  //\cf1\'b1\'e0\'d2\'eb\'ca\'a7\'b0\'dc,\'d2\'f2\'ce\'aa\'ca\'fd\'d6\'b5\'d4\'cb\'cb\'e3\'c4\'ac\'c8\'cf\'d7\'aa\'bb\'bb\'ce\'aaint\'c0\'e0\'d0\'cd\'a3\'ac\'cb\'f9\'d2\'d4\'bd\'e1\'b9\'fb\'ca\'c7int\'c0\'e0\'d0\'cd\'b5\'c4\'d6\'b5\'b2\'bb\'c4\'dc\'b8\'b3\'b8\'f8byte \cf0\par
+\tab\tab b = 3 + 4;\tab   //\cf1\'b1\'e0\'d2\'eb\'b3\'c9\'b9\'a6\'a3\'ac\'d2\'f2\'ce\'aa\'ca\'d7\'cf\'c8\'bc\'c6\'cb\'e3\'b3\'a3\'c1\'bf\'b5\'c4\'d6\'b5\'a3\'ac\'bf\'b4\'ca\'c7\'b7\'f1\'d4\'da\'b1\'e4\'c1\'bf\'c0\'e0\'d0\'cd\'b5\'c4\'b7\'b6\'ce\'a7\'a3\'ac\'d4\'da\'d4\'f2\'b1\'e0\'d2\'eb\'b3\'c9\'b9\'a6\cf0\par
+\'c3\'e6\'ca\'d4\'cc\'e23\'a3\'ba\'cf\'c2\'c3\'e6\'d3\'ef\'be\'e4\'d3\'d0\'c3\'bb\'d3\'d0\'ce\'ca\'cc\'e2\'a3\'bf\'c8\'e7\'b9\'fb\'d5\'fd\'c8\'b7\'b8\'b3\'d6\'b5\'d2\'aa\'d4\'f5\'c3\'b4\'d7\'f6\'a3\'bf\'bd\'e1\'b9\'fb\'ca\'c7\'b6\'e0\'c9\'d9\'a3\'bf\tab\par
+\tab\tab byte b = 130;\par
+\tab\tab byte b = (byte)130;\tab\tab //\'d2\'f2\'ce\'aa130\'d2\'e7\'b3\'f6byte\'c0\'e0\'d0\'cd\'b5\'c4\'c8\'a1\'d6\'b5\'b7\'b6\'ce\'a7\'a3\'ac\'b2\'bb\'c4\'dc\'d6\'b1\'bd\'d3\'b8\'b3\'d6\'b5\par
+\tab\tab b == -126;\tab\tab //\'bb\'f1\'c8\'a1130\'b2\'b9\'c2\'eb\'a3\'ac\'d2\'f2\'ce\'aa\'d5\'fd\'ca\'fd\'d4\'ad\'b7\'b4\'b2\'b9\'d2\'bb\'d1\'f9\'a3\'ac\'bc\'c6\'cb\'e3\'b3\'f6\'b7\'b4\'c2\'eb\'a3\'ac\'b5\'c3\'b5\'bd\'d4\'ad\'c2\'eb\par
+\tab\tab\'b5\'c3\'b5\'bd\'d4\'ad\'c2\'eb1111 1110\tab //\cf1\'d2\'f2\'ce\'aa-128\'c3\'bb\'d3\'d0\'d4\'ad\'b7\'b4\'c2\'eb\'a3\'ac\'cb\'f9\'d2\'d41111 1111\'ca\'c7-127\par
+\cf0\'c3\'e6\'ca\'d4\'cc\'e24\'a3\'ba\'bc\'c6\'cb\'e3100-1000\'c4\'da\'cb\'f9\'d3\'d0\'cb\'ae\'cf\'c9\'bb\'a8\'ca\'fd\par
+\tab\tab\'b9\'e6\'c2\'c9\'a3\'ac\'d0\'e8\'d2\'aa\'bb\'f1\'b5\'c3\'c4\'c4\'b8\'f6\'ce\'bb\'ca\'fd\'c9\'cf\'b5\'c4\'d6\'b5\'a3\'ac\'be\'cd\'b3\'fd\'d2\'d4\'c4\'c4\'b8\'f6\'ce\'bb\'b5\'c4\'d6\'b5\'a3\'ac\'d4\'d9\'b6\'d410\'c8\'a1\'d3\'e0\'a3\'bb\'b8\'f7\'ce\'bb\'d6\'b1\'bd\'d3\'c8\'a1\'d3\'e0\par
+\tab\tab int x\tab = 153/10%10;\tab\tab //153\'b3\'fd10\'b5\'c8\'d3\'da15,15\'b6\'d410\'c8\'a1\'d3\'e0\'b5\'c8\'d3\'da5\'a3\'bb\par
+\tab\tab for(int i = 100; 100 < 1000; i++)\par
+\tab\tab\{\par
+\tab\tab int x = i%10; int y = i/10%10; int z = i/100%10;\par
+\tab\tab if(i == x*x*x + y*y*y + z*z*z)\{System.out.println(i)\}\tab\par
+\tab\tab\}\par
+\'c3\'e6\'ca\'d4\'cc\'e25\'a3\'ba\'bc\'c6\'cb\'e3\'bb\'d8\'ce\'c4\'ca\'fd\'a3\'ac\'b5\'da\'d2\'bb\'ce\'bb\'b5\'c8\'d3\'da\'b5\'b9\'ca\'fd\'b5\'da\'d2\'bb\'ce\'bb\'a3\'ac\'b5\'da\'b6\'fe\'ce\'bb\'b5\'c8\'d3\'da\'b5\'b9\'ca\'fd\'b5\'da\'b6\'fe\'ce\'bb.....\'d6\'d0\'bc\'e4\'d2\'bb\'ce\'bb\'b5\'c8\'d3\'da\'cb\'f9\'d3\'d0\'ce\'bb\'ca\'fd\'cf\'e0\'bc\'d3\'a3\'bb\par
+\tab\tab for(int i = 10000; i < 100000; i++)\par
+\tab\tab\{\par
+\tab\tab int ge = i%10; int shi = i/10%10; int bai = i/100%10; int qian = i/1000%10; \par
+\tab\tab int wan = i/10000%10;\par
+\tab\tab if((ge==wan) && (shi==qian) && (ge+shi+qian+wan==bai)) \par
+\tab\tab\}\par
+\'c3\'e6\'ca\'d4\'cc\'e26\'a3\'ba\'be\'c5\'be\'c5\'b3\'cb\'b7\'a8\'b1\'ed\par
+\tab\tab for(int x = 1; x <= 9; i++)\par
+\tab\tab\{\par
+\tab\tab\tab for(int y = 1; y <= x; y++)\par
+\tab\tab\tab\{\par
+\tab\tab\tab\tab System.out.print(x"*"+y+"="+x*y+"t");\par
+\tab\tab\tab\}\par
+\tab\tab System.out.prrintln();\par
+\tab\tab\}\par
+\'c3\'e6\'ca\'d4\'cc\'e27\'a3\'ba\'be\'b2\'cc\'ac\'b4\'fa\'c2\'eb\'bf\'e9\'a1\'a2\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'b5\'c4\'d6\'b4\'d0\'d0\'cb\'b3\'d0\'f2\'c4\'d8\'a3\'bb\par
+\tab\'cf\'c8\'d6\'b4\'d0\'d0\'be\'b2\'cc\'ac\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'d4\'d9\'d6\'b4\'d0\'d0\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'d7\'ee\'ba\'f3\'d6\'b4\'d0\'d0\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a1\'a3\par
+\tab\'b2\'a2\'c7\'d2\'be\'b2\'cc\'ac\'b4\'fa\'c2\'eb\'bf\'e9\'d6\'bb\'d6\'b4\'d0\'d0\'d2\'bb\'b4\'ce\'a3\'ac\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'c3\'bf\'b4\'ce\'b4\'b4\'bd\'a8\'b6\'d4\'cf\'f3\'b5\'c4\'ca\'b1\'ba\'f2\'b6\'bc\'bb\'e1\'d6\'b4\'d0\'d0\'a3\'bb\par
+\cf1\'c3\'e6\'ca\'d4\'cc\'e28\'a3\'ba\'b4\'fa\'c2\'eb\'ca\'e4\'b3\'f6\'b5\'c4\'cb\'b3\'d0\'f2\'a3\'bb\cf0\par
+public class fu\{\par
+static\{ 1; \}\par
+\{ 2; \}\par
+public fu()\{ 3; \}\par
+\}\par
+public class zi extends fu \{\par
+static\{ 4; \}\par
+\{ 5; \}\par
+pbulic zi()\{ 6;\}\par
+\}\par
+\'cb\'b3\'d0\'f2\'ca\'c7 1, 4, 2, 3, 5, 6;\par
+\cf1\'d4\'ad\'d2\'f2\'ca\'c7\'d2\'f2\'ce\'aa\'c0\'e0\'b5\'c4\'b4\'b4\'bd\'a8\'cf\'c8\'ca\'c7\'bc\'d3\'d4\'d8\'c0\'e0\'b5\'c4\'b3\'c9\'d4\'b1\'d4\'d9\'c8\'a5\'b5\'f7\'d3\'c3\'b9\'b9\'d4\'ec\'ba\'af\'ca\'fd\'a3\'ac\'d2\'f2\'ce\'aazi\'c0\'e0\'d3\'d0\'bc\'cc\'b3\'d0\'a3\'ac\'b4\'b4\'bd\'a8zi\'b6\'d4\'cf\'f3\'ca\'b1\'cf\'c8\'bc\'d3\'d4\'d8\'b8\'b8\'b3\'c9\'d4\'b1\'a3\'ac\'b6\'f8\'b8\'b8\'d6\'d0\'d3\'d0\'be\'b2\'cc\'ac\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'d3\'c5\'cf\'c8\'b5\'f7\'d3\'c3\'a3\'ac\'bc\'d3\'d4\'d8\'cd\'ea\'b8\'b8\'c0\'e0\'c8\'bb\'ba\'f3\'bc\'d3\'d4\'d8\'d7\'d3\'c0\'e0\'a3\'ac\'d7\'d3\'c0\'e0\'d2\'b2\'d3\'d0\'be\'b2\'cc\'ac\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'d4\'d9\'c8\'bb\'ba\'f3\'b2\'c5\'ca\'c7\'b5\'f7\'d3\'c3\'d7\'d3\'c0\'e0\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ac\'b6\'f8\'b5\'f7\'d3\'c3\'d7\'d3\'c0\'e0\'b5\'c4\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'ca\'d7\'cf\'c8\'b5\'f7\'d3\'c3\'b8\'b8\'c0\'e0\'b5\'c4\'ce\'de\'b2\'ce\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ac\'b6\'f8\'b8\'b8\'c0\'e0\'c0\'ef\'d3\'d0\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'cb\'f9\'d2\'d4\'cf\'c8\'d6\'b4\'d0\'d0\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'d4\'d9\'d6\'b4\'d0\'d0\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ac\'d6\'b4\'d0\'d0\'cd\'ea\'b8\'b8\'c0\'e0\'b9\'b9\'d4\'ec\'d4\'d9\'d6\'b4\'d0\'d0\'d7\'d3\'c0\'e0\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ac\'d7\'d3\'c0\'e0\'d2\'b2\'d3\'d0\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'a3\'ac\'cb\'f9\'d2\'d4\'d6\'b4\'d0\'d0\'cd\'ea\'d7\'d3\'c0\'e0\'b9\'b9\'d4\'ec\'b4\'fa\'c2\'eb\'bf\'e9\'b2\'c5\'d6\'b4\'d0\'d0\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ac\'cb\'f9\'d2\'d4\'bd\'e1\'b9\'fb\'ca\'c71, 4, 2, 3, 5, 6,;\par
+\'c3\'e6\'ca\'d4\'cc\'e29\'a3\'ba\'b4\'fa\'c2\'eb\'ca\'e4\'b3\'f6\'b5\'c4\'cb\'b3\'d0\'f2\'a3\'bb\par
+\cf0 class x\{\par
+y d = new y();\par
+x() \{prinln("x");\}\par
+\}\par
+class y\{\par
+y()\{println("y");\}\par
+\}\par
+class z extends x\{\par
+y h = new y;\par
+z() \{println("z");\}\par
+\}\par
+\'bd\'e1\'b9\'fb\'ca\'c7 \'a3\'bayxyz\'a3\'bb\par
+\'c3\'e6\'ca\'d4\'cc\'e210\'a3\'bafinal\'d0\'de\'ca\'ce\'b5\'c4\'d2\'fd\'d3\'c3\'b1\'e4\'c1\'bf\'ba\'cd\'bb\'f9\'b1\'be\'b1\'e4\'c1\'bf\'b5\'c4\'c7\'f8\'b1\'f0\'a3\'bf\par
+\tab\'b1\'bbfinal\'d0\'de\'ca\'ce\'b5\'c4\'d2\'fd\'d3\'c3\'c0\'e0\'d0\'cd\'b1\'e4\'c1\'bf\'b5\'c4\'b5\'d8\'d6\'b7\'d6\'b5\'b2\'bb\'c4\'dc\'b8\'c4\'b1\'e4\'a3\'ac\'d2\'b2\'be\'cd\'ca\'c7\'b2\'bb\'c4\'dc\'c8\'c3\'cb\'fc\'d6\'b8\'cf\'f2\'c1\'ed\'d2\'bb\'b8\'f6\'b1\'e4\'c1\'bf\'a3\'ac\'b5\'ab\'cb\'fc\'cb\'f9\'d6\'b8\'cf\'f2\'b5\'c4\'b1\'e4\'c1\'bf\'b5\'c4\'c4\'da\'c8\'dd\'c8\'e7\'b9\'fb\'b2\'bb\'ca\'c7\'b1\'bbfinal\'d0\'de\'ca\'ce\'b5\'c4\'d4\'f2\'bf\'c9\'d2\'d4\'d0\'de\'b8\'c4\'a3\'bb\par
+\tab\'b1\'bbfinal\'d0\'de\'ca\'ce\'b5\'c4\'bb\'f9\'b1\'be\'b1\'e4\'c1\'bf\'b5\'c4\'b3\'a3\'c1\'bf\'b2\'bb\'c4\'dc\'b1\'bb\'d6\'d8\'d0\'c2\'b8\'b3\'d6\'b5\'a1\'a3\'d2\'b2\'be\'cd\'ca\'c7\'d3\'c3final\'d0\'de\'ca\'ce\'b5\'c4\'b1\'e4\'c1\'bf\'be\'cd\'ca\'c7\'b3\'a3\'c1\'bf\'a1\'a3\par
+\'c3\'e6\'ca\'d4\'cc\'e211\'a3\'ba\'d2\'aa\'c7\'f3\'b7\'d6\'b1\'f0\'cc\'ee\'bf\'d5\'ca\'e4\'b3\'f630\'a3\'ac20,10\'a3\'bb\par
+class a\{\par
+\tab public int num = 10;\par
+\tab public void show()\{\par
+\tab\tab public int num = 20;\par
+\tab\tab class b\{\par
+\tab\tab public int num = 30;\par
+\tab\tab System.out.println(?);\tab\tab //\'cc\'ee\'c8\'ebnum\par
+\tab\tab System.out.println(??);\tab\tab //\'cc\'ee\'c8\'ebthis.num\par
+\tab\tab System.out.println(???);\tab\tab //\'cc\'ee\'c8\'eba.this.num\par
+\tab\}\par
+\}\par
+\}\par
+mian()\{\par
+\tab a.b c = new a().newb();\par
+\tab a.show();\par
+\}\par
+\'c3\'e6\'ca\'d4\'cc\'e212\'a3\'ba\'be\'d6\'b2\'bf\'c0\'e0\'c8\'e7\'ba\'ce\'b7\'c3\'ce\'ca\'be\'d6\'b2\'bf\'b1\'e4\'c1\'bf\'b5\'c4\par
+\tab\'c8\'e7\'b9\'fb\'be\'d6\'b2\'bf\'c0\'e0\'d0\'e8\'d2\'aa\'be\'d6\'b2\'bf\'b1\'e4\'c1\'bf\'a3\'ac\'be\'cd\'d0\'e8\'d2\'aa\'b0\'d1\'be\'d6\'b2\'bf\'b1\'e4\'c1\'bf\'b6\'a8\'d2\'e5\'ce\'aafinal\'d0\'de\'ca\'ce\'b5\'c4\'b1\'e4\'c1\'bf\'a1\'a3\par
+\tab\'d2\'f2\'ce\'aa\'be\'d6\'b2\'bf\'b1\'e4\'c1\'bf\'d4\'cb\'d0\'d0\'d2\'bb\'b4\'ce\'be\'cd\'bb\'e1\'cf\'fb\'ca\'a7\'a3\'ac\'c8\'e7\'b9\'fb\'b6\'a8\'d2\'e5\'ce\'aafinal\'d0\'de\'ca\'ce\'b5\'c4\'b1\'e4\'c1\'bf\'a3\'ac\'ca\'b9\'d3\'c3\'cd\'ea\'d6\'ae\'ba\'f3\'bb\'b9\'bb\'e1\'bc\'cc\'d0\'f8\'b1\'a3\'c1\'f4\'a1\'a3\par
+\'c3\'e6\'ca\'d4\'cc\'e213\'a3\'ba\'b2\'b9\'c6\'eb\'b4\'fa\'c2\'eb\par
+\tab class intert\{\par
+\tab void show();\par
+\}\par
+class outer\{\tab\tab\}\par
+main()\{ outer.method().show();\tab\}\par
+\'cd\'ea\'d5\'fb\'b0\'e6:\par
+class inter\{\par
+\tab pulibc abstract void show();\par
+\}\par
+class\{\par
+\tab public static inter method()\{\par
+\tab\tab retrun new inter()\{\par
+\tab\tab\tab public void show("HelloWorld");\par
+\tab\tab\}\par
+\tab\}\par
+\}\tab\par
+main()\{ outer.menthod().show();\tab\}\par
+\'c3\'e6\'ca\'d4\'cc\'e214\'a3\'baString s = new String("a")\'ba\'cdString s = "a"\'d2\'bb\'d1\'f9\'c2\'f0\'a3\'bb\par
+\'b2\'bb\'d2\'bb\'d1\'f9\'a3\'ac\'c7\'b0\'d5\'df\'bf\'aa\'b1\'d9\'c1\'bd\'b8\'f6\'bf\'d5\'bc\'e4\'a3\'ac\'ba\'f3\'d5\'df\'bf\'aa\'b1\'d9\'d2\'bb\'b8\'f6\'bf\'d5\'bc\'e4\'a3\'ac\'b5\'d8\'d6\'b7\'ca\'c7\'b2\'bb\'d2\'bb\'d1\'f9\'b5\'c4\'a1\'a3\par
+\'c7\'b0\'d5\'df\'d4\'da\'b7\'bd\'b7\'a8\'c7\'f8\'bf\'aa\'b1\'d9\'d2\'bb\'b8\'f6\'bf\'d5\'bc\'e4\'b6\'a8\'d2\'e5\'d6\'b5\'a3\'ac\'d4\'d9\'d4\'da\'b6\'d1\'d6\'d0\'bf\'aa\'b1\'d9\'bf\'d5\'bc\'e4\'d6\'b8\'cf\'f2\'b7\'bd\'b7\'a8\'c7\'f8\'a3\'ac\'d7\'ee\'ba\'f3\'d5\'bb\'d6\'b8\'cf\'f2\'b6\'d1\par
+\'ba\'f3\'d5\'df\'d6\'b1\'bd\'d3\'d6\'b8\'cf\'f2\'b7\'bd\'b7\'a8\'c7\'f8\'b6\'a8\'d2\'e5\'b5\'c4\'d6\'b5\'a1\'a3\par
+\'c3\'e6\'ca\'d4\'cc\'e215\'a3\'ba\'c5\'d0\'b6\'cf\'d7\'d6\'b7\'fb\'b4\'ae\'b0\'fc\'ba\'ac\'bc\'b8\'b8\'f6\'b4\'f3\'d0\'b4\'a1\'a2\'d0\'a1\'d0\'b4\'a1\'a2\'ca\'fd\'d7\'d6\par
+\tab\'d1\'ad\'bb\'b7\'bb\'f1\'c8\'a1\'d7\'d6\'b7\'fb\'b4\'ae\'c3\'bf\'b8\'f6\'d4\'aa\'cb\'d8\tab ch c = s.charAt(i);\par
+\tab if(c >='0' && c <='9')\tab\tab //\'c5\'d0\'b6\'cf\'ca\'fd\'d7\'d6\par
+\tab if(c >='a' && c <='z')\tab\tab //\'c5\'d0\'b6\'cf\'d0\'a1\'d0\'b4\par
+\tab if(c >='A' && c <='Z')\tab\tab //\'c5\'d0\'b6\'cf\'b4\'f3\'d0\'b4\par
+\'d2\'f2\'ce\'aa\'d7\'d6\'b7\'fb\'d7\'f6\'b1\'c8\'bd\'cf\'b5\'c4\'ca\'b1\'ba\'f2\'bb\'e1\'d7\'aa\'ce\'aaint\'c0\'e0\'d0\'cd\'a3\'ac\'b6\'f8\'c3\'bf\'b8\'f6\'d7\'d6\'b7\'fb\'b6\'bc\'d3\'d0\'b6\'d4\'d3\'a6\'b5\'c4ASCII\'c2\'eb\'a1\'a3 \par
+\cf2\fs24\'c3\'e6\'ca\'d4\'cc\'e216\'a3\'ba\'b2\'e9\'d5\'d2\'d7\'d6\'b7\'fb\'b4\'ae\'d6\'d0\'d3\'d0\'bc\'b8\'b8\'f6\'cf\'e0\'cd\'ac\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\par
+\f1 String str = \cf3 "java--sdjavajavaeowiuojavas java"\cf2 ;\cf0\par
+\cf2\tab\tab String s = \cf3 "java"\cf2 ;\cf0\par
+\cf2\tab\tab\cf4\b int\cf2\b0  location = 0;\cf0\par
+\cf2\tab\tab\cf4\b int\cf2\b0  count = 0;\cf0\par
+\cf2\tab\tab\cf4\b while\cf2\b0 ((location = str.indexOf(s))!=-1)\{\cf0\par
+\cf2\tab\tab\tab count++;\cf0\par
+\cf2\tab\tab\tab str = str.substring(location + s.length());\cf0\par
+\cf2\tab\tab\}\par
+\f0\'c3\'e6\'ca\'d4\'cc\'e217\'a3\'ba\par
+1\'a1\'a2String\'a1\'a2StringBuffer\'a1\'a2StringBuilder\'b5\'c4\'c7\'f8\'b1\'f0\par
+\tab\'b4\'f0\'a3\'ba\par
+\tab\tab 1.String\'b5\'c4\'d6\'b5\'c4\'da\'c8\'dd\'b2\'bb\'bf\'c9\'b1\'e4\'a3\'ac\'b6\'f8StringBuffer\'ba\'cdStringBuilder\'bf\'c9\'b1\'e4\par
+\tab\tab 2.StringBuffer\'ca\'c7\'cd\'ac\'b2\'bd\'ca\'fd\'be\'dd\'b0\'b2\'c8\'ab\'d0\'a7\'c2\'ca\'b5\'cd\'b5\'c4,StringBuilder\'ca\'c7\'b2\'bb\'cd\'ac\'b2\'bd\'ca\'fd\'be\'dd\'b2\'bb\'b0\'b2\'c8\'ab\'d0\'a7\'c2\'ca\'b8\'df\'b5\'c4\'a1\'a3\par
+\cf0\fs22 2\'a1\'a2StringBuffer\'bb\'f2Stringbuilder\'ba\'cd\'ca\'fd\'d7\'e9\'b5\'c4\'c7\'f8\'b1\'f0:\par
+\tab\'b4\'f0\'a3\'ba\par
+\tab\tab 1.StringBuffer\'d7\'b0\'b5\'c4\'b6\'bc\'bf\'c9\'d2\'d4\'bf\'b4\'d7\'f6\'ca\'c7\'cb\'ae\'a3\'ac\'ca\'fd\'d7\'e9\'d4\'f2\'ca\'c7\'d1\'a9\'b1\'cc\'a3\'ac\'d6\'bb\'d7\'b0\'d1\'a9\'b1\'cc\par
+\tab\tab 2.StringBuffer\'d7\'ee\'d6\'d5\'d7\'aa\'bb\'bb\'b5\'c4\'b6\'bc\'ca\'c7String\'ca\'fd\'be\'dd\par
+\tab\tab 3.\'ca\'fd\'d7\'e9\'bf\'c9\'d2\'d4\'ca\'c7\'b6\'e0\'d6\'d6\'c0\'e0\'d0\'cd\'b5\'c4\'ca\'fd\'d7\'e9\'a3\'ac\'b5\'ab\'d6\'bb\'c4\'dc\'d7\'b0\'cf\'e0\'cd\'ac\'c0\'e0\'d0\'cd\'b5\'c4\'ca\'fd\'be\'dd\par
+\'c3\'e6\'ca\'d4\'cc\'e218\'a3\'ba\'bf\'b4\'b4\'fa\'c2\'eb\'c5\'d0\'b6\'cftrue\'a1\'a2false\par
+\tab Integer i1 = new Integer(128);\par
+\tab Integer i2 = new Integer(128);\par
+\tab Integer i3 = 128;\par
+\tab Integer i4 = 128\par
+\tab i1 == i2?\tab //\'d2\'f2\'ce\'aai1,i2\'ca\'c7new\'b3\'f6\'c0\'b4\'b5\'c4\'b5\'d8\'d6\'b7\'d6\'b5\'b2\'bb\'d2\'bb\'d1\'f9\'cb\'f9\'d2\'d4false\par
+\tab i3 == i4?\tab //false\par
+\'cb\'e4\'c8\'bbi3,i4\'ca\'c7\'d6\'b1\'bd\'d3\'b8\'b4\'d6\'c6\'b5\'c4\'a3\'ac\'b5\'abInteger\'d4\'da1.5\'b0\'e6\'b1\'be\'ba\'f3\'d3\'d0\'b8\'f6\'d0\'c2\'cc\'d8\'d0\'d4\'a3\'ac\'c8\'e7\'b9\'fb\'d6\'b5\'d4\'dabyte\'b7\'b6\'ce\'a7\'c4\'da\'d4\'f2\'d6\'b1\'bd\'d3\'b4\'d3\'b3\'a3\'c1\'bf\'b3\'d8\'c0\'ef\'bb\'f1\'c8\'a1\'a1\'a3\'c8\'e7\'b9\'fb\'d6\'b5\'b3\'ac\'b9\'fdbyte\'d6\'b5\'d4\'f2\'bb\'e1\'d7\'d4\'b6\'afNew\'d2\'bb\'b8\'f6\'bf\'d5\'bc\'e4\'a3\'ac\'b4\'b4\'bd\'a8\'b6\'d4\'cf\'f3\par
+\'c3\'e6\'ca\'d4\'cc\'e219\'a3\'ba\'c8\'e7\'ba\'ce\'b7\'d6\'b8\'ee\'b5\'d8\'d6\'b7\par
+String str = "D:<{{\field{\*\fldinst{HYPERLINK "\\\\\\\\Program Files\\\\\\\\"}}{\fldrslt{\\\\Program Files\\\\\ul0\cf0}}}}\f0\fs22 >\'ce\'a2\'d0\'c5\\WeChat{{\field{\*\fldinst{HYPERLINK "\\\\\\\\WeChat.exe"}}{\fldrslt{\\\\WeChat.exe\ul0\cf0}}}}\f0\fs22 ";\tab\par
+JAVA\'d7\'d6\'b7\'fb\'b4\'ae\'d6\'d0\'a3\'ac\'d2\'bb\'b8\'f6\\\'b4\'fa\'b1\'ed\'d7\'aa\'d2\'e5\'a3\'ac\'c1\'bd\'b8\'f6\'b2\'c5\'ca\'c7\'c6\'d5\'cd\'a8\'d7\'d6\'b7\'fb\'a3\'ac\'cb\'f9\'d2\'d4\'b5\'d8\'d6\'b7\'d2\'aa\'c1\'bd\'b8\'f6\\\par
+String[] strArray = str.split("\\\\\\\\");\tab\tab\par
+\'d3\'d6\'d2\'f2\'ce\'aa\'b8\'c4\'d0\'b4\'ba\'f3\'b5\'c4\'b5\'d8\'d6\'b7\'d3\'d0\'c1\'bd\'b8\'f6\\\'a3\'ac\'cb\'f9\'d2\'d4\'b7\'d6\'b8\'ee\'b5\'d8\'d6\'b7\'d0\'e8\'d2\'aa\'cb\'c4\'b8\'f6\\\par
+\'c3\'e6\'ca\'d4\'cc\'e220\'a3\'ba\'d0\'b4\'d2\'bb\'b8\'f6\'b7\'bd\'b7\'a8\'c4\'dc\'bb\'f1\'c8\'a1\'c8\'ce\'d2\'e2\'b7\'b6\'ce\'a7\'b5\'c4\'cb\'e6\'bb\'fa\'ca\'fd\par
+public static int getRandom(int a,int b)\{\par
+\tab int random = (int)(Math.random()*(b-a+1)) +a;\par
+\tab return random;\par
+\}\par
+\'c3\'e6\'ca\'d4\'cc\'e220\'a3\'ba\'c5\'d0\'b6\'cf\'cf\'c2\'c1\'d0\'d3\'ef\'be\'e4\'ca\'c7\'b7\'f1\'b3\'f6\'b4\'ed\par
+hm.put(007 , "abc")\tab\tab //\'b2\'bb\'bb\'e1\'b3\'f6\'b4\'ed\par
+hm.put(008, "abc")\tab\tab //\'b4\'ed\'ce\'f3\'a1\'a3\'d2\'f2\'ce\'aa0\'bf\'aa\'cd\'b7\'b5\'c4\'c4\'ac\'c8\'cf\'ce\'aa\'b0\'cb\'bd\'f8\'d6\'c6\'a3\'ac\'b6\'f8\'b0\'cb\'bd\'f8\'d6\'c6\'c3\'bb\'d3\'d08\par
+\par
+\'c3\'e6\'ca\'d4\'cc\'e221\'a3\'baHashMap\'ba\'cdHashtable\'b5\'c4\'c7\'f8\'b1\'f0\par
+Hashtable\tab\'a3\'ba\'cf\'df\'b3\'cc\'b0\'b2\'c8\'ab\'a3\'ac\'b2\'bb\'d4\'ca\'d0\'ednull\'bc\'fc\'ba\'cdnull\'d6\'b5\par
+HashMap\tab\'a3\'ba\'cf\'df\'b3\'cc\'b2\'bb\'b0\'b2\'c8\'ab\'a3\'ac\'d4\'ca\'d0\'ednull\'bc\'fc\'ba\'cdnull\'d6\'b5\par
+\par
+\'c3\'e6\'ca\'d4\'cc\'e222\'a3\'baList\'a1\'a2Set\'a1\'a2\'ca\'c7\'b7\'f1\'bc\'cc\'b3\'d0Map\'bd\'d3\'bf\'da\par
+List\'a1\'a2Set\'bc\'cc\'b3\'d0\'b5\'c4\'ca\'c7Collection\'bd\'d3\'bf\'da\par
+\'b6\'f8Map\'bd\'d3\'bf\'da\'b1\'be\'c9\'ed\'be\'cd\'ca\'c7\'b6\'a5\'b2\'e3\'bd\'d3\'bf\'da\par
+\par
+\'c3\'e6\'ca\'d4\'cc\'e223\'a3\'baCollection \'ba\'cd Collections\'b5\'c4\'c7\'f8\'b1\'f0\par
+Collection \'a3\'ba \'ca\'c7\'b5\'a5\'c1\'d0\'bc\'af\'ba\'cf\'b5\'c4\'b6\'a5\'b2\'e3\'bd\'d3\'bf\'da\'a3\'ac\'d3\'d0LIst\'ba\'cdSet\'d7\'d3\'bd\'d3\'bf\'da\par
+Collections\'a3\'ba \'ca\'c7\'b2\'d9\'d7\'f7\'bc\'af\'ba\'cf\'b5\'c4\'b9\'a4\'be\'df\'c0\'e0\'a3\'ac\'d3\'d0\'b6\'d4\'bc\'af\'ba\'cf\'b2\'d9\'d7\'f7\'b5\'c4\'c5\'c5\'d0\'f2\'ba\'cd\'b6\'fe\'b7\'d6\'b2\'e9\'d5\'d2\'b7\'bd\'b7\'a8\par
+\par
+\'c3\'e6\'ca\'d4\'cc\'e224\'a3\'bathrows \'ba\'cd throw\'b5\'c4\'c7\'f8\'b1\'f0\par
+throw\lang1033 s\lang2052\'a3\'ba\par
+\tab\'d3\'c3\'d4\'da\'c9\'f9\'c3\'f7\'b7\'bd\'b7\'a8\lang1033 ()\lang2052\'ba\'f3\'c3\'e6\'a3\'ac\'b8\'fa\'b5\'c4\'ca\'c7\'bf\'c9\'c4\'dc\'b3\'f6\'cf\'d6\'b5\'c4\'d2\'ec\'b3\'a3\'c0\'e0\'c3\'fb\par
+\tab\'bf\'c9\'d2\'d4\'b8\'fa\'b6\'e0\'b8\'f6\'d2\'ec\'b3\'a3\'c0\'e0\'c3\'fb\'a3\'ac\'d3\'c3\'b6\'ba\'ba\'c5\'b8\'f4\'bf\'aa\par
+\tab\'b1\'ed\'ca\'be\'c5\'d7\'b3\'f6\'d2\'ec\'b3\'a3\'a3\'ac\'d3\'c9\'b5\'f7\'d3\'c3\'d5\'df\'c0\'b4\'be\'f6\'b6\'a8\'c8\'e7\'b9\'fb\'b4\'a6\'c0\'ed\par
+\tab throws\'d6\'bb\'ca\'c7\'c9\'f9\'c3\'f7\'d3\'d0\'d5\'e2\'d6\'d6\'d2\'ec\'b3\'a3\'b5\'c4\'bf\'c9\'c4\'dc\'d0\'d4\'a3\'ac\'b5\'ab\'ca\'c7\'b2\'a2\'b2\'bb\'d2\'bb\'b6\'a8\'bb\'e1\'b7\'a2\'c9\'fa\'a1\'a3\par
+throw\'a3\'ba\par
+\tab\'d3\'c3\'d4\'da\'b7\'bd\'b7\'a8\'cc\'e5\'c4\'da\'a3\'ac\'b8\'fa\'b5\'c4\'ca\'c7\'d2\'ec\'b3\'a3\'b5\'c4\'b6\'d4\'cf\'f3\'a1\'a3\'d0\'e8\'d2\'aanew\'d2\'ec\'b3\'a3\par
+\tab\'d2\'bb\'b4\'ce\'d6\'bb\'c4\'dc\'c5\'d7\'b3\'f6\'d2\'bb\'b8\'f6\'d2\'ec\'b3\'a3\par
+\tab\'b1\'ed\'ca\'be\'d2\'ec\'b3\'a3\'c5\'d7\'b3\'f6\'a3\'ac\'d3\'c9\'b7\'bd\'b7\'a8\'cc\'e5\'c4\'da\'b5\'c4\'d3\'ef\'be\'e4\'b4\'a6\'c0\'ed\par
+throw\lang1033 s\lang2052\'ca\'c7\'c9\'f9\'c3\'f7\'d2\'ec\'b3\'a3\'a3\'acthrow\'ca\'c7\'c5\'d7\'b3\'f6\'c1\'cb\'be\'df\'cc\'e5\'b5\'c4\'d2\'ec\'b3\'a3\par
+\tab\par
+\'c3\'e6\'ca\'d4\'cc\'e225\'a3\'bafinal \'a1\'a2 finally \'ba\'cd final\lang1033 ize\lang2052\'b5\'c4\'c7\'f8\'b1\'f0\par
+final\'a3\'ba\par
+\tab\'d3\'c3\'d3\'da\'d0\'de\'ca\'ce\'c0\'e0\'a3\'ac\'b1\'e4\'c1\'bf\'a3\'ac\'b7\'bd\'b7\'a8\par
+\tab\'d0\'de\'ca\'ce\'c0\'e0\'a3\'ac\'b2\'bb\'c4\'dc\'b1\'bb\'bc\'cc\'b3\'d0\par
+\tab\'d0\'de\'ca\'ce\'b1\'e4\'c1\'bf\'a3\'ac\'b1\'e4\'c1\'bf\'ca\'c7\'b3\'a3\'c1\'bf\'a3\'ac\'b2\'bb\'bf\'c9\'b1\'f0\'b8\'c4\'d0\'b4\par
+finally\'a3\'ba\par
+\tab\'d2\'ec\'b3\'a3\'b4\'a6\'c0\'ed\'bb\'fa\'d6\'c6\'b5\'c4\'d2\'bb\'b2\'bf\'b7\'d6\'a3\'ac\'d3\'c3\'d3\'da\'ca\'cd\'b7\'c5\'d7\'ca\'d4\'b4\par
+\tab\'d2\'bb\'b0\'e3\'c7\'e9\'bf\'f6finally\'bb\'e1\'d6\'b4\'d0\'d0\'a3\'ac\'cc\'d8\'ca\'e2\'c7\'e9\'bf\'f6\'a3\'ba\'d4\'da\'d6\'b4\'d0\'d0finally\'d3\'ef\'be\'e4\'d6\'b4\'d0\'d0\'d6\'ae\'c7\'b0jvm\'d2\'d1\'be\'ad\'cd\'cb\'b3\'f6\par
+final\lang1033 ize\lang2052\'a3\'ba\par
+\tab Object\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ac\'d3\'c3\'d3\'da\'c0\'ac\'bb\'f8\'bb\'d8\'ca\'d5\par
+\par
+\'c3\'e6\'ca\'d4\'cc\'e226\'a3\'ba\'c8\'e7\'b9\'fbcatch\'d3\'ef\'be\'e4\'d3\'d0return\'a3\'acfinally\'d3\'ef\'be\'e4\'bb\'e1\'d6\'b4\'d0\'d0\'c2\'f0\'a1\'a3\'d4\'dareturn\'c7\'b0\'bb\'b9\'ca\'c7\'d4\'dareturn\'ba\'f3\par
+\'b4\'f0\'a3\'ba\'bb\'e1\'d6\'b4\'d0\'d0\'a3\'ac\'d4\'dareturn\'d6\'ae\'c7\'b0\'ca\'fd\par
+\par
+\'c3\'e6\'ca\'d4\'cc\'e227\'a3\'baflush\'ba\'cdclose\'b5\'c4\'c7\'f8\'b1\'f0\par
+A\'a3\'baclose\'b9\'d8\'b1\'d5\'c1\'f7\'b6\'d4\'cf\'f3\'a3\'ac\'b5\'ab\'cf\'c8\'cb\'a2\'d0\'c2\'d2\'bb\'b4\'ce\'bb\'ba\'b3\'e5\'c7\'f8\'a3\'ac\'b9\'d8\'b1\'d5\'d6\'ae\'ba\'f3\'b2\'bb\'c4\'dc\'d4\'d9\'b5\'f7\'d3\'c3\'c1\'f7\'b6\'d4\'cf\'f3\par
+B\'a3\'baflush\'bd\'f6\'bd\'f6\'cb\'a2\'d0\'c2\'bb\'ba\'b3\'e5\'c7\'f8\'a3\'ac\'cb\'a2\'d0\'c2\'d6\'ae\'ba\'f3\'c1\'f7\'b6\'d4\'cf\'f3\'bb\'b9\'bf\'c9\'d2\'d4\'bc\'cc\'d0\'f8\'ca\'b9\'d3\'c3\'a1\'a3\par
+}
+ 

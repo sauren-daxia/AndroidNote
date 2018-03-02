@@ -1,0 +1,25 @@
+在BaseAdapter里更新
+
+1、在构造将AdapterView传进来。用于计算更新的Item是第几个
+
+2、有一个能表示需要更新的回调，假如倒计时自定义控件，当倒计时结束后设计一个回调，用于更新Item
+
+3、定义一个方法,将位置，convertView，还有可以回调的view传进来
+	public void refenshItem(int position , view convertView ,Object view)	
+	//第一个参数是getView()的position，第二个参数是getView()的convertView，第三个是Holder.View需要更新的View
+
+	//if (index >= 0 && index < listView.getChildCount()) {		//如果报错或者不对，就加上这个判断
+
+		view.setOnxxxx(new Onxxx){}		//监听
+		http.s(){				//再次访问数据		
+
+		itenm = Gson().fromJson().xx.xx;		//获取到单个Item的最新对象
+		list.set(position,item)			//将最新对象替换到原来的对象位置
+
+		int newPosition =position - gridView.getFirstVisiblePosition();		//判断当前需要跟新Item的位置
+		View convertView = gridView.getChildAt(newPosition);			//获取到Item的View
+		getView(position,convertView , gridView)				//更新单个Item	
+		
+		}
+	//}
+}	

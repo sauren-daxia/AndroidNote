@@ -1,0 +1,18 @@
+Iterator	//父迭代器
+
+方法：
+boolean		in.hasext()		//判断是否存在下一个元素
+Objectit.next()		//遍历下一个元素
+----------------------------------
+ListIterator	//子迭代器	继承Iterator
+
+特有方法：
+boolean		hasPrevious		//判断是否存在上一个元素
+Object		previous()		//遍历上一个元素
+void		add()			//迭代器添加元素
+
+在遍历过程如果直接使用集合添加功能则会抛并发修改异常，只能使用迭代器添加，
+并且使用迭代器遍历时添加，元素添加在这次遍历元素的后面，用for遍历则会出现在最后
+
+使用previous迭代器，需要先正向遍历，再使用previous，直接使用则是对0索引的前一个判断获取
+

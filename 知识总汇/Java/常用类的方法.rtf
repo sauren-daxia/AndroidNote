@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg936\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset134 \'cb\'ce\'cc\'e5;}}
+{\colortbl ;\red0\green77\blue187;\red255\green0\blue0;\red155\green0\blue211;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.10586}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\cf1\f0\fs36\lang2052 Object\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\cf0\fs22\par
+1.\tab public int hashCode();\'b7\'b5\'bb\'d8\'b8\'c3\'b6\'d4\'cf\'f3\'b5\'c4\'b9\'fe\'cf\'a3\'c2\'eb\'d6\'b5\'a3\'bb\par
+\tab int t = new Student().hashCode();\tab //\'b7\'b5\'bb\'d8\'b8\'c3\'b6\'d4\'cf\'f3\'b5\'c4\'b5\'d8\'d6\'b7\'b1\'e0\'d2\'eb\'ba\'f3\'b5\'c4\'d6\'b5\par
+2.\tab public Clss getClss();\tab\'b7\'b5\'bb\'d8object\'b5\'c4\'d4\'cb\'d0\'d0\'ca\'b1\'c0\'e05.\par
+\tab\tab --public string name();\tab  //Class\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ac\'b7\'b5\'bb\'d8\'b5\'f7\'d3\'c3\'d5\'df\'b5\'c4\'c2\'b7\'be\'b6\par
+\tab Student s = new Student();\tab\tab Class c = s.getClass();\par
+\tab String str = c.getName();\tab\tab //\'b7\'b5\'bb\'d8\'b5\'c4\'ca\'c7\'b8\'c3\'b6\'d4\'cf\'f3\'b5\'c4class\'ce\'c4\'bc\'fe\'c2\'b7\'be\'b6\'a1\'a3\par
+3. \cf2 public String toString()\cf0 ;\tab\'b7\'b5\'bb\'d8\'b5\'c4\'ca\'c7\'b0\'d11\'b7\'bd\'b7\'a8+2\'b7\'bd\'b7\'a8\'c1\'ac\'bd\'d3\'b3\'c9\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\'a1\'a3\'d2\'f2\'ce\'aa\par
+\'b7\'b5\'bb\'d8\'b5\'c4\'c4\'da\'c8\'dd\'c3\'bb\'c8\'ce\'ba\'ce\'d2\'e2\'d2\'e5\'a3\'ac\'cb\'f9\'d2\'d4\'bd\'a8\'d2\'e9\'cb\'f9\'d3\'d0\'d7\'d3\'c0\'e0\'b6\'bc\'d6\'d8\'d0\'b4\'b8\'c3\'b7\'bd\'b7\'a8\lang1033 ,\lang2052\'b0\'d1\'cb\'f9\'d3\'d0\'c0\'e0\'b3\'c9\'d4\'b1\'c6\'b4\'bd\'d3\'d7\'d6\'b7\'fb\'b4\'ae\'ca\'e4\'b3\'f6\'bc\'b4\'bf\'c9\'a3\'ac\cf3\'bf\'ec\'bd\'dd\'bc\'fc\'a3\'ba\cf0\par
+\tab\'b4\'fa\'c2\'eb\'c7\'f8\'d3\'d2\'bc\'fc >> source >> Generat toString();\par
+4.\tab\cf2 public boolean equals(Object obj)\cf0 ;\tab\tab //\'d3\'c3\'d7\'f7\'c1\'bd\'b8\'f6\'b6\'d4\'cf\'f3\'b5\'c4\'b1\'c8\'bd\'cf\'a1\'a3\par
+\tab\'c4\'ac\'c8\'cf\'d7\'f6\'b5\'d8\'d6\'b7\'b1\'c8\'bd\'cf\'a3\'ac\'b5\'ab\'ca\'c7\'d5\'e2\'d6\'d6\'b1\'c8\'bd\'cf\'c3\'bb\'c8\'ce\'ba\'ce\'d2\'e2\'d2\'e5\'a3\'ac\'cb\'f9\'d2\'d4\'bd\'a8\'d2\'e9\'d6\'d8\'d0\'b4\'b7\'bd\'b7\'a8\'a3\'ac\'d6\'d8\'d0\'b4\'b5\'c4\'c4\'da\'c8\'dd\'be\'cd\'ca\'c7\'b0\'d1\'cb\'f9\'d3\'d0\'b3\'c9\'d4\'b1\'d7\'f6\'b1\'c8\'bd\'cf,\'ca\'b2\'c3\'b4\'c0\'e0\'d6\'d8\'d0\'b4\'b8\'c3\'b7\'bd\'b7\'a8\'be\'cd\'b1\'ed\'ca\'be\'d3\'eb\'b8\'c3\'c0\'e0\'d7\'d4\'bc\'ba\'bd\'f8\'d0\'d0\'b1\'c8\'bd\'cf\'a1\'a3\'b2\'ce\'bf\'bcString\'b5\'c4equals\'b7\'bd\'b7\'a8\'a3\'ac\'cb\'fc\'be\'cd\'ca\'c7\'d7\'d6\'b7\'fb\'b4\'ae\'ba\'cd\'d7\'d6\'b7\'fb\'b4\'ae\'b5\'c4\'b1\'c8\'bd\'cf\'a1\'a3\par
+public boolean equals(Object obj)\{\par
+Xxx x = (Xxx)obj;\tab //\'d5\'e2\'b8\'f6\'cb\'ad\'ca\'b2\'c3\'b4\'c0\'e0\'be\'cd\'d7\'aa\'bb\'bb\'ca\'b2\'c3\'b4\'c0\'e0\'a3\'ac\'d2\'f2\'ce\'aa\'d5\'e2\'ca\'c7\'b1\'be\'c0\'e0\'ba\'cd\'b1\'be\'c0\'e0\'b5\'c4\'b1\'c8\'bd\'cf\par
+\tab if (this.name.equals(x.name) && this.id == id)\par
+\tab\{ return true; \} else\{ retrun false; \}\par
+\}\par
+5.\tab public Object Clone()\tab\'bf\'cb\'c2\'a1\'c0\'e0\'b6\'d4\'cf\'f3\'a3\'ac\par
+\tab\'d2\'fd\'d3\'c3\'c0\'e0\'d0\'cd\'b8\'b3\'d6\'b5\'b8\'f8\'d2\'fd\'d3\'c3\'c0\'e0\'d0\'cd\'ca\'c7\'b8\'c4\'b1\'e4\'d6\'b8\'cf\'f2\'b5\'d8\'d6\'b7\'a3\'acclone\'d4\'f2\'ca\'c7\'cf\'f1\'ca\'fd\'d6\'b5\'b1\'e4\'c1\'bf\'d2\'bb\'d1\'f9\'b8\'b4\'d6\'c6\'a1\'a3\par
+\'d2\'aa\'ca\'b9\'d3\'c3\'b8\'c3\'b7\'bd\'b7\'a8\'d4\'f2\'d0\'e8\'d2\'aa\'d4\'da\'c0\'e0\'c0\'ef\'cc\'ed\'bc\'d3\'d2\'bb\'b8\'f6Cloneable\'bd\'d3\'bf\'da\'a3\'ac\'b2\'bb\'c8\'bb\'bb\'e1\'c5\'d7\'d2\'ec\'b3\'a3\'a1\'a3\'bf\'cb\'c2\'a1\'ba\'f3\'b7\'b5\'bb\'d8\'d2\'bb\'b8\'f6\'b8\'b8\'c0\'e0\'a3\'ac\'b5\'ab\'d2\'b2\'bf\'c9\'d2\'d4\'c7\'bf\'d7\'aa\'ce\'aa\'b8\'c3\'d7\'d3\'c0\'e0\'a1\'a3\par
+\cf1\fs36 Scanner\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\par
+\cf4\tab\fs22 scanner\'b5\'c4\'b7\'bd\'b7\'a8\'d3\'d0\'c1\'bd\'b8\'f6\'cf\'b5\'c1\'d0\'a3\'ac\'d2\'bb\'d6\'d6hasNextXxx\'a3\'ac\'d2\'bb\'d6\'d6nextXxx;\par
+Xxx\'bf\'c9\'d2\'d4\'ca\'c7Int Double Float\'b5\'c8\'c0\'e0\'d0\'cd\'a3\'achasNextXxx\'d3\'c3\'d3\'da\'c5\'d0\'b6\'cf\'d3\'c3\'bb\'a7\'ca\'e4\'c8\'eb\'b5\'c4\'b5\'c4\'ca\'fd\'be\'dd\'ca\'c7\'b7\'f1\'b8\'c3\'c0\'e0\'d0\'cd\'a3\'acnextXxx\'ca\'c7\'d3\'c3\'d3\'da\'bd\'d3\'ca\'d5\'d3\'c3\'bb\'a7\'b5\'c4\'ca\'fd\'be\'dd\'a1\'a3\'d2\'bb\'b0\'e3\'c1\'bd\'b8\'f6\'cf\'b5\'c1\'d0\'c5\'e4\'cc\'d7\'ca\'b9\'d3\'c3\'a3\'ba\par
+\tab if (sc.hasNextInt()) \{\tab int s = sc.nextInt();\}\tab else \{ \'b4\'ed\'ce\'f3 \}\par
+\'d2\'bb\'b0\'e3\'ca\'c7\'d3\'c3scanner.nextLine(); \'d7\'d6\'b7\'fb\'b4\'ae\'b5\'c4\'d0\'ce\'ca\'bd\'bd\'d3\'ca\'d5\'ca\'fd\'be\'dd\'d4\'d9\'d7\'aa\'ce\'aa\'d0\'e8\'d2\'aa\'b5\'c4\'c0\'e0\'d0\'cd\'a1\'a3\par
+\cf1\fs36 String\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\par
+\cf4\fs22\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ba\cf1\fs36\par
+\tab\cf4\fs22 public String()\tab //\'bf\'d5\'b9\'b9\'d4\'ec\par
+\tab public String(byte[] by)\tab //\'bd\'ab\'d7\'d6\'bd\'da\'ca\'fd\'d7\'e9\'d7\'aa\'bb\'bb\'ce\'aa\'d7\'d6\'b7\'fb\'b4\'ae\par
+\tab public String(byte[] by, int index, int length)//\'bd\'ab\'d7\'d6\'bd\'da\'ca\'fd\'d7\'e9\'b2\'bf\'b7\'d6\'d7\'aa\'bb\'bb\par
+\tab public String(char[] c)\tab //\'bd\'ab\'d7\'d6\'b7\'fb\'ca\'fd\'d7\'e9\'d7\'aa\'ce\'aa\'d7\'d6\'b7\'fb\'b4\'ae\par
+\tab public String(char[] c, int index, int length)\tab //\'bd\'ab\'d7\'d6\'b7\'fb\'ca\'fd\'d7\'e9\'d7\'aa\'bb\'bb\par
+\tab public String(String str)\tab //\'b0\'d1\'d7\'d6\'b7\'fb\'b4\'ae\'b3\'a3\'c1\'bf\'d7\'aa\'bb\'bb\'ce\'aa\'d7\'d6\'b7\'fb\'b4\'ae\par
+\'d7\'d6\'b7\'fb\'b4\'ae\'c5\'d0\'b6\'cf\'b9\'a6\'c4\'dc\'a3\'ba\par
+\tab s.equals(String str);\tab\tab //\'b1\'c8\'bd\'cf\'c1\'bd\'b8\'f6\'d7\'d6\'b7\'fb\'b4\'ae\'b5\'c4\'c4\'da\'c8\'dd\'ca\'c7\'b7\'f1\'cf\'e0\'cd\'ac\par
+\tab s.equalsIgnoreCase(String str)\tab //\'b1\'c8\'bd\'cf\'c1\'bd\'b8\'f6\'d7\'d6\'b7\'fb\'b4\'ae\'c4\'da\'c8\'dd\'ba\'f6\'c2\'d4\'b4\'f3\'d0\'a1\'d0\'b4\par
+\tab s.contains(String str)\tab //\'c5\'d0\'b6\'cf\'ca\'b1\'ba\'f2\'b0\'fc\'ba\'ac\'b8\'c3\'d7\'d6\'b7\'fb\'b4\'ae\par
+\tab s.startsWith(String str)\tab //\'ca\'c7\'b7\'f1\'d2\'d4\'b8\'c3\'d7\'d6\'b7\'fb\'b4\'ae\'bf\'aa\'ca\'bc\par
+\tab s.endsWith(String srt)\tab\tab //\'ca\'c7\'b7\'f1\'d2\'d4\'b8\'c3\'d7\'d6\'b7\'fb\'b4\'ae\'bd\'e1\'ca\'f8\par
+\tab s.isEmpty(String srt)\tab\tab //\'c5\'d0\'b6\'cf\'d7\'d6\'b7\'fb\'b4\'ae\'ca\'c7\'b7\'f1\'ce\'aa\'bf\'d5 null\'d4\'f2\'c5\'d7\'d2\'ec\'b3\'a3\par
+\'d7\'d6\'b7\'fb\'b4\'ae\'bb\'f1\'c8\'a1\'b9\'a6\'c4\'dc\par
+int\tab s.length();\tab\tab //\'bb\'f1\'c8\'a1\'d7\'d6\'b7\'fb\'b4\'ae\'b5\'c4\'b3\'a4\'b6\'c8\par
+char\tab s.charAt(int ch)\tab //\'bb\'f1\'c8\'a1\'d6\'b8\'b6\'a8\'cb\'f7\'d2\'fd\'ce\'bb\'d6\'c3\'b5\'c4\'d7\'d6\'b7\'fb\par
+s.indexOf(int index);  //\'bb\'f1\'c8\'a1\'d6\'b8\'b6\'a8\'d7\'d6\'b7\'fb\'d4\'da\'d7\'d6\'b7\'fb\'b4\'ae\'d6\'d0\'b5\'da\'d2\'bb\'b4\'ce\'b3\'f6\'cf\'d6\'b5\'c4\'ce\'bb\'d6\'c3,\'bf\'c9\'d0\'b4\'d7\'d6\'b7\'fb\'c0\'e0\'d0\'cd\par
+char\tab s.indexOf(String str); //\'b7\'b5\'bb\'d8\'d7\'d6\'b7\'fb\'b4\'ae\'d4\'da\'d7\'d6\'b7\'fb\'b4\'ae\'d6\'d0\'b5\'da\'d2\'bb\'b4\'ce\'b3\'f6\'cf\'d6\'b5\'c4\'ce\'bb\'d6\'c3\par
+inr\tab s.indexOf(int ch, int f)\tab  //\'b7\'b5\'bb\'d8\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'ba\'f3\'b5\'da\'d2\'bb\'b4\'ce\'b3\'f6\'cf\'d6\'b8\'c3\'d7\'d6\'b7\'fb\'b5\'c4\'ce\'bb\'d6\'c3\par
+inr\tab s.indexOf(String str, int f) //\'b7\'b5\'bb\'d8\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'ba\'f3\'b5\'da\'d2\'bb\'b4\'ce\'b3\'f6\'cf\'d6\'b8\'c3\'d7\'d6\'b7\'fb\'b4\'ae\'b5\'c4\'ce\'bb\'d6\'c3\par
+String \tab s.subString(int start)\tab //\'b4\'d3\'b5\'da\'bc\'b8\'ce\'bb\'bd\'d8\'d7\'d6\'b7\'fb\'a3\'ac\'d6\'b1\'b5\'bd\'c4\'a9\'ce\'b2\'a3\'bb\par
+String \tab s.subString(int start, int end)\tab\tab //\'b4\'d3\'b5\'da\'bc\'b8\'ce\'bb\'bd\'d8\'c8\'a1\'b5\'bd\'b5\'da\'bc\'b8\'ce\'bb\lang1033\par
+\lang2052\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'bb\'bb\'b9\'a6\'c4\'dc\par
+byte[]\tab\tab getBytes()\tab //\'b0\'d1\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'ce\'aa\'d7\'d6\'bd\'da\par
+char[]\tab\tab toCharArray\tab //\'b0\'d1\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'ce\'aa\'d7\'d6\'b7\'fb\'ca\'fd\'d7\'e9\par
+static String valueOf(object obj)\tab //\'bf\'c9\'d2\'d4\'b0\'d1\'c8\'ce\'ba\'ce\'b6\'ab\'ce\'f7\'d7\'aa\'ce\'aa\'d7\'d6\'b7\'fb\'b4\'ae\par
+String toLowerCase()\tab //\'d7\'aa\'ce\'aa\'d0\'a1\'d0\'b4\'d7\'d6\'b7\'fb\'b4\'ae\par
+String toUpperCase()\tab //\'d7\'aa\'ce\'aa\'b4\'f3\'d0\'b4\'d7\'d6\'b7\'fb\'b4\'ae\par
+String concat(String str)\tab\tab //\'d7\'d6\'b7\'fb\'b4\'ae\'c6\'b4\'bd\'d3\par
+\cf0\'d7\'d6\'b7\'fb\'b4\'ae\'c6\'e4\'cb\'fb\'b9\'a6\'c4\'dc\'a3\'ba\par
+String replace(String x, String y)//\'bd\'ab\'c4\'b3\'b8\'f6\'d7\'d6\'b7\'fb\'b4\'ae\'cc\'e6\'bb\'bb\'c4\'b3\'b8\'f6\'d7\'d6\'b7\'fb\'b4\'ae\'a3\'ac\'d2\'b2\'bf\'c9\'bb\'bb\'d7\'d6\'b7\'fb\par
+String trim()\tab\tab //\'c8\'a5\'bf\'d5\'b8\'f1\par
+int compareTO(String str)\tab //\'b0\'b4ASCII\'b1\'c8\'bd\'cf\'d7\'d6\'b7\'fb\'b4\'ae\'a3\'ac\'cf\'e0\'cd\'ac\'b7\'b40\'a3\'ac\'b2\'bb\'cd\'ac\'ca\'d7\'d7\'d6\'c4\'b8\'cf\'e0\'bc\'f5\par
+int compaerToIgnoreCase(String str)\tab //\'ba\'f6\'c2\'d4\'b4\'f3\'d0\'a1\'d0\'b4\'b1\'c8\'bd\'cf\par
+\cf1\fs36 StringBuffer\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\par
+StringBuilder\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\'a3\'a8\'b3\'a3\'d3\'c3\'a3\'a9\tab\par
+StringBuffer\'ba\'cdStringBuilder\'ca\'b9\'d3\'c3\'cf\'e0\'cd\'ac\par
+\cf0\fs22\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8:\par
+\tab public StringBuffer();\tab //\'ce\'de\'b2\'ce\'b9\'b9\'d4\'ec\par
+\tab public StringBuffer(int capacity)\tab //\'d6\'b8\'b6\'a8\'b6\'d4\'cf\'f3\'b5\'c4\'c8\'dd\'c1\'bf\par
+\tab public StringBuffer(String str)\tab\tab //\'bd\'ab\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'ce\'aaStringBuffer\par
+\'b7\'bd\'b7\'a8\'a3\'ba\par
+int\tab  capacity()\tab\tab //\'b7\'b5\'bb\'d8\'b6\'d4\'cf\'f3\'b5\'c4\'c0\'ed\'c2\'db\'c8\'dd\'c1\'bf\par
+int\tab  length()\tab\tab //\'b7\'b5\'bb\'d8\'b6\'d4\'cf\'f3\'ca\'b5\'bc\'ca\'b3\'a4\'b6\'c8\par
+\'cc\'ed\'bc\'d3\'b7\'bd\'b7\'a8\'a3\'ba\par
+StringBuffer append(object)\tab //\'bf\'c9\'d7\'b7\'bc\'d3\'cc\'ed\'bc\'d3\'c8\'ce\'d2\'e2\'c0\'e0\'d0\'cd\'b5\'c4\'b1\'e4\'c1\'bf\'a3\'ac\'bf\'c9\'b7\'b5\'bb\'d8\tab\tab\tab\tab\tab\tab\tab\tab StringBuffer\'c0\'e0\'a3\'ac\'b2\'a2\'b7\'b5\'bb\'d8\'d7\'d4\'c9\'ed\'d4\'ad\'b5\'d8\'d6\'b7\'a1\'a3\par
+StringBuffer insert(int ,object)\tab //\'bf\'c9\'d4\'da\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'b2\'e5\'c8\'eb\'c8\'ce\'ba\'ce\'c0\'e0\'d0\'cd\'b5\'c4\'b1\'e4\'c1\'bf\'a3\'ac\'b7\'b5\'bb\'d8\'cd\'ac\'c9\'cf\par
+\'c9\'be\'b3\'fd\'b7\'bd\'b7\'a8\'a3\'ba\par
+StringBuffer deleteCharAt(int)\tab\tab //\'c9\'be\'b3\'fd\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'b5\'c4\'d7\'d6\'b7\'fb\'a1\'a3\'b7\'b5\'bb\'d8\'cd\'ac\'c9\'cf\par
+StringBuffer delete(int,int)\tab\tab //\'c9\'be\'b3\'fd\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'d6\'c1\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'c4\'da\'b5\'c4\'c4\'da\'c8\'dd\'a1\'a3\par
+\'cc\'e6\'bb\'bb\'b7\'bd\'b7\'a8\'a3\'ba\par
+Stringbuffer replace(int, int , String)\tab\tab //\'bd\'ab\'d6\'b8\'b6\'a8\'ce\'bb\'d6\'c3\'c4\'da\'c8\'dd\'cc\'e6\'bb\'bb\par
+\'b7\'ad\'d7\'aa\'b7\'bd\'b7\'a8\'a3\'ba\par
+StringBuffer reverse()\tab\tab //\'bd\'ab\'d4\'aa\'cb\'d8\'b7\'ad\'d7\'aa\'a1\'a3\par
+\'bd\'d8\'c8\'a1\'b7\'bd\'b7\'a8\par
+String subString(int)\tab\tab //\'bd\'d8\'c8\'a1\par
+String subString(int,int)\tab\tab //\'bd\'d8\'c8\'a1\par
+\cf1\fs36\'ca\'fd\'d7\'e9\'b5\'c4\'b2\'d9\'d7\'f7\'a3\'ba\par
+\cf0\fs22\'c5\'c5\'d0\'f2\'a3\'ba\tab\par
+\tab public static void sort(object[])\tab\tab //\'bf\'c9\'b6\'d4\'c8\'ce\'d2\'e2\'ca\'fd\'d7\'e9\'c5\'c5\'d0\'f2\par
+\'b6\'fe\'b7\'d6\'b2\'e9\'d5\'d2\'a3\'ba\par
+\tab public static int binarySearch(int[])\tab\tab //\'bf\'c9\'b6\'d4\'b6\'e0\'d6\'d6\'ca\'fd\'d7\'e9\'bd\'f8\'d0\'d0\'b2\'e9\'d5\'d2\'a1\'a3\par
+\cf1\fs36\'b6\'d4\'bb\'f9\'b1\'be\'c0\'e0\'d0\'cd\'b5\'c4\'b2\'d9\'d7\'f7\'a3\'ba\par
+\cf0\fs22\'bb\'f9\'b1\'be\'c0\'e0\'d0\'cd\'a3\'babyte\'a1\'a2short\'a1\'a2int\'a1\'a2long\'a1\'a2float\'a1\'a2double\'a1\'a2boolean\'a1\'a2char\par
+\'b6\'d4\'d3\'a6\'b5\'c4\'c0\'e0\'a3\'baByte\'a1\'a2Short\'a1\'a2\cf3 Integer\cf0\'a1\'a2Long\'a1\'a2Float\'a1\'a2Double\'a1\'a2Boolean\'a1\'a2\cf3 Character\par
+\cf4\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'b4\'f3\'cc\'e5\'cf\'e0\'cb\'c6\'a1\'a3\par
+\cf3 Integer\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\par
+\cf4\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ba\par
+\tab 1\'a1\'a2public Integer(int)\tab\tab //\'bd\'abint\'c0\'e0\'b1\'e4\'c1\'bf\'d7\'aa\'ce\'aaInteger\'c0\'e0\'d0\'cd\par
+\tab 2\'a1\'a2public Integer(String)\tab //\'bd\'ab\'d6\'bb\'ba\'ac\'d3\'d0\'ca\'fd\'d6\'b5\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'bb\'bb\'a3\'ac\'b2\'bb\'c4\'dc\'d3\'d0\'d7\'d6\'c4\'b8\par
+\'d7\'aa\'bb\'bb\'b7\'bd\'b7\'a8\'a3\'ba\par
+\cf2 static int ParseInt(String)\tab\tab //\'bd\'ab\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'ce\'aaint\'c0\'e0\'d0\'cd\par
+\cf4 static String valueOf()\tab\tab\tab //\'bd\'abint\'d7\'aa\'ce\'aa\'d7\'d6\'b7\'fb\'b4\'ae,\'b2\'bb\'ca\'c7Integer\'b5\'c4\'b7\'bd\'b7\'a8\fs36\par
+\cf0\fs22 static String toBinaryString(int)\tab //\'d7\'aa\'bb\'bb\'ce\'aa\'b6\'fe\'bd\'f8\'d6\'c6\'ca\'fd\'d6\'b5\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\par
+static String toOctalString(int)\tab\tab //\'d7\'aa\'bb\'bb\'ce\'aa\'b0\'cb\'bd\'f8\'d6\'c6\'ca\'fd\'d6\'b5\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\par
+static String toHexString(int)\tab\tab //\'d7\'aa\'bb\'bb\'ce\'aa\'ca\'ae\'c1\'f9\'bd\'f8\'d6\'c6\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\par
+\cf2 static String toString(int,int)\tab\tab //\'d6\'b8\'b6\'a8\'ca\'ae\'bd\'f8\'d6\'c6\'d6\'b5\'d7\'aa\'bb\'bb2---36\'bd\'f8\'d6\'c6\tab\par
+static String parseInt(String, int)\tab //\'d3\'c9\'d7\'d6\'b7\'fb\'b4\'ae\'d7\'aa\'bb\'bb2----36\'bd\'f8\'d6\'c6\par
+\'c7\'b0\'cc\'e1\'ca\'c7\'d5\'e2\'b8\'f6\'d7\'d6\'b7\'fb\'b4\'ae\'d6\'bb\'c4\'dc\'d3\'c9\'d5\'e2\'b8\'f6\'bd\'f8\'d6\'c6\'d7\'e9\'b3\'c9\'b5\'c4\'ca\'fd\'d7\'d6 "123"\'b2\'bb\'c4\'dc\'d7\'aa\'b6\'fe\'bd\'f8\'d6\'c6\'a3\'ac\'d2\'f2\'ce\'aa\'b6\'fe\'bd\'f8\'d6\'c6\'c3\'bb\'d3\'d03\tab\par
+\cf3 Character\'c0\'e0\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ba\par
+\cf0\'b9\'b9\'d4\'ec\'b7\'bd\'b7\'a8\'a3\'ba\par
+\tab 1\'a1\'a2public Character(char)\tab\par
+\'b7\'bd\'b7\'a8\'a3\'ba\par
+staitc boolean isUpperCase(char)\tab //\'c5\'d0\'b6\'cf\'ca\'c7\'b7\'f1\'b4\'f3\'d0\'b4\par
+static boolean isLowerCase(char)\tab //\'c5\'d0\'b6\'cf\'ca\'c7\'b7\'f1\'d0\'a1\'d0\'b4\par
+static boolean isDigit(char)\tab\tab //\'c5\'d0\'b6\'cf\'ca\'c7\'b7\'f1\'ca\'fd\'d7\'d6\par
+static char toUpperCase(char)\tab\tab //\'d7\'aa\'bb\'bb\'b4\'f3\'d0\'b4\par
+static char toLowerCase(char)\tab\tab //\'d7\'aa\'bb\'bb\'d0\'a1\'d0\'b4\par
+\cf2\tab\par
+}
+ 

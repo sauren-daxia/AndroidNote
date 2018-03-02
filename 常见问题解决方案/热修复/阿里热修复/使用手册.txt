@@ -1,0 +1,36 @@
+代码：
+1、导入alipay热修复的库
+compile 'com.alipay.euler:andfix:0.5.0@aar'	//具体版本请找最新的
+
+2、创建Application，初始化热修复
+
+ patchManager = new PatchManager(this);
+        patchManager.init("1.0");		//这个需要动态去获取版本号
+        patchManager.loadPatch();
+
+3、调用方法去修复
+//这个补丁文件名每次都不能一样，最好是由服务器返回
+  String patch = Environment.getExternalStorageDirectory().getAbsolutePath()+"/out.apatch";	
+        
+  patchManager.addPatch(patch);
+
+4、加入权限
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+操作：
+	1、打包旧版本
+	修改名为old.apk
+
+	2、打包新版本
+	修改名为new.apk
+
+	3、打开cmd
+	复制热修复命令.txt里面的内容粘贴cmd里回车
+
+	4、将生成的patchOut文件里的很长的.patch文件重新命名，这就是补丁文件
+
+	5、将补丁推送到用户那
+
+PS：只能更改同一个类里面的东西，不支持新的类的增加，XML的改变等。
+PS：只能退出应用后下一次打开才能生效

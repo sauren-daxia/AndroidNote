@@ -1,0 +1,26 @@
+URL	链接
+
+构造：
+-----------------------------
+public		URL(String urlname)		//需要一个网址
+
+方法：
+-----------------------------
+URLConnection	openConnection()		//返回一个连接服务器对象
+
+
+
+
+
+
+URLConnection：
+
+构造：
+---------------------------------
+URLConnection conn = url.openConnection();	
+
+方法：
+----------------------------------
+int		getContantLength()		//获取网络文件的长度
+InputSteam	getInputStream()	//获取输入流
+viud		setRequestProperty(String K,String V)		//设置指定的数据内容，第一个值("Range"),第二个值("byte = 0-10000")，获取的范围。用在getInputStream()之前。

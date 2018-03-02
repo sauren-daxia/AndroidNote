@@ -1,8 +1,0 @@
-判断网络状态：
-		Connectivity c =getSystemService(CONNECTIVITY_SERVICE)
-		
-		NetworkInfo f = c.getActiveNetworkInfo;
-
-		boolean b = f.isConnected	//注意，f可能为null 
-
-		需要添加权限<permisstion name = "ACCESS_NETWORK_STATE">

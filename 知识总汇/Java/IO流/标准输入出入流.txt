@@ -1,0 +1,26 @@
+System.out  :   输出流
+
+方法：
+-----------------------------------
+PrintStream		out	//返回一个打印流对象
+
+PrintStream方法：
+---------------------------------
+void	print(任意类型)
+void	println()		//任意类型或换行，等价于System.in.println()
+
+
+
+System.in  :   输入流
+
+方法：
+-----------------------------------
+InputStreamReader	in		//返回一个输入流对象
+
+InputStream		read()		//只有读取一个或者一组字节，不能准确的读取一行
+
+通过封装转换为BufferedReader使用读取行
+-------------------------------------
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in))	//将字符流转换字符流再传给BufferedReader做构造
+
+readLine()	//读取一行的方法

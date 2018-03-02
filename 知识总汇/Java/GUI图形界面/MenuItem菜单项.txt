@@ -1,0 +1,30 @@
+MenuItem
+
+构造：
+------------------
+public		MenuItem(String name)		//设置菜单项名，如：打开
+
+
+添加方法：
+-----------------
+void 		addActionListener(new ActionListener)	//添加点击事件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+事件:
+----------------------
+ActionListener:
+
+public void  actionPerformed(xx x)			//点击事件。

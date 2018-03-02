@@ -1,0 +1,38 @@
+	
+	private CountDownTimer timer;		//倒计时类
+	private SimpleDateFormat sdf;
+	public void startTimer(long CountTimer,long d,String format){
+	//判断是否创建过
+		if(timer == null){
+			sdf = new SimpleDateFormat(format);
+			//第一个参数是总值，第二个参数是间隔多少秒计算一次
+			timer = new CountDownTimer(CountTimer, d) {
+				
+				//每间隔一段时间都会在这个方法刷新一次数据
+				@Override
+				public void onTick(long arg0) {
+					setText(sdf.format(arg0));
+				}
+				
+				//倒计时结束会调用该方法
+				@Override
+				public void onFinish() {
+					setText("00:00:000");
+					timer.cancel();
+					if(listener!=null){
+						listener.stopTimer();
+					}
+				}
+			};
+			//启动倒计时
+			timer.start();
+		}
+	}
+	
+	public void setOnStopTimerListener(OnStopTimerListener listener){
+		this.listener = listener;
+	}
+	private OnStopTimerListener listener;
+	public interface OnStopTimerListener{
+		void stopTimer();
+	}

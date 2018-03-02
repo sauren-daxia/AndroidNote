@@ -1,0 +1,9 @@
+1、在主Activity中设置启动模式为SingleTask
+
+2、在主Activity中定义一个常量。
+
+3、在需要返回主界面的某个Fragment的Activity中，在返回监听中将主Activity的常量改变
+
+4、在主Activity的onResume()方法中判断这个字符串是否为修改的。
+
+5、判断完毕后将常量变为默认状态。

@@ -1,0 +1,14 @@
+vector： List的子类
+--------------------------------------
+添加：
+void		addElement(Object b)	----被add()替代
+
+获取：
+Object		elementAt(index i)	----被get()替代
+
+迭代器
+Enumeration	elements()		----被Iterator替代
+	hasMoreEnumertion()		----被hasNext()替代
+	nextMoreEnumertion()		----被next()替代	
+
+--------------------------------------

@@ -1,0 +1,5 @@
+System：
+	public static void gc();	//垃圾回收器，强制调用则会浪费更多资源
+	public static void exit(int)	//终止程序，0为正常状态，非0为异常，一般给0;
+	public static long currentTimeMixlllis()	//返回当前电脑时间的毫秒值，用于测试程序运行的效率
+public static void arraycopy(object[],int,object[],int,int)//从哪个数组的第几个元素复制到哪个数组的第几个，复制几个

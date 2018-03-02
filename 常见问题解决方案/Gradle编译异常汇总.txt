@@ -1,0 +1,15 @@
+编译报错
+Error:java.lang.RuntimeException: com.android.builder.dexing.DexArchiveMergerException: Unable to merge dex
+
+1、当前出错的情况为编译版本和v7版本同为27以上，并且使用了databinding，分析是因为databinding中依赖了v4包，v4包与v7包的某些内容冲突,
+   目前找不到解决方法，只有把编译版本和v7版本降为26.0.2支持gradle3.0.0，原因是Gradle或者DataBinding本身的问题
+
+
+
+
+
+依赖包报错：
+	Failed to resolve: com.android.support:appcompat-v7:26.0.0
+
+	需要在项目build.gradle中配置，原因是因为26以上的版本都要配置
+	maven { url "https://maven.google.com" }

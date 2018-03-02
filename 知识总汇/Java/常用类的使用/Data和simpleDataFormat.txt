@@ -1,0 +1,45 @@
+Date：
+构造：
+	public Date();		//对象的值是当前世界时间
+	public Date(long);	//给定一个毫秒值，计算出这个毫秒值的时间，所有时间都是从1970年1月1日08点0分0秒开始
+方法：
+	void	setTime(long)	//给定一个毫秒值，。。。。同上
+	long	getTime()	//获取当前世界时间
+字符串转换为日期：
+	Date	parse(String)	//将字符格式的日期转换为日期格式
+
+	String str = "2008-08-08 11:11:11";
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date d = sdf.parse(str);	//双击这行的行号报错，点击错误抛出异常。
+日期转换为字符串:
+	String	format(Date)	//将日期格式转换为字符串
+
+	Date d = new Date();	//先获取一个时间对象
+	SimpleDateFomat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");	//制定一个将时间转换字符串的格式
+	String str = sdf.format(d);	//用模式对象将时间对象转换为字符串
+
+
+由字符串转换为日期，simpleDateFormat的格式必须与字符串一致。
+由日期转换为字符串，simpleDateFormat的格式可以按自定义更改。
+
+日期格式：
+字母  日期或时间元素  表示  示例  
+G  Era 标志符  Text  AD  
+y  年  Year  1996; 96  
+M  年中的月份  Month  July; Jul; 07  
+w  年中的周数  Number  27  
+W  月份中的周数  Number  2  
+D  年中的天数  Number  189  
+d  月份中的天数  Number  10  
+F  月份中的星期  Number  2  
+E  星期中的天数  Text  Tuesday; Tue  
+a  Am/pm 标记  Text  PM  
+H  一天中的小时数（0-23）  Number  0  
+k  一天中的小时数（1-24）  Number  24  
+K  am/pm 中的小时数（0-11）  Number  0  
+h  am/pm 中的小时数（1-12）  Number  12  
+m  小时中的分钟数  Number  30  
+s  分钟中的秒数  Number  55  
+S  毫秒数  Number  978  
+z  时区  General time zone  Pacific Standard Time; PST; GMT-08:00  
+Z  时区  RFC 822 time zone  -0800  

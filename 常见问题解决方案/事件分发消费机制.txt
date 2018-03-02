@@ -1,0 +1,14 @@
+dispatchTouchEvent (事件分发)
+
+
+onInterceptTouchEvent （事件拦截）
+
+1、如果是容器，或者是ListView这种可以包含子View的控件，就需要在拦截事件中获取MotionEvent.ACTION_DOWN的getX，getY
+   因为容器的子View大多数会消费DOWN事件，如果在onTouch中再获取DOWN事件是获取不到的，这只是针对子View会消费的情况。
+   如果子View没消费的，就可以在onTouch中获取点击时的X，Y。
+
+2、如果在这里的时候没有对事件进行拦截，而且子View也消费了，那么往后都不会触发拦截事件
+   同样的，如果在一开始或者特定情况下拦截了，那么往后也会拦截。
+
+onTouchEvent(事件响应(事件处理))
+

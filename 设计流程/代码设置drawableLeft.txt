@@ -1,5 +1,0 @@
-view.setText("µãÔÞ");
-        Drawable drawable = con.getResources().getDrawable(R.mipmap.icon_zan_cancel);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        view.setCompoundDrawables(drawable, null, null, null);
-        view.setCompoundDrawablePadding(DisplayUtil.dip2px(con,5));

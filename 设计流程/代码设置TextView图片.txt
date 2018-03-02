@@ -1,6 +1,0 @@
-//创建Drawable
-Drawable nav_up=getResources().getDrawable(R.drawable.button_nav_up);
-//设置Drawable的宽高
-nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
-//设置
-textview1.setCompoundDrawables(null, null, nav_up, null);

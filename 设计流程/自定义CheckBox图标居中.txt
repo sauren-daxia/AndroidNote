@@ -1,7 +1,0 @@
-以往设置自定义的图标是在XML的
-	button = "@drawable/xxx"
-这样写，padding的时候图标不会居中显示
-
-改成：
-	drawableLeft = "@drawable/xx"
-这样写，padding就的时候就会居中

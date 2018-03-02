@@ -1,0 +1,17 @@
+FileOutPutStream:
+
+构造方法：
+--------------------------------------
+public		FileOutPutStream(String file)	//指向指定的文件
+public 		FileOutPutStream(File file)	//指向封装好的路径对象。
+public		FileOutPutStream(String file , boolean true)	//当第二个参数为true的时候可以使文件追加写入
+
+写数据方法：
+--------------------------------------
+void		writer(int b)		//写入一个字节，会转换为二进制编码，再由文件默认编码格式翻译，例如：97-翻译后-a   
+void		writer(Bytes[])		//将数据通过字符串方法getBytes转换的字节数组
+void		writer(Bytes[] int start, int end)	//写入一部分字节
+
+关闭流方法：
+--------------------------------------
+void		close()			//在使用完流时候必须关闭流，否则会一直占用系统资源，流对象系统不会自动回收

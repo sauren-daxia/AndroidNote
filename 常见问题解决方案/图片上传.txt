@@ -1,0 +1,28 @@
+1、获取外存所有图片路径的cursor
+	ContentResolver resolver = getContentResolver();
+	Cursor curosr = resolver.query(Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+2、这些数据基本放在ListView或GridView的，当用户点击某个Item是获取当前图片的路径
+	onItemclick(int position){
+		String imgPath = curosr.getString(curosr.getColumnIndex(Media.DATA));
+		File file = new File(imgpath);
+		if(file.exists){
+			return;	//如果文件不存在了就结束
+		}
+
+		Httputils htt = new HttpUtils();
+		RequestParams params = new RequestParams();
+		params.addBodyParameter(key, file)	//key是服务器定义的
+		mHttpUtils.send(HttpMethod.Post, "", params, new RequestCallBack<String>() {
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				Toast.makeToast(Activity.this,"上传失败",0).show();
+			}
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				Toast.makeToast(Activity.this,"上传成功",0).show();
+			}
+			
+		});
+	}
+	

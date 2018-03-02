@@ -1,0 +1,5 @@
+	if (System.currentTimeMillis() - lastClickBarTime > 1000) {
+		lastClickBarTime = System.currentTimeMillis();
+	} else {
+		onBackPressed();
+	}

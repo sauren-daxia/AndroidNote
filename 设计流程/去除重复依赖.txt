@@ -1,3 +1,0 @@
-compile('com.jph.takephoto:takephoto_library:4.0.3') {		//括号里面是依赖项目
-        exclude group: 'io.reactivex'				//这里表示移除哪个相关的依赖的包名
-    }

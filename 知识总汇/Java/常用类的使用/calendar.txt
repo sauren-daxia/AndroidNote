@@ -1,0 +1,21 @@
+Calendar：
+构造方法：
+	calendar c = calendar.getInstance();	//calender为抽象，这个方法返回它的子类
+方法：
+	int	get(calendar);		//获取这个类的静态字段返回对应的int值；
+	void	set(int,int,int);	//跳转到指定值年月日；
+	void	add(calender,int)	//给定静态字段，对这个日期进行加或减的操作int的值为正数或负数，正加负减
+
+calender静态字段：
+isTimeSet		//判断是否为有效的日期值
+DAY_OF_MONTH		//表示某月的某一天
+DAY_OF_WEEKE		//表示一个星期中的某天
+DAY_OF_WEEKE_IN_MONTH	//表示这个月的第几个星期
+DAY_OF_YEAR		//表示这个年中的第几天
+HOUR_OF_DAY		//表示小时
+YEAR			//表示年
+MONTH			//表示月	月是从0开始算的，所以正常情况需要+1;
+DATE			//表示天
+MINUTE			//表示分钟
+MILLISECOND		//表示毫秒
+

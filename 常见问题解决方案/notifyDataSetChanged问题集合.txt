@@ -1,0 +1,8 @@
+1、NotifyDataSetChange不执行
+	1、遇到的情况是，使用了Empty，然后需要对MultiItemAdapter做setData的操作，所以操作的时候是MultiItemAdapter的对象，而并非直接是RecyclerView.Adapter的子类
+	解决一：不适用Empty
+	解决二：在Empty里面做setData，没尝试过
+
+2、NotifyDataSetChange刷新后会回到头部
+	1、多次setAdapter
+	

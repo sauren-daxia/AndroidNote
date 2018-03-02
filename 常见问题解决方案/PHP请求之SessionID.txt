@@ -1,0 +1,31 @@
+其实只要在OK里面添加一个Cookie就行了，不过这个cookie最好持久化
+
+代码如下
+  public static OkHttpClient getOk() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .readTimeout(10, TimeUnit.SECONDS)    //读取超时
+                .writeTimeout(10, TimeUnit.SECONDS)    //写入超时
+                .connectTimeout(10, TimeUnit.SECONDS)//连接超时
+                .pingInterval(10, TimeUnit.SECONDS)    //websocket 轮训间隔
+                .cookieJar(jar);
+        if (BuildConfig.LOG_DEBUG) {
+            builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        }
+        return builder.build();
+    }
+
+    
+    private static final HashMap<String, List<Cookie>> cookieStore = new HashMap<String, List<Cookie>>();
+    public static CookieJar jar = new CookieJar() {
+
+        @Override
+        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+            cookieStore.put(url.host(), cookies);
+        }
+
+        @Override
+        public List<Cookie> loadForRequest(HttpUrl url) {
+            List<Cookie> cookies = cookieStore.get(url.host());
+            return cookies != null ? cookies : new ArrayList<Cookie>();
+        }
+    };

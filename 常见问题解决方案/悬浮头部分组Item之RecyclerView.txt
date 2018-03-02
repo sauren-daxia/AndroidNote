@@ -1,0 +1,43 @@
+private TextView titleTv;
+    private List<CountryVariousCityBean> countryCityList;
+    private int mSuspensionHeight;
+    private LinearLayoutManager manager;
+    private int mCurrentPosition;
+ 
+ recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                mSuspensionHeight = titleTv.getHeight();
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //找到列表第二个可见的View
+                mCurrentPosition = manager.findFirstVisibleItemPosition();
+                int nextPosition = mCurrentPosition+1;
+                if(nextPosition <= countryCityList.size()){
+                    titleTv.setText(countryCityList.get(mCurrentPosition).getFirstletter());
+                    if(countryCityList.get(mCurrentPosition).getFirstletter().equals(countryCityList.get(nextPosition).getFirstletter())){
+                        titleTv.setY(0);
+                        return;
+                    }
+                }
+                View view = manager.findViewByPosition(mCurrentPosition + 1);
+                if (view == null) return;
+                //判断View的top值是否小于悬浮条的高度
+                if (view.getTop() <= mSuspensionHeight) {
+                    titleTv.setY(-(mSuspensionHeight - view.getTop()));
+                } else {
+                    titleTv.setY(0);
+                }
+                //判断是否需要更新悬浮条
+                if (mCurrentPosition != manager.findFirstVisibleItemPosition()) {
+                    mCurrentPosition = manager.findFirstVisibleItemPosition();
+                    titleTv.setY(0);
+                    //更新悬浮条
+//                    updateSuspensionBar();
+                }
+            }
+        });

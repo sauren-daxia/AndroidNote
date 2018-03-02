@@ -1,0 +1,36 @@
+第一种常用异常处理机制
+	
+	String s  =  "2012-02-21"		
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	try{	
+			
+	Date d = sdf.parse(s);		//可能出现异常的语句
+	
+	}
+	catch(parseExcption e){		//异常对象。根据报什么异常就设置什么异常对象
+	
+	e.printStackTrace();		//异常处理方法
+	}
+
+
+Exception及所有子类通用方法：
+
+void	printStackTrace();		//提示异常，并且程序往下执行。
+
+第二种异常处理机制：
+
+throws	ParseException			//在方法()后面追加抛出异常类名，现在不处理，待调用者调用再处理，声明作用
+
+throw   new ParseException		//在方法体内使用，抛出具体的异常对象
+
+
+查找异常类型的方法：
+	按Ctrl点击会报异常的方法，查看源码看看它声明了什么异常。
+
+注意事项：
+	A:如果父方法中抛了异常，子类重写方法的时候不能比父方法抛的异常等级更高
+
+	B:如果父类抛出多个异常，子类只能抛出父类相同异常或者异常的子类，不能抛出父类没有抛出的异常
+
+	C:如果父类方法没有抛异常，子类就绝对不能抛异常。如果子类方法体有异常，只能try、catch

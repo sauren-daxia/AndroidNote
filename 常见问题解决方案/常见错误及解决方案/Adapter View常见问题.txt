@@ -1,0 +1,7 @@
+1、内容\Item显示补全
+
+	1.1	没有重新计算高度，继承AdapterView在onMeasure（）方法中重新计算
+			heightMeasureSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,  MeasureSpec.AT_MOST);
+
+	1.2	使用GridView的话可能会出现这种情况，解决方法：
+			使用ListView，将ListView的Item布局设置为一行两个或三个...做成GridView的效果

@@ -1,0 +1,60 @@
+1、定义Map存储每个倒计时
+ private HashMap<TextView, CountTimerUtils> timerMap = new HashMap<>();
+
+2、倒计时前取消之前的倒计时
+		CountTimerUtils timer = timerMap.get(countTimeExplainTv);
+                    if (timer != null) {
+                        timer.cancel();
+                        timer = null;
+                    }
+                countTimer(countTimeExplainTv, hourTv, minuteTv, secondTv, bean, position);
+
+3、开始倒计时并储存倒计时
+ private void countTimer(final TextView text_second_2, final TextView text_hour, final TextView text_minute, final TextView text_second, final HomeHotelGreenDaoBean bean, final int position) {
+        long currentTime;
+        CountTimerUtils timerUtils = new CountTimerUtils();
+        if (!TextUtils.isEmpty(Encrypt.getInstance().time)) {
+            currentTime = System.currentTimeMillis() - Long.parseLong(Encrypt.getInstance().time);
+        } else {
+            currentTime = System.currentTimeMillis();
+        }
+        long beginTime = bean.getBeginTime() * 1000;
+        long endTime = bean.getEndTime() * 1000;
+        long startTime;
+        if (currentTime < beginTime) {       //还没开始
+            startTime = beginTime - currentTime;
+            text_second_2.setText("秒后可订房");
+        } else if (currentTime < endTime) {      //已经开始
+            startTime = endTime - currentTime;
+            text_second_2.setText("秒后活动结束");
+        } else {
+            text_second_2.setText("秒后活动结束");
+            return; //已经结束
+        }
+        timerUtils.startTimer(startTime, 1000);
+        timerUtils.setOnCountTimeListener(new CountTimerUtils.OnCountTimeListener() {
+            @Override
+            public void onTime(int day, int hour, int minute, int second) {
+                if (hour == -1 && minute == -1 && second == -1) {
+                    countTimer(text_second_2, text_hour, text_minute, text_second, bean, position);
+                    return;
+                }
+                if (hour < 10) {
+                    text_hour.setText("0" + hour);
+                } else {
+                    text_hour.setText(hour + "");
+                }
+                if (minute < 10) {
+                    text_minute.setText("0" + minute);
+                } else {
+                    text_minute.setText(minute + "");
+                }
+                if (second < 10) {
+                    text_second.setText("0" + second);
+                } else {
+                    text_second.setText(second + "");
+                }
+            }
+        });
+        timerMap.put(text_hour, timerUtils);
+    }

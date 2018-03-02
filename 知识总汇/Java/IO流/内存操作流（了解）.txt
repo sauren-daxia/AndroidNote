@@ -1,0 +1,33 @@
+将数据暂时存在内存中，使用完就释放，不必写入文本中。
+
+
+ByteArrayOutputStream
+
+无参构造
+---------------------------
+方法：
+---------------------------
+void		write(byte[] bys)	//将byte类型的数据存入内存中
+byte[]		toByteArray()		//将存在内存中的数据存到数组中
+		
+
+ByteArrayInputStream
+
+构造方法：
+---------------------------
+public		ByteArrayInputStream(byte[] bys)	//将存在数组中的数据读取
+
+方法：
+---------------------------
+int		read(int t)		//读取单个数据
+...
+
+CharArrayWriter		//使用方法和字符流一样		----
+							    |
+CharArrayReader		//使用方法和字符流一样		----
+							    |--------了解即可
+StringWriter		//使用方法和字符流一样		----
+							    |
+StringReader		//使用方法和字符流一样		----
+
+

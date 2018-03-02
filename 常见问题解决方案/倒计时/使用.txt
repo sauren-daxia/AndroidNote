@@ -1,0 +1,38 @@
+ 
+ private CountTimerUtils countTimerUtils = new CountTimerUtils();
+
+  countTimerUtils.cancel();
+        countTimerUtils.startTimer(second, 1000);
+        countTimerUtils.setOnCountTimeListener(new CountTimerUtils.OnCountTimeListener() {
+            @Override
+            public void onTime(int day, int hour, int minute, int second) {
+                StringBuilder sb = new StringBuilder();
+                if (hour == -1 && minute == -1 && second == -1) {
+                    countTimer(text_second_2, text_hour, text_minute, text_second, bean, position);
+                    return;
+                }
+                if (hour < 10) {
+                    sb.append("0"+hour+"小时");
+                } else {
+                    sb.append(hour+"小时");
+                }
+                if (minute < 10) {
+                    sb.append("0"+minute+"分钟");
+                } else {
+                    sb.append(hour+"分钟");
+                }
+                if (second < 10) {
+                    sb.append("0"+minute+"秒");
+                } else {
+                    sb.append(hour+"秒");
+                }
+            }
+        });
+
+
+
+@Override
+    protected void onDestroy() {
+        super.onDestroy();
+        countTimerUtils.cancel();
+    }

@@ -1,0 +1,32 @@
+DateInputStream:
+
+构造：
+---------------------------
+public		DateInputStream(FileInputStream fis)		//需要一个输入流
+
+方法：
+---------------------------
+public		readByte(byte b)		//读取byte类型
+public		readInt(int i)			//读取Int类型的数据
+...
+
+
+DateOutputStream:
+
+构造：
+---------------------------
+public		DateOutputStream(FileOutputStream fos)		//需要一个输出流
+
+方法：
+---------------------------
+public		write(byte b)		//写入一个byte类型的数据
+public		write(int i)		//写入一个Int类型的数据
+....
+
+
+------------------------------
+PS:存储一个 boolean true 和一个 int 256
+存到文本的数据是 1 0010
+
+取出一个int 和一个 boolean
+取到的值是1001  0		1001 -->00000001 00000000 0000000 00000001 转换为十进制后 == 16777217

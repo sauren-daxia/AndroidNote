@@ -1,0 +1,4 @@
+1、通过代码设置ScrollView，在构造的时候
+	this.setFillViewport(true);
+2、通过XML文件设置ScrollView
+	android:fillViewport="true"

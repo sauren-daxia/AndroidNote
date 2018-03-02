@@ -1,0 +1,43 @@
+Class
+
+构造：
+-------------------------------
+Class c = 类.class		//使用类名.class返回一个Class对象
+Class c = p.getClass		//使用引用对象调用getClass()返回一个Class对象
+Class c = Class.forName("com.bwf._01.Student")	//常用指定类文件返回一个Class对象
+
+方法：
+--------------------------------
+Constructor		getConstructor()	//返回单个公共构造，无参的
+Constructor		getConstructor(String.class,int.class)	//返回单个公共构造,根据对应的参数获取对应个数参数列表的构造
+Constructor		getDeclaredConstructor()	//返回单个构造，无参的
+Constructor		getDeclaredConstructor(String.class,int.class)	//返回单个构造根据对应的参数获取对应个数参数列表的构造
+Constructor[]		getConstructors()	//返回所有公共构造数组
+Constructor[]		getDeclaredConstructors()	//返回所有构造数组。
+
+
+
+
+
+
+
+Constructor：
+
+方法：
+----------------------------
+Object		newInstance()		//创建Constructor获取到的构造。相当于new构造。
+void		setAccressible(boolean)	//访问私有需要权限，调用该方法设置true，可以取消访问权限
+
+
+
+
+
+
+
+
+
+——————————————————————————
+PS：Class对象包括三个东西,这三个东西都有相对应的对象。
+	1、
+	2、构造方法------Constructor
+	3、

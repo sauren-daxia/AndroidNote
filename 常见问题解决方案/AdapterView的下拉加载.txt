@@ -1,0 +1,25 @@
+private int lastVisibleIndex = 0;
+private boolean isLoading;
+private OnscrollListener listener = new OnScrollListener(){
+
+	onScrollStateChanged(){
+	}	
+
+	publci void OnScroll(view v, int first , int visiblecount , int total){
+
+		//减1是因为加载数据时会在ViewAdapter中添加一个尾部加载视图，必须要减去这个尾部
+		if(lastVisibleIndex == first + visiblecount - 1){
+			return;
+		}
+		lastVisibleIndex = first + visiblecount -1;
+		
+		//isLoading需要在获取数据后解析Json是才设置为true
+		if(!isLoading && first + visiblecount == total){
+		
+			//如果等于最后一条数据.就去访问数据并设置数据源
+			initListView();
+		}
+
+	}
+
+}

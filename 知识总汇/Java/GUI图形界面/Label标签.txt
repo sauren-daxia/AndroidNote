@@ -1,0 +1,5 @@
+Label
+
+构造：
+--------------------
+public		Label(String text)		//设置标签内容

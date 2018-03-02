@@ -1,0 +1,37 @@
+Button
+
+构造：
+----------------------------
+public		Button()	//无参
+public		Button(String name)	//设置按钮的名称
+
+方法：
+--------------------------------
+void		setSize()		//设置按钮的大小。	
+
+void		addActionListener(new ActionListener)	//添加一个点击按钮事件。
+void		addMouseListener(new MouseAdapter)	//添加一个鼠标事件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+事件：
+----------------------------------------
+ActionListener：
+public	void  actionPerformed(ActionEvent e)		//点击事件
+
+-----------------------------------------
+MouseListener：
+public  void  mouseEntered(xx x)			//当鼠标滑动到按钮上的事件
+
+public  void  mouseExited(xx x)				//当鼠标离开按钮事件

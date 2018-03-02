@@ -1,0 +1,27 @@
+﻿对基本类型的操作：
+基本类型：byte、short、int、long、float、double、boolean、char
+对应的类：Byte、Short、Integer、Long、Float、Double、Boolean、Character
+类的方法大体相似。
+Integer类的方法：
+构造方法：
+	1、public Integer(int)		//将int类变量转为Integer类型
+	2、public Integer(String)	//将只含有数值的字符串转换，不能有字母
+转换方法：
+static int ParseInt(String)		//将字符串转为int类型
+static String valueOf()			//将int转为字符串,不是Integer的方法
+static String toBinaryString(int)	//转换为二进制数值的字符串
+static String toOctalString(int)	//转换为八进制数值的字符串
+static String toHexString(int)		//转换为十六进制的字符串
+static String toString(int,int)		//指定十进制值转换2---36进制	
+static String parseInt(String, int)	//由字符串转换2----36进制
+int	ii.intValue();			//将integer转换为int
+前提是这个字符串只能由这个进制组成的数字 "123"不能转二进制，因为二进制没有3	
+Character类的方法：
+构造方法：
+	1、public Character(char)	
+方法：
+staitc boolean isUpperCase(char)	//判断是否大写
+static boolean isLowerCase(char)	//判断是否小写
+static boolean isDigit(char)		//判断是否数字
+static char toUpperCase(char)		//转换大写
+static char toLowerCase(char)		//转换小写

@@ -1,0 +1,39 @@
+1、定义一个类继承DefaultHandler并重写五个方法
+
+	startDocument()		//读取外层标签时会执行的方法，可以在这里对变量做初始化操作
+		List<Item> list = new ArrayList<Item>();
+
+	endDocument()		//外层标签结束的时候执行的方法。没什么作用
+
+	startElement()		//每读取一个事件的时候会执行的方法，可以在这里创建一个新的对象用于添加到add，如果不在这里创建可以在endElement()中创建
+
+	endElement()		//当一个事件读取完毕时候会执行的方法，在这里吧Item的对应类添加到List集合中
+
+	characters()		//执行startElement或endElement()都会执行的方法，在这里获取Item的属性
+
+	getList()		//用于将读取到的Item集合返回到调用者中
+
+2、定义一个全局字符串Name，在startElement()中将读取到的标签名赋值到Name中，用于在characters()判断读取到的每个标签，或用于endElement()中判断是否每个Item的结束，是则添加到List中
+
+3、在characters()中获取属性
+
+	new String(ch,start,length)
+
+4、在界面中创建DefaultHandler类
+
+	
+	SAXParserFactory factory = SAXParserFactory.newInstance();
+	
+	SAXParser saxParser = factory.newSAXParser();
+	
+	XMLReader reader = saxParser.getXMLReader();
+	
+	SaxHandler saxHandler = new SaxHandler();
+	
+	reader.setContentHandler(saxHandler);
+				
+	InputSource inputSource = new InputSource(getAssets().open("data2.xml"));
+	
+	reader.parse(inputSource);
+	
+	List<Item> list = saxHandler.getList();

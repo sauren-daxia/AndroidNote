@@ -1,0 +1,37 @@
+1、每个build.gradle都是一个project，一个project包含N个Task
+
+2、一个project包含多个插件，一个插件包含多个Task
+
+3、Task之间是有依赖关系的，会按照依赖顺序执行，如果没有依赖则在最开始执行
+
+4、每个project都是单独存在的，但是project之间可以有依赖关系
+
+5、project之间的依赖关系，可以通过在根目录定义一个build.gradle，一个settings.gradle来描述
+
+6、根目录的build.gradle是用于配置多个project之间的公共属性
+
+7、根目录的settings.gradle是用于描述改项目是多个project组成的，并且在里面配置都有哪些project
+
+8、Gradle工作流程
+
+	初始化 >>>>>> Hook(初始化完) >>>>>> 构造 >>>>>> Hook(构造完) >>>>>> 执行 >>>>>> Hook(执行完)
+
+	初始化：这个阶段会执行settings.gradle，确定该项目有多少个project要参与编译和执行任务
+
+	Hook(初始化完)：这个回调通知调用者已经初始化完毕，可以在这里做一些构造之前的操作
+
+	构造：这个阶段会将所有的project生成一个实例，并且配置好project里面非task相关的属性，接着会确定好整个项目中project和task的关系图
+
+	Hook(构造完)：这个回调通知调用者已经构造完毕，可以在这里做一些执行之前的操作
+
+	执行：这个阶段会将每个project中的task按照关系图执行一遍
+
+	Hook(执行完)：这个回调通知调用者已经执行完毕，可以在这里做一些执行完的操作
+
+命令：
+---------------------
+gralde projects			//在根目录查看该项目包含多少个project
+
+gradle <project路径>:tasks	//查看该project中包含多少个task，如果当前路径就是project所在的目录则可以不需要写路径
+
+gralde <TaskName>		//在project目录下，通过任务名执行该任务，例如：gradle clean

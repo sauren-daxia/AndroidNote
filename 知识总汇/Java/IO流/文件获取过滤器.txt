@@ -1,0 +1,13 @@
+
+File file = new File("E:\\");		//获取某个文件夹的能容
+
+String[] strArr = file.list(new Filenamefilter{
+
+	@Override
+	public boolean accept(File dir, String nmae){		//dir是绝对路径，name是文件名 
+
+	
+	return new File(dir,name).isFile() && name.endsWith(".jpg"); //将路径和文件名转换为file对象，判断该对象是否是文件，并且文件名是否以XXX结尾
+	}
+
+})

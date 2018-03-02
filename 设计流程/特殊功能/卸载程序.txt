@@ -1,6 +1,0 @@
-	
-	Uri uri = Uri.parse("package:com.xx.xx");	//包名，应该可以通过getPackgeName()获得
-
-	Intent intent = new Intent(Intent.ACTION_DELETE,uri)
-	
-	startActivity(intent);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#F1F1F1"
+    android:layout_height="match_parent">
+
+    <com.dsfa.common.ui.widget.MTitleBar
+        android:layout_width="match_parent"
+        android:id="@+id/mt_bar"
+        android:layout_height="wrap_content"></com.dsfa.common.ui.widget.MTitleBar>
+
+    <include
+        android:id="@+id/include_error"
+        android:layout_width="match_parent"
+        android:layout_below="@id/mt_bar"
+        android:layout_height="match_parent"
+        layout="@layout/empty_load_error"
+        />
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/bga_rl"
+        android:layout_width="match_parent"
+        android:layout_below="@id/mt_bar"
+        android:background="#FFFFFF"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_friends_circle"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"></android.support.v7.widget.RecyclerView>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        layout="@layout/include_friends_circle_reply"/>
+</RelativeLayout>

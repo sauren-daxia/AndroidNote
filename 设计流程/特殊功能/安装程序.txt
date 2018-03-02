@@ -1,8 +1,0 @@
-	
-	Uri uri = Uri.fromFile(file)	//file = APK文件
-
-	Intent intent = new Intent(Intent.ACTION_VIEW);
-
-	intent.setDataAndType(uri,"application/vnd.android.package-archive")	//格式固定
-
-	startActivity(intent);

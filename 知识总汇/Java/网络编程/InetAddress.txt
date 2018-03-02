@@ -1,0 +1,10 @@
+InetAddress:
+
+构造：
+---------------------------
+InetAddress ia = IntAddress.getByName(String ip)			//可以传IP地址，也可以传主机名
+
+获取功能：
+---------------------------
+String		getHostName()		//获取主机名
+String		getHostAddress()	//获取IP地址

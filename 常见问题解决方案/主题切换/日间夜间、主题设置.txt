@@ -1,0 +1,81 @@
+首先需要Android版本是23的，至少依赖了下面这个：
+	    compile 'com.android.support:appcompat-v7:23.4.0'	
+
+其次，定义资源文件：
+	1、创建Value资源文件，名为value-night
+	2、在value-night资源文件里面创建color资源文件
+	3、value-night-color的资源文件名必须和value-color里面的资源文件名一致
+	4、在Application中初始主题样式，这个初始样式放在静态代码块里执行
+		static {
+		//当然，最好将主题存在SharedPreference中，然后取出来再设置，让主题持久化
+		    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+		}
+	5、除了初始主题样式，还需要动态取改变主题样式：
+		日夜主题切换：
+			在点击事件里面执行：
+			{
+				//获取主题模式
+				int mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+				//判断日间还是夜间
+				if(mode == Configuration.UI_MODE_NIGHT_YES) {
+				//设置日间
+					AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+				} else if(mode == Configuration.UI_MODE_NIGHT_NO) {
+				//设置夜间
+					AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+				}
+				//当设置完毕后重新创建Activity，当然需要做动画过度，不然会闪屏，还有数据保存等
+					recreate();
+			}
+		PS:setDefaultNightMode()支持的变量
+		MODE_NIGHT_NO. Always use the day (light) theme(一直应用日间(light)主题).
+		MODE_NIGHT_YES. Always use the night (dark) theme(一直使用夜间(dark)主题).
+		MODE_NIGHT_AUTO. Changes between day/night based on the time of day(根据当前时间在day/night主题间切换).
+		MODE_NIGHT_FOLLOW_SYSTEM(默认选项). This setting follows the system’s setting, which is essentially MODE_NIGHT_NO(跟随系统，通常为MODE_NIGHT_NO).
+		
+		普通主题切换:
+			普通主题切换有点不一样：
+			首先：
+				在点击事件里面只改变主题的变量
+				{
+					int themeId = R.style.xxxx;
+					recreate();
+				}
+
+			然后在onSavaeInstanceState()中保存主题：
+			{
+				savedInstanceState.putInt("theme", themeId);
+				//当然还需要保存一些当前页面的数据
+			}
+
+			最后在create()中取出保存的主题然后设置：
+			{
+				if(saveInstanceState != null){
+					int themeId = saveInstanceState.getInt("theme");
+					setTheme(themeId);	//设置主题
+				}
+			}
+		PS:普通主题切换调用setTheme()方法，但是这个方法必须在setContentView()方法前执行
+
+PS:
+某些地方不能生效：
+	WebView，因为WebView加载的是网页，网页的内容无法把控
+	MODE_NIGHT_AUTO模式不好用：
+	因为使用MODE_NIGHT_AUTO需要请求坐标权限，获取系统的位置。
+	你肯定会说了，这尼玛不是坑爹吗？如果程序已经授予了坐标权限(location permission)
+	(如果你的target SDK为23或者更高，需要考虑运行时权限)，
+	AppCompat会试着去获取上次保存的坐标，根据坐标来计算日出与日落的时间
+	。如果程序没有位置权限或者LocationManager没有存储上次坐标的信息呢？
+	系统或默认设置为早上6点钟为日出，下午10点为日落。用户调整系统时间，
+	当前的主题也会随之改变。如果我们不希望用户在设定主题后，
+	主题还会随着时间改变,MODE_NIGHT_AUTO就不适用了。
+recreate():
+	recreate()重新创建
+        重新创建会执行下面生命周期：
+        onSaveInstanceSata();
+        onCreate();
+        onStart();
+        onRestoreInstanceState();
+        onResume();
+
+还看不懂就看原文：http://www.jianshu.com/p/dcfcfcbda7ac

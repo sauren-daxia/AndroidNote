@@ -1,0 +1,19 @@
+下拉刷新可以套SwipeRefreshLayout使用
+
+这里的是没有套FooterView的加载，好像套用Footer同样能用
+	监听滑动时间
+	int visiblePosition
+		mRecyclerView.setOnScrollListener(new xx{
+			onScrollStateChanged(RecyclerView view ,in newState){
+				//newState是状态值
+				//判断的条件：是否是停止状态、可显示的Item个数+1是否等于adapter的总数
+				if(newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 ==adapter.getItemCount()){			
+						//如果都满足说明可以加载了
+				}			
+
+			}
+    			publicvoid onScroll(AbsListView absListView, inti, inti1, inti2){  
+				// 一直在滚动中，多次触发,不停的获取可显示的最后一个Item的位置                      
+				visiblePosition = lineaerLayoutManager.findLastVisibleItemPosition();				
+		    } 
+		})

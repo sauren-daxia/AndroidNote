@@ -1,3 +1,0 @@
-MeasureUtil.getScreenSize((Activity) mContext)[0] //X
-
-MeasureUtil.getScreenSize((Activity) mContext)[1] //Y

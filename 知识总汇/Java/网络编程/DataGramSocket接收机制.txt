@@ -1,0 +1,45 @@
+DatagramSocket:
+1、创建DateGramSocket对象
+2、创建一个数据接收包
+3、调用方法接收数据
+4、解析数据，并显示
+5、关闭通讯对象
+
+DatagramSocket
+
+构造：
+----------------
+public		DatagramSocket(int port)		//设置接收方端口号
+
+方法：
+----------------
+void		receive(DatePacket dp)		//需要一个数据包
+
+
+DatePacket
+
+构造：
+----------------
+public		DatagramPacket(byte[] bys,int length)	//创建一个接收的数据包，大小，和长度
+
+方法：
+-----------------
+InetAddress	getAddress()		//获取发送方的IP
+byte[]		getDate()		//获取数据包缓冲的数据
+int		getLength()		//获取数据包的实际长度
+
+例子：
+	DatagramSocket ds = new DatagramSocket(10086);		//创建一个接收的套接字
+	while(true){
+	byte[] bys = new byte[1024]
+	DatagramPacket dp = new DatagramPacket(bys,bys.length);		//封装好数据包
+
+	ds.receive(dp);						//接收数据到数据包
+
+	String str = new String(dp.getData(),0,dp.getLength());	//解析数据
+	syso(str);
+	}
+	//ds.close();						//关闭通讯,开启循环后就不需要了。
+
+------------------
+ps:开启多次，会报端口异常，或者设置已经被占用的端口也会报异常。

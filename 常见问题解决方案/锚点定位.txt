@@ -1,0 +1,71 @@
+
+private boolean isClickScroll = false;
+ private void initTab() {
+
+        tabLayout.setViewPager(titles);
+        tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+                isClickScroll = true;
+                int y = 0;
+                switch (position) {
+                    case 0:
+                        y = schoolDetailsLlty.getTop();
+                        break;
+                    case 1:
+                        y = visualizationSchoolLlty.getTop();
+                        break;
+                    case 2:
+                        y = schoolHonourLlty.getTop();
+                        break;
+                    case 3:
+                        y = practicalCenterLlty.getTop();
+                        break;
+                    case 4:
+                        y = commentLlty.getTop();
+                        break;
+                    case 5:
+                        y = questionsLlty.getTop();
+                        break;
+                }
+                for (int i = 0; i < 5; i++) {
+                    nScroll.smoothScrollTo(0, y);
+                }
+            }
+        });
+        nScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                if (isClickScroll) {  //判断是否通过手动滑动ScrollView的
+                    return;
+                }
+                if (nScroll.getScrollY() > schoolDetailsLlty.getTop() && nScroll.getScrollY() < visualizationSchoolLlty.getTop()) {
+                    tabLayout.setCurrentTabNotViewPager(0);
+                } else if (nScroll.getScrollY() > visualizationSchoolLlty.getTop() && nScroll.getScrollY() < schoolHonourLlty.getTop()) {
+                    tabLayout.setCurrentTabNotViewPager(1);
+                } else if (nScroll.getScrollY() > schoolHonourLlty.getTop() && nScroll.getScrollY() < practicalCenterLlty.getTop()) {
+                    tabLayout.setCurrentTabNotViewPager(2);
+                } else if (nScroll.getScrollY() > practicalCenterLlty.getTop() && nScroll.getScrollY() < commentLlty.getTop()) {
+                    tabLayout.setCurrentTabNotViewPager(3);
+                } else if (nScroll.getScrollY() > commentLlty.getTop() && nScroll.getScrollY() < questionsLlty.getTop()) {
+                    tabLayout.setCurrentTabNotViewPager(4);
+                } else if (nScroll.getScrollY() > questionsLlty.getTop()) {
+                    tabLayout.setCurrentTabNotViewPager(5);
+                }
+            }
+        });
+        nScroll.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    isClickScroll = false;
+                }
+                return false;
+            }
+        });
+    }
+

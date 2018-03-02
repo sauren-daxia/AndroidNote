@@ -1,0 +1,44 @@
+    private FragmentManager fragmentManager;
+    private Fragment indexfragment;
+
+       @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_index);
+        fragmentManager = getSupportFragmentManager();
+    }
+
+/**
+     * 切换Fragment
+     */
+    public void switchContent(Class<?> c) {
+        if (indexfragment != null && indexfragment.getClass().getName().equals(c.getName())) {
+            return;
+        }
+        Fragment fragmentTag = fragmentManager.findFragmentByTag(c.getName());
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragmentTag == null) {
+            try {
+                fragmentTag = (BaseFragment) c.newInstance();
+                fragmentTransaction.add(R.id.flyt_fragment, fragmentTag, c.getName());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            fragmentTransaction.show(fragmentTag);
+        }
+        if (indexfragment != null) {
+            fragmentTransaction.hide(indexfragment);
+        }
+        indexfragment = fragmentTag;
+        fragmentTransaction.commit();
+    }
+
+ /**
+     *	//比较当前Fragment和点击Fragment是否同一个
+     */
+    public boolean equalsFragment(Class<?> c) {
+        return indexfragment.getClass().getName().equals(c.getName());
+    }

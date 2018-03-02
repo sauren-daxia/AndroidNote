@@ -1,0 +1,5 @@
+ <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:scrollbars="none"			<-- 取消滚动条 -->
+	    android:overScrollMode="never"		<-- 取消阴影-->
+            android:layout_height="match_parent"/>

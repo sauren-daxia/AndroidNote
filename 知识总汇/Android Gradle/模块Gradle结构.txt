@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+
+
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+
+    signingConfigs {					//配置签名
+        config {
+            keyAlias 'future'
+            keyPassword 'ly930617'
+            storeFile file('F:/KEY_STORY/futurekey.jks')
+            storePassword 'ly930617'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.dinghong.studyviewdemo1"
+        minSdkVersion 23
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+	    resValue "string","appname","release"		//定义资源文件，在代码中R.string.xx使用即可
+            buildConfigField"boolean","DEBUG","true"		//定义变量
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+	    resValue "string","appname","debug"
+            buildConfigField"boolean","DEBUG","false"		
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets.main{				//配置so路径
+	    jniLibs.srcDir 'src/main/libs'
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')		//依赖某个路径下的jar包, fileTree表示依赖多个文件的意思
+
+    compile 'com.android.support:appcompat-v7:26.0.2'		//依赖某个库
+
+    complie(name:"jasonchenAar",ext:"aar")			//依赖aar，前提要在仓库中配置aar路径
+
+    complie project(name:"jasonchenlibrary",ext:"module")	//依赖一个module
+
+    compile ('com.facebook.fresco:animated-webp:0.13.0') {	//依赖某个库，但使用exclude移除库中依赖某个组织的所有的库，避免冲突，库是由，组织:名字:版本确定的
+	exclude group: 'com.android.support'			
+    }
+
+    compile('com.android.support:appcompat-v7:23.2.0') {	//依赖某个库，但使用exclude移除库中依赖的某个库，避免冲突
+	exclude group: 'com.android.support', module: 'support-compat'	// 写全称
+	exclude group: 'com.android.support', module: 'support-v4'
+    }
+}
+ 
+}
+kapt {
+    generateStubs = true
+}
+
+repositories {
+    flatDir{		//配置aar路径
+	dirs 'aars'
+    }
+    mavenCentral()
+}
+
+
+1、apply plugin：添加插件，插件里面都是一些任务，这些任务提供很多便捷操作，比如第一行Android的插件，就提供了，编译、测试，打包等任务
+
+2、android{}：所有的Android特殊配置都写在里面，这是Android插件提供的
+
+3、defaultConfig{}：配置程序各种默认属性，
+
+4、buildTypes{}：定义编译类型，针对不同的需求编译不同的的命令，默认有两种类型：debug、release
+
+5、dependencies{}：配置当前gradle项目的依赖
+
+6、sourceSets{}：配置so的路径

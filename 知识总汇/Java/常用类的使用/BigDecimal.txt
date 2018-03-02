@@ -1,0 +1,14 @@
+BigDecimal：
+	针对浮点型的小数位精准运算,当用于高精度的运算的时候使用，比如金融计算
+构造：
+	public BigDecimal(String)	//字符串形式的数值
+方法
+	BigDecimal	add(BigDecimal)	//加
+	BigDecimal	subtract(BigDecimal)	//减
+	BigDecimal	multiply(BigDecimal)	//乘
+ 	BigDecimal	divide(BigDecimal)	//除
+	BigDecimal	divide(BigDecimal,int,BigDecimal.ROUND_HALF_UP)	//除法，保留几位小数，对小数的取舍
+
+BigDecimal b1 = new BigDecimal("12312");
+BigDecimal b2 = new BigDecimal("123123");
+BigDecimal b3 = b1.add(b2);

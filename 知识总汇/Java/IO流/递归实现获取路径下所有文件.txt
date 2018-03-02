@@ -1,0 +1,34 @@
+思路：
+	1、封装路径
+	2、获取该路径下所有文件或者文件夹的File数组
+	3、遍历File数组，得到file对象
+	4、判断file对象是否为文件夹
+		是：回到第2步
+		否：判断是否以.java结尾
+			是：输出file对象的路径
+			否：不搭理它
+
+
+
+
+
+public static void getAllJavaFilePaths(File srcFolder){
+
+	File[] fileArray = srcFolder.listFile();		//获取该路径下所有文件及文件夹的file数组
+
+	for(File file :  fileArray){				//遍历file数组得到file对象
+
+		if(file.isDirectory){				//判断file对象是否为文件夹
+		
+			getAllJavaFilePaths(file);		//是的话把当前路径再传个getAll方法获取该路径下的文件及文件夹
+		}else{
+
+			if(file.getName().endsWith(".java")){	//不是的话判断该文件是否以指定的后缀结尾
+
+				System.out.println(file.getAbsolutePath());	//是的话就输出该文件路径
+			}
+		}
+
+	}
+
+}

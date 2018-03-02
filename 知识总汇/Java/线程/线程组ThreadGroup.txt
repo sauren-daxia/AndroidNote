@@ -1,0 +1,12 @@
+ThreadGroup：
+
+构造方法：
+---------------------------------
+public		ThreadGroup(String name)		//创建一个线程组，并对其取名字；
+
+方法：
+---------------------------------
+void		setDaemon(boolean)			//设置后台的守护线程
+void		setMaxPriority(int num)			//设置线程组的优先级
+ThreadGroup	getThreadGroup()			//获取线程所在的组
+String		getName()				//获取线程组的名字

@@ -1,3 +1,0 @@
-1、the sdk directory "H:\programmeTool\AppData" does not exist
-
-修改local.properties文件中，SDK在本地电脑中正确的路径

@@ -1,0 +1,39 @@
+TCP/IP协议
+	客户端：Socket	
+
+
+1、创建Socket对象
+2、获取输出流
+3、释放资源
+
+Socket
+
+构造
+--------------------
+public		Socket(String host,String port)		//设置接收方的IP地址，设置接收方的端口号
+
+方法：
+--------------------
+OutputStream	getOutputStream()		//获取输出流
+void		shutdownOutput()		//终止输出，提示服务端输出已终止。
+
+
+例子：
+----------------------
+	Socket s = new Socket("192.168.1.1",12345);		//访问服务器的地址及端口
+
+	OutputStream os = s.getOutputStream();			//获得输出流向服务器传输数据
+
+	os.write("xxx".getBytes());				//写入数据
+
+	s.close();						//关闭通讯
+
+例子二：使用键入发送
+------------------------------
+	Socket s = new Socket("192.168.1.1",12345);
+	
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+	String str = br.readLine();
+
+	s.close();

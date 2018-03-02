@@ -1,0 +1,37 @@
+Collection
+
+方法
+	add()			//添加元素
+	remove()		//移除元素
+	contains()		//判断集合是否包含指定元素
+	iterator()		//迭代器
+	size()			//长度
+
+	遍历方法：
+		增强for
+		迭代器
+
+	|--List
+		get()
+	
+	遍历：普通for
+
+	|--Set
+		方法、遍历与Collection一致
+
+Map
+
+方法
+V		put(K key , V value)	//添加元素，参数为键，值，如果键是第一次存储则返回null
+					//如果键是第一次存储，则存储元素，如果键不是第一次存储，则把原有的键对应的值修改，并返回原有的值
+
+V		get(Object key)		//根据键获取值
+void   		remove(Object key)	//根据键移除元素，并且返回值
+boolean	 	containsKey(Object key)		//判断是否包含此键
+boolean 	containsValue(Object value)	//判断是否包含此值
+boolean		isEmpty()			//判断集合是否为空
+Set<K>		keySet()		//获取集合中所有的键
+Collection<V>	values()		//获取集合中所有的值
+int		size()			//获取集合的长度
+	
+	

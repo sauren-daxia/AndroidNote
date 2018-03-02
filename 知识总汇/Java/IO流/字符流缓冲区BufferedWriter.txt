@@ -1,0 +1,20 @@
+BufferedWriter:
+
+构造方法：
+--------------------------------------
+public		BufferedWriter(FileWriter fw)		//需要一个输出字符流
+
+输出方法：
+--------------------------------------
+void		write(int c)			//写入单个字符
+void		write(char[] ch , int start, int len)	//写入一部分字符数组，从第几个开始写几个
+void		write(String s, int start , int len)	//写入一部分字符串，从第几个开始写几个
+void		newLine()			//换行
+void		flush				//刷新
+
+释放资源：
+--------------------------------------
+void		flush()			//刷新缓冲区
+void		close()			//关闭流对象
+
+

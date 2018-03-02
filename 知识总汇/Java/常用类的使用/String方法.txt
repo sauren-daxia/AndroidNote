@@ -1,0 +1,60 @@
+﻿String类的方法：
+
+分割			split
+替换 			replace
+出现的位置		indexOf
+是否为空		isEmpty
+转换字符数组		toCharArray
+截取			subString
+获取索取位置字符	charAt
+长度			length
+判断首字母		startsWith
+判断尾字母		endsWith
+判断是否相等		equlas
+忽略大小写判断		equlasIgnoreCase
+是否包含		contains
+转换为字节		getbytes
+转换小写		toLowerCase
+转换大写		toUpperCase
+拼接			concat
+去空			trim
+按ASCII比较		compareTo
+忽略大小写按ASCII	compareToIgnoreCase
+把任何类型转换字符串	valueOf
+
+构造方法：
+	public String()	//空构造
+	public String(byte[] by)	//将字节数组转换为字符串
+	public String(byte[] by, int index, int length)//将字节数组部分转换
+	public String(char[] c)	//将字符数组转为字符串
+	public String(char[] c, int index, int length)	//将字符数组转换
+	public String(String str)	//把字符串常量转换为字符串
+字符串判断功能：
+	s.equals(String str);		//比较两个字符串的内容是否相同
+	s.equalsIgnoreCase(String str)	//比较两个字符串内容忽略大小写
+	s.contains(String str)	//判断时候包含该字符串
+	s.startsWith(String str)	//是否以该字符串开始
+	s.endsWith(String srt)		//是否以该字符串结束
+	s.isEmpty(String srt)		//判断字符串是否为空 null则抛异常
+字符串获取功能
+int	s.length();		//获取字符串的长度
+char	s.charAt(int ch)	//获取指定索引位置的字符
+s.indexOf(int index);  //获取指定字符在字符串中第一次出现的位置,可写字符类型
+char	s.indexOf(String str); //返回字符串在字符串中第一次出现的位置
+inr	s.indexOf(int ch, int f)	 //返回指定位置后第一次出现该字符的位置
+inr	s.indexOf(String str, int f) //返回指定位置后第一次出现该字符串的位置
+String 	s.subString(int start)	//从第几位截字符，直到末尾；
+String 	s.subString(int start, int end)		//从第几位截取到第几位
+String[]  s.split(String)	//按照指定正则表达式，或者指定字符进行分割；
+字符串转换功能
+byte[]		getBytes()	//把字符串转为字节
+char[]		toCharArray	//把字符串转为字符数组
+static String valueOf(object obj)	//可以把任何东西转为字符串
+String toLowerCase()	//转为小写字符串
+String toUpperCase()	//转为大写字符串
+String concat(String str)		//字符串拼接
+字符串其他功能：
+String replace(String x, String y)//将某个字符串替换某个字符串，也可换字符
+String trim()		//去空格
+int compareTO(String str)	//按ASCII比较字符串，相同反0，不同首字母相减
+int compaerToIgnoreCase(String str)	//忽略大小写比较

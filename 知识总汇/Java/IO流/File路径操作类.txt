@@ -1,0 +1,53 @@
+File
+
+构造方法：三种构造功能一样，常用第一种
+--------------------------------------------
+public		File(String pathname)	//根据具体文件路径得到file对象，例如"E:\\javafile\\Test.java"
+
+public		File(String parent, String Child)	//根据具体路径和文件名得到file对象，例如"E:\\javafile" , "Test.java"
+
+public		FIle(File file, String Child)	//根据file对象和文件名得到file对象,例如file , "Test.java";
+--------------------------------------------
+创建方法：
+--------------------------------------------
+boolean		createNewFile()		//创建文件，如果文件名存在则不创建。不能在不存在的目录里创建，如果不写盘符，默认在项目路径
+
+boolean		mkdir()			//创建文件夹，如果文件夹存在则不创建，如果指定目录的上一级不存在则不能创建
+
+boolean		mkdirs()		//创建多级文件夹
+--------------------------------------------
+获取功能：
+--------------------------------------------
+String		getName()		//获取文件或文件夹名
+String		getPath()		//获取相对路径
+String		getAbsolutePath		//获取绝对路径
+String		getParentFile()		//获取上一级目录地址
+long		length()		//获取文件大小，单位为字节
+long		lastModified()		//获取上一次修改文件的时间，返回毫秒值
+String[]	list()			//获取文件夹下所有文件名，只是获取名字
+File[]		listFiles()		//获取文件下所有文件名对象。是获取名字的对象，可对这些文件对象进行操作。
+过滤器：
+String[]	list(FilenameFilter filter)	//获取所有文件，但在获取之前就过滤不要的文件信息，详情查看本文件下<<文件过滤器>>
+File[]		listFiles(FilenameFilter filter) //获取文件名对象，在获取之前判断是否获取。详情同上。
+--------------------------------------------
+
+判断功能：
+--------------------------------------------
+boolean		isDirectort()		//判断是否是文件夹
+boolean		isFile()		//判断是否是文件
+boolean		exists()		//判断是否存在
+boolean		canRead()		//判断是否可读
+boolean		canWrite()		//判断是否可写
+boolean		isHidden()		//判断是否隐藏
+--------------------------------------------
+重命名方法：
+--------------------------------------------
+boolean		renameTo(File file)	//参数是需要修改的名字的file对象，如果路径与被修改对象相同则，修改，如果不相同则剪切并修改
+					同名：file1=="as.jpg"	file2=="saa.jpg"; 则修改名
+					不同：file1=="as.jpg"	file2=="E:\\saa.jpg";则修改名并且剪切到E盘路径
+--------------------------------------------
+删除方法：
+--------------------------------------------
+boolean		delete()		//删除file对象的内容，file是文件则删文件，file是文件夹则删文件夹，删除文件是彻底删除，不进回收。
+					要删除文件夹，则该文件下不能包含文件或者文件夹。
+--------------------------------------------

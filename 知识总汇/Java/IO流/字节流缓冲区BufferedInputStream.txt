@@ -1,0 +1,26 @@
+BufferedInputStream：
+
+构造方法
+----------------------------------------
+public		BufferedInputStreram(InputStream)		//需要一个输出流
+
+输出方法：
+----------------------------------------
+int		read()		//一次写一个字节
+int		read(byte[] )	//一次读一组字节
+
+释放资源：
+----------------------------------------
+void		close()		
+
+两种读取方式：
+byte[] b = new byte[1024];
+int len =0;
+while((len = bis.read(b)) != -1){
+	syso(new String(b, 0 , len))
+}
+
+int len = 0;
+whiel((len = bis.read) != -1){
+	syso((char)len)
+}

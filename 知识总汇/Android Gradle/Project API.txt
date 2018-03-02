@@ -1,0 +1,123 @@
+API:
+------------------------------------
+apply(map<String,?>)	//添加插件
+			//plugin添加插件，示例：apply plugin:"com.android.application" ，key为pluugin，值为"com.android.application"
+			//from添加gradle，示例：apply from:rootProject.getRootDir().getAbsolutePath() + "/utils.gradle"，gradle本身也是一个插件这里添加一个本地自定义的gradle，可以的调用里面的task
+
+ext			//设置依赖属性属性，或全局属性，在某个module设置表示可以让依赖它的project调用，在根build.gradle设置表示可以让所有project调用
+			//示例：
+				gradle.ext.id = 5555		//这里是当前的project定义的，这里的gradle并不是表示当前的project，而是表示根目录的project，定义属性的时候需要加ext，id是新的属性，声明方式有点不同
+
+				println gradle.id		//定义完的属性使用的时候不需要ext了，直接调用
+
+				project.ext.id = 666		//proejct属性是表示依赖的project，或自身，比如A依赖B，B里面的project表示A，或任何一个依赖的project，定义属性也是一样的
+
+				println project.id		//调用时同样不需要ext
+
+				PS:这里注意，定义gradle也好project也好，定义什么就用什么,定义一个gradle的属性，依赖的project调用时，就gradle.xx，project也一样
+
+				ext{				//另一种定义全局变量的方式，如果只是project.ext或gradle.ext，一次只能定义一个，用闭包来定义可以定义一堆
+
+					name = "chen"		//在ext闭包里面就不需要指定project和gradle了，连ext也不需要
+
+					deleteAction = this.&deletAction	//将方法定义为一个变量
+				
+				}
+
+				def deleteAction(){}
+
+				println name
+
+
+				PS:这里注意，在定义的时候没必要的话不要执行定义的任务，否则依赖的项目首先会调用一次，然后自身再调用一次，就会调用两次，最好是交给依赖的project自己调用
+
+task				//定义任务
+				//示例:
+					task hello			//定义一个名为hello的任务
+
+					task hello{ println id }	//定义一个任务并且实现action，action就是这个闭包，但是这个action会在创建task的时候，在返回给用户之前就调用了，
+
+					task hello << { println id }	//定义一个doLast任务，doLast最后才会执行，<<是doLast的缩写
+
+					task hello(type:Copy)		//定义一个有继承关系的任务，这个任务继承自Copy类
+
+					PS:以上的任务的action，可有可无
+
+dependsOn			//任务依赖
+				//示例：
+					clean.dependsOn 'helloTask'		//clean是一个task，依赖helloTask执行，也就是执行clean之前会执行helloTask
+
+tasks.getByName(String){ it }	//获取某个任务，tasks是一个project任务集合，通过byName找到对应的任务，得到这个任务后，可以在里面做一些这个任务执行之前之后的操作
+
+subprojects{}			//遍历根project下的每个子porject，it就是每个project的对象，在这里操作，就表示每个project都这么做
+
+	buildscript{}			//project提供的方法，配置当前project的基本信息，所有可以获取project的都可以使用，所以subprojects里面也可以
+			
+			repositories{}		//buildscript提供的方法，配置仓库
+
+			dependencies{}		//buildscript提供的方法，配置依赖
+
+android{}			//Android插件提供的，配置Android属性
+	
+	compileSdkVersion = gradle.api  //android方法提供的属性，这两个参数必须设置 
+	buildToolsVersion  = "22.0.1" 
+
+	signingCofings{}	//android{}提供的方法。配置签名信息
+
+			debug{}			//自定义不同的签名类型
+
+					storeFile file("file://${project.gradle.debugKeystore}")		//signingConfig提供的属性，设置签名文件路径
+
+					storePassword "android"							//signingConfig提供的属性，设置签名文件密码
+
+					keyAlias "androiddebugkey"						//signingConfig提供的属性，设置签名别名文件名
+
+					keyPassword "android"							//signingConfig提供的属性，设置签名别名文件密码
+			
+			release{}		//自定义不同的签名类型，可以自定义更多
+		
+	buildType{}		//android{}提供的方法，配置编译类型
+
+			debug{}			//自定义不同的编译版本
+					
+					//这里提供了N多属性，需要查阅文档
+
+			release{}		//自定义不同的编译类型，可以自定义更多
+
+			PS:这里定义的任务，可以通过tasks.getByName("prexxxBuild")获取，中间的xxx则是自己定义的名字，gradle tasks --all查看所有任务。然后，多尝试几次，直到找到这个名字
+
+	sourceSets{}		//JAVA插件提供的方法，配置源码路径
+
+			main{}			//sourceSets提供的方法，配置主要资源路径
+				
+					manifest.srcFile 'xx.xml'	//main提供的方法，设置manifest路径
+
+					aidl.srcDirs=['src']		//main提供的方法，设置AIDL目录，需要一个集合，这个集合只有一个元素
+
+					java.srcDirs=['src']		//main提供的方法，设置Java文件目录，需要一个集合，这个集合只有一个元素
+
+					jniLibs.srcDir 'src/lib'	//main提供的方法，设置jni文件目录
+
+					assets.srcDirs = ['assets']	//main提供的方法，设置assets文件目录，需要一个集合，这个集合只有一个元素
+
+	dependencies{}		//Java插件提供的方法，Android也用了，设置都是一样的，可以在android{}里，也可以在android{}外面，因为gradle本身就有这个方法
+			
+			compile fileTree(include: ['*.jar'], dir: 'libs')		//依赖某个路径下的jar包, fileTree表示依赖多个文件的意思
+
+			compile 'com.android.support:appcompat-v7:26.0.2'		//依赖某个库
+
+			complie(name:"jasonchenAar",ext:"aar")				//依赖aar，前提要在仓库中配置aar路径
+
+			complie project(name:"jasonchenlibrary",ext:"module")		//依赖一个module
+
+			compile ('com.facebook.fresco:animated-webp:0.13.0') {		//依赖某个库，但使用exclude移除库中依赖某个组织的所有的库，避免冲突，库是由，组织:名字:版本确定的
+				exclude group: 'com.android.support'			
+			}
+
+			compile('com.android.support:appcompat-v7:23.2.0') {		//依赖某个库，但使用exclude移除库中依赖的某个库，避免冲突
+				exclude group: 'com.android.support', module: 'support-compat'	// 写全称
+				exclude group: 'com.android.support', module: 'support-v4'
+			}
+
+project.afterEvaluate {}	//project构造完成，关系图完成后的方法
+

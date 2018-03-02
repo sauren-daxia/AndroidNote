@@ -1,0 +1,3 @@
+1¡¢Ìø×ªä¯ÀÀÆ÷
+
+	Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("www.baidu.com"));

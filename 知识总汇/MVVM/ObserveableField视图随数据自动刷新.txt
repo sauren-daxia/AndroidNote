@@ -33,6 +33,16 @@ ViewDataBinding			//未知
 public class Data{
 	ObservableInt age = new ObservableInt();
 	ObservableBoolean isYoung = new ObservableBoolean(true);		//可以带值
+
+	private ObservableString name = new ObservableString("")		//这里注意，如果为private的话生成的get方法，返回类型必须是ObservableXxx，否则不起作用
+
+	public void setName(String name){		
+		this.name.set(name);
+	}
+
+	public ObservableString getName(){
+		return this.name.get();
+	}
 }
 
 3.1、代码使用
@@ -43,7 +53,7 @@ public static void main(String[] args){
 }
 
 3.2、XML使用
-android:text="@{data.age.get()}"
+android:text="@{data.age}"
 
 4、数据监听事件
 data.age.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

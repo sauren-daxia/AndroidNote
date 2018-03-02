@@ -1,0 +1,41 @@
+当一个项目要实现个对象的功能，但有多个对象都具有这个功能，在不确定最终要使用哪个对象的功能时，需要频繁修改代码
+
+使用反射机制可以避免这种重复的无意义的修改。
+
+1、需要再配置文件中定义好格式
+
+2、在代码中获取配置文件的内容
+
+3、通过反射创建class文件对象
+
+4、调用方法
+
+----------------------------------------------
+
+1、配置文件，
+
+在TXT文件中设置如下属性（格式固定，但内容可变）：
+className=???		//设置class的键值对，需要使用什么对象就修改值即可；
+methodName=???		//设置需要调用的方法键值对
+
+2、获取配置文件内容
+//获取键值对数据
+properties prpo = new properties();	
+FileReader fr = new FileReader(String name);		//配置文件的路径
+prpo.load(fr);
+fr.close();
+
+//获取每个值
+String className = prpo.getProperty("className")	//根据键获取值
+String methodNname = prpo.getProperty("methodName");	//根据键获取值
+
+//创建对象
+Class c = Class.forName(className);	//使用className得到的class类名创建文件
+Constructor con = c.getConstructor();
+Object obj = con.newInstance();		//创建对象
+
+//调用方法
+Method m = c.getMethod(methodName)	//反射获取方法
+m.setAccessible(true)			//取消检测
+m.invoke(obj)				//调用这个类的方法
+		

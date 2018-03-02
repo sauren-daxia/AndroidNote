@@ -1,0 +1,15 @@
+BigInteger：
+	因为Integer只能对int范围的值进行操作，所以Biginteger是大于int的数值的操作；
+构造：
+public BigInteger(String )	//参数为字符串形式的数值
+
+方法：
+BigInteger	add(BigInteger)		//加	需要的参数是BigInteger类型的变量,返回的都是BigInteger类型
+BigInteger	subtract(BigInteger)	//减
+BigInteger	multiply(BigInteger)	//乘
+BigInteger	divide(BigInteger)	//除
+BigInteger[]	divideAndRemainder(BigInteger)	//返回商和余数的数组
+
+BigInteger b1 = new BigInteger("123");
+BigInteger b2 = new BigInteger("34334");
+BigInteger b3 - b1.add(b2);

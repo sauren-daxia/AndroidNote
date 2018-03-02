@@ -1,0 +1,11 @@
+PrintWriter	：底层也是使用BufferedWriter实现的，也是缓冲流的一种。
+
+构造：
+-------------------------------
+public		PrintWriter(FileWriter,true)		//需要一个输出流，true为自动刷新设置，但要配合println()使用
+
+方法：
+-------------------------------
+void		write(String s,int start, int end)	//写入一部分或者写入一段
+void		print(Object obj)			//可以写入任意类型
+void		println(Object obj)			//可以写入任意类型并且自动刷新、自动换行，但前提是构造设置自动刷星

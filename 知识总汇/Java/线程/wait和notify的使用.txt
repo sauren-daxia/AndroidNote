@@ -1,0 +1,14 @@
+wait()		//让当前线程休眠
+
+notify()	//唤醒休眠的线程
+
+wait()使用
+
+synchronized(obj){
+	obj.wait()		//使用obj对象的锁把当前线程给休眠了，要唤醒只能通过其他线程调用notify()
+}
+
+
+synchronized(obj){
+	obj.notify()		//要唤醒其他线程，就必须获取锁该线程对象的锁才能解锁。
+}

@@ -1,0 +1,106 @@
+package com.example.b_0039_exam_listview_1;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
+import android.graphics.RectF;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+
+public class MyListView extends View {
+	private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWSYZ";
+	private Paint mPaint;
+
+	public MyListView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+		init();
+	}
+
+	public MyListView(Context context) {
+		super(context, null);
+		// TODO Auto-generated constructor stub
+	}
+
+	private void init() {
+		//初始化画笔设置
+		mPaint = new Paint();
+		mPaint.setAntiAlias(true);
+		mPaint.setTextSize(24);
+	}
+
+	private int width, height, singleHeight;
+	float baseline;
+	private int currentTouchIndex = -1;
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		//获取控件宽高并设置基准线
+		if (width == 0) {
+			width = getWidth();
+			height = getHeight();
+			FontMetrics metrics = mPaint.getFontMetrics();
+			singleHeight = height / LETTERS.length();
+			RectF f = new RectF(0, 0, width, singleHeight);
+			baseline = (f.bottom + f.top - metrics.top - metrics.bottom) / 2;
+		}
+		//绘制字母
+		for (int i = 0; i < LETTERS.length(); i++) {
+			String text = LETTERS.charAt(i) + "";
+			float x = (width - mPaint.measureText(text)) / 2;
+			if (i == currentTouchIndex) {
+				mPaint.setColor(Color.RED);
+			} else {
+				mPaint.setColor(Color.BLUE);
+			}
+			canvas.drawText(text, x, baseline + i * singleHeight, mPaint);
+		}
+		super.onDraw(canvas);
+	}
+
+	//由ListView点击Item后返回的首字母，用户定位到用户选中的字母
+	public void refresh(char c) {
+		for (int i = 0; i < LETTERS.length(); i++) {
+			if (c == LETTERS.charAt(i)) {
+				if (currentTouchIndex != i) {
+					currentTouchIndex = i;
+				}
+				invalidate();
+				return;
+			}
+		}
+
+		invalidate();
+	}
+
+	//滑动索引控件并回调给ListView处理
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		int index = (int) (event.getY() / singleHeight);
+		if (index < 0 || index > LETTERS.length() - 1) {
+			return true;
+		}
+		if (index != currentTouchIndex) {
+			currentTouchIndex = index;
+			invalidate();
+			if (indexListenre != null) {
+				indexListenre.setIndexListenre(LETTERS.charAt(index));
+			}
+		}
+		return true;
+	}
+
+	public interface OnSetIndexListenre {
+		void setIndexListenre(char index);
+	}
+
+	private OnSetIndexListenre indexListenre;
+
+	public void setOnSetIndexListenre(OnSetIndexListenre indexListenre) {
+		this.indexListenre = indexListenre;
+	}
+}

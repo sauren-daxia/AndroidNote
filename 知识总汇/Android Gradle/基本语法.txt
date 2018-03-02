@@ -19,8 +19,13 @@
 		1 * 1
 	}
 
-5、类型推导，groovy语言是弱类型，和Kotlin自动推导一样
-	def a = 1
+5、变量，groovy语言是弱类型，和Kotlin自动推导一样
+	def a = 1	//这样的变量是不能由其他方法调用的，因为虽然在同一个文件下声明，但是作用于不一样
+	a = 1		//去除了def之后，可以在同一个文件下使用，但是假如类A使用了a，类B调用了类A使用a的地方则报错，因为a并不是类A的成员，只是同一个文件下可访问
+	
+	import groovy.transform.Field
+	@Field a = 1	//这样注解之后，上面的问题就解决了，类A调用a，a就变成了类A的成员
+
 
 6、括号是可选的
 	println a
@@ -37,7 +42,17 @@
 9、list,默认是ArrayList
 	def list = ['a','b']	//定义字符串集合
 	list << 'c'		//add元素
-	list.get(1)		//获取元素
+	list.get(0)		//获取元素
+	list[0]			//获取元素
+	list[-1]		//倒数第一个元素
+	list[-2]		//倒数第二个元素
+	list[0..2]		//获取0.1.2元素
+
+	遍历
+	list.each{
+		println it
+	}
+	
 
 10、map,默认是LikedHashMap
 	def map = ['name':'CHEN','age':'18']
@@ -45,3 +60,18 @@
 	println map.name	//获取元素
 	println map['name']	//获取元素
 
+	遍历
+	map.each{
+		println "key = ${it.key} value = ${it.value}"
+	}
+
+11、方法可以不写参数括号，返回值也可以不写
+def method(int a , int b){
+	a+b
+}
+
+task hello{
+	def a = 2
+	def b = 3
+	println method a,b
+}

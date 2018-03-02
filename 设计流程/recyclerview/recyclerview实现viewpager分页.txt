@@ -1,2 +1,0 @@
-PagerSnapHelper snapHelper = new PagerSnapHelper();
-            snapHelper.attachToRecyclerView(bannerRv);

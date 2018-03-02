@@ -1,0 +1,15 @@
+Properties 
+
+构造方法：
+------------------------
+使用无参构造
+
+方法：
+------------------------
+void		put(Object o, Object ob)		//添加一对键值对，对于这个类的特殊功能没意义
+
+void		setProperty(String str , String str1)	//该类特殊功能只能添加键值对为String类型的数据
+
+Set<V>		StringProprotyName()			//获取所有键的集合
+
+String		getProproty(String)			//根据键找值，获取键对应的值

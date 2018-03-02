@@ -1,0 +1,7 @@
+  
+            BigDecimal b1 = new BigDecimal(0.00);
+            int totalNum = beanList.get(groupPosition).getGoods().size();//总数叠加
+            for (int i = 0; i < beanList.get(groupPosition).getGoods().size(); i++) {
+
+                b1 = b1.add(new BigDecimal(beanList.get(groupPosition).getGoods().get(i).getFinal_total()));
+            }

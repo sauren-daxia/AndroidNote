@@ -1,0 +1,10 @@
+1、设置界面是否与状态栏共存
+getWindow().setFlags(WindowManager.LayoutParams. FLAG_LAYOUT_IN_SCREEN , WindowManager.LayoutParams. FLAG_LAYOUT_IN_SCREEN);
+
+FLAG_VISIBLE ：状态栏和Activity共存，Activity不全屏显示。也就是应用平常的显示画面
+
+FLAG_FULLSCREEN ：Activity全屏显示，且状态栏被覆盖掉
+
+FLAG_LAYOUT_IN_SCREEN : activity与状态栏共存，类似沉浸式
+
+INVISIBLE ： Activity全屏显示，隐藏状态栏

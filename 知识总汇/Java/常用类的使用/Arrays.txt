@@ -1,0 +1,8 @@
+Arrays数组的操作：
+排序：
+	public static void sort(object);
+二分查找:
+	public static void binarySearch(object);
+
+将可变数组转换为list
+List<T>		asList(<T>... arr)	//虽然可以转换为list，但是却不能对list进行增删操作，但可以修改，因为本质还是数组

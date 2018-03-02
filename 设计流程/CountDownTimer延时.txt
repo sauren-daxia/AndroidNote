@@ -1,3 +1,0 @@
-因为手机硬件的计时并不是超精密的，所以使用CountDownTime倒计时的时候，在执行onFinish回调前会有一秒左右的延时；
-解决方法
-new CountDownTime(currentTimerMiilis,1000-500);		//在定时这里设置少500左右的毫秒值就行了，但是还是感觉延时了300毫秒左右

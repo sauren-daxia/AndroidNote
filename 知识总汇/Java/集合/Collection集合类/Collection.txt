@@ -1,0 +1,31 @@
+Collection 集合方法：
+
+增：
+boolean		add(Object obj) 	//增加元素
+boolean		addAll(Collection c)	//增加collection集合
+-----------------------------------------------------
+删：
+void 		clear()		//移除所有元素
+boolean		remove(Object o)	//移除指定元素
+boolean		removeAll(Collection c)	//移除指定集合的元素
+-----------------------------------------------------
+判断
+boolean cntains(Object o)	//判断集合中是否包含指定元素
+boolean catainsAll(Object o)	//判断是否包含所有集合元素，
+boolean isEmpty()		//判断集合是否为空
+------------------------------------------------------
+获取：
+Iterator<E> iterator()		//迭代器
+
+Iterator it = c.iterator();	//将集合传给遍历器	
+Boolean		hasNext()	//在遍历器获取元素之前先判断是否为空，否则超出元素数获取就会报错
+Object		it.next()	//遍历器获取元素方法，每次获取之后都会跳转到下一个元素
+------------------------------------------------------
+长度：
+int 		size()		//获取集合的长度
+------------------------------------------------------
+交集：
+boolean retainAll(Collection c)	//两个集合都有的元素？	//A交集B的话，如果有交集，则把交集元素存到A中，B不变，A原有元素则全移除
+------------------------------------------------------
+把元素转换数组
+Object[] toArray()		//将所有集合元素转换为数组，需要遍历集合先转数组

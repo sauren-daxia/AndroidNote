@@ -1,0 +1,119 @@
+1、继承ScrollView，达到滑动效果
+
+2、定义一些变量用于计算
+	List<View> views;		//用于添加到ScrollView中充当Item
+	List<Imageview> imgs;		//可有可无，只是一个箭头ImageView的集合
+	LinearLayout layout		//用于装载Item和GridView子菜单的
+	GridView mGridView		//用于点击Item显示出子菜单
+	LayoutInflater	inflater	//布局加载器
+
+	private static final int NUM_COLUMNS = 3;	//GridView的列数
+	private float paddingDip = 12;			//GridView的间隔
+	private float verticalSpaceDip = 12;		//GridView的垂直间隔
+	private float horizontalSpacingDip = 12;	//GridView的水平间隔
+
+	private Scroller mScroller			//用来滑动的
+	private Animation mArrowOpenAnim,mArrowCloseAnim;	//动画，可有可无
+
+3、初始化
+	只是一些需要用的类创建一下，并不涉及计算和添加数据
+	init();
+
+4、init()初始化;
+	//设置装载Item的layout,并添加到ScrollView中
+	layout = new LinearLayout(content)
+	layout.setOrientation(LinearLayout.Vertical);
+	addView(layout);
+
+	//设置GridView的列数，行高并给一个空的Adapter
+	mGridView = new GridView(content);
+	mGridView.setNumColumns(NUM_COLUMNS)	//设置列
+	int paddingPx = DensityUtil.dip2px(getContext(), paddingDip);		//通过dp转换工具获取值
+	mGridView.setPadding(paddingPx, paddingPx, paddingPx, paddingPx);	//获取到的值设置padding
+	mGridView.setHorizontalSpacing(DensityUtil.dip2px(getContext(), horizontalSpacingDip));	//设置水平间隔
+	mGridView.setVerticalSpacing(DensityUtil.dip2px(getContext(), verticalSpaceDip));	//设置垂直间隔
+	mAdapter = new RecipeCategoryGridViewAdapter(getContext());		//创建一个Adapter
+	mGridView.setAdapter(mAdapter);						//设计一个空的Adapter
+	mGridView.setOnItemClickListener(this);					//监听Item点击事件
+
+下面三个方法是核心代码
+
+5、提供给外部的加载数据方法
+	Result r = xxxx		//获取数据源
+	for(){
+	View v = getItemView(r)		//封装一个方法，该方法使用布局加载器加载一个Item，然后用数据源设定好数据后返回该Item
+	layout.addView(v)		//将每个Item添加到layout中
+	views.add(v)			//将Item添加到集合用，用于判断点击事件用的
+	v.setOnclickListener(listener)	//设置每个Item的点击事件
+	}
+
+6、Item的点击事件,使用一个值来标识Item的状态，第一种，点击没展开，第二种，点击展开，第三种，有展开，但是点击另一个没展开
+	int lastClick = -1;
+	if(lastClick == -1){			//表示点击没展开
+	
+	mAdapter.addAdapter(xxx)		//为GridView设置数据源
+	layout.addView(mGridView,i+1)		//将GridView插入到点击的Item的下一个，该动作就可以作出菜单效果了
+	mLastExpandPos = i;			//更改状态
+	computeGridViewHeight();		//这是重新计算GridView的高的方法，重点
+	setGridViewHeight()			//获取到测量的高度之后，再重新设置固定高度
+	startAnimator(-mGridViewHeight, 0);	//设置展开的动画，可有可无
+
+	if(i >= 3){				//滑动ScrollView，因为展开了GridView,ScrollView的整体高度也变了，要滑动到合适的地方
+		smoothScrollTo((i - 2)*mGroupViews.get(0).getHeight());
+	}
+
+	}else if(lastClick == i){		//表示点击展开的,i是传递过来的参数，表示第几个Item被点击了
+		//这是只是设置动画的关闭效果，或者清空GridView的数据源即可
+	}else{					//表示有展开，但点击的是另一个
+		layout.removeView(mGridView)	//这里要移除GridView先，或者也可以启动关闭动画
+		lastClick = -1;			//关闭后，状态重新设置为原始状态
+		onLayoutItemClick(i)		//回调自己，先关闭当前，在展开其他Item。
+	}
+	
+7、获取GridView的高
+	//保存每次重绘的GridVIew的高
+	private int mGridViewHeight;
+	
+	private void computeGridViewHeight(){
+		int totalHeight = 0;
+		//先计算GridView有几行
+		int lineNum = mAdapter.getCount()/NUM_COLUMNS;
+		if(mAdapter.getCount()%NUM_COLUMNS != 0){
+			lineNum++;
+		}
+		//再计算GridView中item的高度
+		View itemView = mAdapter.getView(0, null, mGridView);
+		itemView.measure(0, 0); // 测量View自己的大小
+		totalHeight += itemView.getMeasuredHeight()*lineNum;
+		//再加上padding
+		totalHeight += 2*DensityUtil.dip2px(getContext(), paddingDip);
+		//再加上item竖直方向的间距
+		totalHeight += (lineNum-1)*DensityUtil.dip2px(getContext(), verticalSpaceDip);
+
+		mGridViewHeight = totalHeight;
+	}
+
+
+8、重新设置高度
+	private void setGridViewHeight() {
+		LinearLayout.LayoutParams params = (android.widget.LinearLayout.LayoutParams) mGridView.getLayoutParams();
+		params.height = mGridViewHeight;
+	}
+
+9、滑动ScrollView
+	private void smoothScrollTo(int y){
+		int startY = getScrollY();
+		int dy = y - startY;
+		mScroller.startScroll(0, startY, 0, dy, 600);
+		invalidate();//为了触发computeScroll()
+	}
+	@Override
+	public void computeScroll() {
+		super.computeScroll();
+		if(!mScroller.isFinished()){
+			if(mScroller.computeScrollOffset()){
+				scrollTo(0, mScroller.getCurrY());
+				invalidate();
+			}
+		}
+	}

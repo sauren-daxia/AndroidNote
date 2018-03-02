@@ -1,3 +1,0 @@
-
-                    List<FriendsCircleBean.CHILDRENBean> newList =new ArrayList<FriendsCircleBean.CHILDRENBean>( new  ArrayList(Arrays.asList( new Object[list.size()])));
-                    Collections.copy(newList, list);

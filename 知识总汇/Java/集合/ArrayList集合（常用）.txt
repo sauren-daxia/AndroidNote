@@ -1,0 +1,42 @@
+ArrayList：	List的子类
+--------------------------------------
+添加：
+boolean 	add(object o)			//添加元素
+void		add(int index, object o)	//在指定位置添加元素 
+boolean 	addAll(Collection c)		//添加集合 
+boolean		addAll(int index, Collection c) //在指定位置添加集合 
+--------------------------------------
+删除：
+void 		clear()			//清空集合元素 
+Object		remove(int index) 	//移除指定元素并返回被移除的元素
+boolean 	remove(Object o)  	//移除指定集合
+void		removeRange(int a, int b) //移除列表中索引在 a（包括）和 b（不包括）之间的所有元素
+--------------------------------------
+获取：
+object		get(int index)		//获取指定索引元素
+Object[] 	toArray()		//将集合转换为数组
+int		size()			//获取集合的长度  
+--------------------------------------
+判断：
+boolean		isEmpty() 		//判断集合是否为空
+boolean		contains(Object o)  	//判断是否包含指定元素
+--------------------------------------
+拷贝：
+Object		clone() 		//将集合拷贝一份副本
+ --------------------------------------
+迭代器：
+--------------------------------------
+Iterator	iterator()		//Iterator迭代器
+--------------------------------------
+boolean		hasNext()		//判断是否有下一个元素
+Object		next()			//获取下一个元素，从0开始
+--------------------------------------
+ListIterator<E> listIterator()  	//ListIterator迭代器
+--------------------------------------
+void		add()			//迭代器添加，不会报错
+boolean		hasNext()		//判断是否有下一个元素
+Object		nex()			//获取下一个元素
+boolean		hasPrevious()  		//判断逆向获取是否有元素
+Object		previous()		//逆向获取下一个元素
+void		remove() 		//移除next下一个元素
+void		set(Object e) 		//替换next下一个元素

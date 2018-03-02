@@ -1,2 +1,0 @@
-在Receiver中跳转Activity需要设置Intent的flag属性
-	  actionIntent.setFlags(FLAG_ACTIVITY_NEW_TASK);

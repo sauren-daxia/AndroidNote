@@ -1,0 +1,14 @@
+1、自动滑动到中间，这是焦点的问题，把焦点设置最顶端的控件就行了
+	    android:focusable="true"
+                android:focusableInTouchMode="true"
+
+2、notifydatasetchange数据会滚动到顶部
+	大多数情况因为重复给reycclerview设置adapter了，这样判断就好了
+	 if (adapter == null) {
+            adapter = new NewHotelAdapter(getActivity(), R.layout.item_home_hotel_new, list);
+            recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            emptyWrapper = new EmptyWrapper(adapter);
+            emptyWrapper.setEmptyView(R.layout.layout_list_empty);
+            recycler.setAdapter(emptyWrapper);
+            adapter.setOnItemClickListener(this);
+        }

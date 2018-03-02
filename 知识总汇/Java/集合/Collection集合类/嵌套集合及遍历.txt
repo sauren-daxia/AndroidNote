@@ -1,0 +1,13 @@
+嵌套集合
+---------------------------------------
+ArrayList< ArrayList<Student> >  bigArrayList = new ArrayList< ArrayList<Student> >;	//将student的集合添加进集合
+
+使用嵌套增强for遍历嵌套嵌套集合
+
+for(ArrayList<Student> arr: bigArrayList){	//目标集合是来自bigArrayList的
+   for(Student s : arr){			//目标集合是来自bigArrayList遍历出来的arr集合
+   	....
+   }
+}
+
+ 

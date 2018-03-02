@@ -1,8 +1,0 @@
-PS：在横竖屏切换的时候，所有数据都会销毁，所以前切换之前要保存数据
-
-1、横竖屏切换的时候会执行OnSaveInstanceState方法
-
-	在OnSavaInstanceState方法中，使用参数Bundle保存数据
-
-	Bundle.putxxx(xxxx)
-2、在Oncreate方法中取出Bundle保存的数据，但前提要判断是否为Null

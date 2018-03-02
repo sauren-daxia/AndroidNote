@@ -1,0 +1,5 @@
+在没打开APP点击notifycation跳进的某个页面，按返回后会退出APP
+	原因是因为，APP还没启动，点击进去的只是启动某个页面而已，在栈中只存在这一个页面。
+	所以在这个界面返回的时候调用onBackPressed();
+	并且设定一个值，在跳转这个页面的时候更改这个值，在onBackPressed中判断这个值到底是notifycation中跳转的还是直接跳转的
+	如果是notifycation中跳转的就让它跳转的主界面

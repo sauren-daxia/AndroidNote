@@ -1,0 +1,39 @@
+Thread:
+
+构造方法：
+----------------------------
+public		Thread()		//无参构造
+public		Thread(String name)	//带参构造设置名字，子类想使用就要重写
+public		Thread(Runnable rb, String name)	//添加一个run类，并设置名字
+public		Thread(ThreadGroup tg,Runnable rb,String name)	//添加有某个线程组，添加一个Runnable类，设置该线程名字
+
+启动方法：
+-------------------------------
+void		start()		//启动当前线程
+
+获取功能：
+-----------------------------
+Thread		Thread.cruuentThread()	//获取当前线程
+String		getName()		//获取线程名字
+int		getPriority		//获取线程优先级
+
+设置功能:
+-----------------------------
+void		Thread.sleep(long time)	//设置休眠时间，单位为毫秒
+void		setDaemon(boolean b)	//设置当前线程为守护线程，true为守护，当主线程挂了，他们也挂了。(以坦克大战为理解)
+void		join()			//当该线程启动后，调用此方法，会阻止其他线程运行，直到该线程执行完毕
+void		yield()			//让当前线程让步其他线程执行，写在run方法里，但并不能保证让一下就不会马上执行
+void		interrupt()		//终止线程的状态，让线程继续执行，并抛出一个interrupt异常，
+void		setPriority(int i)	//设置线程优先级，最高为10，最低为1，默认为5
+void		setName(String name)	//设置线程名字
+
+判断功能：
+------------------------------
+boolean		isAlive()		//判断线程是否还活着
+
+线程的声明周期：
+--------------------------------
+1、新建：创建线程对象
+2、就绪：有执行资格，没有执行权
+3、运行：有执行资格，有执行权
+	3.5、组设

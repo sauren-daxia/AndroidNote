@@ -1,0 +1,51 @@
+UDP协议发送数据：
+
+1：创建DatagramSocket对象
+2：创建数据，并打包数据
+3：发送数据
+4：释放资源
+
+
+DategramSocket:
+---------------
+无参构造
+
+方法：
+---------------
+void		send(DatagramPacket dp)		//需要一个数据报包
+void		close();			//发送完毕就需要释放资源
+
+
+DategramPacket:
+
+构造
+---------------
+public		DatagramPacket(byte[] bys, int length, InetAddress ia, int port)	//需要一个数据，一个数据的长度，一个对方的IP，一个对方的端口号
+
+
+例子：
+	优化版：
+	DatagramSocket ds = new DatagramSocket();
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	String str ="";	
+	while((str = br.readLine()) != null){
+	if("886".equals(str)){ds.close(); break;}	//用语句设置结束循环
+	byte[] bys = "xxxx".getBytes();
+	DatagramPacket dp = new DatagramPacket(bys, bys.length, InetArress.getByName("192.168.1.1"), 12345);	//简化版创建数据包
+	ds,send(dp);
+	}
+	//ds.close();	开启循环模式就不需要关闭了
+
+----------------------------------------------------------------
+
+	DatagramSocket ds = new DatagramSocket();	//创建套接字对象
+	
+	byte[] bys = "xxxx".getBytes();		//创建数据源
+	int length = bys.length;		//数据源长度
+	InetAddress ia = InetAddress.getByName("192.168.1.1");	//通讯方地址
+	int port = 10086;		//通讯方端口号
+
+	DatagramPacket dp = new DatagramPacket(bys, length, ia, port);	//数据打包
+
+	ds.send(dp);	//发送数据包
+	ds.close()	//关闭通讯

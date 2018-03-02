@@ -1,0 +1,16 @@
+针对Collection类的操作：
+
+排序：
+Static void		sort(List<T> list)		//默认为自然排序，并且是实现了comparable的类型
+
+二分查找：
+Static int		binarySerch(List<?> list, T key)	// 查找元素
+
+查找最大值：
+Static T		max(Collection coll)		//查找集合最大值，返回查找的类型
+
+翻转：
+Static void		reverse(List<?> list)		// 将集合元素翻转
+
+随机排序
+Static void		shuffle(List<?> list)		//将集合元素打乱

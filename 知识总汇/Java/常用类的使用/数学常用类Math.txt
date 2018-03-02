@@ -1,0 +1,18 @@
+Math类全为static，可直接调用
+
+Matn.PI		//π的值 
+Math.E		//最小自然数的值
+
+
+int	Math.abs(int a)		//获取某个值得绝对值
+double	Math.ceil(double a)	//向上取整，12.01 的向上取整为13
+double	Math.floor(double a)	//向下取整，12.99 的向下取整为12
+int	Math.max(int a, int b)	//求两个数的最大值
+int	Math.min(int a, int b)	//求两个数的最小值
+double	Math.pow(double a, double b)	//求 a得b次幂
+double	Math.random()		//随机数
+int round(float a )	//四舍五入 也可以是double类型
+double sqrt(double +a)	//求一个正数的平方根
+
+随机数的准确返回值公式
+(int) (Math.random() * (end - start)) + start;

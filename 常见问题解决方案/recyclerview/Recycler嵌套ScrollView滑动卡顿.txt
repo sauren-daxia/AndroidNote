@@ -1,0 +1,5 @@
+ДњТы:
+recyclerView.setNestedScrollingEnabled(false)
+
+XML:
+  android:nestedScrollingEnabled="false"

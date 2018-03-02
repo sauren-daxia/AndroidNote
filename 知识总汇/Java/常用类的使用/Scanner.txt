@@ -1,0 +1,5 @@
+﻿Scanner类的方法：
+	scanner的方法有两个系列，一种hasNextXxx，一种nextXxx;
+	Xxx可以是Int Double Float等类型，hasNextXxx用于判断用户输入的的数据是否该类型，nextXxx是用于接收用户的数据。一般两个系列配套使用：
+	if (sc.hasNextInt()) {	int s = sc.nextInt();}	else { 错误 }
+	一般是用scanner.nextLine(); 字符串的形式接收数据再转为需要的类型。

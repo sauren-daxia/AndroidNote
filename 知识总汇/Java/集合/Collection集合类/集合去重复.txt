@@ -1,0 +1,38 @@
+第一种：
+	判断字符串可以用，但是判断类，需要重写equals方法
+
+	ArrayList arr = new ArrayList();
+
+	arr.add("feewef");
+	....
+
+	ArrayList newArr =new ArrayList();
+
+	Iterator it = arr.iterator();
+	while(it.hasNext()){
+	
+	String s = (String)arr.next();
+
+	if(!newArr.contains(s)){
+		newArr.add(s);
+	}
+}
+
+第二种：
+	ArrayList arr = new ArrayList();
+
+	arr.add("feewef");
+	....
+
+	for(int i = 0; i < arr.size() - 1;i++){
+	
+	for(int j = i + 1; i < arr.size(); j++){
+		ifr(arr.get(i).equals(arr.get(j))){
+			arr.remove(j);
+			j--;	//如果存在连续相同的元素，在移除指定元素后，下一个元素会替代原来元素的位置
+				而原来元素的位置for循环只会判断一次。
+		}
+	}
+}
+
+	

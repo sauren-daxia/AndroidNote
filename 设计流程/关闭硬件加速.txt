@@ -1,7 +1,0 @@
-在AndroidManifest.xml中设置如下：
-    <application   
-	android:hardwareAccelerated="false"  >
-    </application> 
-
-自定义View中：
-	setLayerType(LAYER_TYPE_SOFTWARE, null);           //关闭硬件加速

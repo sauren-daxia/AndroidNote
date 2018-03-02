@@ -1,0 +1,11 @@
+if(position!=0){
+            if(mDatas.get(position).getFirstletter().equals(mDatas.get(position-1).getFirstletter())){
+                holder.setVisible(R.id.tv_letter,false);
+            }else{
+                holder.setText(R.id.tv_letter, bean.getFirstletter());
+                holder.setVisible(R.id.tv_letter,true);
+            }
+        }else{
+            holder.setText(R.id.tv_letter, bean.getFirstletter());
+            holder.setVisible(R.id.tv_letter,true);
+        }
