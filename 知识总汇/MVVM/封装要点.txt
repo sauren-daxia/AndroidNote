@@ -1,0 +1,1 @@
+1、定义一个ViewBindingAdapter类，里面全是一切用到的自定义属性

@@ -1,0 +1,4 @@
+1、在app项目的app.iml中添加
+<orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android"/>
+
+API版本随自己gradle版本定义

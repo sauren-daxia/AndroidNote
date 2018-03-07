@@ -1,0 +1,117 @@
+1、数字装箱不会保留类型
+	var a = 1
+	var b :Int? = a
+	var c :Int? = a
+	b == c		//true,因为数值是相等的
+	b === c		//false,因为koltin中所有都是引用类型，b和c是两个不同的对象，===是判断类型和引用地址的，所以不相等
+
+	PS:此处不相等是因为Int?的关系，如果只是声明类型:Int或不声明类型，只是单纯的赋值了地址引用，类似Java的：
+		Integer a = 10000
+		Integer b = a
+	
+	   但是加了Int?后则变成了
+		Integer a = 10000
+		Integer b = new Integer(a)
+
+2、显示转换
+	val a : Long =1
+	val b : Int = 1
+	a == b		//不能直接判断，因为类型不一致，编译期不通过
+	a.toInt = b	//可以，因为Long类型显示转换为Int类型，而b就是Int类型
+
+	val a : Byte = 1
+	val b : Int = a		//错误，因为不同类型不可直接赋值
+
+	val a : Byte = 1
+	val b : Int = a.toInt() //可以，显示转换为相同类型
+
+3、可显示转换的8种基本类型
+toByte()	//转换为Byte
+toShort()	//转换为Short
+toInt()		//转换为Int
+toLong()	//转换为Long
+toFloat()	//转换为Float
+toDouble()	//转换为Double
+toChar()	//转换为Char
+toString()	//转换为String
+
+4、隐式转换，与Java一样，较小类型与较大类型计算，结果会自动转换较大的类型
+	val a : Byte = 1
+	val b : Int = 2
+	a + b			//结果是Int类型
+
+5、kotlin运算符
+	shl		//有符号左移(<<)
+	shr		//有符号右移(>>)
+	ushr		//无符号右移(>>>)
+	and		//位与(&)
+	or		//位或(|)
+	xor		//位异或(^)
+	inv		//位非(~)
+	==		//等值
+	!=		//不等值
+	<		//小于
+	>		//大于
+	<=		//小于等于
+	>=		//大于等于
+	..		//区间
+	in		//判断区间
+	!in		//判断非区间
+	&&		//逻辑与
+	||		//逻辑或
+	!		//逻辑非
+
+6、转义符号
+	\t、\n、\b、\r、\\、\'、\"、\$
+
+7、字符
+	val c : Char ='0'
+	c == 0			//不可，因为类型不一致，不可隐式转换
+
+	if('0' in '0'..'9')	//可以
+
+8、字符串
+	普通用法
+		"this String"
+	
+	带变量
+		var a = 5
+		"a = $a"
+	
+	带表达式
+		"a = ${ 1 + 5}"
+
+	字符串模板
+		""" 
+		fun main(args : Array<String>){
+
+		}
+		"""
+
+9、数组
+	创建
+		arrayOf(1,2,3)
+		arrayListOf<T>(1,2,3)
+	
+	种类
+		ByteArray(1,2,3)
+		ShortArray(1,2,3)
+		IntArray(1,2,3)
+		LongArray(1,2,3)
+		FloatArray(1F,2F,2F)
+		DoubleArray(1.0d,2.0d,3.0d)
+		StringArray("1","2","3")
+		CharArray('1','2','3')
+		Array<T>()
+
+	迭代
+		for(item in list){
+			println(item)			//增强for
+		}
+
+		for(i in list.indices){			//循环迭代
+			println(list[i])
+		}
+
+		list.foreach{ item -> println(item) }	//Java8
+	

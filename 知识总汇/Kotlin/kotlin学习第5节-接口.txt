@@ -1,0 +1,44 @@
+1、接口
+		接口所有的方法和属性都是抽象的，当然方法可以有具体实现，属性也可以有返回值
+		inteface OnclickListener{
+			var name : String		//定义一个var类型，实现接口的时候必须重写，并且不能有初始值，也就是不能 var name : String =""，只能通过get()set()赋值和获取
+				get()=""		//不建议重写，也可以在接口里直接重写值，子类实现就不需要重写了
+				set(value){}
+
+			val nickName 
+				get() = ""		//val属性因为是无法重写的而且只读的，但是也不能初始化，可以有get方法，在get方法返回值
+			
+			fun onClick()			//最基本的写法
+			fun onLongClick{		//与Java类似可以有具体实现
+				//.....
+			}
+		}
+
+		intefacee ListenerApdater : OnClickListener{
+			override var name : String			//接口定义的属性默认是没有值的，实现接口的时候需要重写，var需要重写get()set()
+				get() = TODO("请初始化值")
+				set(value){}
+
+			override val nickName				//val值能重写get()
+				get() = ""
+		}
+
+		重写冲突，在第三节说过了，当类和接口的方法都是同名时可以选择实现某个或者都实现父类的方法
+			class Person{
+				fun eat(){
+					println("吃")
+				}
+			}
+
+			interface Android{
+				fun ect(){
+					println("吃")
+				}
+			}
+
+			class Man : Person ,Android{
+				override fun eat(){
+					super<Person>.eat()
+					super<Android>.eat()
+				}
+			}

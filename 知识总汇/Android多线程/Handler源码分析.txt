@@ -1,0 +1,98 @@
+
+	Handler机制组成
+				Message			:线程通讯的单元，承载信息的载体
+				
+				Message Queue		：消息队列，存放Handler发送的信息，按照队列先进先出的规则
+
+				Handler			：负责Looper分发过来的Message信息的处理，也负责将Message发送到Message Queued队列中
+
+				Looper			：轮训器，负责从Message Queue抽出Message然后分发给Handler处理，是一个死循环的轮训
+
+	PS：
+		1、每个线程只能有一个Looper，但是可以和多个线程的Handler绑定，也就是可以往多个Looper绑定的Message Queue发送消息，从而实现通讯
+
+		2、Handler在创建的时候可以指定Looper，这样Handler发送消息的时候就会发送到指定Looper的Message Queue中，如果不指定，就是当前线程的Looper
+
+	结构分析
+				Looper			
+
+					变量：
+						final Thread mThread				:记录当前Looper所在的线程
+
+						static ThreadLocal<Looper> sThreadLocal		:在Looper构造的时候会把Looper实例储存在ThreadLocal里面
+
+					方法：
+
+						Looper()		：构造方法，执行这个方法的时候会去创建一个MessageQueue，并且将变量mThread设置为当前构造Looper的线程
+
+						prepare()		：会去创建一个Looper，为当前线程创建一个MessageQueue，Looper创建和MessageQueue是绑定的，创建一个Looper一定会创建一个MessageQueue、
+									  因为在创建Looper的构造方法里面就会去创建MessageQueue
+
+						prepareMainLooper()	：Android自己调用的方法，开发者不允许调用，这个方法是绑定UI线程的Looper
+
+						loop()			：通过prepare()方法后已经初始化完绑定该线程的所有工作，然后调用loop开启Message Queue和Looper轮训的工作
+									  在loop方法中有一个死循环，
+
+						myLooper()		：获取绑定当前线程的Looper
+
+						myQueue()		：获取绑定当前线程的Message Queue，前提是要先prepare()绑定了
+
+						getMainLooper()		：获取主线程的Looper
+
+					总结：Looper就是通过prepare()方法绑定当前线程，再创建一个Message Queue，然后通过loop()方法开始轮训，
+					      当获取到数据的时候通知Message中的target属性也就是Handler的时候，通过Handler的dispatchMessage()
+					      方法去回调告诉我们有一个新的Message
+
+				Message Queue
+
+					变量：
+						Message mMessages				：保存Message实例，会在轮训的时候用到
+
+					方法：
+
+						next()			：Looper.loop()的死循环调用了MessageQueue的死循环来阻塞，next()主要就是获取msg，获取到了返回出去
+									  如果第一次获取不到，则会将nextPollTimeoutMillis变量设置为-1，那么下次循环的开始会调用nativePollOnce()，
+									  nativePollOnce()方法是native层的一个阻塞方法，如果nextPollTimeoutMillis为-1，表示没有数据进来，将阻塞
+									  直到数据不为空也就是nextPollTimeoutMillis!=-1的时候才会去获取Message，然后返回去
+
+						enqueueMessage()	：根据消息时间加入队列中
+
+					总结：Message Queue就是通过Looper.prepare()创造的，由Looper.loop()调用next()开启轮训工作，如果next()获取不到Message则会阻塞
+					      获取到了则交给Looper通知Handler去处理，而Handler发送消息的时候则会把消息提交给内部的一个Message Queue引用的enqueueMssage()，加入队列中
+					      而这个Message Queue则是在构造Handler的时候通过Looper获取的
+
+				Handler
+
+					变量：
+
+					方法：
+
+						Handler(Call)		：Handler创建的时候会获取myLooper()，如果没有调用prepare()的话，myLooper()返回的是空，所以在创建Handler前一定要Loooper.prepare()
+						
+						dispatchMessage()	：Looper.loop()中获取到Message之后会通过Message保存的target变量，也就是Handler实例，调用这个方法把Message回调给我们处理，处理前先判断
+									  Message.call是否不为空，如果不为空就表示用了post()，不然就回调到Handler的handlerMessage()给开发者处理
+
+						sendMessage()		：各种发送消息的方法
+
+						post(Runnable)		：也是发送消息的，但是可以直接在Runnable里面处理，其实是把Runnable交给了message的callback，然后发送一条空信息到Message Queue
+									  接着Looper轮训到信息后，会给message的target，也就是Handler的dispatchMessage()，这个方法判断msg.call不为空的话，就会执行Runnable的run()，所以可以直接在里面写
+
+					总结：Handler就是用来发送消息和处理消息的，发送信息的时候通过构造时保存的当前线程绑定的Looper和Message Queue去把消息加入Message Queue的队列中，由Looper
+					      去开启轮训工作，直到有信息的时候返回到Handler，交给Handler处理
+				Message
+					
+					变量：
+						static Message sPool				：Message类的一个静态变量，用来保存Message实例
+
+						Message next					：Message实例的一个属性，用来保存this
+					方法：
+						obtain()					：synchronize方法，所有obtain()重载都会调这个方法，在这里通过sPool和next属性互相交换，达到复用的目的
+
+						recycleUnchecked()				：清除当前sPool的属性,并将sPool和next的值互相交换，达到复用的目的
+
+					总结：Message就是一个Handler通信过程的一个信息载体，内部通过obtain()和recyclerUnchecked()做了复用处理，并且保存了一个Handler引用，当Looper轮训到Message的时候
+					      就会交给Message中的Handler去做回调处理
+	
+	PS：一个线程只能有一个Looper，一个Looper可以绑定很多个Handler，一个线程也能有很多个Handler						
+
+					

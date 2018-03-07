@@ -1,0 +1,13 @@
+1、数据类
+	1、data关键字，数据类的结构必须有一个主函数，并且类型必须为val 或 var 
+		data class UserInfoBean(var name : String , var identity : Array<String>)
+
+	2、data类会自动生成以下方法
+		equals()		//判断值或地址是否相等
+		hashCode()		//判断哈希码是否相等
+		toString()		//所有属性转字符串输出
+		copy()			//深度复制一个对象
+
+	PS：若以上方法显示重现或父类已经标记为final，则不会调用，而只会使用现有的方法
+
+	

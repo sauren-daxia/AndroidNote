@@ -14,7 +14,7 @@ okHttpClient.newWebSocket(request, new WebSocketListener() {
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         super.onOpen(webSocket, response);
-       // 连接成功
+       // 连接成功,成功之后保存webSocket这个引用，然后发送或者其他的时候需要用到
     }
 
     @Override
