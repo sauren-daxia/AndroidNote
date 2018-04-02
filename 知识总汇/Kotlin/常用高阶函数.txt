@@ -50,7 +50,7 @@
 	  虽然use也是扩展方法，如果直接调用方法的会调用的会是Closeable的方法，而不是子类的，所以还是需要加it调用
 	  同样也是有返回值的，返回值类型根据最后一句推导
 
-、map
+5、map
 	fun main(args : Array<String>){
 		val newList = args.map{
 				  it::toDouble
@@ -61,7 +61,7 @@
 
 	PS：使用场景，批量String转Int
 
-、flatMap
+6、flatMap
 	fun main(args : Array<String>){
 		val newList = args.flatMap{ ff ->
 			ff.map{
@@ -81,7 +81,7 @@
 		使用场景，二维数组转一维数组
 		flatMap与Map的不同处在于, map只是将元素的类型转换成另一个类型，而flatMap是将元素转换成一个数组，类型不限
 
-、reduce
+7、reduce
 	fun main(args : Array<String>){
 		(1..10).reduce{acc , i -> acc + i}
 	}
@@ -90,7 +90,7 @@
 	
 	PS：使用场景，累加，累乘、字符串拼接等
 
-、fold
+8、fold
 	fun main(args : Array<String>){
 		(1..10).fold(5){
 			a,b -> a+ b
@@ -101,7 +101,7 @@
 	
 	PS:使用场景，暂无
 
-、takeWhile
+9、takeWhile
 	fun main(args : Array<String>){
 		("text","img","video","music","PDF").takeWhile{ 
 			it.equlas("text") || it.equlas("img") || it.equlas("video")
@@ -110,5 +110,23 @@
 
 	//takeWhile的作用是当遇到判断条件不符的时候立刻终止，并返回之前相符的元素
 	  上面的例子遇到"music"后会立刻终止，返回一个数组{"text","img","video"}
+
+	PS：使用场景，暂无
+
+10、any
+	fun main(args:Arrary<String>){
+		args.any{it == "hello"}
+	}
+
+	//any的作用是在返回一个Boolean值，在循环的过程中只要有一个判断相符立马终止循环并返回Boolean值
+
+	PS：使用场景，类似于String的contains方法
+
+11、all
+	fun main(args:Arrary<String>){
+		args.any{it == "hello"}
+	}
+	
+	//all的作用是在返回一个Boolean值，在循环的过程中必须所有的判断都为true才会返回true，否则为false
 
 	PS：使用场景，暂无

@@ -1,0 +1,63 @@
+## dependence
+`dependence`是` @Component `用来管理依赖关系的
+举个例子：
+`AdapterComponent`提供了一个`Adapter`对象，当然`AdapterComponent`是需要`AdapterModule`来构造这个对象的
+然后`BeanComponet`提供了一个`ListBean`对象，当然`BeanComponet`也是需要`BeanModule`来构造这个对象的
+现在`MainActivity`需要使用`Adapter`对象和`ListBean`对象，正常情况一定回去创建一个`MainActivityComponet`和`MainActivityModule`
+但是通过` @Component `的`dependence`依赖关系，可以将`AdapterComponent`和`BeanComponet`依赖起来，也可以说继承，这样就不需要自己去`MainActivityModule`提供对象了
+
+首先是Adapter
+```
+@Component
+interface AdapterComponent{
+	fun getAdapter() : Adapter
+}
+
+@Module
+class AdapterModule{
+	@Provides
+	fun providesAdapter():Adapter{
+		return Adapter()
+	}
+}
+```
+接着是Bean
+```
+@Component
+interface BeanComponent{
+	fun getListBean() : Bean
+}
+
+@Module
+class BeanModule{
+	@Provides
+	fun providesListBean():Bean{
+		return ListBean()
+	}
+}
+```
+最后是MainActivity
+```
+@Component(dependence = arrayOf(AdapterComponent::class,BeanComponent::class))
+interface MainActivityComponent{
+	//这里面什么都不用
+}
+
+@Module
+class MainActivityModule  //完全可以不用定义这个，当然看情况如果`MainActivity`有自己特殊的对象要提供的话还是有必要的
+```
+具体实现
+```
+class MainActivity:AppCompatActivity{
+	fun onCreate(){
+		var activityComponent= DaggerMainActivityComponent
+							.builder()
+							.adapterComponent(DaggerAdapterComponent.builder().build())
+							.beanComponent(DaggerBeanComponent.builder().build())
+							.build()
+		activityComponent.getListBean()
+		activityComponent.getAdapter()
+	}
+}
+```
+==通过依赖，可以避免很多重复的动作，最后可以在`Component`的构造类里获取到依赖的对象==

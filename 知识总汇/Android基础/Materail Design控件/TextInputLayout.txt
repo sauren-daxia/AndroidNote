@@ -1,0 +1,31 @@
+## TextInputLayout XML使用
+```xml
+	<android.support.design.widget.TextInputLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="请输入性命"
+		app:errorTextAppearance="输错了"
+		app:counterEnabled="true"
+		app:counterMaxLength="20"
+		app:errorEnabled="true"
+		app:hintAnimationEnabled="true"
+		app:passwordToggleDrawable="@mipmap/ic_launcher_round"
+		app:passwordToggleEnabled="true"
+		app:passwordToggleTint="@color/cardview_dark_background"
+	>
+	</android.support.design.widget.TextInputLayout>
+```
+
+|属性介绍					|解释|
+|:-:|:-:|
+|android:hint					|提示语，与Edit的提示语不冲突，但是最好别一起用|
+|app:errorTextAppearance			|错误提示语|
+|app:counterEnabled				|是否开启字符计数器，true开启，会在右下角有个数字|
+|app:counterMaxLength				|是否提示用户输入最长的字符数，true开启，但不会限制最长字符|
+|app:errorEnabled				|是否开启错误提示，true开启|
+|app:hintAnimationEnabled			|是否开启提示语切换动画，true开启，默认开启|
+|app:passwordToggleEnabled			|是否开启密码明文密文切换，true开启，只有EditText的inputType="password"类型才有用|
+|app:passwordToggleDrawable			|设置明文密文切换开关的图标|
+|passwordToggleTint				|设置明文密文切换开关的颜色|
+
+		TextInputEditText和EditText的使用方式一样，嵌套在TextInputLayout里面使用就可以了

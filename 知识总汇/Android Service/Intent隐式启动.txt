@@ -1,0 +1,15 @@
+## 远程服务AIDL配置
+```xml
+	<service
+		android:name=".service.ADILService"
+		android:exported="true"
+		android:process=":remote"> 
+		<!-- 将本地服务设置成远程服务 ,设置可被其他进程调用 -->
+
+		<!-- 提供隐式跳转，此处Intent的action必须写成“服务器端包名.aidl文件 隐式启动中Service的category不是必须的 -->
+		<intent-filter>
+			<action android:name="com.studio.chen.aidlchildtest.IAIDLTestInterface" />
+			<category android:name="android.intent.category.DEFAULT"/>
+		</intent-filter>
+</service>
+```

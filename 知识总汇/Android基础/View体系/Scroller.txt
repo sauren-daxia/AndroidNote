@@ -1,0 +1,26 @@
+
+	使用Scroller可以让View在移动过程中有过渡的效果
+
+	ScrollView的使用方式是固定的：
+		Scroller scroller = new Scroller(getContext());
+
+		public void smoothScrollTo(int dstx, int dsty) {
+			int scrollX = getScrollX();			
+			int moveXValue = dstx - scrollX;
+
+			int scrollY = getScrollY();
+			int moveYValue = dsty - scrollY;
+
+			scroller.startScroll(scrollX, scrollY, moveXValue, moveYValue, 1000);
+			postInvalidateOnAnimation();
+		}
+
+		@Override
+		public void computeScroll() {
+			if(scroller.computeScrollOffset()){
+				scrollTo(scroller.getCurrX(),scroller.getCurrX());
+				postInvalidateOnAnimation();
+			}
+		}
+
+			

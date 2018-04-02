@@ -1,0 +1,59 @@
+
+	dispatchTouchEvent
+
+			MotionEvent.DOWN(点击)
+
+					默认			把点击事件传递给自身的onTouchEvent处理
+
+					true			自己处理点击事件，不会往下传递
+
+					false			自己不处理点击事件，事件返回给ViewGroup的onTouch事件，事件就此结束，ViewGroup的后续事件也不会传递下来
+
+			MotionEvent.MOVE(移动)
+
+					默认			把移动事件传递给自身的onTouchEvent处理
+
+					true			自己处理移动事件，不会往下传递
+
+					false			自己不处理移动事件，事件返回给ViewGroup的onTouch事件，事件就此结束，ViewGroup的后续事件也不会传递下来
+
+			MotionEvent.UP(松手)
+
+					默认			把松手事件传递给自身的onTouchEvent处理
+
+					true			自身处理松手事件，不会往下传递
+
+					false			自己不处理松手事件，事件返回给ViewGroup的onTouch事件，事件就此结束，ViewGroup的后续事件也不会传递下来
+
+	onTouchEvent
+
+			MotionEvent.DOWN(点击)
+
+					默认			自己不处理松手事件，事件返回给ViewGroup的onTouch事件，事件就此结束，ViewGroup的后续事件也不会传递下来
+
+					true			自身处理点击事件，后续会产生MotionEvent.MOVE(移动)事件，
+
+					false			和默认一样
+
+			MotionEvent.MOVE(移动)
+
+					默认			自己不处理松手事件，事件返回给ViewGroup的onTouch事件，事件就此结束，ViewGroup的后续事件也不会传递下来
+
+					true			自己处理点击事件，后续会产生MotionEvent.UP(松手)事件，
+
+					false			和默认一样
+
+			MotionEvent.UP(松手)
+
+					默认			自己不处理松手事件，事件返回给ViewGroup的onTouch事件，事件就此结束，ViewGroup的后续事件也不会传递下来
+
+					true			自己处理点击事件，事件就此结束
+
+					false			和默认一样
+
+		总结：
+			1、不论dispatchTouchEvent还是onTouchEvent也好，只要MotionEvent的DOWN事件都不处理，就不会有后续事件
+
+			2、只要处理过DONW事件，不管后面事件是否处理，都会收到事件传递
+
+			3、dispatchTouchEvent处理了事件就不会交给onTouchEvent

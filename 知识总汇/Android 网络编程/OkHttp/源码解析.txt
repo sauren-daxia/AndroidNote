@@ -1,0 +1,127 @@
+## OkHttpClient(库的核心类，主要使用它来进行网络请求)
+* `OkHttpClient()` 构造方法，主要就是构造Http的，在内部依然是使用OkHttpClient内部类Builder构造，将Builder默认的属性赋值给OkHttpClient
+* `OkHttpClient.Builder()` OkHttpClient构造的核心类，是采用构建者模式构造出OkHttpClient对象的
+* `newCall()` 是Ok发送请求的核心，这个方法会去构造一个RealCall，这是OKHttp库Calll的实现类，拿到这个Call之后就可以进行异步或者同步操作
+
+## OkHtppClient.Build(OkHttpClient的构造者，它拥有的属性说明OkHttpClient也有)
+* `Dispatcher dispatcher` Ok的核心功能之一，请求缓存线程池，在构造的Ok的时候必定会构造它，所以也是为什么Ok最好做成单例，因为Ok有很多庞大的池子可以重复利用
+* `ConnectionPool connectionPool` Ok的核心功能之一，Http连接池，在构造的Ok的时候必定会构造它，所以也是为什么Ok最好做成单例，因为Ok有很多庞大的池子可以重复利用
+* ` @Nullable Proxy proxy` 代理对象，对网络请求代理不是很熟暂时忽略
+* `List<Protocol> protocols` 这个比较重要，是Ok比较优秀的地方，可以指定请求协议，有http1.0、1.1、2.0，还有些不认识的
+* 'List<ConnectionSpec> connectionSpecs' 这个是SSL协议的东西，比较复杂，用来支持HTTPS协议的
+* `final List<Interceptor> interceptors = new ArrayList<>()` 这个是Ok核心功能之一，应用级的拦截
+* `final List<Interceptor> networkInterceptors = new ArrayList<>()` 这个也是Ok核心功能之一，网络级拦截
+* `CookieJar cookieJar` Cookie机制，Ok对它的支持很友好
+* ` @Nullable Cache cache` Ok的缓存机制，提供对请求的缓存，也是很强大的机制
+* `int connectTimeout` 连接超时，表示连接超过指定时间就判断为连接超时
+* `int readTimeout` 读取超时，表示读取数据的时候超过指定时间就认为读取超时
+* `int writeTimeout` 写入超时，表示写入数据的时候超过指定时间就认为写入超时
+
+## Dispatcher(请求缓存池，其实也就是线程池,用来处理并发)
+* `private int maxRequests = 64` 最大的并发数量，超过了则进入缓存待请求
+* `private int maxRequestsPerHost = 5` 表示每个主机或者叫域名，最大的请求数量
+* `private @Nullable ExecutorService executorService` Ok的线程池
+* `private final Deque<AsyncCall> readyAsyncCalls = new ArrayDeque<>()` 存储异步缓存待请求的列表
+* `private final Deque<AsyncCall> runningAsyncCalls = new ArrayDeque<>()` 存储异步正在请求的列表
+* `private final Deque<RealCall> runningSyncCalls = new ArrayDeque<>()` 存储同步请求的列表
+* `executorService()` 单例构造线程池的方法，构造一个0核心线程存活，Integer.MAX_VALUE个容量，60秒内回收非核心线程的线程池
+* `enqueue()` 异步请求会判断`runningAsyncCalls`运行中请求的数量是否达到了`maxRequests`个，没达到上限的话再判断`runningAsyncCalls`中访问同一个主机的请求是否超过`maxRequestsPerHost`在请求，都没有的话，则把这个请求添加到`runningAsyncCalls`中，并用线程池开启请求，否则说明请求中的数量大于`maxRequests`或者访问统一个主机的请求大于`maxRequestsPerHost`，然后就会把这个请求添加到`readyAsyncCalls`缓存待请求集合中
+* `executed()` 同步请求，只知道是在`RealCall`的`executed()`方法中把`RealCall`添加到`runningSyncCalls`，里面没看懂怎么执行的？？？？？？？
+* `finished()` 当RealCall请求完毕会调用请求缓存池的`finished()`把当前的`call`移除，然后会调用`promoteCalls()`把`readyAsyncCalls`里的请求添加到`runningAsyncCalls`，并执行请求
+* `promoteCalls()` 每个请求完毕的时候会调用这个方法，判断如果`runningAsyncCalls`小于最大并发量，则将`readyAsyncCalls`缓存里的请求转到`runningAsyncCalls`去并执行请求
+
+## ConnectionPool(Http连接池，其实也就是线程池)
+* `private static final Executor executor` OK的连接池，构造一个0核心线程存活，Integer.MAX_VALUE个容量，60秒内回收非核心线程的线程池
+* `private final Deque<RealConnection> connections = new ArrayDeque<>()` 储存缓存连接器，连接器会在`ConnectInterceptor`中通过`StreamAllocation.newStream`方法构造或者在`connections`获取，构造的同时添加到`connections`集合中
+* `cleanup()` 清理连接池，不太清楚实现，比较复杂，由`cleanupRunnable`调用，这里是一个死循环，会一直清理完闲置连接池为止，然后下次添加连接器的时候会继续清理
+* `put()` 添加连接器，每次添加连接器都会去清理一遍之前的闲置连接器，但是清理条件在`cleanup()`里面有规定，只是每次添加的时候都会通过线程池`executor`启动一个`cleanupRunnable`任务去清理
+* `get()` 根据`address`获取连接器
+
+## RealConnection(连接器)
+# `connect()` 进行网络链接，在`ConnectInterceptor`中通过`StreamAllocation.newStream`方法构造的同时会调用这个方法去连接，连接方法太复杂就不看了
+
+## Call(异步回调接口)
+* `execute()` 同步请求方法
+* `enqueue()` 异步请求方法
+* `isExecuted()` 判断当前方法是否同步请求
+* `cancel()` 取消当前请求
+* `isCanceled()` 是否取消了请求
+* `request()` 返回当前请求对象
+
+## RealCall(异步回调的实现类)
+* `final RetryAndFollowUpInterceptor retryAndFollowUpInterceptor` 错误重连引用，说明这个回调类还负责错误重连
+* `final OkHttpClient client` Ok的对象，在连接过程中会调用Ok库的核心功能
+* `private boolean executed` 这个标记用来判断这个RealCall已经请求过同步或者异步方法了，也就是一个newCall出来的RealCall对象只能选择同步或者异步的方式请求一次
+* `RealCall()` 构造方法，这个构造是私有的，通过静态方法newRealCall()去构造，构造的时候会持有Ok引用，Request引用，会标记是否为WebSocket，并且构造一个错误重连拦截
+* `newRealCall()` 静态方法，用于构造RealCall对象，在构造的时候会去给Ok构造一个EventListener对象，该对象官方说只是一个预览功能不一定会支持，这个对象看起来像是对RealCall进行网络请求的过程做一个生命周期回调，大概内容类似，是否连接，正在连接，断开连接这样的回调
+* `enqueue()` 异步方法，需要传一个Callback做回调，然后会去判断`executed`变量是否为true，为true则说明已经同步请求过了，就会抛异常，如果没有则把它变成true，告诉别人我现在正在请求，然后会调用Ok的线程池执行一个`AsyncCall`类型的Runnable，这个`AsyncCall`的构造需要一个`Callback`，就是我们回调需要实现的那个Callback
+* `execute()` 同步方法，和`enqueue()`一样回去判断`executed`变量，然后通过拦截器模式`getResponseWithInterceptorChain()`获取`Response`，把`Response`返回，请求完最后一定会执行finally，将OK线程池`dispatcher.finished()`，把这个RealCall请求给移除掉，整个过程就结束了
+* `getResponseWithInterceptorChain()` Ok拦截核心所在，以责任链模式进行网络请求，先把开发人员自定义的拦截添加到拦截集合总，再添加自带的几个拦截,也就是执行开发人员的拦截再执行自带的拦截，然后通过`Interceptor.Chain`的实现类`RealInterceptorChain`的`chain.proceed()`方法执行责任链
+
+## RealInterceptorChain(拦截器责任链的责任者)
+* `RealInterceptorChain()` 构造，会将当前执行任务次数的index和RealCall还有拦截集合传递进来
+* `proceed()` 核心方法用来驱动责任链的工作，当`RealCall.getResponseWithInterceptorChain()`启动后，`proceed()`会判断index是否大于拦截集合的`size`，然后记录当前拦截集合的index，接着再构造一个`RealInterceptorChain`，然后获取获取下一个拦截，把`RealInterceptorChain`实例传给下一个拦截器，下一个拦截器中又会调用`Chain.proceed()`，再次重复一次方法流程，就这样形成了一个链式，最后所有拦截器处理完后返回一个Response给调用者，简单来说责任链就是一个结构型的尾递归
+
+## ConnectInterceptor(连接拦截器)
+* 这个主要功能就是去连接服务器，它不做数据处理，交给`CallServerInterceptor`去做数据处理
+
+## CallServerInterceptor(数据转换拦截器)
+* 这个没啥好说的，就是将连接通道得来的数据转换成Response
+
+## AsyncCall(异步任务，是RealCall的内部类，实现了Runnable接口的类，用来异步请求的)
+* `AsyncCall()` 构造，需要一个`CallBack`，就是我们异步请求回调需要重写的`Callback`
+* `execute()` 额，在`run()`里面调用的方法，通过拦截器模式`getResponseWithInterceptorChain()`获取`Response`，然后根据外部类`RealCall`的`retryAndFollowUpInterceptor`判断有没有被cancel了，如果没有就把`Response`返回给`callBack.onResponse()`，取消了就返回给`callBack.onFailure()`，请求完最后一定会执行finally，将OK线程池`dispatcher.finished()`，把这个RealCall请求给移除掉，整个过程就结束了
+
+## Request(请求体封装类)
+* `final HttpUrl url` 请求地址
+* `final String method`	请求方式
+* `final Headers headers` 请求头部
+* `final @Nullable RequestBody body` 请求参数键值对
+* `Request()` 构造方法，通过Builder来构造
+
+## Request.Builder(请求体构造者)
+* `url()` 设置请求地址
+* `addHeader()` 添加头部键值对
+* `get()` 请求方式，还有其他几种不常用的
+* `post()` 请求方式，需要传`RequestBody`，还有其他几种不常用的
+* `cacheControl()` 添加缓存控制，一般用不上
+
+## HttpUrl
+
+## Headers(请求头部)
+* `newBuilder()` 新构造一个Builder，会把`Headers.namesAndValues`丢给`Builder.namesAndValues`
+
+## Headers.Builder(请求头部构造者)
+* `final List<String> namesAndValues = new ArrayList<>(20)` 用来储存头部信息的几个，使用Array来保存键值对，比较奇怪
+
+## RequestBody(POST键值对对象)
+* `create()` 多种`create()`重载，用来构造一个键值对信息
+
+## Response(响应体封装类)
+* `final Request request` 请求体，已经被各种拦截操作过的了
+* `final Protocol protocol` 请求协议,Http1.0、1.1、2.0等
+* `final int code` 响应code码
+* `final String message` 响应信息
+* `final Headers headers` 响应头部
+* `final @Nullable ResponseBody body` 响应数据
+* `Response()` 构造方法，通过Builder来构造
+* `newBuilder()` 新构造一个Builder，会把当前Response所有信息都传给新的构造
+
+## Response.Builder(响应体构造者)
+`暂无什么介绍，和Response参不多，就是用来构造的，一般我们也不会去动这个类`
+
+## ResponseBody(响应数据)
+* `contentType()` 数据类型
+* `contentLength()` 数据长度
+
+# 总结
+  最开始的时候，我们会去构造一个`OkHttpClient`对象，在构造的时候会初始化很多核心的类，其中主要的就是`Dispatcher`请求缓存池和`ConnectionPool`连接缓存池，`Dispatcher`主要用来解决并发的，默认限定64个并发，大于则放到缓冲里，
+`ConnectionPool`主要用来复用通道，当连接了服务器之后就会形成一个通道，这个通道在HTTP1.0以前是不支持的，HTTP1.1之后支持，为了提高性能和利用率，当使用完一段时间内暂不销毁，`ConnectionPool`主要就是在发送请求的时候构造一个
+`RealConnection`连接器，然后保存到`ConnectionPool`中，或者在`ConnectionPool`取出可复用的连接器。
+  当OKHTTP都初始化完毕，就会调用`OkHttpClient.newCall`，这个方法会去构造一个`RealCall`，其实`RealCall`才是真正执行任务的一个类，它主要有那么几个类是核心：`execute()`、`enqueue()`、`getResponseWithInterceptorChain()`，
+`execute()`同步请求，会去调用`Dispatcher`提供的`execute()`，执行时会调用`getResponseWithInterceptorChain()`启动拦截模式获取`Response`，最后再通过`Dispatcher.finished`移除`RealCall`这个，因为`RealCall`只能用一次
+`enqueue()`异步请求，先会去构造一个`AsyncCall`任务，它实现了`Runnable`接口也就是可以被线程池执行，异步和同步其实也是一样回去调用`getResponseWithInterceptorChain()`然后再`finished`掉，只不过多了一个`Callback`用来回调
+`getResponseWithInterceptorChain()`这个是`OkHttp`请求核心机制，责任链模式处理`Request`和`Response`，主要过程是通过`RealInterceptorChain`去启动，每个`Intercept`都会去调用`proceed()`方法形成一个链式结构，这里主要有一个拦截
+比较重要，就是`ConnectInterceptor`，连接拦截器，是请求的最最最核心的内容————发送请求...,它在内部会通过`StreamAllocation.newStream`得出一个`RealConnection`连接器，这个连接器会被储存到`ConnectionPool`连接池中复用，在构造
+`RealConnect`的同时回去调用`RealConnect.connect()`，这个才是连接服务器的具体实现，底层是通过`Socket`去连接的，过程比较复杂就不详细了解了
+  当最后一环节`ConnectInterceptor`数据转化拦截器将数据转为Response后，返回给调用者，整个流程就结束了，但这个时候`OkHttpClient`对象已经使用过了，有留下来可复用的东西和庞大的对象，如果不再次使用`OkHttpClient`对象，则又会产生一堆垃圾内存

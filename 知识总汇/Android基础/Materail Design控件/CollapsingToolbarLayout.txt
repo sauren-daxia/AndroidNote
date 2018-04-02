@@ -1,0 +1,10 @@
+## CollapsingToolbarLayout XML使用
+```xml
+	
+```
+
+|属性介绍					|解释|
+|:-:|:-:|
+|app:contentScrim=""				|设置自己在渐渐隐藏子view后的那一段高度的颜色,是渐变的，隐藏子view后还有一个toolbar的高度|
+|app:title=""					|设置标题|
+|app:layout_collapseMode=""			|设置子view的折叠模式、none:不折叠、pin：不折叠但是会固定顶部、prarllax：折叠|

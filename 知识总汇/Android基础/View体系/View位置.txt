@@ -1,0 +1,18 @@
+
+	View坐标：
+		
+		X		：View的X是相对屏幕的左上角的X轴
+
+		Y		：View的Y是相对屏幕的左上角的Y轴
+
+	View的位置
+
+		left		：View的左上角的X轴坐标，相对于父容器来说
+
+		top		：View的左上角的Y轴坐标，相对于父容器来说
+
+		right		；View的右下角的X轴坐标，相对于父容器来说
+
+		bottom		：View的右下角的Y轴坐标，相对于父容器来说
+
+	

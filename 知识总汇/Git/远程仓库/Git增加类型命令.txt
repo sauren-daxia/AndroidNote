@@ -1,0 +1,5 @@
+### 克隆
+```
+将远程仓库克隆到本地目录
+$ git clone https://github.com/c297131019/JRatingBar.git
+```

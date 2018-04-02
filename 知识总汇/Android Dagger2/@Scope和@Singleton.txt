@@ -1,0 +1,43 @@
+## @Singleton
+` @Singleton `表示为局部单例的意思，在` @Component `的使用范围中被` @Singleton `标识的属性都为单例
+首先需要标识` @Provides `提供的属性是单例的
+```
+@Module
+class AppMoudle(private val context: BaseApplication){
+	@Provides
+	@Singleton
+	fun providesContext() : Context{
+		return context
+	}
+}
+```
+然后需要在` @Component `也标识为` @Singleton `，同时标注，这样编译器才能知道在` @Component `使用的范围中，` @Module `提供的某个对象是单例的
+```
+@Component
+@Singleton
+interface AppComponent{
+	fun getContext() : Context
+}
+```
+
+## @Scopre
+` @Singleton `是` @Scopre `的实现，所以` @Scopre `也当然是局部单例的注解
+` @Scope `的使用，是在` @Component `有依赖关系，并且依赖的` @Component `是被` @Singleton `标注的
+Dagger2规定，父` @Component `被标记` @Scopre `的话，子` @Component `也必须标记` @Scopre `
+但是在依赖关系中，如果父` @Component `使用了` @Scope ` 默认实现的` @Singleton `的话，子类就不能再用了
+必须重新定义一个单独标识的` @Scope `，也就是在一个依赖层次中，不能出现同样的` @Scope `
+
+自定义一个` @Scope `
+```
+@Scope
+@Documented
+@Retention(RUNTIME)
+public @interface ActivityScope {}
+```
+当`ActivityComponent`依赖`AppComponent`的时候就要为`ActivityComponent`标注自定义的` @ActivityScope `
+```
+@ActivityScope
+@Component(dependencies = [(AppComponent::class)])
+interface ActivityComponent
+```
+

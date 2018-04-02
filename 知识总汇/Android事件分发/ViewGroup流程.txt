@@ -1,0 +1,106 @@
+
+	dispatchTouchEvent
+		
+			MotionEvent.DOWN(点击)
+
+					默认		把点击事件传递给onInterceptTouchEvent做事件分发
+
+					true		自己处理点击事件，事件不会给onInterceptTouchEvent分发，也不会给onTouch处理点击事件，自己处理点击事件后才有MotionEvent.MOVE(移动)事件
+
+					false		自己不处理点击事件，事件往上返回，事件就此结束
+
+			MotionEvent.MOVE(移动)
+
+					默认		把移动事件传递给onInterceptTouchEvent做事件分发
+
+					true		自己处理移动事件，事件不会给onInterceptTouchEvent分发，也不会给onTouch处理移动事件，自己处理后续事件后才有MotionEvent.UP(松手)事件
+
+					false		自己不处理移动事件，事件往上返回，事件就此结束
+
+			MotionEvent.UP(松手)
+
+					默认		把松手事件传递给onInterceptTouchEvent做事件分发
+
+					true		自己处理松手事件，事件不会给onInterceptTouchEvent分发，也不会给onTouch处理松手事件，处理完松手事件，事件就此结束
+
+					false		自己不处理松手事件，事件往上返回，事件就此结束
+
+	onInterceptTouchEvent(只是分发，不能确定接下来的后续事件)
+
+			MotionEvent.DOWN(点击)
+
+					默认		将点击事件传递给子View的dispatchTouchEvent事件，
+							如果子View不处理，下次不会再经过onInterceptTouchEvent，并且下次直接由dispatchTouchEvent交给自身onTouchEvent处理，
+							如果子view处理，下次还是会经过onInterceptTouchEvent。
+
+					true		自己处理点击事件，点击事件会分发到自身的onTouchEvent事件，并且下次直接由dispatchTouchEvent交给自身onTouchEvent处理，不会再经过onInterceptTouchEvent
+
+					false		和默认一样
+
+			MotionEvent.MOVE(移动)		
+
+					默认		将移动事件传递给子View的dispatchTouchEvent事件，
+							如果子View不处理，下次不会再经过onInterceptTouchEvent，并且下次直接由dispatchTouchEvent交给自身onTouchEvent处理，
+							如果子view处理，下次还是会经过onInterceptTouchEvent。
+
+					true		自己处理移动事件，移动事件会分发到自身的onTouchEvent事件，并且下次直接由dispatchTouchEvent交给自身onTouchEvent处理，不会再经过onInterceptTouchEvent
+
+					false		和默认一样
+
+			MotionEvent.UP(松手)
+
+					默认		将松手事件传递给子View的dispatchTouchEvent事件，
+							如果子View不处理，下次不会再经过onInterceptTouchEvent，并且下次直接由dispatchTouchEvent交给自身onTouchEvent处理，
+							如果子view处理，下次还是会经过onInterceptTouchEvent。
+
+					true		自己处理松手事件，松手事件会分发到自身的onTouchEvent事件，并且下次直接由dispatchTouchEvent交给自身onTouchEvent处理，不会再经过onInterceptTouchEvent
+
+					false		和默认一样
+
+	onTouchEvent
+
+			MotionEvent.DOWN(点击)
+
+					默认		不处理点击事件，事件往上返回，事件就此结束，没有后续事件
+
+					true		自己处理点击事件，后续会产生MotionEvent.MOVE(移动)事件，
+							一般来说走到这里是因为自身拦截了点击事件或者子View不处理点击事件，才会到这里来
+							无论是哪种情况走到这，后续事件都不会交给onInterceptTouchEvent和子view，直接由dispatchTouchEvent交给自身onTouchEvent处理
+
+					false		和默认一样
+
+			MotionEvent.MOVE(移动)
+
+					默认		不处理点击事件，事件网上返回，事件就此结束，没有后续事件
+
+					true		自己处理点击事件，后续会产生MotionEvent.UP(松手)事件，
+							一般来说走到这里是因为自身拦截了移动事件或者子View不处理移动事件，才会到这里来
+							无论是哪种情况走到这，后续事件都不会交给onInterceptTouchEvent和子view，直接由dispatchTouchEvent交给自身onTouchEvent处理
+
+					false		和默认一样
+
+			MotionEvent.UP(松手)
+
+					默认		不处理点击事件，事件网上返回，事件就此结束，没有后续事件
+
+					true		自己处理点击事件，事件就此结束
+							一般来说走到这里是因为自身拦截了移动事件或者子View不处理移动事件，才会到这里来
+
+					false		和默认一样
+
+	总结：
+		1、dispatchTouchEvent处理了事件，事件就不会交给onInterceptTouchEvent分发，也不会去交给onTouchEvent处理
+
+		2、如果子view和自身的onTouchEvent都不处理MotionEvent.DOWN事件就不会有后续事件
+
+		3、如果自身onTouchEvent处理了事件，就不会再经过onInterceptTouchEvent
+
+		4、如果子view处理了事件，后续事件依然会经过onInterceptTouchEvent
+
+
+	ViewGroup事件流程
+		
+	(ViewGroup)disaptchTouchEvent--------->(ViewGroup)onInterceptTouchEvent									    (ViewGroup)------------->onTouchEvent
+										|								    |
+										|								    |
+										|---------->(子view)dispatchTouchEvent---------->(子view)onTouchEvent

@@ -1,0 +1,27 @@
+<?xl version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="JTitleBar">
+        <attr name="leftImg" format="reference" />
+        <attr name="leftImgWidth" format="dimension" />
+        <attr name="leftImgHeight" format="dimension" />
+        <attr name="leftText" format="string" />
+        <attr name="leftTextSize" format="dimension" />
+        <attr name="leftTextColor" format="color" />
+        <attr name="rightOneImg" format="reference" />
+        <attr name="rightOneImgWidth" format="dimension" />
+        <attr name="rightOneImgHeight" format="dimension" />
+        <attr name="rightOneText" format="string" />
+        <attr name="rightOneTextSize" format="dimension" />
+        <attr name="rightOneTextColor" format="color" />
+        <attr name="rightTwoImg" format="reference" />
+        <attr name="rightTwoImgWidth" format="dimension" />
+        <attr name="rightTwoImgHeight" format="dimension" />
+        <attr name="rightTwoText" format="string" />
+        <attr name="rightTwoTextSize" format="dimension" />
+        <attr name="rightTwoTextColor" format="color" />
+        <attr name="titleText" format="string" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="titleTextColor" format="color" />
+    </declare-styleable>
+</resources>

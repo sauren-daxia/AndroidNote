@@ -1,0 +1,40 @@
+
+## 代码使用
+```kotlin
+	//在Activity里面
+	overrid fun onCreate(saveInstaceState : Bundler?){
+		super.onCreate(saveInstanceState)
+		setContent(R.layout.activity_main)
+		/** 添加Toolbar **/
+		setSupportActionBar(toolbar)
+		
+	}
+```
+
+## XML使用
+```xml
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toorbar"
+		app:contentInsetStart="0dp"
+		app:contentInsetEnd="0dp"
+		app:contentInsetLeft="0dp"
+		app:contentInsetRight="0dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+	>
+	</android.support.v7.widget.Toolbar>
+```
+
+## 主题配置(这个很重要)
+```xml
+	<activity
+		android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+	>
+``
+
+|属性介绍			|解释|
+|:-:|:-:|
+|contentInsetStart	|去除默认左边距|
+|contentInsetEnd	|去除默认右边距|
+|contentInsetLeft	|去除默认左边距|
+|contentInsetRight	|去除默认右边距|

@@ -1,0 +1,22 @@
+
+	MotionEvent					：View的事件
+		
+		MotionEvent.ACTION_DOWN			：View的点击事件
+
+		MotionEvent.ACTION_MOVE			：View的滑动事件
+
+		MotionEvent.ACTION_UP			：View的松手事件
+
+
+	TouchSlop					：View的滑动最小值，小于这个值不被系统识别为滑动
+
+							  通过ViewConfiguration.get(this).getScaledTouchSlop()获取
+
+	VelocityTracker					：View滑动速率，获取方式：
+
+							  VelocityTracker tracker = VelocityTracker.obtain();
+							  tracker.addMovement(event);             //传入View的事件
+							  tracker.computeCurrentVelocity(1000);//设置用于计算的事件，比如1000毫秒内滑动了多少
+							  float x = tracker.getXVelocity();       //获取X轴滑动的速率
+							  float y = tracker.getYVelocity();       //获取Y轴滑动的速率
+		

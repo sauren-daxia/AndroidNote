@@ -1,0 +1,17 @@
+* 提高service优先级
+```java
+	<service>
+		<intent-filter android:priority="1000">			//最高等级1000
+		</intent-filter>
+	</service>
+```
+
+* 在onDestroy的时候发送一条广播到给静态BroadCastReceiver中再次启动service
+```java
+	override fun onDestroy(){
+		stopForeground(true)
+		val intent = Intent("com.xx.xx.broad")
+		sendBroadcast(intent)
+		super.onDestroy()
+	}
+```

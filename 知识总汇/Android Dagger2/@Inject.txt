@@ -1,0 +1,17 @@
+## @Inject
+` @Inject `主要是标注类的构造，和属性的，让他们产生关系，在通过` @Component `去产生关联
+先将类的构造标注为` @Inject `
+```
+//将某个构造标注为` @Inject `这样` @Component `才知道去那个构造方法构造对象
+class Adapter @Inject constructor()
+```
+然后在使用的时候也标注为` @Inject `
+```
+class MainActivity : AppCompatAcitivity{
+	@Inject
+	lateinit var adapter : Adapter
+}
+```
+最后通过` @Component `产生关联
+@Component
+interface MainComponent

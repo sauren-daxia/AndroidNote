@@ -42,3 +42,24 @@
 					nestedScrollView.smoothScrollTo(0,y);
 				}
 		虽然不知道最少次数，但是5次是可以保证达到预期效果的
+
+5、自定义RatingBar的时候处理maxProgress = 100 ，而progress只能是0 - 99 或者 1 - 100的问题
+	只需要判断点击的位置是否在星星的范围内，比如：
+
+		if(evet.x >= rect.left && evet.x <= rect.right){
+			//计算结果的progress+1即可，这里可以保证点击的结果是正确的也就是1-100
+			progress = (xxx+xx*xxx)+1
+		}
+
+		if(event.x > rect.left){
+			progress = 0			//这里处理没有选中
+		}else if(event.x < rect.right){
+			progress = maxProgress		//这里处理全选了
+		}
+
+		 /**
+                 * 这里的progress做了+1的操作，是为了处理边界的问题，一般来说max=100的话
+                 * progress的值的范围应该是0 - 99 或者 1 - 100，但是因为event.x的值即使
+                 * 在rect.left = 0的情况下，也是选中了的，所以也是需要有进度，所以这里的判
+                 * 断必须保证event.x是否在rect.left和rect.right之内才算精准
+                 */

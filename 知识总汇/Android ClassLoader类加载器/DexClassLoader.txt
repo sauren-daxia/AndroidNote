@@ -1,0 +1,13 @@
+## DexClassLoader
+* 可以加载任意路径下的类，加载路径是自定义传入的，也就是可以加载任意路径下的apk、dex、jar等等
+```java
+//继承BaseDexClassLoader
+
+/**
+* 第一个参数传入任意class文件所在的路径
+* 第二个参数传入一个ODex存放目录，apk安装过程会对dex进行优化，会将dex文件存放在ODex目录
+* 第三个参数传入一个os包路径，但应该只能是/data/app/包名/os包的路径
+* 第四个参数传入一个父加载器，比如AppClassLoader、ExtClassLoader、BootstrapClassLoader
+*/
+DexClassLoader(String dexPath, String optimizedDirectory, String librarySearchPath, ClassLoader parent)
+```

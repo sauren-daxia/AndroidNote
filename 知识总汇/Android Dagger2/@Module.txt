@@ -1,0 +1,29 @@
+## @Module(对象实例化工厂类)
+` @Module `是Dagger中的一个工厂类注解，作用就是为抽象类、接口、第三方库对象提供实例化的功能
+```java
+@Module
+class MainActivityMudole{
+
+	/**
+	* 这种写法是更便捷的提供对象，不需要自己手动构造，但是这个参数的对象也必须必须是被` @Inject `标注过的
+	*/
+	@Provides
+	fun providesOnclickListener(onClick : OnClickListener):OnClickListener{
+		return onClick
+	}
+
+	/**
+	* 这种写法仅仅是提供一个对象
+	*/
+	@Provides
+	fun providesMutableMap():MutableMap<String,String>{
+		return mutableMapOf("aa" to "bb")
+	}
+}
+```
+==当`MainActivityComponent`的目标类包含接口、抽象类或者第三方库的对象属性的时候，就无法通过` @Inject `完成对象实例化功能，所以可以指定`MainActivityComponent`来`MainActivityMudole`
+寻找相对应的对象构建方法，产生关联之后，会在代码编译器就生成对象构造的代码，所以不需要自己去手动构造对象==
+这里有几点要注意：
+1. 被` @Provides `标记为提供对象的方法的返回值，最好是抽象的或者接口
+
+

@@ -1,0 +1,51 @@
+## XML中使用
+```xml
+	<VideoView
+		android:id="@+id/video"
+		android:width="match_parent"
+		android:height="200dp"/>
+```
+
+## 代码中调用
+```kotlin
+	fun initVideo(){
+		var file = File(Environment.getExternalStorageDirectory(),"xxx.mp4")
+		video.setVideoPath(file.getPath)
+	}
+
+	fun player(){
+		if(!video.isPlaying){
+			video.start()
+		}
+	}
+
+	fun pause(){
+		if(video.isPlaying){
+			video.pause()
+		}
+	}
+
+	fun replay(){
+		if(video.isPlaying){
+			video.resume()
+		}
+	}
+
+	overrid fun onDestroy(){
+		super.onDestroy()
+		video?.suspend()
+	}
+```
+## VideoView
+|API						|解释|
+|:-:|:-:|
+|setVideoPath()					|设置文件路径|
+|start()					|开始播放|
+|pause()					|暂停，如果没在播放会崩溃|	
+|resume()					|重新播放，如果没在播放会崩溃|
+|seekTo()					|快进到某个点，如果没在播放会崩溃|
+|isPlaying()					|是否在播放|
+|duration					|获取当前进度值|
+
+## 使用到的权限
+` <use-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"> `

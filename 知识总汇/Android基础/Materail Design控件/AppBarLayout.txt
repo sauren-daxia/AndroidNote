@@ -1,0 +1,18 @@
+## AppBarLayout XML使用
+```xml
+	
+```
+
+|属性介绍						|解释|
+|:-:|:-:|
+|app:layout_scrollFlags					|其实是子view的属性，设置子view的滑动模式，有：scroll、snap、enterAlways、exitUntilCollapsed、enterAlwaysCollapsed|
+
+#### 不同滑动模式的组合效果
+* scroll|enterAlways		只要有滑动就跟着滑动，不管滑动的内容是否在中间或者顶部
+* scroll|snap			就像ListView添加了一个头部，会整体滑动,并且富有弹性效果，也就是根据这个view的显示范围，如果少于一半则自动滑动到隐藏，如果多于一半则自动滑动到全部显示
+* scroll|exitUntilCollapsed	折叠模式，使用在AppBarLayout里面的CollapsingToolbarLayout，感觉像是将这个容器放在底层，然后滑动的时候也会有一些细微的滑动当滑动到只能显示CollapsingToolbarLayout一个ToolBar的高度的时候，将渐渐隐藏，同理也会渐渐显示
+* scroll|enterAlwaysCollapsed	同上，感觉差不多
+* scroll			就像ListView添加了一个头部，会整体滑动
+
+|API介绍						|解释|
+|:-:|:-:|

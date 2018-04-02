@@ -1,0 +1,60 @@
+## DrawerLayout XML使用
+```xml
+	<android.support.v4.widget.DrawerLayout 
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:isTouch="none"
+		app:maxProgress="70"
+		app:progress="5"
+		app:starCount="9" />
+
+	<android.support.design.widget.NavigationView
+		android:layout_width="200dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="start">
+			<include layout="@layout/layout_navigation_left" />
+	</android.support.design.widget.NavigationView>
+
+	<android.support.design.widget.NavigationView
+		android:layout_width="200dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="end">
+			<include layout="@layout/layout_navigation_right" />
+	</android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
+```
+* DrawerLayout必须是最外层容器
+* 子View里第一个就是主内容
+
+## DrawerLayout 代码使用
+```kotlin
+	overrid fun onCreate(saveInstaceSate:Bundler){
+		super.onCreate(saveInstaceState)
+		setContentView(R.layout.activity_main)
+
+	}
+```
+
+## DrawerLayout
+|API介绍				|解释|
+|:-:|:-:|
+|openDrawer()				|打开抽屉，一般使用(gravity,true)这个方式打开，gravity为打开哪边的抽屉，true为打开过程的动画|
+|closeDrawer()				|关闭抽屉，一般使用(gravity,true)这个方式关闭，gravity为关闭哪边的抽屉，true为关闭过程的动画|
+|closeDrawers()				|关闭所有抽屉|
+|setDrawerElevation()			|设置抽屉视图的Z轴高度，增加阴影效果|
+|isDrawerOpen()				|判断某个抽屉是否打开|
+|isDrawerVisible()			|判断某个抽屉是否可见|
+|setScrimColor()			|当抽屉打开时，未被遮住的部分的颜色|
+|setDrawerLockMode()			|控制是否可以打开抽屉，LOCK_MODE_LOCKED_CLOSED：不能滑动并关闭、LOCK_MODE_LOCKED_OPEN：不能滑动并打开、LOCK_MODE_UNDEFINED：默认、LOCK_MODE_UNLOCKED：解锁|
+|addDrawerListener()			|监听抽屉打开事件|
+|removeDrawerListener()			|移除监听器|
+

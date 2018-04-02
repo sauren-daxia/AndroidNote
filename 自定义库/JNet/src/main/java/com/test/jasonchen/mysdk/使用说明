@@ -1,0 +1,94 @@
+
+
+1、初始化
+      NetSDK(context){
+        baseUrl("")         //必须添加baseUrl
+
+        DEBUG = true        //可选，默认false
+
+        addHeaders(
+        "cache-Control" to "no-cache"，
+        "appversion" to "2.0.0"，
+        "fun" to {getVersionName()})    //添加头部，任意类型，如果值是动态的，可以传一个方法进去
+
+        addIntercept()      //如果自己有拦截，可以添加拦截进去
+      }
+
+2、定义请求Interface
+    interface API {
+
+            /**
+            *   普通参数请求
+            */
+            @FormUrlEncoded
+            @POST("123/123")
+            fun   baidu(@FieldMap map:MutableMap<String, Any>): Observable<BaseBean<HomeBean>>       //此处的BaseBean类型必须写
+
+            /**
+            *   文件上传
+            */
+            @Multipart
+            @POST("123123/123123")
+            fun pushActiveCircle(@PartMap map:MutableMap<String, RequestBody> , @Part files:MutableList<MultipartBody.Part> ): Observable<BaseBean<*>>
+
+    }
+
+3、实现BaseAPI
+    class LoginApi : BaseApi() {
+            override fun post(): Observable<BaseBean<HomeBean>> {           //这里的Observable泛型必须和接口的一样
+                return return retrofit.create(API::class.java).baidu(paramsMap)     //参数请求，没有可以不写
+            }
+    }
+
+    class UploadApi : BaseApi(){
+            override fun post(): Observable<BaseBean<*>> {           //这里的Observable泛型必须和接口的一样
+                return  retrofit.create(API::class.java).pushActiveCircle(bodyMap.toBodyMap(),fileList.toPartList())     //文件上传
+            }
+    }
+
+4、使用
+
+    普通请求
+
+      LoginApi().apply {
+
+          this.paramsMap.apply {
+              put("it", "123")
+              put("it", "123")
+              put("it", "123")
+          }
+
+      }.post().toRx(RxAdapter({
+
+      },{
+
+      },{
+
+      }))
+
+
+    文件上传
+
+    UploadApi().apply {
+            //添加文件
+            this.fileList.apply {
+                var files = mutableListOf<File>()
+                for (i in files.indices) {
+                    add(BodyFile("[$i]",files[i].path, Types.FORM_DATA))
+                }
+            }
+
+            //添加参数
+            this.bodyMap.apply {
+                add(BodyFile("id","123123",Types.TEXT_PLAIN))
+                add(BodyFile("id","123123",Types.TEXT_PLAIN))
+                add(BodyFile("id","123123",Types.TEXT_PLAIN))
+                add(BodyFile("id","123123",Types.TEXT_PLAIN))
+            }
+        }.post().toRx(RxAdapter({
+
+        },{
+
+        },{
+
+        }))

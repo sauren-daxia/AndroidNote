@@ -1,0 +1,47 @@
+
+#使用：为了兼容不同系统，使用Compat的来构造Notification
+
+
+```java
+var manager = NotificationManagerCompat.from(this)
+
+var notification = NotificationCompat.Builder(context,"Nofitication-Name").build()
+```
+
+## Notification.Builder 
+|API 												|	解释				|
+|:-:|:-:|
+|.setSmallIcon(R.mipmap.icon_arrow)								|必须设置，小图标，显示在状态栏		|
+|.setContentTitle("Hello，这是一条通知")							|通知标题				|
+|.setContentText("下面有关开发者的信息")							|通知内容				|
+|.setShowWhen(false)										|是否显示发送时间，如果为false，when设置就没意义了|
+|.setWhen(System.currentTimeMillis())								|发送通知的时间				|
+|.setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_grade_big_star_select))	|大图标，显示在通知栏			|
+|.setAutoCancel(true)										|是否处理后销毁				|
+|.setContentIntent(PendingIntent.getActivity(this, 0, Intent(), 0))				|设置点击事件				|
+|.setSound(Uri.fromFile(File("xx/xx/xxx/xxx/xx/")))						|设置点击音效				|
+|.setVibrate(longArrayOf(0,100,0,110))								|设置收到通知的震动频率，单数为禁止市场，双数为震动市场 需要权限 VIBRATE|
+|.setLights(Color.GREEN,1000,1000)								|设置收到通知的呼吸灯，参数一颜色，参数二亮的时长，参数三暗的时长|
+|.setDefaults(NotificationCompat.DEFAULT_ALL)							|不设置上面的一些小玩意儿，可以设置系统默认的|
+|.setStyle()											|设置长文本，富文本，大图等，需要点击之后才能看到详情，没点击默认显示Notifiycation的ContentTitle和ContentText|
+|.setPriority(NotificationCompat.PRIORITY_MAX)							|设置通知的等级，PRIORITY_MAX、HEIGHT：像微信一样弹出通知，MIN、LOW、DEFAULT都不会弹出，只是在通知栏排名有所不一样|
+|.build() |构造Notification|
+
+
+
+## NotificationCompat.BigTextStyle
+|API 												|解释|
+|:-:|:-:|
+|.BigTextStyle()										|构建|
+|.setBigContentTitle("")									|长文字的标题|
+|.bigText("")											|长文字的内容|
+|.setSummaryText("")									        |长文字的摘要,在内容下面有一行简要|
+
+
+## NotificationCompat.BigPictureStyle 
+|API 												|解释|
+|:-:|:-:|
+|.bigLargeIcon()										|图标|
+|.setBigContentTitle("")									|图标右侧标题|
+|.setSummaryText("")										|标题下面简要|
+|.bigPicture()											|大图|

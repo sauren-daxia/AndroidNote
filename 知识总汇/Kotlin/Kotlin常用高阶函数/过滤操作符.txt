@@ -1,0 +1,8 @@
+http://blog.csdn.net/fine1938768839/article/details/73550989
+
+1、drop
+	去掉前面N个元素后返回新的集合
+	
+	(1..20).drop(5)
+
+2、

@@ -1,0 +1,73 @@
+## @Qualifier(自定义标识注解)
+当一个接口或抽象类有多个实现类的时候，并且同时存在` @Module `里，如果仅仅是告诉` @Component `去` @Module `里寻找被标注为` @Provides `的构造的时候
+会产生一个注解迷失的情况。` @Qualifier `用来自定义标识注解，指定让` @Inject `的属性去` @Module `里找同样被该注解标识的方法获取对象
+```
+//自定义名字为MainAdapter的注解
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MainAdapter
+
+//自定义名字为UserAdapter的注解
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface UserAdapter
+``
+接着需要将注解标识到` @Inject `的属性和` @Provides `的方法上
+```
+@Module
+class MainActivityModule{
+	@Provides
+	@MainAdapter
+	fun providesMainAdapter():BaseAdapter{
+		return MainAdapter()
+	}
+
+	@Provides
+	@UserAdapter
+	fun providesUserAdapter():BaseAdapter{
+		return UserAdapter()
+	}
+}
+```
+Activity里
+```
+class MainActivity : AppCompatActivity{
+	@Inject
+	@MainAdapter
+	lateinit var mainAdapter : BaseAdaapter
+
+	@Inject
+	@UserAdapter
+	lateinit var userAdapter : BaseAdaapter
+}
+```
+==` @Qualifier `作为一个标识符，作用就是告诉` @Inject `属性到底要去哪个` @Provides `找到自己的对象==
+
+## @Named
+` @Named `是` @Qualifier `的实现类，不需要自定义只需要提供用于标识的字符串即可
+@Module
+class MainActivityModule{
+	@Provides
+	@Named("MainAdapter")
+	fun providesMainAdapter():BaseAdapter{
+		return MainAdapter()
+	}
+
+	@Provides
+	@Named("UserAdapter")
+	fun providesUserAdapter():BaseAdapter{
+		return UserAdapter()
+	}
+}
+```
+class MainActivity : AppCompatActivity{
+	@Inject
+	@field:[Named("MainAdapter")]
+	lateinit var mainAdapter : BaseAdaapter
+
+	@Inject
+	@field:[Named("UserAdapter")]
+	lateinit var userAdapter : BaseAdaapter
+}
+```
+==因为Kotlin的原因不能直接在属性注解字符串，所以需要配合` @field `使用，方法则无所谓==

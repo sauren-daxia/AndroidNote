@@ -1,0 +1,32 @@
+<manifest  
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.finddreams.csdn"
+	android:sharedUserId="string"
+	android:sharedUserLabel="string resource"
+	android:versionCode="integer"
+	android:versionName="string"
+	android:installLocation=["auto" | "internalOnly" | "preferExternal"] >
+</manifest>
+
+xmlns:android			：Android命名空间，可以使用Android各种标准的属性
+
+package				：项目/应用包名
+
+android:sharedUserId		：两个APK共享数据时需要，ID可以随意定义，但是需要共享的APK，ID必须一致
+				  获取目标Context
+					Koltin：
+					var dstContext = createPackageContext("<目标应用的包名>", Context.CONTEXT_INCLUDE_CODE or Context.CONTEXT_IGNORE_SECURITY)
+
+					Java：
+					createPackageContext("<目标包名>",Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
+
+android:sharedUserLabel		：为sharedUserId设置一个可读标签，前提必须社会sharedUserId，并且标签只能是字符串资源 @string/xxx
+
+android:versionCode		：程序版本号，程序升级用的，每次迭代需要+1
+
+android:versionName		：版本号名称
+
+android:installLocation		：程序安装的位置，现在手机都是内置内存，很少有SD卡，基本可以废弃
+					"auto"			：自动识别
+					"internalOnly"		：必须内置内存
+					"preferExternal"	：SD卡

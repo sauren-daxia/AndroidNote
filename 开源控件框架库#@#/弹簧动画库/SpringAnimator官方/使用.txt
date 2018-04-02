@@ -1,0 +1,2 @@
+依赖：
+	compile 'com.android.support:support-dynamic-animation:25.3.1'

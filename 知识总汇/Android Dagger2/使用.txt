@@ -1,0 +1,98 @@
+## 依赖：
+```java
+ //dagger2
+compile "com.google.dagger:dagger:$dagger2_version"
+kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+
+//需要添加插件，哪个module使用都要添加
+apply plugin: 'kotlin-kapt'
+```
+
+## 第一种使用(标准的Class)
+```java
+	//给需要实例化的对象构造方法标注 @Inject，暂时没试过有参构造
+class A @Inject constructor(){
+	fun show(){
+		println("Inject Success")
+	}
+}
+
+//给需要实例化的属性也标注 @Inject，这样就会关联起来
+class B{
+	@Inject
+	lateinit var a : A
+
+	fun main(args : Array<String>){
+		a.show()
+	}
+}
+```
+
+## 第二种使用(一般用于interface、abstract)
+```java
+interface RegisterModel{
+	fun register()
+}
+
+//因为RegisterModelImpl是实现类，在Module中的参数会去寻找这个类，所以这个类也要使用 @Inject标注
+class RegisterModelImpl @Inject constructor() : RegisterModel{
+	fun register(){}
+}
+
+//定义一个类，并标注为Module，作为类的构造工厂，所有接口都可以放在这里
+@Module
+class UserModule{
+	@Providers
+	fun providerReigsterModel(registerService : RegisterServiceImpl):ReigsterModel{
+		return registerService
+	}
+}
+
+//定义一个类，并标注为Component，用于桥接，标注里的modules表示，Activity中有实例化的对象会用到该类Module工厂下的构造方法，可以传多个
+//接着需要rebuild一下项目，生成Component相关的类
+```java
+@component(modules = [(UserModule::class)])
+interface UserComponent{
+	fun injectReigsterActivity(activity:RegisterAcitivty)
+}
+
+//最后在Activity中初始化
+class RegisterActivity:AppCompatActivity(){
+	fun onCreate(){
+		DaggerUserComponent.builid().userModule(UserModule()).build().inject(this)
+	}
+}
+```
+
+## @Named注解(解决注解迷失)
+```java
+//如果一个接口有多个实现类的话，Dagger2不知道去实例化哪个，所以使用一个注解来标识
+//1、在Module实例化的时候定义标识符
+@Module
+class UserModule{
+	@Providers
+	@Named("RegisterModelImpl")
+	fun providerReigsterModel(registerService : RegisterServiceImpl):ReigsterModel{
+		return registerService
+	}
+
+	@Providers
+	@Named("RegisterModelImp2")
+	fun providerReigsterModel(registerService : RegisterServiceImpl):ReigsterModel{
+		return registerService
+	}
+}
+
+//2、在属性标注标识符
+class A {
+
+@Inject
+@field:[Named("RegisterModelImpl")]
+lateinit var service : ReigsterService
+
+@Inject
+@field:[Named("RegisterModelImpl2")]
+lateinit var service2 : ReigsterService
+
+}
+```

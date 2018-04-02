@@ -1,0 +1,17 @@
+使用
+	LayoutTransition transition = new LayoutTransition();  
+
+	transition.setAnimator(LayoutTransition.CHANGE_APPEARING,  transition.getAnimator(LayoutTransition.CHANGE_APPEARING));  
+
+	mLayout.setLayoutTransition(transition);  
+
+
+LayoutTransition.APPEARING			：当一个View在ViewGroup中出现时，对子View设置的动画
+
+LayoutTransition.CHANGE_APPEARING		：当一个View在ViewGroup中出现时，对此子View对其他子View位置造成影响，对其他子View设置的动画
+
+LayoutTransition.DISAPPEARING			：当一个View在ViewGroup中消失时，对子View设置的动画
+
+LayoutTransition.CHANGE_DISAPPEARING		：当一个View在ViewGroup中消失时，对此子View对其他子View位置造成影响，对其他View设置的动画
+
+LayoutTransition.CHANGE				：不是由于View出现或消失造成对其他View位置造成影响，比如宽高、移动，然后对其他子View设置的动画。

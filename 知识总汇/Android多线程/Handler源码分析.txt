@@ -24,8 +24,8 @@
 					方法：
 
 						Looper()		：构造方法，执行这个方法的时候会去创建一个MessageQueue，并且将变量mThread设置为当前构造Looper的线程
-
-						prepare()		：会去创建一个Looper，为当前线程创建一个MessageQueue，Looper创建和MessageQueue是绑定的，创建一个Looper一定会创建一个MessageQueue、
+	
+						prepare()		：会去构造一个Looper，为当前线程创建一个MessageQueue，Looper创建和MessageQueue是绑定的，创建一个Looper一定会创建一个MessageQueue、
 									  因为在创建Looper的构造方法里面就会去创建MessageQueue
 
 						prepareMainLooper()	：Android自己调用的方法，开发者不允许调用，这个方法是绑定UI线程的Looper
@@ -33,7 +33,7 @@
 						loop()			：通过prepare()方法后已经初始化完绑定该线程的所有工作，然后调用loop开启Message Queue和Looper轮训的工作
 									  在loop方法中有一个死循环，
 
-						myLooper()		：获取绑定当前线程的Looper
+						myLooper()		：通过ThreadLocal获取绑定当前线程的Looper
 
 						myQueue()		：获取绑定当前线程的Message Queue，前提是要先prepare()绑定了
 
@@ -64,6 +64,7 @@
 				Handler
 
 					变量：
+						traget			：Handler实例
 
 					方法：
 
@@ -95,4 +96,36 @@
 	
 	PS：一个线程只能有一个Looper，一个Looper可以绑定很多个Handler，一个线程也能有很多个Handler						
 
-					
+	流程：
+		先说Looper，Looper是一个轮训器，提供了几个主要的方法，第一个prepare()方法，调用这个方法的时候会去构造一个新的Looper对象，然后把这个对象的实例交给TreadLocal去保存，
+		接着会去获取当前的线程，然后再去为当前的线程构造一个MessageQueue，prepare()这个方法主要是做通讯的准备工作的，还有一个类似的方法叫prepareMainLooper()，这个方法也会
+		去调用prepare()这个方法，不同的是，prepareMainLooper是系统在ActivityThread的main方法调用的，用来保存主线程，所以Handler才能够与主线程通讯，当然Looper也提供了获取
+		主线程的getMainLooper()这个方法，以便我们在任何地方都能获取到主线程，接着还有一个loop()方法，loop()方法是整个Handler机制的核心环节之一，调用它之后会在内部开启一个
+		阻塞的死循环，不断的从MessageQueue获取Message，获取到之后会通过Message持有的Handler实例，调用dispatchMessage()方法去处理消息，整个Looper的任务大概就这些是比较核心的
+
+		接着说MessageQueue，刚刚说Looper的prepare方法的时候已经说到了，MessageQueue跟Looper一样是跟线程绑定的，一个线程只能有一个Looper也只能有一个MessageQueue，MessageQueue
+		是一个队列结构的消息池，它提供了两个主要的方法，第一个enqueueMessage()方法，主要是把新的Message加入队列的一个操作，第二个方法是next()，也是Handler核心机制的环节之一，
+		刚刚有说道Looper的loop方法，是开启一个阻塞性的死循环，但其实这个阻塞操作是MessageQueue的next()方法来做的，next方法里面也是一个死循环，这个死循环也是不断的获取Message，
+		和loop()方法不一样的地方在于，next()方法里面会有一个判断，如果获取不到Message的话就调用一个native层的方法去阻塞等待，等有新的Message进入队列的时候会醒来，但是这个醒来的
+		动作不知道在哪里调用的，获取到Message之后就把Message返回给loop这个死循环，MessageQueue的工作就完了
+
+		再接着说Message，Message是Handler通信的一个消息载体，负责保存数据传递的，Message这个类比较简单，有意思的方法只有两个，一个是obtain()方法，一个是recycleUnchecked()方法，
+		一般在网上查到Handler的使用方式的时候，别人都会说发送信息的时候使用Message.obtain()方法性能更好，但是如果不看源码的话也不知道好在哪里，我刚开始使用obtain()方法的时候，
+		只是告诉了我他有一个复用的机制，一直以为Android每个复用机制都是很复杂的，但是看了Message的复用方式之后觉得，也不过如此。其实Message里面定义了一个类属性和静态属性，都是Message类型的，
+		obtain()方法主要判断当前静态属性是否有实例了，如果有就直接饮用，没有就构造，reyclerUnchecked()方法主要是用来清除Message属性的，清除完之后会把静态属性的Message赋值给类属性的Message，
+		说白了，obtain()方法是用来构造的，recycleUnchecked()是用来清除数据的，但是他们同时有一个类似于变量交换的一个操作，这样使用两个变量就可以做到Message复用这样一个功能
+
+		最后说说Handler，Handler的作用是消息发送和处理，它是我们接触最多的一个类，一般的做法是在主线程构造出来，然后在子线程里面跟主线程通讯使用的，但是既然是用于线程通讯的，
+		不单单是单方面子线程向主线程去发送信息，也可以在主线程发送信息到子线程，想要发送到子线程就必须在子线程构造这个Handler，因为handler消息的处理和线程有关，但是不能直接像
+		主线程那样创建，首先得调用Looper的prepare()方法，为这个线程构造一个Looper和MessageQueue，这样这个线程才能正常的工作，准备工作好了之后就可以构造Handler了，在Handler构造
+		里面获取持有当前线程的Looper对象，如果没有上一步的prepare()操作，获取不到Looper就会报错的。最后调用Looper的loop方法开始轮训来接收Message，Handler也提供了几个方法，
+		主要分两类，一类是发送的方法，好多个重载，第二类是处理的方法，其中最常见的就是handlerMessage这个方法了，一般构造的时候都会要从写这个方法的，第二种处理方法就是Post。
+		之前说了，在Looper轮训的时候拿到Message的话会调用Message持有的Handler实例，再去调用Handler的dispatchMessage方法，在这个方法里会做判断，如果我们重写了handlerMessage方法的
+		话，那么dispatchMessage就会分发消息到这里来，还有一种情况就是post，如果我们用了post方法来处理消息的话，优先会将消息分发到post提供的Runnable的run方法里面，但是这里比较奇怪。
+		一般run方法是在线程里面使用的，而在这里被当成了一个普通方法去调用，所以我们在run方法处理事件的时候并不是在其他线程，而是在Looper绑定的线程里面，Handler机制的话我就了解这么一些
+
+
+		
+
+		
+

@@ -1,0 +1,17 @@
+使用：
+	var anim = ObjectAnimator.ofFloat(jrb, View.X, View.Y, Path())
+            anim.interpolator = PathInterpolatorCompat.create(0.3f, 0.8f, 0.7f, 1f)
+            anim.start()
+
+	PS:
+		重点1：ObjectAnimator的构造方法，这是新的构造方法用来进行曲线动画描述的
+		重点2：构造方法中的Path决定了运行轨迹
+		重点3：PathInterpolator插值器决定了运行轨迹的速率
+
+		//当然可以使用其他插值器，但是构造方法是必须的，貌似现在只有View.X，和View.Y两个属性，可以试试旋转移动那些
+
+	
+系统提供的默认path插值器，在drawable文件使用
+	@interpolator/fast_out_linear_in.xml
+	@interpolator/fast_out_slow_in.xml
+	@interpolator/linear_out_slow_in.xml

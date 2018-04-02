@@ -1,0 +1,12 @@
+## OkHttpClient.Build API
+|API介绍					|解释|
+|:-:|:-:|
+|.addNetworkInterceptor()			|添加多个网络级的拦截器|
+|.addInterceptor()				|添加多个应用层的拦截器|
+|.connectTimeout()				|连接超时重连|
+|.readTimeout()					|读取超时重连|
+|.writeTimeout()				|写入超时重连|
+|.followRedirects()				|重新定向|
+|.hostnameVerifier()				|支持Https，重写返回true即可|
+|.retryOnConnectionFailure()			|错误重连，默认为true|
+|.cookieJar()					|支持cookie|

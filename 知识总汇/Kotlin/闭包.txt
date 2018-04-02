@@ -3,7 +3,7 @@
 	fun aFun(a: Int): (c: Int) -> Unit {
 		var b = a
 		println("这里是  aFun $b")
-		return  return fun(d: Int) {
+		return fun(d: Int) {
 			println(b++)
 			println()
 		}

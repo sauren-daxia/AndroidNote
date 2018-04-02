@@ -1,0 +1,7 @@
+
+1、避免层级过
+	多层级建议使用RelativeLayout，层级少建议使用LinearLayout
+
+2、绘制优化
+	避免在自定义view中绘制过多内容
+

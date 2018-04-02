@@ -1,0 +1,3 @@
+val bmp = Bitmap.createBitmap(selectBitmap, 0, 0, touchPointX - rect.left, selectBitmap.height, null, false)
+                canvas.drawBitmap(bmp, rect.left.toFloat(), rect.top.toFloat(), mPan)
+                bmp.recycle()

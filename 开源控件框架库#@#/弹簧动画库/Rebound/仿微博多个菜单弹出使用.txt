@@ -1,0 +1,37 @@
+1、依赖
+	compile 'com.facebook.rebound:rebound:0.3.8'
+
+2、把每个空间的位置布局好之后：
+      SpringChain springChain = SpringChain.create(40, 6, 50, 7);	//从左到右是主拉力，主摩擦力，辅助拉力，辅助摩擦力。
+        for (int i = 0; i < mainView.getChildCount(); i++) {		
+            final View childAt = mainView.getChildAt(i);
+            springChain.addSpring(new SimpleSpringListener(){		//为容器里面的每个菜单按钮设置动画监听
+                @Override
+                public void onSpringUpdate(Spring spring) {
+                    childAt.setTranslationY((float) spring.getCurrentValue());	//Y轴移动
+
+                    float scale = (1 + 2 * (float) spring.getCurrentValue() / mainView.getHeight());	//进场
+		    //float scale = (mainView.getHeight() - 2 * (float)spring.getCurrentValue()) / mainView.getHeight(); //出场
+
+                    childAt.setScaleX(scale);	//X轴缩放
+                    childAt.setScaleY(scale);	//Y轴缩放
+                }
+
+                @Override
+                public void onSpringEndStateChange(Spring spring) {
+                    super.onSpringEndStateChange(spring);
+                }
+
+		@Override
+                public void onSpringActivate(Spring spring) {
+                    super.onSpringActivate(spring);
+                    view.setVisibility(VISIBLE);	//先把控件GONE了，在准备开始动画的时候再显示
+                }
+
+            });
+        }
+        List<Spring> springs = springChain.getAllSprings();	//将设置好的菜单监听动画取出来，为每个菜单按钮设置位置初始值
+        for (int i = 0; i < springs.size(); i++) {
+            springs.get(i).setCurrentValue(mainView.getHeight());	//一般是从下往上弹，值越小，越明显，一般使用界面的高度就可以了
+        }
+        springChain.setControlSpringIndex(0).getControlSpring().setEndValue(0);	//设置从哪个菜单按钮开始执行动画，Index值不一样，动画也不一样

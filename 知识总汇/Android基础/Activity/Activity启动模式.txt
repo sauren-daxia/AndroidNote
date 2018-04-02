@@ -1,0 +1,42 @@
+
+	Activity启动模式有四种
+
+		Standard			：默认启动方式，每次启动都会创建一个新的activity
+
+		SingleTop			：栈顶复用模式，该模式下的activity如果存在栈顶那么将不会被创建
+
+		SingleTask			：栈内复用模式，该模式下的activity如果存在栈内之后，那么不会被创建，并且会将该activity栈之上的所有activity都弹出栈
+
+		SingleInstance			：独立栈内复用模式，该模式下启动activity，系统会为之创建一个单独的栈，只存放该activity，并且有SingleTask的特性
+
+
+	XML设置启动模式
+
+		<activity
+			launchMode="singleTop"
+		>
+
+		XML可配置模式：
+			
+			Standard
+
+			SingleTop
+
+			SingleTask
+
+			SingleInstace
+
+	代码设置启动模式
+
+		Intent intent = new Intent();
+		intent.addFlag(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		代码可选模式：
+			
+			Intent.FLAG_ACTIVITY_SINGLE_TOP			：同SingleTop
+
+			Intent.FLAG_ACTIVITY_NEW_TASK			：同SingleTask
+
+			无Flag则为Standard
+
+		PS：代码无法选择SingleInstace模式

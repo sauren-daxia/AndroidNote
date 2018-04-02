@@ -1,0 +1,71 @@
+https://blog.csdn.net/briblue/article/details/54973413
+
+## Java类加载器有三种
+* `BootstrapClassLoader`，纯C++编写，没有对应Java类，主要加载/jre/lib/目录下的核心库
+* `ExtClassLoader`，主要加载/jre/lib/ext/目录下的扩展包
+* `AppClassLoader`，主要加载CLASSPATH路径下的包
+
+## Android类加载器在Java类加载的基础上多了三种
+* `PathClassLoader`，主要加载/data/app/包名目录下的类，也就是当APK被安装到手机后会在/data/app/下生成apk的包，`PathClassLoader`就是加载这里面的类
+* `DexClassLoader`。可以加载任意路径下的类，加载路径是自定义传入的，也就是可以加载任意路径下的apk、dex、jar等等
+
+## 父委托加载机制
+```java
+protected Class<?> loadClass(String name, boolean resolve)throws ClassNotFoundException{
+        synchronized (getClassLoadingLock(name)) {
+
+            //检查类是否被加载过，如果加载直接返回，否则为空
+            Class<?> c = findLoadedClass(name);
+            if (c == null) {
+                long t0 = System.nanoTime();
+                try {
+
+		   /**		   
+		   * 核心代码，假设现在的加载机制是AppClassLoader，先去判断parent(ExtClassLoader)是否为空
+		   * 因为AppClassLoader是有parent的，也就是ExtClassLoader，所以会委托ExtClassLoader去加载
+		   * 因为ExtClassLoader和AppClassLoader都是继承ClassLoader，那么ExtClassLoader加载的时候也会去判断
+		   * parent(BootstrapClassLoader是否为空)，但是因为BootstrapClassLoader没有对应Java类的，肯定为空
+		   * 所以会走else条件，else条件则正是调用native层的BootstrapClassLoader去加载，所以不管AppClassLoader加载也好，
+		   * 还是ExtClassLoader加载也好，最终加载的都不是它们，而是BootstrapClassLoader
+		   */
+                    if (parent != null) {
+                        c = parent.loadClass(name, false);
+                    } else {
+                        c = findBootstrapClassOrNull(name);
+                    }
+
+
+                } catch (ClassNotFoundException e) {
+                    // ClassNotFoundException thrown if class not found
+                    // from the non-null parent class loader
+                }
+
+                if (c == null) {
+                    //经过BootstrapClassLoader加载后依然为空，则报ClassNotFoundException
+                    long t1 = System.nanoTime();
+                    c = findClass(name);
+
+                    // this is the defining class loader; record the stats
+                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+                    sun.misc.PerfCounter.getFindClasses().increment();
+                }
+            }
+            if (resolve) {
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+```
+
+## 加载流程
+```
+
+BootstrapClassLoader	<------------BootstrapClassLoader会去/jre/lib/目录下的核心库加载这个类，如果加载成功则返回给ExtClassLoader
+ ↑(委托)  ↓(返回)
+ExtClassLoader		<------------如果BootstrapClassLoader加载成功则返回给AppClassLoasder，否则ExtClassLoader会去/jre/lib/ext/目录下的扩展包加载这个类，如果加载成功则返回给AppClassLoader
+ ↑(委托)  ↓(返回)
+AppClassLoader		<------------如果ExtClassLoader加载成功则返回给...，否则ExtClassLoader会去/jre/lib/ext/目录下的扩展包加载这个类，如果加载成功则返回给AppClassLoader
+
+```

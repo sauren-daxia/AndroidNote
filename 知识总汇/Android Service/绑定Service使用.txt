@@ -1,0 +1,71 @@
+Kotlin版本
+
+Service：
+
+class MyService : Service() {
+
+    val myBinder: MyBinder by lazy {		//创建IBinder子对象，在onBind()方法提供给Activity操作的
+        MyBinder()
+    }
+
+    override fun onCreate() {
+        Log.d("CHEN", "Service - onCreate")
+        super.onCreate()
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d("CHEN", "Service - onStartCommand")
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun onBind(intent: Intent?): IBinder {
+        Log.d("CHEN", "Service - onBind")
+        return myBinder
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d("CHEN", "Service - onUnbind")
+        return super.onUnbind(intent)
+    }
+
+    override fun onDestroy() {
+        Log.d("CHEN", "Service - onDestroy")
+        super.onDestroy()
+    }
+
+	//新建一个子类继承自Binder类，最好是内部类，可以对Service操作
+	inner class MyBinder : Binder() {
+	    fun activityBindService() {      //自定义方法，给Activity调用，需要多少定义多少
+		Log.d("CHEN", "Service - activityBindService - 绑定Service")
+	    }
+	}
+}
+
+Activity：
+
+class MainActivity:AppCompatActivity(){
+	val connService = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+            //在activity解除与service的绑定时候调用
+            Log.d("CHEN", "Service - onServiceDisconnected")
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            //在activity与service的绑定时候调用，在onBind之后
+            Log.d("CHEN", "Service - onServiceConnected")
+            var bind = service as MyBinder	//转换成子类MyBinder
+            bind.activityBindService()		//调用子类的方法去操作Service
+        }
+    }
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+	    //参数说明
+            //第一个参数:Intent对象
+            //第二个参数:上面创建的Serviceconnection实例
+            //第三个参数:标志位
+            //这里传入BIND_AUTO_CREATE表示在Activity和Service建立关联后自动创建Service
+            //这会使得MyService中的onCreate()方法得到执行，但onStartCommand()方法不会执行
+
+            bindService(Intent(this,MyService::class.java),connService,BIND_AUTO_CREATE)
+	}
+}

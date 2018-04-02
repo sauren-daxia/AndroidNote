@@ -1,0 +1,9 @@
+## CoordinatorLayout XML使用
+```xml
+
+```
+
+|属性介绍					|解释|
+|:-:|:-:|
+|app:layout_behavior=""				|关联嵌套目标，常用： @string/appbar_scrolling_view_behavior|
+|app:layout_anchor="@id"			|依附某个控件之上|

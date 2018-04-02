@@ -114,6 +114,9 @@ paint.setXfermode(Xfermode);		//设置本次画出来的内容与上一次canvas
 		View.setLayerType(LAYER_TYPE_HARDWARE)  //使用 GPU 来缓冲
 		View.setLayerType(LAYER_TYPE_SOFTWARE)  //直接直接用一个 Bitmap 来缓冲
 
+style：
+	setStyle(Paint.Style)			//三种 FILL(实心的)，FILL_OR_STROKE，或STROKE（空心的）
+
 线条形状：
 	setStrokeWidth(float width)		//设置线条大小粗细
 	setStrokeCap(Paint.Cap cap)		//设置线头形状，BUTT 平头、ROUND 圆头、SQUARE 方头

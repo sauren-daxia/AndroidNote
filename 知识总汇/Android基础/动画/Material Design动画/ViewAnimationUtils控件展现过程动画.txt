@@ -1,0 +1,29 @@
+
+	使用
+		var animator =ViewAnimationUtils.createCircularReveal(jrb, 0, jrb.height, 0f, jrb.width.toFloat())
+		animator.interpolator = LinearInterpolator()
+		animator.duration =1500
+		animator.start()
+
+	//和属性动画一样的API，特点在于构造方法
+		createCircularReveal(View , Int ,Int , Float ,Float)
+
+			参数一：要操作的View
+			参数二：X轴的控制点
+			参数三：Y轴的控制点
+			参数四：初始的半径大小
+			参数五：目标半径大小
+
+	监听，动画管用的手法，开始的时候显示，结束的时候隐藏
+
+	animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
+                    super.onAnimationStart(animation, isReverse)
+                    jrb.visibility = View.VISIBLE
+                }
+
+                override fun onAnimationEnd(animation: Animator?, isReverse: Boolean) {
+                    super.onAnimationEnd(animation, isReverse)
+                    jrb.visibility = View.GONE
+                }
+            })

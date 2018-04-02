@@ -1,0 +1,9 @@
+<meta-data android:name="string"
+           android:resource="resource specification"
+           android:value="string"/>
+
+就是一种在manifest中定义的属性，可在manifest中引用
+
+name		：属性名
+
+value		：属性值

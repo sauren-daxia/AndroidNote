@@ -1,0 +1,71 @@
+1、StateListAnimator
+	XML
+		android:stateListAnimator="@anim/xxxx"
+
+	代码
+
+		var anim = AnimatorInflater.loadStateListAnimator(this,resID)
+		View.setStateListAnimator(anim)
+
+		需要添加 @SuppressLint("ResourceType")
+
+2、XML定义，放在anim目录下
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <set>
+            <objectAnimator				//主要使用这个标签
+	    android:duration="500" 
+	    android:propertyName="rotationX" 
+	    android:valueTo="360" 
+	    android:valueType="floatType" />
+        </set>
+    </item>
+
+    <item android:state_pressed="false">
+        <set>
+            <objectAnimator android:duration="500" 
+	    android:propertyName="rotationX" 
+	    android:valueTo="0" 
+	    android:valueType="floatType" />
+        </set>
+    </item>
+</selector>
+
+2、AnimatorStateListDrawable，和普通的selectDrawable一样使用，只是在这个过程可以插入动画，但目前只能是帧动画
+
+XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/checked"
+        android:state_pressed="true"
+        android:drawable="@drawable/ic_launcher_background"/>
+
+    <item
+        android:id="@+id/unchecked"
+        android:state_pressed="false"
+        android:drawable="@drawable/ic_launcher_background"/>
+    <transition
+        android:fromId="@id/checked"
+        android:toId="@id/unchecked">
+        <animation-list>
+            <item android:drawable="@drawable/ic_launcher_background" android:duration="200"/>
+            <item android:drawable="@drawable/ic_launcher_background" android:duration="200"/>
+            <item android:drawable="@drawable/ic_launcher_background" android:duration="200"/>
+            <item android:drawable="@drawable/ic_launcher_background" android:duration="200"/>
+        </animation-list>
+    </transition>
+
+</animated-selector>
+	
+使用
+
+android:background="@anim/xxx"
+
+android:button="@anim/xxx"
+
+代码
+
+var a = view.background as AnimatedStateListDrawable 

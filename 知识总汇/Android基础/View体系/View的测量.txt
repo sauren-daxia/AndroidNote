@@ -1,0 +1,29 @@
+
+	view的测量方式是固定的，根据需要去修改
+
+	@Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            if (getLayoutParams().width == ViewGroup.LayoutParams.MATCH_PARENT) {
+
+                //宽度是否为MATCH
+		  setMeasuredDimension(newWidth, newHeight)
+
+            } else if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+
+                //宽度是否为WRAP
+		  setMeasuredDimension(newWidth, newHeight)
+
+            } else if (getLayoutParams().height == ViewGroup.LayoutParams.MATCH_PARENT) {
+
+                //高度是否为MATCH
+		  setMeasuredDimension(newWidth, newHeight)
+
+            } else if (getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+
+                //高度是否为WRAP
+		  setMeasuredDimension(newWidth, newHeight)
+
+            }else{
+                super.onMeasure(widthMeasureSpec, heightMeasureSpec);    
+            }
+        }

@@ -1,0 +1,58 @@
+<application  
+	android:allowClearUserData=["true" | "false"]
+	android:allowTaskReparenting=["true" | "false"]
+	android:backupAgent="string"
+	android:debuggable=["true" | "false"]
+	android:description="string resource"
+	android:enabled=["true" | "false"]
+	android:hasCode=["true" | "false"]
+	android:icon="drawable resource"
+	android:killAfterRestore=["true" | "false"]
+	android:label="string resource"
+	android:manageSpaceActivity="string"
+	android:name="string"
+	android:permission="string"
+	android:persistent=["true" | "false"]
+	android:process="string"
+	android:restoreAnyVersion=["true" | "false"]
+	android:taskAffinity="string"
+	android:theme="resource or theme" >
+</application>
+
+android:allowClearUserData			：能否让用户手动在 设置->程序->清除数据 ，默认true
+
+android:allowTaskReparenting			：是否允许activity从当前任务栈，移动到别的任务栈，相当于把activity给了调用的人
+
+android:backupAgent				：备份数据，需要继承BackupAgent实现，比较复杂，属性值就是继承BackupAgent的类的完整路径
+
+android:allowBackup				：备份数据，默认为true
+
+android:debuggable				：调试APK，为true的时候可以在手机上调试，为false调试则报错，默认true
+
+android:description				：描述APK的作用，值为字符串资源
+
+android:label					：APP名字
+
+android:enabled					：能否让 系统 实例化当前应用的某些组件，为true的话，由每个组件的enable属性去决定能否实例化，为false则全部不能让系统实例化
+
+android:hasCode					：不懂，默认为true，不要修改
+
+android:icon					：APP图标
+
+android:killAfterRestore			：是指在一个完整的系统恢复操作之后应用程序是否被终止，默认为true，不要修改
+
+android:manageSpaceActivity			：毫无卵用，不要折腾
+
+android:name					：自定义application的类名路径
+
+android:permission				：是否让组件可以设置快捷方法，由每个组件自己决定，如若为false，全部不能用
+
+android:process					：设置APP继承名称，默认是包名
+
+android:restoreAnyVersion			：能否允许恢复任何一个版本的备份数据来恢复当前版本的数据，默认false，如果为true则会引起不必要的麻烦，不要修改
+
+android:theme					：APP基本主题
+
+
+
+

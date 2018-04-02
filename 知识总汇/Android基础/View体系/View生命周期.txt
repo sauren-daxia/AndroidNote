@@ -1,0 +1,38 @@
+
+	生命周期：
+			constructor()
+
+			onFishiInflate()
+
+			onAttachedTowindow()
+
+			onWindowVisibilityChange()
+
+			onVisibilityChange()
+
+			onMeasure()
+
+			onSizeChange()
+
+			onLayout()
+
+			onDraw()
+
+			onDetachedFromWindow()
+
+	
+	构建生命周期	：onCreate -> constructor -> onStart -> onResume -> onFinishInflate -> onAttachedToWindow -> onWindowVisibilityChange -> onVisibilityChange -> onMeasure -> onSizeChange -> onLayout -> onMeasure - > onLayout -> onDraw
+
+	隐藏生命周期	：onPause -> onWindowVisibilityChange -> onStop -> onVisibilityChange
+
+	销毁生命周期	：onPause -> onWindowVisibilityChange -> onStop -> onVisibilityChange -> onDestroy -> onDetachedFromWindow
+
+
+
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        if (visibility == GONE && !hasWindowFocus()) {
+            //被销毁
+        }
+    }

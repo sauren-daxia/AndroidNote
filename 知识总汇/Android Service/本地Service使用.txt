@@ -1,0 +1,7 @@
+前台Service其实和后台构建没有什么不同，唯一不同在于startCommand()调用了Notification，
+
+让后台的代码显示了一个View，所以因为存在这个View，系统不会直接杀掉
+
+至于怎么用Notification，请查看Notification的文章
+
+怎么构建Service可以看看本地Service和绑定Service的用法

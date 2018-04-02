@@ -1,0 +1,15 @@
+步骤
+
+1、新建一个<animation>标签
+
+2、为<ImageView>设置背景颜色为<animartion>
+
+3、获取ImageView对象并赋值给帧对象
+
+AnimationDrawable animation = (AnimationDrawable)image.getBackground();
+
+4、启动或者停止
+
+animariton.start();
+
+animartion.stop();

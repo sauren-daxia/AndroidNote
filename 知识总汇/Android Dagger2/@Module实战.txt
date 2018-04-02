@@ -1,0 +1,53 @@
+## 只是提供对象
+```
+@Module
+class ActivityModule(private val con : Context){
+	@Provides
+	fun providesContext() : Context = con
+
+	@Provides
+	fun providesAny() : Any = Any()
+}
+```
+
+## 使用参数提供对象
+```
+@Module
+class WidgetModule(){
+	@Provides
+	fun providesView(con : Context) : View{
+		return View(con)
+	}
+}
+
+//如果是这么写的话` @Component `的`Modules`就需要添加`ActivityModule`
+//因为` @Provides `使用了一个参数，并且这个参数并不是通过`WidgetModule`构造传进来的，就需要去找提供`Context`的` @Module `
+
+@Component(modules = [(ActivityModule::class),(WidgetModule::class)])
+interface WidgetComponent{}
+```
+
+## 使用当前` @Module `提供的对象作为参数
+```
+@Module
+class CarModule(private val con : Context){
+	@Provides
+	fun providesCarBody():CarBody{
+		return CarBody()
+	}
+
+	@provides
+	fun providesPorsche(carBody : CarBody):Porsche{
+		return Porsche(carBody)
+	}
+}
+
+//这样写` @Module `会有限从自己的内部寻找是否有` @Provides `提供了这个对象，如果没有的话，会去` @Component `找其他的` @Module `有没有
+```
+
+```
+@Module
+class ActivityModule(private val con : Context){
+	
+}
+```

@@ -1,0 +1,33 @@
+## @Component(两种使用方法)
+` @Component `是Dagger中最重要的一个注解器，作用就是目标类和Module之间建立关系
+1. `fun inject(目标类 : MainActivity)` 实例化对象
+```java
+@Component
+interface MainActivityComponent{
+	fun inject(目标类 : MainActivity)
+}
+```
+==`MainActivityComponent`会通过目标类里被标注为` @Inject `的属性 ，然后去寻找这些属性被标为` @Inject `的构造方法，
+如果目标类并没有` @Inject `属性，就不需要这个`fun inject(目标类 : MainActivity)`方法了==
+产生关联之后，会在代码编译器就生成对象构造的代码，所以不需要自己去手动构造对象
+
+1. `fun getContext() : Context` 提供对象
+```java
+@Component
+interface MainActivityComponent{
+	fun getContext() : Context
+}
+```
+```
+@Mudule
+class MainActivityModule(private val con : Context){
+	@Provides
+	fun providesContext(){
+		return con
+	}
+}
+``
+==在第一种使用方法说了，如果目标类并没有` @Inject `只是想获取对象，那么可以通过这种做法来获取对象，
+但是这个对象需要通过` @Module `来提供，` @Module `中提供对象的方法，于方法名无关，只要是返回对象相同即可==
+
+

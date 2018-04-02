@@ -1,0 +1,11 @@
+<service android:name=".activity.base.MyService"/>
+
+
+属性			说明							备注
+android:name		Service的类名	
+android:label		Service的名字						若不设置，默认为Service类名
+android:icon		Service的图标	
+android:permission	申明此Service的权限					有提供了该权限的应用才能控制或连接此服务
+android:process		表示该服务是否在另一个进程中运行（远程服务)		不设置默认为本地服务；remote则设置成远程服务
+android:enabled		系统默认启动						true：Service 将会默认被系统启动；不设置则默认为false
+android:exported	该服务是否能够被其他应用程序所控制或连接		不设置默认此项为 false

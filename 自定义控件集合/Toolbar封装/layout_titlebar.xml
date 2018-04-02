@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="50dp"
     android:background="#fff">
 
 
@@ -12,13 +12,11 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="false"
         android:layout_centerVertical="true"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
-
+        android:gravity="center"
+        android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:visibility="gone">
 
@@ -35,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textColor="#666666"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -63,11 +61,11 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:gravity="center"
-        android:paddingLeft="10dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
+        android:gravity="center"
+        android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:visibility="gone">
 
@@ -84,7 +82,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textColor="#666666"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -94,10 +92,10 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/rlty_right_one"
-        android:gravity="center"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:selectableItemBackgroundBorderless"
+        android:gravity="center"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:visibility="gone">
@@ -115,23 +113,24 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textColor="#666666"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_title"
+        android:maxLines="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:selectableItemBackground"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/rlty_right_two"
         android:layout_toRightOf="@+id/rlty_left_two"
+        android:clickable="true"
         android:ellipsize="end"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackground"
         android:gravity="center"
         android:textColor="#333333"
         android:textSize="14sp" />

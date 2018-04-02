@@ -1,9 +1,0 @@
-Runtime
-
-构造：
-------------------
-Runtime  r =  Runtime.getRuntime();
-
-方法：
--------------------
-void		exec(String name)		//程序名。必须是添加过环境变量的

@@ -1,0 +1,49 @@
+	
+	Service
+
+			是Android体系四大组件之一，提供在后台长期运行服务
+
+	生命周期分两种
+		
+			手动调用：startService()  ->   onCreate()   ->   onStartCommand()(任务开始)   ->    onDestroy()
+
+			内部调用：bindService()   ->   onCreate()   ->   onBind() (任务开始)          ->    onUnBind()     ->     onDestroy()
+
+	类型：
+							特点				优点				缺点			应用场景
+
+		按运行地点	
+				本地服务		运行在主线程			节约资源			限制性大		音乐播放等
+							随主进程终止而终止		同一个进程通信方便		随主进程终止而终止	依附某个进程的任务
+
+				远程服务		运行独立进程			灵活				消耗资源		
+							服务常驻后台，不依靠组件	服务常驻后台，不依靠组件	使用AIDL进行进程通讯	系统级的服务
+
+		按运行类型
+
+				前台服务		可显示在通知栏			优先级高，不会因为内存不足被杀				通知、音乐播放操作，
+																		服务被终止时，通知栏的内容将被清除
+
+				后台服务		处于后台服务，不可显示		优先级低，内存不足会先杀掉				天气更新，日期同步
+																		服务终止用户无法知道
+
+		按功能划分
+
+				不可通讯服务		Activity调用startService()后								不需要和Service通讯
+							Activity退出，Service依然存在
+
+				可通讯服务		
+							
+						bindService()				随调用者Activity销毁而销毁				需要控制Service开始执行
+
+						startService()+bindService()		随调用者Activity销毁而销毁				不需要控制Service，并且一开始就执行
+
+	* Service和Thread、进程没有同等级比较的关系，Service和Activity一样是依附在进程的主线程运行的组件
+	* BroadCastReceiver不能bindService，但是可以startService，bindService必须是Activity的Context
+
+	
+
+
+				
+
+	

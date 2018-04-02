@@ -1,0 +1,33 @@
+## Kotlin版本：
+```kotlin
+	class MyService : Service() {
+
+	    override fun onCreate() {
+		Log.d("CHEN","Service - onCreate")
+		super.onCreate()
+	    }
+
+	    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {		//前台Service主要是显示View的，所以
+		Log.d("CHEN","Service - onStartCommand")
+		//前台线程是跟NotificationCompat有关，所以先构造NotificationCompat
+		//但是调用的方式不再是NotificationManagerCompat.nofity(id,notification)
+		//而是通过Service自带的方法 setForeground()，使用方式和notifi一样
+		return super.onStartCommand(intent, flags, startId)
+	    }
+
+	    override fun onBind(intent: Intent?): IBinder? {			//默认是不可空的IBinder类型，如果不需要bind，需要手动加?
+		Log.d("CHEN","Service - onBind")
+		return null
+	    }
+
+	    override fun onUnbind(intent: Intent?): Boolean {
+		Log.d("CHEN","Service - onUnbind")
+		return super.onUnbind(intent)
+	    }
+
+	    override fun onDestroy() {
+		Log.d("CHEN","Service - onDestroy")
+		super.onDestroy()
+	    }
+	}
+```

@@ -1,0 +1,74 @@
+* 坑1 ：启动Activity的话要给Intent-Filter设置一个category为 `android.intent.category.DEFAULT` , 并且启动方也要加上这个category
+
+## 隐式启动配置
+```xml
+	<!-- 隐式启动中 Activity的category是必须设置的，最好为DEFAULT -->
+	<intent-filter>
+		<action android:name="com.studio.chen.aidlchildtest.Main2Activity" />
+		<category android:name="android.intent.category.DEFAULT"/>
+	</intent-filter>
+```
+
+
+	隐式启动需要匹配IntentFliter，设置IntentFilter
+		
+		只能在XML中设置:
+			<activity>
+				
+				<intent-filter>
+					<action android:name="chen.jason.test"/>
+					<category android:name="test.jason.chen"/>
+					<data android:name="jason.chen.text"/>
+				</intent-filter>
+
+				<intent-filter>
+					<action android:name="yang.qingyu.test"/>
+					<category android:name="test.qingyu.yang"/>
+					<data android:mimeType="application/jpg"/>
+				</intent-filter>
+
+			</activity>
+
+			intent-filter		：可以有多组，每组都可以有，action、category、data
+
+			action			：一组中可以有多个，只需要匹配其中一个即可
+
+			category		：一组中可以有多个，可以没有，如果有，不管有多少个都要全部匹配
+
+			data			：一组中可以有多个，可以没有，只需匹配其中一个即可
+
+	data组成
+
+		mimeType			：mimeType指的是资源类型，比如iamge/jpg、auto/mpeg4-generic和view/*
+
+		URL				：URL则表示为该组件定义的路径，URL组成：<shceme>://<host>:<port>/[ <path> | <pathPrefix> | <pathPattern> ]
+						  URL一般可以定义为：
+								content://jason.chen.test:100/src/main/MainActivity
+
+								解释：content是可选的，jason.chen.test就用包名就好，100端口自定义，path这些可以自定义，最好是类的所在路径
+
+								与Http对比：http://www.baidu.com:80/search/info
+
+			shceme			：URI模式必选，可选：content、file、http
+
+			host			：主机名必填，自定义
+
+			port			：端口号，自定义
+
+			path			：自定义，只是路径
+
+			pathPattern		：自定义，只是路径和path一样
+
+			pathPrefix		：自定义，只是路径和path一样
+
+			mimeType		：数据类型，image/jpg等等
+
+	代码中使用Intent匹配
+
+		intent.setAction("jason.chen.test");		//匹配Action
+
+		intent.addCategory("chen.jason.test");		//有多少个category就写多少个
+		intent.addCategory("chen.test.json");		//有多少个category就写多少个
+
+		//如果data同时设置了URL和mimeType，就需要使用，setDataAndType，否则使用setData或setType即可
+		intent.setDataAndType(Uri.parse("content://jason.chen.test:100/src/main/JavaMainActivity"), "image/*");

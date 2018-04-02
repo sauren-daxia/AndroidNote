@@ -88,7 +88,7 @@
 
 											Content-Encoding	:请求体/响应体的编码格式
 
-											Accept-Encoding		:告诉对方，我方接收的Content-Lengthh
+											Accept-Encoding		:告诉对方，我方接收的Content-Encoding
 
 											ETag			:配合Last-Modified、If-None-Match、If-Modified-Since控制缓存
 
@@ -167,7 +167,7 @@
 
 											set-Cookie		：设置Cookie
 
-				请求数据体：		存放需要发送的数据信息
+				响应数据体：		存放需要发送的数据信息
 				
 									常见类型：
 											键值对			:key=value
@@ -195,7 +195,7 @@
 
 				建立长连接头部类型：Connection，
 
-							Connection.close			：表示不建立长连接
+							Connection:close			：表示不建立长连接
 
 							Connection:keep-Alve:max = xx		：失败重试多少次后断开连接
 

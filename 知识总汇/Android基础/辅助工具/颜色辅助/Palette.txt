@@ -1,0 +1,38 @@
+## 依赖
+```
+	com.android.support:palette-v7:26.0.2
+```
+
+## Palette颜色提取器
+|API					|作用|
+|:-:|:-:|
+|getVibrantSwatch()			|有活力的颜色|
+|getDarkVibrantSwatch()			|有活力的暗色|
+|getLightVibrantSwatch()		|有活力的亮色|
+|getMutedSwatch()			|柔和的颜色|
+|getDarkMutedSwatch()			|柔和的暗色|
+|getLightMutedSwatch()			|柔和的亮色|
+
+## Palette.Swatch(由Palette提取出来的色样)
+|API					|作用|
+|:-:|:-:|
+|getPopulation()			|样本中的像素数量|
+|getRgb()				|颜色的RBG值|
+|getHsl()				|颜色的HSL值|
+|getBodyTextColor()			|主体文字的颜色值|
+|getTitleTextColor()			|标题文字的颜色值|
+
+` PS: 用途，根据图片提取出来的颜色设置周围的控件的颜色，同色系的页面更好看 `
+
+```kotlin
+	//通过Bitmap去提取图片中的一些活跃的颜色
+	fun getColor(bitmap:Bitmap){
+		Palette.from(bitmap).generate{
+			p->
+				var swatch : Palette.Swatch = p.getVibranSwatch()
+				...
+		}
+	}
+
+```
+

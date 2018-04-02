@@ -1,0 +1,55 @@
+` 库推荐：https://github.com/tyzlmjj/PagerBottomTabStrip `
+
+## BottomNavigationView XML使用
+```xml
+	<android.support.design.widget.BottomNavigationView
+		android:id="@+id/bottom_nav_"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="#000"
+		android:backgroundTint="@color/colorPrimary"
+		android:elevation="8dp"
+		app:itemIconTint="@color/item_bottom_nav_selector"
+		app:itemTextColor="@color/item_bottom_nav_selector"
+		app:menu="@menu/botton_nav_menu" />
+```
+## Menu XML
+```xml
+	<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/item_bottom_home"
+		android:icon="@drawable/ic_home_black_24dp"
+		android:orderInCategory="0"
+		android:title="首页" />
+
+	<item
+		android:id="@+id/item_bottom_explore"
+		android:icon="@drawable/ic_explore_black_24dp"
+		android:orderInCategory="1"
+		android:title="发现" />
+
+	<item
+		android:id="@+id/item_bottom_mine"
+		android:icon="@drawable/ic_perm_identity_black_24dp"
+		android:orderInCategory="2"
+		android:title="我的" />
+</menu>
+```
+
+|属性介绍				|解释|
+|:-:|:-:|				
+|app:itemBackground			|设置Item的背景，可以设置水波纹|
+|app:itemIconTint			|给Item设置Selector颜色，设置各种状态下图标的颜色|
+|app:itemTextColor			|给Item设置Selector颜色，设置各种状态下文本的颜色|
+|app:menu				|设置菜单|
+
+
+|API介绍				|解释|
+|:-:|:-:|
+|setOnNavigationItemSelectedListener()	|设置Item点击监听|
+|getMaxItemCount()			|获取Item的个数|
+|inflateMenu()				|为BottonNavigationView设置Menu|
+|setItemTextColor()			|给Item设置Selector颜色，设置各种状态下图标的颜色|
+|setItemIconTintList()			|给Item设置Selector颜色，设置各种状态下文本的颜色|

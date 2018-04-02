@@ -1,0 +1,43 @@
+
+1、XML定义
+	<ripple color="xxx">	//color就是点击动画
+		<android:drawable="@mipmap/xxxx"/>	//默认效果，也可以是color
+		
+	</ripple>
+
+2、系统自带触摸反馈
+	点击波浪
+	?android:selectableItemBackground
+
+	圆形波浪
+	?android:selectableItemBackgroundBorderless
+
+	可以使用在前景色
+	android:foreground=""
+	可以使用在背景色
+	android:background=""
+
+	PS：
+		使用在前景色的情景：
+					1、有背景色或背景图片
+					2、使用selectableItemBackgroundBorderless不能有阴影，太丑了，但是可以使用?android:selectableItemBackground
+					3、不需要无边界的点击效果，设置在前景色的点击效果只能在按钮内部呈现
+
+		
+		使用在背景色的情景
+					1、没有背景色或背景图片，设置后会变无色，只有点击的时候有效果
+					2、有阴影情况下设置后阴影无效
+					3、需要无边界点击效果
+
+	非button需要加
+	android:clickable="true"
+	android:focusable="true"
+
+	button需要加，掩饰默认的阴影，image不需要加，不要和点击效果一起用，没意义
+	style="?android:attr/borderlessButtonStyle"
+
+3、修改系统自带颜色，默认灰色
+	在style(v21文件里修改)
+	<item name="colorControlHighlight">@color/colorAccent</item>
+
+PS：无论是自定义ripple还是系统的都推荐使用前景色，想要使用无边界效果就用背景色

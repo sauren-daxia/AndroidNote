@@ -1,5 +1,5 @@
 
-1、	新建一个包后缀.aidl，创建一个文件后缀为.aidl
+1、	新建一个包aidl，创建一个文件后缀为.aidl
 		package xxx.xx.aidl;
 		interface xx{
 			int getint();

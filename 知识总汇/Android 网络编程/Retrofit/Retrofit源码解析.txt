@@ -1,0 +1,9 @@
+## Retrofit(库的核心类，主要使用它来进行网络请求)
+* `create()` 通过反射去构造接口
+
+## Retrofit.Builder(Retrofit的构造者)
+* `baseUrl()` 设置一个URL
+* `client()` 添加一个OkHttpClient对象
+* `addConverterFactory()` 添加各种数据转换器，比较有用的是`GsonConverterFactory`，使用`GsonConverterFactory`的话，获取到数据的时候会使用`Gson`来戒指成指定对象
+* `addCallAdapterFactory` 添加各种回调转换器，比较有用的是`RxJavaCallAdapterFactory`，使用`RxJavaCallAdapterFactory`的话，最终以`Rxjava`的`Observerable`回调，默认是`Call`
+

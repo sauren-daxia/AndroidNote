@@ -1,0 +1,45 @@
+1、定义一个mvvm包，放各个界面的包，包里放MVVM具体实现的View，model，viewmodel，如
+	mvvm
+		view
+				MainActivity
+
+		model	
+				MainModel
+
+		viewmodel
+				MainViewModel
+
+		control
+				MainControl
+
+2、在mvmm包下定义一个control包存放管理MVVM基类的interface
+	interface LoginRegisterContact {
+	    interface View extends BaseView{		//LoginView相关功能
+		boolean checkInputContent();
+	    }
+
+	    abstract class ViewModel extends BaseViewModel<View, Model>{		//LoginViewModel相关的功能
+		abstract void requestLogin(String userName, String password);
+		abstract void requestRegister(String userName, String password);
+	    }
+
+	    abstract class Model extends BaseModel<ViewModel> {					//LoginModel相关的功能
+		abstract Observable<LoginModel> login(String userName, String password);
+		abstract Observable<RegisterModel> register(String userName, String password);
+	    }
+	}
+
+3、view实现control接口
+	public class LoginRegisterFragment extends BaseFragment<LoginRegisterViewModel, LoginRegisterModel> implements LoginRegisterContact.View{
+	
+	}
+
+4、model实现control接口
+	public class LoginRegisterModel extends LoginRegisterContact.Model {
+
+	}
+
+5、viewmodel实现control接口
+	public class LoginRegisterViewModel extends LoginRegisterContact.ViewModel {
+
+	}

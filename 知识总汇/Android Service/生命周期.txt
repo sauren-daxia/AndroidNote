@@ -1,0 +1,73 @@
+	
+	生命周期分三种
+
+			startService()			：onCreate()	->	startCommand()	->	onDestroy()
+
+			bindService()			：onCreate()	->	onBind()	->	onUnBind()	->	onDestroy()
+
+			startService()+bindServcie()	：onCreate()	->	startCommand()	->	onBind()	->	onUnBind()	->	onDestroy()
+
+	启动模式分三种
+			
+			startService()
+
+			bindService()
+
+			startService+bindService()
+
+	手动控制生命周期
+
+				startService()			：启动服务，下一步会走onCreate()、onStartCommand()
+
+								onCreate()	：首次调用startService()会执行
+
+								onStartCommand()：多次调用startService()会执行
+
+				bindService()			：绑定服务，下一步会走onCreate()、onBind()
+
+								onCreate()	：首次调用bindService()会执行
+
+								onBind()	：首次调用会bindService()会执行
+
+				stopService()			：停止服务。下一步会走onDestroy()
+								
+								onDestroy()	：如果有OnBind()会判断有没有onUnBind()，
+										  如果有就直接onDestroy()，
+										  接着如果没有onUnBind()什么都不执行，
+										  如果没有以上的操作，会直接onDestroy()
+
+				unBindService()			：解除绑定，下一步会走unBind()或onDestroy()，但是如果没有onBind()就调用，直接抛异常
+								
+								onUnBind()	：如果调用过onBind()会执行，接着会执行onDestroy()
+
+								onDestroy()	：没有onBind()过，就会执行
+
+							PS：Activity销毁的时候也会调用unBindService()，所以也会执行unBindService()的流程，
+							    但是多个Activity绑定Service，只有最后一个解除才会执行onDestroy()
+	系统控制生命周期
+			
+			onCreate()			：初始化服务
+
+			onStartCommand()		：开始服务
+
+			onDestroy()			；销毁服务
+
+			onBind()			：绑定服务
+
+			onUnBind()			；解除绑定服务
+
+	关于操作Service
+
+			startService()			：不可操作Service
+
+			bindService()			：可操作Service
+	
+	关于自动销毁Service
+
+			startService()			：调用者销毁后还在，不会自动销毁Service
+
+			bindService()			：随着调用者销毁而销毁，自动销毁Service
+
+			startService()+bindService()	：调用者销毁后还在，不会自动销毁Service，但是会调用onUnBind()，所以需要手动stopService()
+
+

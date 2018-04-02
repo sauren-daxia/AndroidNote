@@ -1,0 +1,93 @@
+## 第一步，先在服务端创建AIDL接口，方式如下
+* 在main目录下，与Java目录同级，右键`new AIDL`
+* 创建好AIDL文件目录后会自动生成一个接口，会有个默认方法，删除掉，定义自己需要的接口
+```java
+	interface IMyAIDL{
+		String getPackageName();
+	}
+```
+* 创建AIDL完接口之后，先sync一下代码，生成关于AIDL接口的类
+* 接着在Java目录下随便一个地方创建用于远程服务的`Service`
+```java
+	//kotlin代码
+	class MyRemoteService : Service{
+		override fun onCreate(){
+			super.onCreate()
+		}
+
+		override fun onBind():IBinder?{
+			return MyAIDLBindler()
+		}
+
+		override fun onUnBind(){
+			super.onUnBind()
+		}
+
+		onverride fun onDestroy(){
+			super.onDestroy()
+		}
+
+		//这里继承的是AIDL接口生成的IBindler
+		inner class MyAIDLBindler : IMyAIDL.Stub(){
+			override fun getPackageName():String{
+				return this@ADILService.packageName
+			}
+		}
+	}
+```
+* 定义好service之后需要在AndroidManifest中配置，到此服务器端的配置就完成了
+```java
+	<service
+	android:name=".service.MyRemoteService"
+	android:exported="true"
+	android:process=":remote"> <!-- 将本地服务设置成远程服务 ,设置可被其他进程调用 -->
+		<!-- action最好写Service的全路径吧 -->
+		<intent-filter>
+			<action android:name="com.studio.chen.aidlchildtest.service.MyRemoteService" />
+		</intent-filter>
+	</service>
+```
+
+## 第二步配置客户端
+* 首先，需要把服务端的AIDL目录完完全全不加修改的复制到自己的main目录下，与Java目录同级
+* 文件复制过后`sync`一下生成AIDL的类，接着，在需要进程通讯的地方去绑定Service
+```java
+	class MainActivity : AppcompatActivity(){
+		lateinit var myAIDL : IMyAIDL 
+		
+		val connService : ServiceConnecton by lazy{
+			object:ServiceConnection{
+				override fun onServiceDisconnected(name : ComponentName?){
+					//断开连接
+				}
+
+				override fun onServiceConnected(name: ComponentName?, service: IBinder?){
+					myAIDL = IMyAIDL.Stub.asInterface(service)
+					//之后有调用AIDL接口方法的地方都最好Try一下
+				}
+			
+			}
+		}
+
+		override fun onCreate(saveInstaceState : Bundle?){
+			super.onCreate(saveInstaceState)
+			setContentView(R.layout.activity_main)
+			bindAIDL()
+		}
+
+		fun bindAIDL(){
+			var intent = Intent()
+			intent.component = ComponentName("com.studio.chen.aidlchildtest","com.studio.chen.aidlchildtest.service.MyRemoteService")
+			/**
+			*	ComponentName构造参数一是远程服务的包名，参数二是远程服务Service的绝对路径
+			*	隐式启动或绑定Service除了设置Component之外，还可以setPackageName，二选一，都是需要设置目标的包名				
+			*/
+			var isBind = bindService(intent,connService,BIND_AUTO_CREATE)
+			Toast.makeText(this,"绑定成功? $isBind", Toast.LENGTH_SHORT).show()
+		}
+
+	}
+```
+* `远程绑定不能在目标Service未绑定或启动的情况下隐式绑定，这是5.0以上强烈要求的，禁止互相唤醒`
+* `远程绑定不能在目标Service未绑定或启动的情况下隐式绑定，这是5.0以上强烈要求的，禁止互相唤醒`
+* `远程绑定不能在目标Service未绑定或启动的情况下隐式绑定，这是5.0以上强烈要求的，禁止互相唤醒`

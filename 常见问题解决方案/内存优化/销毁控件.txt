@@ -1,0 +1,21 @@
+ override fun onDestroy() {
+        var rootGroup = window.decorView.parent as ViewGroup
+        onDestroyView(rootGroup)
+        super.onDestroy()
+    }
+
+private tailrec fun onDestroyView(view: View) {
+        if ((view as? ViewGroup) != null) {
+            (0..view.childCount).forEach {
+                onDestroyView(view.getChildAt(it))
+            }
+        } else {
+            view?.apply {
+                val background = view.background
+                if (background != null) {
+                    background.callback = null
+                    this.background = null
+                }
+            }
+        }
+}

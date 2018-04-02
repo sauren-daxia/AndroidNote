@@ -1,0 +1,135 @@
+	
+	界面过度动画分两种
+
+			普通跳转
+
+			共享元素
+
+	动画种类
+			退出 -> 进入  -> 返回   -> 重新进入
+			Exit -> Enter -> Return -> Reenter
+
+	系统提供：这三个类都继承于 Transition 
+
+			Explode()
+
+			Slide()
+
+			Fade()
+
+	API：		
+		transition.setDuration();		：设置动画的时间。类型：long
+		
+		transition.setInterpolator();		：设置修饰动画，定义动画的变化率，具体设置往下翻就看到了
+
+		transition.setStartDelay();		：设置动画开始时间，延迟n毫秒播放。类型：long
+		
+		transition.setPathMotion();		：设置动画的运行路径
+
+		transition.setMode();			：改变动画 出现/消失 的模式。Visibility.MODE_IN:进入；Visibility.MODE_OUT：退出。
+
+		transition.addListener()		：设置动画的监听事件
+代码使用
+			
+
+
+XML使用
+	1、在res文件目录定义一个transition目录，然后编写动画
+
+	<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+		<changeBounds/>				//为目标视图的布局边界的变化添加动画。
+		<changeTransform/>			//为目标视图的裁剪边界的变化添加动画。
+		<changeClipBounds/>			//为目标视图的缩放与旋转变化添加动画。
+		<changeImageTransform/>			//为目标图像的大小与缩放变化添加动画。
+	</transitionSet>
+
+
+
+	2、在style中配置或者在代码中配置
+		2.1：代码中配置
+			 getWindow().setEnterTransition(visibility);
+			 ..其他类似
+
+		2.2：style中配置		
+			<style name="myTheme" parent="android:Theme.Material">
+			        
+				<item name="android:windowContentTransitions">true</item>   开启动画 允许使用transitions
+				<item name="android:windowAllowEnterTransitionOverlap">true</item>  是否覆盖执行，其实可以理解成前后两个页面是同步执行还是顺序执行
+				<item name="android:windowAllowReturnTransitionOverlap">true</item>  与上面相同。即上一个设置了退出动画，这个设置了进入动画，两者是否同时执行。
+			
+				<item name="android:windowContentTransitionManager">true</item>  引用TransitionManager XML资源，定义不同窗口内容之间的所需转换。
+			
+
+				<item name="android:windowEnterTransition">@transition/anim_fade</item>     Activity首次进入的动画
+				<item name="android:windowReenterTransition">@transition/anim_fade</item>     Activity 重新进入的动画。即第二次进入，可以和首次进入不一样
+
+			        
+				<item name="android:windowExitTransition">@transition/anim_fade</item>      Activity 退出动画
+				<item name="android:windowReturnTransition">@transition/anim_fade</item> Activity 调用 finishAfterTransition() 退出时，此页面退出的动画
+			
+			
+				<item name="android:fragmentEnterTransition">@transition/anim_fade</item>   Fragment过度动画
+				<item name="android:fragmentExitTransition">@transition/anim_fade</item>
+			
+				<item name="android:popupEnterTransition">@transition/anim_fade</item>      POPUPWindow 过度动画 API24才支持
+				<item name="android:popupExitTransition">@transition/anim_fade</item>
+			        
+				<item name="android:windowSharedElementEnterTransition">@transition/anim_fade</item>    共享元素动画
+				<item name="android:windowSharedElementExitTransition">@transition/anim_fade</item>
+ 
+				<item name="android:windowSharedElementsUseOverlay">@transition/anim_fade</item>	指示共享元素在转换期间是否应使用叠加层
+			 </style>
+
+3、普通跳转
+
+	//跳转
+	startActivity(Intent(this, BActivity::class.java),ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle())
+	
+	startActivity(Intent(this, BActivity::class.java), options.toBundle());
+
+
+	//返回
+	// 如果定义了 return transition ，将使用 定义的动画过渡
+	Visibility returnTransition = buildReturnTransition();
+	getWindow().setReturnTransition(returnTransition);
+
+	// 如果没有 return transition 被定义，将使用 反进入 的动画
+	finishAfterTransition();
+
+4、共享元素跳转
+
+	XML
+		layout_a
+			
+		<Button
+		android:id="@+id/btn1"
+		android:text="动画"
+		android:transitionName="translationAnim"			//两个共享元素之间，transitionName必须一致，但id可以不一致
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+		layout_b
+
+		<Button
+		android:id="@+id/btn2"
+		android:transitionName="translationAnim"
+		android:text="动画"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+		PS：共享元素尽量设置固定值或wrap_content，否则在界面过渡的开始、结束位置容易出现闪屏。
+
+
+	代码
+
+	//单个元素共享跳转
+	var transitionName = "translationAnim"
+	var options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,jrb,"transitionName").toBundle()
+	startActivity(Intent(this, BActivity::class.java),options)
+
+	//多个个元素共享跳转
+	ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,
+					Pair.create(view1, "agreedName1"),
+					Pair.create(view2, "agreedName2")).toBundle()
+
+	startActivity(Intent(this, BActivity::class.java),options)

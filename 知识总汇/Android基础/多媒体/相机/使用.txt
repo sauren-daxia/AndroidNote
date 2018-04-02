@@ -1,0 +1,48 @@
+
+## 调用系统相机拍照，代码
+```kotlin
+	lateinit var uri:Uri
+
+	overrid fun openCamer(){
+		var file = File(externalCacheDir,"camer-${System.currentTimeMillis()}.jpg")
+		file.createNewFile()
+		uri = if(Build.VERSION.SDK_INT >=24){
+			uri = FileProvider.getUriForFile(context,"android.com.jason.test",file)		<!-- 这串字符串可以随便写，但是自己配置了FileProvider的话，就一定要匹配 -->
+		}else{
+			Uri.formFile(file)
+		}
+
+		var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+		intent.putExtra(MediaStore.EXTRA_OUTPUT,uri)
+		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+		startActivityForResult(intent,1)
+
+	}
+
+	overrid fun onActivityResult(reuqestCode :Int, resultCode : Int ,data :Intent){
+		if(requestCode == 1 && resultCode == RESULT_OK){
+			contentResolver.OpenInputStream(uri).use{
+				vat bitmap = BitmapFactor.decodeStream(it)
+				image.setImageBitmap(bitmap)
+			}
+		}
+	}
+```
+
+## AndroidManifest配置 [Provider详细配置](file:///F:/AndroidNote/常见问题解决方案/FileProvider.txt)
+```xml
+	<application>
+		<provider
+			android:name="android.supoort.v4.content.FileProvider"
+			android:authorities="android.com.jason.test""			<!-- 和URI配置时候的参数一样 -->
+			android:exported="false"
+			android:grantUriPermissions="true"
+		>
+			<mate-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/file_paths">			
+		</provider>
+
+	</application>
+```
+

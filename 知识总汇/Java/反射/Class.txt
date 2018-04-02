@@ -1,43 +1,58 @@
-Class
 
-构造：
+
+获取Class三种方式
 -------------------------------
 Class c = 类.class		//使用类名.class返回一个Class对象
 Class c = p.getClass		//使用引用对象调用getClass()返回一个Class对象
 Class c = Class.forName("com.bwf._01.Student")	//常用指定类文件返回一个Class对象
 
-方法：
+Class获取构造三类方式
 --------------------------------
-Constructor		getConstructor()	//返回单个公共构造，无参的
-Constructor		getConstructor(String.class,int.class)	//返回单个公共构造,根据对应的参数获取对应个数参数列表的构造
-Constructor		getDeclaredConstructor()	//返回单个构造，无参的
-Constructor		getDeclaredConstructor(String.class,int.class)	//返回单个构造根据对应的参数获取对应个数参数列表的构造
-Constructor[]		getConstructors()	//返回所有公共构造数组
-Constructor[]		getDeclaredConstructors()	//返回所有构造数组。
+Constructor		getConstructor()			//返回单个public构造，无参的
+Constructor		getConstructor(String.class,int.class)	//返回单个public构造,根据对应的参数获取对应个数参数列表的构造
+
+Constructor		getDeclaredConstructor()		//返回单个构造，无参的，包括public、private、protected、package
+Constructor		getDeclaredConstructor(String.class,int.class)	//返回单个构造根据对应的参数获取对应个数参数列表的构造。包括public、private、protected、package
+
+Constructor[]		getConstructors()			//返回所有public构造数组
+Constructor[]		getDeclaredConstructors()		//返回所有构造数组。包括public、private、protected、package
+
+Class获取方法两类方式
+--------------------------------
+Method			getMethod()		//返回单个public方法，传入方法名，以及参数类型class
+Method			getDeclaredMethod()	//返回单个方法，传入方法名，以及参数类型class，包括public、private、protected、package，但不包括继承的方法
+
+Method[]		getMethods()		//返回所有public方法数组
+Method[]		getDeclaredMethods()	//返回所有方法数组、包括public、private、protected、package，但不包括继承的方法
+
+Class获取属性方式
+--------------------------------
+Field			getField()		//获取单个public属性，传入属性名
+Field			getDeclaredFields()	//获取单个属性，传入属性名，包括public、private、protected、package，但不包括继承的属性
+
+Field[]			getFields()		//获取所有public属性
+Field[]			getDeclareFields()	//获取所有属性，包括public、private、protected、package，但不包括继承的属性
 
 
 
-
-
-
-
-Constructor：
-
-方法：
+Constructor API：
 ----------------------------
 Object		newInstance()		//创建Constructor获取到的构造。相当于new构造。
 void		setAccressible(boolean)	//访问私有需要权限，调用该方法设置true，可以取消访问权限
 
+Method
+----------------------------
+Object		invoke()		//传入要获取放的实例和参数
+void		setAccressible(boolean)	//访问私有需要权限，调用该方法设置true，可以取消访问权限
 
-
-
-
-
-
-
+Field API:
+----------------------------
+Object		get()			//传入要获取属性的实例，可以获取基本类型，也可以获取Object强转
+void		set()			//传入需要设置属性的实例，再传参数
+void		setAccressible(boolean)	//访问私有需要权限，调用该方法设置true，可以取消访问权限
 
 ——————————————————————————
 PS：Class对象包括三个东西,这三个东西都有相对应的对象。
-	1、
-	2、构造方法------Constructor
-	3、
+	1、构造方法------Constructor
+	2、方法----------Method
+	3、属性---------

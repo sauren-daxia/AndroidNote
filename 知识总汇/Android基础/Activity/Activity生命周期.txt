@@ -1,0 +1,46 @@
+
+	生命周期
+	
+		onCreate				：Activity在创建的时候会调用
+
+		onRestoreInstaceState			：当Activity被系统销毁后又被创建时候会调用，系统销毁一般是内存不足，或者旋转屏幕时候
+
+		onStart					：Activity准备显示前调用
+
+		onRestart				：当Activity不可见后再打开会被调用，一般指按了home键，或者跳转到别的activity，再回来的时候
+
+		onResume				：Activity正在显示的时候会调用
+
+		onPause					：当Activity失去焦点交互的时候会调用，一般是在Activity中弹出了Dialog，PopupWindow这样的挡住了Activity的焦点，但是Activity还是可见的
+
+		onSaveInstanceState			：当Activity被系统销毁的时候会调用，不一定执行在onPuase之后，也可能是之前，但一定会是onStop之前，
+
+		onStop					：当Activity完全不可见的时候会调用，一般情况是跳转到了别的Activity或者按下Home键等页面切换的时候
+
+		onDestroy				：当Activity被销毁的时候会调用，一般情况是按了back键，但也可能是因为被系统销毁，总之Activity销毁一定会调用这个方法
+
+
+	正常生命周期：
+		
+		onCreate -> onStart -> onResume -> onPause -> onStop -> onDestroy
+
+	正常跳转时候两个Activity的生命周期：
+
+		A：onCreate(A) -> onStart(A) -> onResume(A) -> onPuase(A)			onStop(A)
+									|			|	|
+									|			|	|
+		B：							onCreate(B) -> onStart(B)	onResume(B)
+
+	禁止Activity因旋转或非内存不足被销毁再创建：
+		在AndroidManifest中设置
+			<activity
+				android:configChange="orientation|keyBoard|keyBoardHidde|screenSize"
+			>
+
+			orientation		：当屏幕旋转
+
+			keyBoard		：键盘类型改变，比如插入外置键盘
+
+			keyBoardHidde		：弹出键盘
+
+		PS：如果禁止销毁再创建的话是不会执行onRestoreInstaceState和onSaveInStanceState，取而代之的时候onConfigChange

@@ -44,7 +44,7 @@ class DefaultConstructor(){
 5、获取方法
 	1)无参方法
 		val default = Default()
-		val clazz = Default::class. 
+		val clazz = Default::class
 		val method = clazz.getDeclaredMehod("aFun").apply{ isAccessible = true }.invoke(default)
 
 	2)有参方法
@@ -53,7 +53,11 @@ class DefaultConstructor(){
 		val method = clazz.getDeclaredMethod("bFun", String::class.java).apply{ isAccessible = true }.invoke(defualt, "CHEN")
 
 6、获取扩展方法
-	
+	需要先查看这个方法的字节码，然后反编译，反编译后因为扩展方法都是定义在一个静态类的静态方法的，所以拿到这个类的全路径
+	  Class
+            .forName("com.jasonchen.kotlin.Test2Kt")		//获取方法所在的路径
+            .getDeclaredMethod("show", Person::class.java)	//方法名
+            .invoke(null, Person())				//方法参数
 	
 
 

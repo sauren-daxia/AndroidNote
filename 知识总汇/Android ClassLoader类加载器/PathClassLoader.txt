@@ -1,0 +1,20 @@
+## PathClassLoader
+* 主要加载手机/data/app/包名下的类，也就是当APK被安装到手机后会在/data/app/下生成apk的包，`PathClassLoader`就是加载这里面的类
+## 构造
+```java
+//继承BaseDexClassLoader
+
+/**
+*  第一个参数传入一个加载路径，但应该只能是/data/app/包的路径，
+*  第二个参数传入一个父加载器，比如AppClassLoader、ExtClassLoader、BootstrapClassLoader
+*/
+PathClassLoader(String dexPath, ClassLoader parent)
+
+/**
+*  第一个参数传入一个加载路径，但应该只能是/data/app/包的路径，
+*  第二个参数传入一个os包路径，但应该只能是/data/app/包名/os包的路径
+*  第三个参数传入一个父加载器，比如AppClassLoader、ExtClassLoader、BootstrapClassLoader
+*/
+PathClassLoader(String dexPath, String librarySearchPath, ClassLoader parent)
+
+```
