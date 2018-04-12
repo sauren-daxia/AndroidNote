@@ -1,0 +1,25 @@
+1、滑动速度对象：VelocityTracker
+	跟踪用户在控件上，在规定时间内滑动的速度
+
+	可以在onTouchEvent的Move中使用，方式如下：
+		VelocityTracker	tracker = VelocityTracker.obtian();
+
+		tracker.addMovement(event)
+
+		tracker.computeCurrentVelocity(1000)	//监测指定时间内的滑动速度，单位毫秒，在调用下面两句之前必须调用
+
+		int velocityX = (int)tracker.getXVelocity();	//获取X轴的滑动速度，单位像素
+
+		int velocityY = (int)tracker.getYvelocity();	//获取Y轴的滑动速度，单位像素
+
+		PS：获取到的速度可以为正数，也可为负数，其值结果按照滑动的方向计算，公式如下：
+
+			速度 = （终点值 - 起点值）/ 时间值
+		
+		在不需要使用的时候需要手动回收：
+		tracker.clear();
+
+		tracker.recycle();
+
+
+

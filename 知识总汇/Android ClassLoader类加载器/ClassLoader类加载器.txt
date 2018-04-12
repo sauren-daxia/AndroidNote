@@ -3,7 +3,7 @@ https://blog.csdn.net/briblue/article/details/54973413
 ## Java类加载器有三种
 * `BootstrapClassLoader`，纯C++编写，没有对应Java类，主要加载/jre/lib/目录下的核心库
 * `ExtClassLoader`，主要加载/jre/lib/ext/目录下的扩展包
-* `AppClassLoader`，主要加载CLASSPATH路径下的包
+* `AppClassLoader`，主要加载当前应用CLASSPATH路径下的包
 
 ## Android类加载器在Java类加载的基础上多了三种
 * `PathClassLoader`，主要加载/data/app/包名目录下的类，也就是当APK被安装到手机后会在/data/app/下生成apk的包，`PathClassLoader`就是加载这里面的类

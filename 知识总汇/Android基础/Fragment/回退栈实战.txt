@@ -1,0 +1,70 @@
+## 初始化
+```java
+ override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        initFragment(AFragment::class.java)
+
+        btnA.setOnClickListener {
+            initFragment(AFragment::class.java)
+        }
+        btnB.setOnClickListener {
+            initFragment(BFragment::class.java)
+        }
+        btnC.setOnClickListener {
+            initFragment(CFragment::class.java)
+        }
+    }
+```
+
+## 切换Fragment方式
+```java
+lateinit var framentIndex: Fragment
+    private fun initFragment(clazz: Class<*>) {
+        if (::framentIndex.isInitialized && clazz.name == framentIndex::class.java.name) {
+            return
+        }
+        var fragment = supportFragmentManager.findFragmentByTag(clazz.name)
+        var ft = supportFragmentManager.beginTransaction()
+        if (fragment == null) {
+            fragment = clazz.newInstance() as Fragment?
+            fragment ?: return
+            ft.add(R.id.frame, fragment, fragment::class.java.name)
+	    //添加到回退栈
+            ft.addToBackStack(fragment::class.java.name)
+        } else {
+            ft.show(fragment)
+        }
+        if (::framentIndex.isInitialized) {
+            ft.hide(framentIndex)
+        }
+        framentIndex = fragment
+        ft.commit()
+    }
+```
+
+override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            var count = supportFragmentManager.backStackEntryCount
+            if (count > 1) {
+                supportFragmentManager.popBackStackImmediate()
+                var fragmentTag = supportFragmentManager.getBackStackEntryAt(supportFragmentManager.backStackEntryCount - 1).name
+                framentIndex = supportFragmentManager.findFragmentByTag(fragmentTag)
+                when (fragmentTag) {
+                    AFragment::class.java.name -> {
+                        //切换文字等操作
+                    }
+                    BFragment::class.java.name -> {
+
+                    }
+                    CFragment::class.java.name -> {
+
+                    }
+                }
+            } else {
+                finish()
+            }
+        }
+        return true
+    }

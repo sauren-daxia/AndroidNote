@@ -1,0 +1,14 @@
+1、在当前分支创建一个实验分支
+`$ git checkout -b test-function`
+
+2、开发完毕切换工作分支
+`$ git checkout workBranch`
+
+3.1、功能开发完毕--不需要该功能，强行删除
+`$ git branch -D test-function`
+
+3.2.1、功能开发完毕--需要改功能，合并
+`$ git merge --no-ff -m"添加新功能" test-function`
+
+3.2.2、删除实验分支
+`$ git branch -d test-function`

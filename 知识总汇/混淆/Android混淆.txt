@@ -20,13 +20,13 @@ buildTypes {
 
 -dontoptimize					//关闭优化，默认开启
 
--optimizationpasses 5				//表示proguard对代码进行迭代优化的次数，Android一般为5
-
 -dontobfuscate					//关闭混淆，默认开启
 
--keep class cn.hadcn.test.**			//两颗星表示，不混淆该包下所有类，包括子包
+-optimizationpasses 5				//表示proguard对代码进行迭代优化的次数，Android一般为5
 
 -keep class cn.hadcn.test.*			//一颗星表示，不混淆该包下所有类
+
+-keep class cn.hadcn.test.**			//两颗星表示，不混淆该包下所有类，包括子包
 
 -keep class cn.hadcn.test.* {*;}		//不混淆该包所有类及类内容
 

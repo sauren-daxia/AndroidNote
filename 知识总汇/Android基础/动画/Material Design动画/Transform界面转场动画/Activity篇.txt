@@ -1,0 +1,126 @@
+
+## 代码/属性配置(二选一)
+```
+Activity首次进入的动画
+
+XML:
+<item name="android:windowEnterTransition">@android:transition/fade</item>		
+
+代码：
+getWindow().setEnterTransition(new Fade()
+```
+
+```
+Activity 重新进入的动画。即第二次进入，可以和首次进入不一样
+
+XML:
+<item name="android:windowReenterTransition">@android:transition/fade</item>		
+
+代码：
+getWindow().setReenterTransition(new Fade())
+```
+
+```
+Activity 退出动画
+
+XML:
+<item name="android:windowExitTransition">@android:transition/explode</item>		
+
+代码：
+getWindow().setExitTransition(new Explode())
+```
+
+```
+Activity 调用 finishAfterTransition() 退出时，此页面退出的动画
+
+XML:
+<item name="android:windowReturnTransition">@android:transition/explode</item>		
+
+代码：
+getWindow().setExitTransition(new Explode())
+```
+
+```
+Activity共享元素进入动画
+
+XML:
+<item name="android:windowSharedElementEnterTransition">@transition/anim_fade</item>    
+
+代码：
+getWindow().setSharedElementEnterTransition(new Fade())
+```
+
+```
+Activity共享元素退出动画
+
+XML:
+<item name="android:windowSharedElementExitTransition">@transition/anim_fade</item>	
+
+代码：
+getWindow().setSharedElementExitTransition(new Fade())
+```
+
+## 无共享元素跳转
+```java
+MainActivity
+	onCreate(){
+		//在style/theme配置，或者代码配置
+		getWindow().setEnterTransition(new Fade()
+		getWindow().setExitTransition(new Explode())
+	}
+
+	//使用兼容方式跳转避免崩溃
+	ActivityCompat.startActivity(
+			MainActivity.this,
+			new Intent(MainActivity.this,SecondActivity.class),
+			ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this).toBundle()
+	);
+
+SecondActivity
+	onCreate(){
+		//在style/theme配置，或者代码配置
+		getWindow().setEnterTransition(new Fade()
+		getWindow().setExitTransition(new Explode())
+	}
+```
+
+## 代码方式共享元素跳转
+```java
+MainActivity
+	ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+		                new Pair(civ1, "civ1"),		//设置共享元素名称，与控件无关，与共享元素名称有关
+				new Pair(civ2, "civ2"),
+				new Pair(civ3, "civ3")
+	);
+	Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+	ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
+
+SecondActivity
+	ViewCompat.setTransitionName(civ1, "civ1");		//设置共享元素名称，与控件无关，与共享元素名称有关
+        ViewCompat.setTransitionName(civ2, "civ2");
+        ViewCompat.setTransitionName(civ3, "civ3");
+```
+
+## XML方式共享元素跳转
+```
+activity_a.xml
+	<Button
+		android:id="@+id/btn1"
+		android:text="动画"
+		android:transitionName="translationAnim"			//两个共享元素之间，transitionName必须一致，但id可以不一致
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+activity_b
+	<Button
+		android:id="@+id/btn2"
+		android:transitionName="translationAnim"
+		android:text="动画"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
+PS：共享元素尽量设置固定值或wrap_content，否则在界面过渡的开始、结束位置容易出现闪屏。
+
+//最后用无共享元素方式跳转即可
+ActivityCompat.startActivity(MainActivity.this, intent,ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
+```

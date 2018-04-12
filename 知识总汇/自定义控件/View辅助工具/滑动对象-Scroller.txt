@@ -1,0 +1,33 @@
+## 滑动对象：Scroller https://blog.csdn.net/briblue/article/details/73441698
+Scroller用法:
+```
+	//自定义的一个方法
+	private void smoothScrollTo(int destX,int destY , int duration){
+		//使用目标坐标X - 当前已经滑动了的距离，因为Scroll是反方向的，所以减的话就正确了
+		int dx = destX - getScrollX();      
+		int dy = destY - getScrollY();
+		scroller.startScroll(getScrollX(), getScrollY(), dx, dy, duration);
+		invalidate();//刷新，为了触发
+	    }
+	@Override
+	public void computeScroll() {
+		super.computeScroll();
+
+		//调用mScroller.computeScrollOffset()方法会计算下一个目标位置
+		if(!scroller.isFinished() && scroller.computeScrollOffset()){
+		scrollTo(scroller.getCurrX(), scroller.getCurrY());
+		invalidate();
+		}
+	}
+```
+	PS：尚不知Scroller.getCurrX()是什么
+	
+	ScrollTo、ScrollBy:
+
+	1、都是移动容器里面的内容，而非本身。
+
+	2、Scroll计算的方向是反的，所以向左移动是正值，向右移动是负值
+
+	getScrollX、getScrollY:
+
+	1、获取当前已经滑动的距离，获取的值也是反的。如果想移动到目标值，就用目标值 - getScroll

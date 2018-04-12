@@ -1,0 +1,9 @@
+* 使用`StringBuilder`代替字符串拼接
+* 使用`ArrayMap`和`SparseArray`代替`HashMap`
+* 避免内存抖动，当内存抖动时说明有很多垃圾对象要回收，会频繁调用GC，而GC执行的时候所有线程都是停止的，GC执行的越频繁应用运行越卡
+* `ListView`复用
+* 避免`onDraw`创建对象
+
+
+
+

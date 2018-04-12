@@ -4,3 +4,10 @@
 	}
 
 	//没什么特别
+
+2、扩展属性
+	var String.lastChar : Char
+		get() = get(length - 1)
+		set(value : Char){
+			setCharAt(length - 1, value)
+		}

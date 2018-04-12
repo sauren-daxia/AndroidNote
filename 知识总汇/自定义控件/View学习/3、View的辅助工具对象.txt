@@ -91,4 +91,15 @@
 
 	1、获取当前已经滑动的距离，获取的值也是反的。如果想移动到目标值，就用目标值 - getScroll
 
+4、拖动对象：ViewDragHelper
+	简化拖动View的操作性
 
+	构造：
+		ViewDragHelper.create(ViewGroup forParent, ViewDragHelper.Callback cb)
+		参数一：操作对象所在的父容器
+		参数二：拖动回调
+
+		ViewDragHelper.create(ViewGroup forParent, float sensitivity, ViewDragHelper.Callback cb)
+		参数一：操作对象所在的父容器
+		参数二：
+		参数三：拖动回调

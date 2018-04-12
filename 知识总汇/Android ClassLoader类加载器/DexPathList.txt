@@ -1,0 +1,3 @@
+## DexPathList
+* `DexPathList`是Dex文件的路径集合
+* `DexPathList`包含一个`Element[]`，它每个元素就是一个Dex

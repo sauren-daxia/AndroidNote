@@ -1,0 +1,139 @@
+## 拖动对象：ViewDragHelper https://blog.csdn.net/briblue/article/details/73730386
+简化拖动View的操作性
+构造：
+```
+ViewDragHelper.create(ViewGroup forParent, ViewDragHelper.Callback cb)
+参数一：操作对象所在的父容器
+参数二：拖动回调
+```
+
+```
+ViewDragHelper.create(ViewGroup forParent, float sensitivity, ViewDragHelper.Callback cb)
+参数一：操作对象所在的父容器
+参数二：
+参数三：拖动回调
+```
+API：
+* `flingCapturedView()` 快速滚动的意思，一般手指离开后`view`还会由于惯性继续滑动。
+* `smoothSlideViewTo()` 让`child`平滑地滑动到某个位置
+* `setEdgeTrackingEnabled(EDGE_LEFT | EDGE_TOP)` 识别左边缘和上边缘，`EDGE_LEFT`左边缘、`EDGE_RIGHT`右边缘、`EDGE_TOP`上边缘、`EDGE_BOTTOM`下边缘、`EDGE_ALL`所有边缘
+* `shouldInterceptTouchEvent()`	是否应该拦截`children`的触摸事件，只有拦截了`ViewDragHelper`才能进行后续的动作，将它放在`ViewGroup`中的`onInterceptTouchEvent()`方法中就好了 	
+* `processTouchEvent()` 处理`ViewGroup`中传递过来的触摸事件序列，在`ViewGroup`中的`onTouchEvent()`方法中处理
+* `settleCapturedViewAt()` 拖拽后的回弹，将 child 安置到坐标`finalLeft,finalTop`的位置。需要调用`continueSettleing()`才有意义
+	1. settleCapturedViewAt() 方法调用的目的的将 child 定位到 (left,top) 位置，但它不是瞬间到达，有一个动画的过程。 
+	1. 需要动画过程的每一帧调用 continueSettling() 方法，直到它返回 false。 
+	1. 如果 continueSettleing() 返回 false 表明此次动画结束。
+* `continueSettleing()` continueSettleing() 方法要在每一帧被调用,最适合的场合就是`ViewGroup`中的`computeScroll()`方法中
+```
+@Override
+public void computeScroll() {
+    super.computeScroll();
+    if (mDragHelper != null && mDragHelper.continueSettling(true)) {
+        invalidate();
+    }
+}
+```
+
+
+## 推拽回调：ViewDragHelper.Callback
+* `tryCaptureView()` 根据`View`判断是否是目标`View`，返回`true`才会产生后续事件
+* `clampViewPositionHorizontal()` 修整 child 水平方向上的坐标，left 指 child 要移动到的坐标，dx 相对上次的偏移量
+* `clampViewPositionVertical()` 修整 child 垂直方向上的坐标，top 指 child 要移动到的坐标，dy 相对上次的偏移量
+* `onViewReleased()` 手指释放时的回调
+* `getOrderedChildIndex()` 未知
+* `getViewHorizontalDragRange()` 未知
+* `getViewVerticalDragRange()` 未知
+* `onEdgeDragStarted()` 边缘拖拽开始，需要设置`ViewDragHelper.setEdgeTrackingEnabled`
+* `onEdgeTouched()` 边缘被点击，需要设置`ViewDragHelper.setEdgeTrackingEnabled`
+* `onEdgeLock()` 未知
+* `onViewCaptured()` 未知
+* `onViewDragStateChanged()` 未知
+* `onViewPositionChanged()` 未知
+
+## 基本拖拽例子
+```java
+public class TestViewGroup extends FrameLayout {
+    private static final String TAG = "TestViewGroup";
+
+    private ViewDragHelper mDragHelper;
+
+    public TestViewGroup(Context context) {
+        this(context,null);
+    }
+
+    public TestViewGroup(Context context, AttributeSet attrs) {
+        this(context, attrs,0);
+    }
+
+    public TestViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        mDragHelper = ViewDragHelper.create(this, new ViewDragHelper.Callback() {
+            @Override
+            public boolean tryCaptureView(View child, int pointerId) {
+                return true;
+            }
+
+            @Override
+            public int clampViewPositionHorizontal(View child, int left, int dx) {
+                return left;
+            }
+
+            @Override
+            public int clampViewPositionVertical(View child, int top, int dy) {
+                return top;
+            }
+
+            @Override
+            public void onViewReleased(View releasedChild, float xvel, float yvel) {
+                super.onViewReleased(releasedChild, xvel, yvel);
+            }
+        });
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return mDragHelper.shouldInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        mDragHelper.processTouchEvent(event);
+        return true;
+    }
+}
+```
+
+## 推拽回弹例子
+```java
+mDragHelper = ViewDragHelper.create(this, new ViewDragHelper.Callback() {
+    @Override
+    public boolean tryCaptureView(View child, int pointerId) {
+        return true;
+    }
+
+    @Override
+    public void onViewCaptured(View capturedChild, int activePointerId) {
+        super.onViewCaptured(capturedChild, activePointerId);
+        mDragOriLeft = capturedChild.getLeft();
+        mDragOriTop = capturedChild.getTop();
+    }
+
+    @Override
+    public int clampViewPositionHorizontal(View child, int left, int dx) {
+        return left;
+    }
+
+    @Override
+    public int clampViewPositionVertical(View child, int top, int dy) {
+        return top;
+    }
+
+    @Override
+    public void onViewReleased(View releasedChild, float xvel, float yvel) {
+        super.onViewReleased(releasedChild, xvel, yvel);
+
+        mDragHelper.settleCapturedViewAt((int)mDragOriLeft,(int)mDragOriLeft);
+    }
+});
+```

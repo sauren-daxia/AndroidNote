@@ -1,0 +1,21 @@
+```java
+fun memory(){
+
+	var manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+	//获取系统为应用分配的内存,没有额外的扩充
+        manager.memoryClass
+
+	//过设置manifest文件中的<application>标签中largeHeap属性的值为"true"，获得应用可使用的最大内存
+        manager.largeMemoryClass
+
+	//获取当前运行时总占用的内存大小
+	Runtime.getRuntime().totalMemory() * 1.0f / (1024/1024)			//默认是KB，计算出来是MB
+
+	//获取内存空间里的空闲空间
+	Runtime.getRuntime().freeMemory() * 1.0f / (1024/1024)
+
+	//获取系统分配最大内存，(totalMemory + freeMemory = maxMemory) ，totalMemory不够用会去向freeMemory申请空间，直到超出maxMemory就OOM
+	Runtime.getRuntime().maxMemory() * 1.0f / (1024/1024)
+}
+```

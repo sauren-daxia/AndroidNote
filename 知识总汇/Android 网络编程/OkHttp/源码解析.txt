@@ -34,7 +34,7 @@
 * `private static final Executor executor` OK的连接池，构造一个0核心线程存活，Integer.MAX_VALUE个容量，60秒内回收非核心线程的线程池
 * `private final Deque<RealConnection> connections = new ArrayDeque<>()` 储存缓存连接器，连接器会在`ConnectInterceptor`中通过`StreamAllocation.newStream`方法构造或者在`connections`获取，构造的同时添加到`connections`集合中
 * `cleanup()` 清理连接池，不太清楚实现，比较复杂，由`cleanupRunnable`调用，这里是一个死循环，会一直清理完闲置连接池为止，然后下次添加连接器的时候会继续清理
-* `put()` 添加连接器，每次添加连接器都会去清理一遍之前的闲置连接器，但是清理条件在`cleanup()`里面有规定，只是每次添加的时候都会通过线程池`executor`启动一个`cleanupRunnable`任务去清理
+* `put()` 添加连接器`RealConnection`，每次添加连接器都会去清理一遍之前的闲置连接器，但是清理条件在`cleanup()`里面有规定，只是每次添加的时候都会通过线程池`executor`启动一个`cleanupRunnable`任务去清理
 * `get()` 根据`address`获取连接器
 
 ## RealConnection(连接器)

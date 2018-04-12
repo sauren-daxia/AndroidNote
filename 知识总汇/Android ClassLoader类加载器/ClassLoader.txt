@@ -1,0 +1,11 @@
+## ClassLoader抽象类
+* `ClassLoader` 构造是需要一个父加载器的，如果不传父加载器则默认是`AppClassLoader`
+* `findClass` 获取Class文件名，重写这个方法，方便我们自己去寻找自己的文件，解析，各种操作
+* `defineClass` 根据class文件二进制byteArray构造Class对象，一般不建议重写
+* `loadClass` 父委托机制，委托父加载器去加载这个类，一般不建议重写
+* `findLibrary` 获取Libs包名，暂时没用过，应该是去加载Libs相关的文件
+* ==着重关注deFine相关的方法==
+
+## NativeLibrary(暂不知)
+* `loadLibrary`，通过`ClassLoader`的`findLibrary`方法去查找`Libs`目录
+* `findNative`暂不知

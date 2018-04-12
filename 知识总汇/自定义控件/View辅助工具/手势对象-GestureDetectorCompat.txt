@@ -1,0 +1,37 @@
+## 手势对象：GestureDetectorCompat https://blog.csdn.net/harvic880925/article/details/39520901
+主要监测：单机，滑动，长按，双击等
+
+	可以在onTouchEvent的Move中使用，方式如下：
+	GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener());		//设置监听
+
+	boolean consume = gestureDetector.onTouchEvent(event);	//监听Event的动作
+
+	GestureDetector.SimpleOnGestureListener可以监听两种模式：
+
+	单击：
+		onDown():			//轻轻触摸，触发一个ACTION_DOWN
+
+		onShowPress():			//轻轻触摸，触发一个ACTION_DOWN，与DOWN不一样的在于，不松手不移动
+
+		onSingleTapUp():		//单击，触发一个ACTION_DOWN和一个ACTION_UP
+
+		onLongPress():			//长按，
+		
+		onScroll():			//滑动，触发一个ACTION_DOWN和多个ACTION_MOVE
+		
+		onFling():			//快速滑动，触发一个ACTION_DOWN、多个ACTION_MOVE和一个ACTION_UP
+
+	双击：
+		onDoubleTap():			//双击，由两次单击组成
+
+		onSingleTapConfirmed():		//严格的单击？
+		
+		onDoubleTapEvent():		//双击行为，在双击期间ACTION_DONW、ACTION_MOVE、ACTION_UP都会触发这个方法一次
+
+		PS：
+		1、在一次滑动过程中，会频繁的回调各个方法，而不是只回调其中相关的某一个
+
+		2、一般长按后是不会有滑动事件的，如果需要可以这样实现:
+			gestureDetector.setIsLongpressEnabled(false)
+
+## 例子：仿探探 https://blog.csdn.net/iamzgx/article/details/53239874

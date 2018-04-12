@@ -1,0 +1,37 @@
+```java
+fun loadDex() {
+        //创建Dex目录
+        var dexDir = File(filesDir, "dex")
+        if (dexDir != null && !dexDir.exists()) {
+            dexDir.mkdirs()
+        }
+        //创建ODex目录
+        var oDexDir = File(filesDir, "oDex")
+        if (oDexDir != null && !oDexDir.exists()) {
+            oDexDir.mkdirs()
+        }
+        //将aseets的libs.apk复制到Dex目录下
+        var dexFile = File(dexDir, "libs.apk")
+        var aseetsIs = assets.open("libs.apk")
+        if (aseetsIs != null) {
+            var bos = BufferedOutputStream(FileOutputStream(dexFile))
+            bos.use { bos ->
+                aseetsIs.use {
+                    it.copyTo(bos)
+                }
+            }
+        }
+	/**
+	* 原本的加载方式是PathClassLoader -> BootClassLoader
+	* 这里的操作是让DexClassLoader插入到中间，实现分包加载
+	* 通过反射让PathClassLoder的父加载变成DexClassLoader的父加载器，DexClassLoader变成PathClassLoader的加载器
+	*/
+        var libsSoPath = applicationInfo.nativeLibraryDir
+        var dexClassLoader = DexClassLoader(dexFile.absolutePath,oDexDir.absolutePath,libsSoPath,classLoader.parent)
+        var parentField = ClassLoader::class.java.getDeclaredField("parent")
+        if(parentField!=null){
+            parentField.isAccessible = true
+            parentField.set(classLoader,dexClassLoader) 
+        }
+    }
+```

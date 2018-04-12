@@ -22,6 +22,18 @@
 
 
 #----------------------------------------------------------------------------
+#---------------------------------5.自定义view相关的类和方法-----------------------
+
+
+
+#----------------------------------------------------------------------------
+
+#---------------------------------6.各种SDK相关的类和方法-----------------------
+
+
+
+#----------------------------------------------------------------------------
+
 #---------------------------------------------------------------------------------------------------
 
 #-------------------------------------------基本不用动区域--------------------------------------------
@@ -44,6 +56,8 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.support.v7.**
 -keep public class com.android.vending.licensing.ILicensingService
 -keep class android.support.** {*;}
 

@@ -1,0 +1,46 @@
+```java
+class CustomClassLoader(private val loaderPath: String) : ClassLoader() {
+
+
+    override fun findClass(name: String?): Class<*> {
+        if (name.isNullOrEmpty()) {
+            return super.findClass(name)
+        }
+        //解析class名
+        var className = getClassName(name!!)
+
+        if (className.isNullOrEmpty()) {
+            return super.findClass(name)
+        }
+
+        //读取class二进制，defineClass可以将class二进制转换为Class独享
+        var classFile = File(loaderPath, className)
+        if (classFile.exists() && classFile.isFile) {
+            var bis = BufferedInputStream(FileInputStream(classFile))
+            var baos = ByteArrayOutputStream()
+            baos.use { ba ->
+                bis.use { bi ->
+                    bi.copyTo(baos)
+                }
+            }
+            var byteArray = baos.toByteArray()
+            defineClass(className,byteArray,0,byteArray.size)
+        }
+        return super.findClass(name)
+    }
+
+
+    /**
+     * 通过自定义解析找到Class名
+     * 假如自己需要加载的Class名都被定义后缀添加CMM，也就是一个类名叫test.class的话
+     * 则被修改成test.classCMM，现在我们要把它给解析出正确的类名
+     */
+    fun getClassName(name: String): String {
+        if (name.endsWith(".classCMM", true)) {
+            return name.substring(0, name.length - 3)
+        }
+        return ""
+    }
+
+}
+```

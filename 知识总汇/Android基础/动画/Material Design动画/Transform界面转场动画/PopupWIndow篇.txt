@@ -1,0 +1,21 @@
+
+## 代码/属性配置(二选一)
+```
+OPUPWindow 进入动画 API24才支持
+
+XML:
+<item name="android:popupEnterTransition">@android:transition/move</item>
+
+代码：
+this.setEnterTransition(new Fade())
+```
+
+```
+POPUPWindow 退出动画 API24才支持
+
+XML:
+<item name="android:popupExitTransition">@android:transition/move</item>
+
+代码：
+this.setExitTransition(new Fade())
+```

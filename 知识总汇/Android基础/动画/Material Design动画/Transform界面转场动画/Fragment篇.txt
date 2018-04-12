@@ -1,0 +1,61 @@
+
+## 代码/属性配置(二选一)
+```
+Fragment第一次进入过度动画
+
+XML:
+<item name="android:fragmentEnterTransition">@android:transition/slide_bottom</item>
+
+代码：
+this.setEnterTransition(new Slide())
+```
+
+```
+Fragment第一次退出过度动画
+
+XML:
+<item name="android:fragmentExitTransition">@android:transition/slide_top</item>
+
+代码：
+this.setExitTransition(new Slide())
+```
+
+```
+Fragment共享元素进入
+
+XML:
+<item name="android:fragmentSharedElementEnterTransition">@android:transition/move</item>
+
+代码：
+this.setSharedElementEnterTransition(new Slide())
+```
+
+```
+Fragment共享元素退出
+
+XML:
+<item name="android:fragmentSharedElementReturnTransition">@android:transition/move</item>
+
+代码：
+this.setSharedElementReturnTransition(new Slide())
+```
+
+## 代码方式共享元素切换
+```java
+MainActivity
+	getSupportFragmentManager()
+                .beginTransaction()
+                .addSharedElement(civ1, "civ1")		//设置共享元素名称，与控件无关，与共享元素名称有关
+		.addSharedElement(civ2, "civ2")
+                .addSharedElement(civ3, "civ3")
+		.show(homeFragment)
+                .commit();
+```
+
+## 代码方式不共享切换
+```java
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransitionStyle(R.transition.out)
+                .commit();
+```

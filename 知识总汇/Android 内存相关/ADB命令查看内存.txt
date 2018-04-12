@@ -1,0 +1,37 @@
+## 查看某个应用的内存占用情况
+`dumpsys meminfo <包名>`
+## MEMINFO(单位字节)
+```java
+			PssTotal(物理内存使用率)	PrivateDirty()		PrivateClean()		SwappedDirty()		HeapSize(堆大小)	 HeapAlloc(堆分配大小)	HeapFree(空闲堆大小)HeapAlloc+Heapfree = HeapSize 
+Native Heap(JNI堆)
+Dalvik Heap(虚拟机堆)
+Dalvik Other(虚拟机其他堆)
+Stack(堆栈)
+Ashmem(共享内存)
+Other dev()
+.so mmap(so使用大小)
+.apk mmap(apk使用大小)
+.ttf mmap(tff使用大小)
+.dex mmap(dex使用大小)
+.oat mmap(oat使用大小)
+.art mmap(art使用大小)
+Other mmap(其他使用大小)
+GL mtrack()
+Unknown()
+TOTAL(使用总计)
+```
+
+## Summary
+```java
+					Pss(KB)
+					------
+Java Heap(Java堆):			5568
+Native Heap(JNI堆):			7260
+Code:					8816
+Stack:					532
+Graphics:				7948
+Private Other:				1144
+System:					2435
+
+               TOTAL:    33703      TOTAL SWAP (KB):        0
+```

@@ -1,0 +1,12 @@
+## 内存泄漏观察
+1. 步骤一：点击`Profile`运行`Project`
+1. 步骤二：点击`AndroidStudio`左下角的选项卡`Android profiler`
+1. 步骤三：这时候出现`CUP`、`MEMORY`、`NETWORK`三种数据图，点击`MEMORY`所在的数据图
+1. 步骤四：在视图左上角有三个按钮，第一个垃圾箱`Force garbage collection`是用于`GC`回收内存的，第二个对某个节点做内存分析的`Dump Java Heap`，第三个录制一段时间内存的变化的`Record memory allocations`
+1. 步骤五：选择第三个按钮录制一段内存变化，在这段时间内操作你觉得可能发生内存泄漏的内容，比如进退几个可能发生内存泄漏的`Activity`
+1. 步骤六：操作完毕后再次点击按钮会停止录制，下面会弹出分析列表`Class Name`，假如某个`Activity`发生内存泄漏了，可以通过`Ctrl+F`搜索这个`Activity`的名字，搜到并点击它
+1. 步骤七：接着右边会弹出`Instance View`的窗口，其中`Instance`列表就是在这段内存录制时间产生的引用，先记着有多少个，个数肯定是与你打开多少次这个`Activity`的次数相等的
+1. 步骤八：现在关闭`Instance View`的窗口，然后在内存数据图右上角有一个播放样式的按钮`Live`，点击以下会滚动到当前时间段内存的变化，然后再点击左上角的三个按钮之一的第一个`Force garbage collection`
+1. 步骤九：重复步骤一到步骤七的操作
+1. 步骤十：这时候再看`Instance View`的列表`Instance`，看看还有没有之前看到的那么多`Activity`引用，如果有，则说明内存没被释放掉，已经造成内存泄漏，因为在步骤八手动回收了内存的，一般情况所有没引用的对象都会被回收
+1. 步骤十一：现在分析内存泄漏
