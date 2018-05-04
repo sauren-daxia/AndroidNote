@@ -1,0 +1,124 @@
+## 介绍多种被观察者的创建方式
+* 基本创建，自定义事件发送，灵活性高
+	* `Observable.create()`
+* 快速创建，单单是发送事件，灵活性低，目的性强
+	* `Observable.just()`发送单一的事件，最多可发送9个事件，实际上是快速发送10个之内的onNext
+	* `Observable.fromArray()`发送一组数据，无限制事件，实际上是快速发送无限制个onNext
+	* `Observalbe.empty()`发送一个空数据，实际上是快速发送一个onComplete
+	* `Observable.error()`发送一个异常，实际上是快速发送一个onError
+	* `Observable.fromIterable()`发送一个可迭代类型Iterator数据
+	* `Observable.never()`什么都不发送，主要是用来测试，可无视
+* 延迟创建
+	* `Observable.defer()`和懒加载一样，直到订阅Observer的时候才会创建Observable，并且如果defer创建Observable的时候如果引用了其他引用，那么在创建订阅Observer之前，这个引用的值仍然是改变的
+	* `Observable.timer()`指定延迟多少秒发送一个事件，这个事件为Long类型的0，一般用于测试
+	* `Observable.interval()`指定每间隔多少秒发送一个事件，这个事件为Long类型，从0递增，死循环发送事件，所以最好自己要在不需要的时候取消发送，否则会内存泄漏
+	* `Observable.intervalRange()`可以指定每隔多少秒发送一个事件，也可以指定发送多少个事件，有限循环发送事件，也要注意内存泄漏
+	* `Observable.range()`指定发送一个区间的个数的事件，比如0到10,比如1到10...，没有间隔
+	* `Observable.rangeLong()`和ragne一样，只不过类型是Long的数值
+## create案例
+```java
+    /**
+    * 需求为寻找一个目录下所有的txt类型文件，并读取第一行
+    *
+    */
+    void testRx(){
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> it) throws Exception {
+                File directory = new File("");
+                //获取某个目录下的所有文件，并且过滤文件名后缀为.txt的，然后读取第一行为标题，读取完传递给观察者处理
+                if (directory.exists() && directory.isDirectory()) {
+                    for (File file : directory.listFiles(new FileFilter() {@Override public boolean accept(File pathname) { return pathname.getName().endsWith(".txt"); }})) {
+                        BufferedReader br = new BufferedReader(new FileReader(file));
+                        String title = br.readLine();
+                        it.onNext(title);
+                    }
+                    //告诉观察者已经没事件了，可以不用接收了
+                    it.onComplete();
+                } else {
+                    //当目录错误则告诉观察者这里报错了
+                    it.onError(new Exception("没找到这个目录"));
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String title) {
+                        //这里会收到每一行的标题
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //如果目录错误会在这里收到异常
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //当事件结束后会在这里收到
+                    }
+                });
+
+    }	
+```
+## just案例
+```java
+
+```
+## fromArray案例
+```javva
+
+```
+## empty案例
+```java
+
+```
+## error案例
+```java
+
+```
+
+## defer案例
+```java
+
+```
+## timer案例
+```java
+
+```
+## interval案例
+```java
+    /**
+    * 需求为每隔1毫秒请求一次百度，无线轮训，攻击百度
+    */
+void testRx() {
+        Observable
+                .interval(1, TimeUnit.MILLISECONDS)
+                .doOnNext(new Consumer<Long>() { 
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        HttpURLConnection conn = (HttpURLConnection) new URL("http://www.baidu.com").openConnection();
+                        conn.setRequestMethod("GET");
+                        conn.connect();
+			
+                        conn.disconnect();
+                    }
+                })
+                .subscribe();
+    }
+```
+## intervalRange案例
+```java
+
+```
+## range案例
+```java
+
+```
+## rangeLong案例

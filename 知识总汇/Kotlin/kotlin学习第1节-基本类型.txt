@@ -5,13 +5,15 @@
 	b == c		//true,因为数值是相等的
 	b === c		//false,因为koltin中所有都是引用类型，b和c是两个不同的对象，===是判断类型和引用地址的，所以不相等
 
-	PS:此处不相等是因为Int?的关系，如果只是声明类型:Int或不声明类型，只是单纯的赋值了地址引用，类似Java的：
+	PS：此处不相等是因为Int?的关系，如果只是声明类型:Int或不声明类型，只是单纯的赋值了地址引用，类似Java的：
 		Integer a = 10000
 		Integer b = a
 	
 	   但是加了Int?后则变成了
 		Integer a = 10000
 		Integer b = new Integer(a)
+
+	PS：== 的本质是equals() ，=== 的本质是equals() + as 
 
 2、显示转换
 	val a : Long =1

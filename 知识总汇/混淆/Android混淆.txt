@@ -45,6 +45,19 @@ buildTypes {
 	public <init>(java.long.Object); //某个参数为Object的构造方法不被混淆
 }
 
+
+-dontpreverify			//android不需要preverify，去掉这一步加快混淆速度  
+
+-dontusemixedcaseclassnames	//不使用大小写混合，混淆后类名称为小写 ，建议开启
+
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*  这个过滤器是谷歌推荐的算法，一般也不会改变  
+
+-keepattributes Signature	//类型转换错误 添加如下代码以便过滤泛型（不写可能会出现类型转换错误，一般情况把这个加上就是了）,即避免泛型被混淆  
+
+-keepattributes *Annotation*	//假如项目中有用到注解，应加入这行配置,对JSON实体映射也很重要,eg:fastjson  
+
+-keepattributes SourceFile,LineNumberTable	//抛出异常时保留代码行数  
+
 3、保留关键字
 -keep class		//保留类和成员不被混淆
 

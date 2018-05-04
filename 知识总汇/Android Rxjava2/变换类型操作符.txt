@@ -1,0 +1,84 @@
+## 变换类型操作符
+* `map()`将一个事件类型转换成另一个事件类型，比如要发送的是Integer类型的，但是想观察者收到的时候是String类型的，就可以在订阅之前篡改类型
+* `flatMap()`将一个事件转换成Observable<?>，在订阅的时候，会把所有Observeable的事件组合成一个数组，然后再挨个挨个发送给观察者，组成的数组是无序的
+* `concatMap()`和flatMap功能一样，但组成的数据是有序的
+* `buffer()`提供一个缓冲功能，如果每个事件都一次次性发送，很消耗性能，buffer()可以设置一个缓冲区大小，比如凑够了5个事件再一次发送，观察者收到的时候会是一个List集合，里面装有一个缓冲区的元素
+
+## map案例
+```java
+    /**
+     * 需求：将一组图片资源转换为Bitmap
+     */
+    void testRx() {
+        Observable
+                .fromArray(new Integer[]{R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher})
+                .map(new Function<Integer, Bitmap>() {
+                    @Override
+                    public Bitmap apply(Integer resID) throws Exception {
+                        return MainActivity.this.getResources().getDrawable(resID);
+                    }
+                }).subscribe(new Consumer<Bitmap>() {
+            @Override
+            public void accept(Bitmap bitmap) throws Exception {
+
+            }
+        });
+    }
+```
+
+## flatMap案例
+```java
+     /**
+     * 需求：嵌套请求
+     */
+    void testRx() {
+        // 步骤1：创建Retrofit对象
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://fy.iciba.com/") // 设置 网络请求 Url
+                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析(记得加入依赖)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // 支持RxJava
+                .build();
+
+        // 步骤2：创建 网络请求接口 的实例
+        GetRequest_Interface request = retrofit.create(GetRequest_Interface.class);
+        observable1 = request.getCall();
+        observable2 = request.getCall_2();
+        observable1.subscribeOn(Schedulers.io())               // （初始被观察者）切换到IO线程进行网络请求1
+                .observeOn(AndroidSchedulers.mainThread())  // （新观察者）切换到主线程 处理网络请求1的结果
+                .doOnNext(new Consumer<Translation1>() {
+                    @Override
+                    public void accept(Translation1 result) throws Exception {
+                        Log.d(TAG, "第1次网络请求成功");
+                        result.show();
+                        // 对第1次网络请求返回的结果进行操作 = 显示翻译结果
+                    }
+                })
+
+                .observeOn(Schedulers.io())                 // （新被观察者，同时也是新观察者）切换到IO线程去发起登录请求
+                // 特别注意：因为flatMap是对初始被观察者作变换，所以对于旧被观察者，它是新观察者，所以通过observeOn切换线程
+                // 但对于初始观察者，它则是新的被观察者
+                .flatMap(new Function<Translation1, ObservableSource<Translation2>>() { // 作变换，即作嵌套网络请求
+                    @Override
+                    public ObservableSource<Translation2> apply(Translation1 result) throws Exception {
+                        // 将网络请求1转换成网络请求2，即发送网络请求2
+                        return observable2;
+                    }
+                })
+
+                .observeOn(AndroidSchedulers.mainThread())  // （初始观察者）切换到主线程 处理网络请求2的结果
+                .subscribe(new Consumer<Translation2>() {
+                    @Override
+                    public void accept(Translation2 result) throws Exception {
+                        Log.d(TAG, "第2次网络请求成功");
+                        result.show();
+                        // 对第2次网络请求返回的结果进行操作 = 显示翻译结果
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        System.out.println("登录失败");
+                    }
+                });
+    }
+```
+

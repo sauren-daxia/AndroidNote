@@ -1,0 +1,37 @@
+1. 需要保存一个时间在sharedpreference里面，用来判断全局是否发送过验证码
+```java
+public void onCreate(){
+	init()
+}
+
+public void init(){
+	long cureentTime = System.currentTimeMillis();
+        long verification = getSharedPreferences("mySP", MODE_PRIVATE).getLong("verification", 0)
+        if (verification > cureentTime) {
+            counDown(verification - cureentTime / 1000);
+        }
+}
+```
+
+2. 提供一个重置功能，避免异常情况出现
+```java
+  private void resetTimer() {
+        /**
+         * 这里设置按钮为可用状态，也就是enable = true
+         * 会有三个地方调用：
+         *          1. 一开始进入的时候如果别的地方有在发送验证码，则继续倒计，倒计时完毕会恢复状态
+         *          2. 正在发送验证码的时候，当请求如果异常则恢复
+         *          3. 当请求正常完成的时候
+         */
+    }
+```
+
+3. 请求
+```java
+ private void sendVerification(){
+        /**
+         * 这里进行网络请求
+         * 请求的时候设置sharedPreference中的变量，为currentTimeMuillis+ (120 * 1000)
+         */
+    }
+```

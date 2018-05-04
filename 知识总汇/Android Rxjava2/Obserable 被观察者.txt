@@ -1,0 +1,66 @@
+## Observable简介
+就是字面意思，被观察者，在Rxjava中被观察者通常是用来发送事件的，比如老板需要秘书处理一份文件，比如顾客点了一份鸡腿堡
+
+## Observable使用
+```java
+void testRx(){
+	/**
+         * 第一种，最基本创建被观察者
+         * 在创建的过程中由自己控制事件发送，无限制
+         * 可以发送三种类型的事件，
+         * onNext        : 发送一个正常工作事件
+         * ononComplete  : 发送一个事件发送完毕的通知，观察者收到后则不会再接收任何事件
+         * onError       : 发送一个异常事件，通知观察者发送异常，观察者收到后则不会再接收任何事件
+         * setDisposable :
+         * setCancellable:
+         * isDisposed    :
+         * serialize     :
+         * tryOnError    :
+         */
+     Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> it) throws Exception {
+                it.onNext(1);//发送一个正常工作事假
+                it.onComplete();//告诉观察者事件已经发送完，后面有事件也不处理
+                it.onError(new Exception());//告诉观察者这里出现了异常，后面有事件也不处理
+            }
+        });
+}
+```
+
+## 订阅事件
+当我们定义好被观察者，那么总得有个观察者吧，没人观察你，谁知道你干嘛。
+通过Observable.subscribe()方法就可以订阅，不懂什么是观察者Observer的先看看Observer的文档简介
+```java
+void testRx(){
+ Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> it) throws Exception {
+                it.onNext(1);//发送一个正常工作事假
+                it.onComplete();//告诉观察者事件已经发送完，后面有事件也不处理
+                it.onError(new Exception());//告诉观察者这里出现了异常，后面有事件也不处理
+            }
+        }).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+		//当事件观察者主动不想处理事件的时候，可以使用Disposable切断与被观察者的联系
+                //但是观察者依然会执行自己的事件发送，只是观察者不再收到事件，常用与避免内存泄漏
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+		//当观察者每发送一个OnNext事件的时候会在这里收到通知
+            }
+
+            @Override
+            public void onError(Throwable e) {
+		//当观察者发送一个OnError事件的时候会在这里收到通知
+            }
+
+            @Override
+            public void onComplete() {
+		//当被观察者发送onComplete的时候会在这里收到通知
+            }
+        });
+}
+```
