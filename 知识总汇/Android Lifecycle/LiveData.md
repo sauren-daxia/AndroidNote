@@ -1,0 +1,54 @@
+### LiveData
+- 能感知组件的生命周期
+- 能被观察的数据存储结构
+- 只在`START`、`RESAUME`时才通知组件更新数据
+- 不用担心内存泄漏，参考上一条特点，并且会在组件`onDestroy`移除观察者
+- 将LiveData声明到ViewModel里，不用担心组件`Recreated`后数据被销毁
+
+### 用法
+- 使用子类MutableLiveData
+- 继承子类MutableLiveData
+
+### 使用子类MutableLiveData案例
+```java
+class MyViewModel{
+    //如果需要观察数据则在泛型写上类型
+    val name = MutableLiveData<String>()
+    //不需要观察数据，只做一个回调，则写Void
+    val login = MutableLiveData<Void>()
+
+    /**
+    *一般会在ViewModel中配合MVVM写点击事件的
+    *这里模拟点击登录好了
+    */
+    fun login(view: View){
+        login.call()
+    }
+
+    /**
+    *MVVM虽然需要写点击事件，但也可以直接调用某个方法
+    *这里
+    */
+    fun rename(rename: String){
+        //直接setValue是在主线程进行的，所以也只能在主线程setValue
+        name.setValue(rename)
+        //POST则可以在子线程，异步的话需要改变数据可以用POST，主线程就用setValue
+        //name.postValue(rename)
+    }
+}
+class MyActivity :  AppcompatActivity{
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
+
+        viewModel.login.observer(this,Observer{
+            //当点击登录的时候会调用login.call()，这是通知观察者的意思
+            //所以在这可以收到点击通知，并且只能在START、RESUME的时候收到
+        })
+
+        viewModel.name.observer(this,Observer{ it->rename
+            //当name.setValue的时候，观察者也能收到通知
+            //并且将最新设置的数据返回过来
+        })
+    }
+}
+```
