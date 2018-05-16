@@ -64,3 +64,72 @@ void testRx(){
         });
 }
 ```
+
+## Actions
+标准的订阅的话，会有四个回调事件：`onSubcribe()`、`onNext()``onCompleted()`、`onError()`，但是一般不会在四个事件里面都有操作，可能只在`onNext()`和`onError()`里面操作，那么也得订阅四个事件的话，显得太啰嗦，所以`Rx`也有自己的`Action`事件的适配器
+#### Consumer
+```java
+/**
+* subscribe有多个重载方法，常用的有
+* subscribe(onNext: Consumer)
+* subscribe(onNext: Consumer, onError: Consumer)
+* subscribe(onNext: Consumer, onError: Consumer, onCompleted: Consumer)
+* subscribe(onNext: Consumer, onError: Consumer, onCompleted: Consumer, onSubscribe: Consumer)
+*/
+private fun rx(){
+    Observable.create<String>({
+      it.onNext("hello")
+    })
+        .subscribe{
+            //onNext
+        }
+    Observable.create<String>({
+      it.onNext("hello")
+    })
+        .subscribe({
+            //onNext
+        }, {
+            //onError
+        }) 
+    Observable.create<String>({
+      it.onNext("hello")
+    })
+        .subscribe({
+            //onNext
+        }, {
+            //onError
+        }, {
+            //onCompleted
+        })
+    
+    Observable.create<String>({
+        it.onNext("hello")
+    })
+        .subscribe({
+            //onNext
+        }, {
+            //onError
+        }, {
+            //onCompleted
+        }, {
+            //onSubscribe
+        })
+}
+```
+
+## Flowable和Observeable
+使用`Observable`和`Observer`进行事件流操作的时候，事件少于1K的话基本不会造成OOM，但是超过后就很容易OOM，比如数据库操作，IO操作等。使用`Flowable`就可以解决这个问题，`Flowable`和`Observable`使用方式一样
+
+## BackPressure(背压)
+背压只有使用`Flowable`的时候才用到，因为事件过多的话，发送的频率高于处理的能力的话，就会一直堆积着，`BackpressureStrategy`提供了几种策略来解决上游发送频率的问题
+- `BackpressureStrategy.MISSING`
+上下游流量不均匀的时候会抛出异常
+- `BackpressureStrategy.ERROR`
+上下游流量不均匀的时候会抛出异常
+- `BackpressureStrategy.BUFFER`
+与Observable并没有什么不同，如果不处理的话还是会OOM
+- `BackpressureStrategy.DROP`
+提供一个128长度的事件池，直到每处理一个才把最新的一个存进来，在事件池满时发送的事件全部会丢失
+- `BackpressureStrategy.LATEST`
+每进入一个就把第一个丢弃掉，最终只会保存最新最新的128事件，比如1-999，只会保存999之前的事件
+

@@ -1,0 +1,16 @@
+Button默认样式minWidth = 88dp，怎么设置都是没用的
+
+方案：
+在主题中配置全局
+<style name="SmallerButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:minWidth">20dp</item>
+</style>
+
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+  
+        <item name="android:buttonStyle">@style/SmallerButtonStyle</item>
+</style>

@@ -1,3 +1,5 @@
+## 顶层build.gradle结构
+```groovy
 buildscript {			
 
     repositories {
@@ -8,9 +10,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1
     }
-
 }
-
+```
+```groovy
 allprojects {
     repositories {
         jcenter()
@@ -24,11 +26,12 @@ allprojects {
 	targetSdkVersion = 24
     }
 }
-
+```
+```groovy
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
+```
 
 1、buildscript：定义Android工具的类路径，
 
