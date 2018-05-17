@@ -17,6 +17,9 @@ productFlavors{
         //设置最大支持SDK版本，一般不设置
         maxSdkVerson 27
 
+        //设置期望运行的版本，比如设置21，5.0还没有运行时权限，设置23则会提示需要权限
+        targetSdkVersion 27
+
         //配置渠道使用，替换AndroidManifest.xml中的mate-data value属性
         manifestPlaceholders = [UMENG_APP_KEY: "你替代的内容"]
 
