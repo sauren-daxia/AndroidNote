@@ -1,4 +1,4 @@
-
+﻿
 	生命周期
 	
 		onCreate				：Activity在创建的时候会调用
@@ -34,7 +34,7 @@
 	禁止Activity因旋转或非内存不足被销毁再创建：
 		在AndroidManifest中设置
 			<activity
-				android:configChange="orientation|keyBoard|keyBoardHidde|screenSize"
+				android:configChanges="orientation|keyboard|keyboardHidden|screenSize"
 			>
 
 			orientation		：当屏幕旋转

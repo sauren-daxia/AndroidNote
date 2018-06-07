@@ -1,0 +1,240 @@
+{
+  "configs": [
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "南通➞日本美西",
+      "server": "n-ntg-cmcc.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "郑州➞日本",
+      "server": "n-cgo-cu.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "维也纳NME",
+      "server": "n-vie-nme.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "新加坡M247",
+      "server": "n-sin-m247.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "新加坡Azure×0.8",
+      "server": "n-sin-azure.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "马尼拉CS",
+      "server": "n-mnl-cs.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港东涌HKT",
+      "server": "n-hkg-hkt-tc.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港奥运HKT",
+      "server": "n-hkg-hkt-ow.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "深圳➞香港",
+      "server": "n-szx-aliyun.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港SV",
+      "server": "n-hkg-sv.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港Azure×0.8",
+      "server": "n-hkg-azure.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港LeaseWeb",
+      "server": "n-hkg-leaseweb.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港LW",
+      "server": "n-hkg-lw.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "香港Aliyun",
+      "server": "n-hkg-aliyun.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "台北FET",
+      "server": "n-tpe-fet.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "高雄DCT",
+      "server": "n-khh-dct.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "上海➞高雄",
+      "server": "n-sha-aliyun.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "釜山Azure×0.8",
+      "server": "n-pus-azure.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "东京SBC",
+      "server": "n-tyo-sbc.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "东京Sakura",
+      "server": "n-tyo-sakura.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "札幌Sakura",
+      "server": "n-cts-sakura.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "伯力TTK",
+      "server": "n-khv-ttk.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "西雅图CTL",
+      "server": "n-sea-ctl.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "(洛杉矶BN)",
+      "server": "n-lax-bn.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "洛杉矶C3Edge",
+      "server": "n-lax-c3edge.weltour.xyz",
+      "server_port": 10790
+    },
+    {
+      "obfs": "http_simple",
+      "protocol": "auth_sha1_v4",
+      "method": "chacha20",
+      "password": "7c977AidwW",
+      "remarks": "洛杉矶DGC",
+      "server": "n-lax-dgc.weltour.xyz",
+      "server_port": 10790
+    }
+  ],
+  "localPort": 1080,
+  "shareOverLan": false
+}

@@ -1,4 +1,4 @@
-Paint章节
+﻿Paint章节
 
 颜色：
 	paint.setColoe()
@@ -140,7 +140,7 @@ paint.setPathEffect()		//线的轮廓效果，不支持硬件加速
 	new SumPathEffect(dashEffect, discreteEffect);		//组合PathEffect，重叠
 	new ComposePathEffect(dashEffect, discreteEffect);	//组合PathEffect，先用第一种效果改变原来的状态，再用第二种效果改变第一种状态，好比线本来是直的，先弄成弧形，再弄成三角形，就变成了弧形的三角线
 				
-paint.setShadowLayer(10, 0, 0, Color.RED);	//底层阴影，不支持硬件加速
+paint.setShadowLayer(10, 0, 0, Color.RED);	//底层阴影，不支持硬件加速，学习资料：https://blog.csdn.net/harvic880925/article/details/51818489
 		参数说明：
 			参数一：阴影范围
 			参数二：偏移X轴

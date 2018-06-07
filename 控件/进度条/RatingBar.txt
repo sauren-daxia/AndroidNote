@@ -21,3 +21,14 @@ getRating()		//获取星星个数
 setOnRatingBarChangeListener(new OnRatingBarChangeListener)		//监听
 
 onRatingChanged(R r , float f,boolean)		//第二个参数是选中的个数，第三个是判断是否手动
+
+必设定参数
+----------------
+    <style name="nearlyRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar</item>
+        <item name="android:minHeight">12dp</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:maxHeight">12dp</item>
+        <item name="android:minWidth">12dp</item>
+        <item name="android:maxWidth">12dp</item>
+    </style>
